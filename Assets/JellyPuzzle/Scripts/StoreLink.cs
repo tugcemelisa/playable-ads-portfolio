@@ -15,6 +15,8 @@ namespace JellyAd
             Luna.Unity.LifeCycle.GameEnded();
         }
 
+        public static void GameEnded() => NotifyGameEnded();
+
         public static void LogEvent(string name, int value = 0)
         {
             Luna.Unity.Analytics.LogEvent(name, value);
