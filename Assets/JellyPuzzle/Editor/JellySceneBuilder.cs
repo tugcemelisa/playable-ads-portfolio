@@ -12,6 +12,42 @@ namespace JellyAd.EditorTools
         public const string JellyScene = "Assets/Scenes/JellyPuzzle.unity";
         public const string RunnerScene = "Assets/Scenes/RescueRun.unity";
         public const string SurvivorScene = "Assets/Scenes/LastCamp.unity";
+        public const string NumberMatchScene = "Assets/Scenes/NumberMatch.unity";
+
+        [MenuItem("Voodoo/Build Number Match Scene")]
+        public static void BuildNumberMatch()
+        {
+            CreateScene(NumberMatchScene, true, typeof(NumberMatchAd.NumberMatchGame));
+            SetBuildScene(NumberMatchScene);
+            EditorSceneManager.OpenScene(NumberMatchScene);
+        }
+
+        // batch-mode entry: desktop test build of the Number Match scene (output path after -nmOut)
+        public static void BuildNumberMatchTestPlayer()
+        {
+            if (!System.IO.File.Exists(NumberMatchScene)) BuildNumberMatchBatch();
+            var args = System.Environment.GetCommandLineArgs();
+            string outPath = "Builds/NumberMatchTest/NumberMatch.exe";
+            for (int i = 0; i < args.Length - 1; i++) if (args[i] == "-nmOut") outPath = args[i + 1];
+            var report = UnityEditor.BuildPipeline.BuildPlayer(new[] { NumberMatchScene }, outPath,
+                BuildTarget.StandaloneWindows64, BuildOptions.None);
+            Debug.Log("[Voodoo] Test build: " + report.summary.result + " -> " + outPath);
+        }
+
+        // command-line entry (no -batchmode): opens the scene and presses Play
+        public static void PlayNumberMatch()
+        {
+            if (!System.IO.File.Exists(NumberMatchScene)) BuildNumberMatchBatch();
+            EditorSceneManager.OpenScene(NumberMatchScene);
+            EditorApplication.isPlaying = true;
+        }
+
+        // batch-mode entry: Unity -batchmode -executeMethod JellyAd.EditorTools.JellySceneBuilder.BuildNumberMatchBatch
+        public static void BuildNumberMatchBatch()
+        {
+            CreateScene(NumberMatchScene, true, typeof(NumberMatchAd.NumberMatchGame));
+            SetBuildScene(NumberMatchScene);
+        }
 
         [MenuItem("Voodoo/Build Last Camp Scene")]
         public static void BuildSurvivor()
@@ -29,6 +65,7 @@ namespace JellyAd.EditorTools
                 if (!System.IO.File.Exists(JellyScene)) CreateScene(JellyScene, true, typeof(JellyGame));
                 if (!System.IO.File.Exists(RunnerScene)) CreateScene(RunnerScene, false, typeof(RescueRun.RunnerGame));
                 if (!System.IO.File.Exists(SurvivorScene)) CreateScene(SurvivorScene, false, typeof(HordeCamp.SurvivorGame));
+                if (!System.IO.File.Exists(NumberMatchScene)) CreateScene(NumberMatchScene, true, typeof(NumberMatchAd.NumberMatchGame));
                 if (EditorBuildSettings.scenes.Length == 0) SetBuildScene(JellyScene);
             };
         }

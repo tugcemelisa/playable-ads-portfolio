@@ -35,3 +35,6 @@ Thumbs.db
 *.aab
 *.unitypackage
 crashlytics-build.properties
+
+# Claude private notes
+CLAUDE.local.md

@@ -10,6 +10,7 @@ Playable ads and video creatives by **Melisa Tuğçe Haspolat**, built in Unity.
 |---|---|---|
 | **Jelly Flow** | Playable + Video | Pixel-art puzzle: jellies ride a conveyor around the picture and eat matching pixels. |
 | **Rescue Run** | Playable + Video (spec) | Runner shooter: grow your squad through +/× gates, free the trapped hero, face the boss. |
+| **Number Match** | Playable + Video | Colour-by-number: a picture breaks into a numbered grid, drag tiles onto matching numbers and each colour group reveals with a wave. Playable-ad version of my Number Match case study. |
 
 ## Tech
 
@@ -24,6 +25,7 @@ Playable ads and video creatives by **Melisa Tuğçe Haspolat**, built in Unity.
 Assets/
 ├── AdKit/         shared ad UI + SFX
 ├── JellyPuzzle/   Jelly Flow playable
+├── NumberMatch/   Number Match playable
 ├── RescueRun/     Rescue Run playable
 └── Scenes/
 ```
