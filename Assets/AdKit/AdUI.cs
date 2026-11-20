@@ -37,7 +37,8 @@ namespace AdKit
             // drag tutorial
             ui.tut = (RectTransform)new GameObject("DragTutorial", typeof(RectTransform)).transform;
             ui.tut.SetParent(ui.Root, false);
-            ui.tut.anchorMin = ui.tut.anchorMax = new Vector2(0.5f, 0f);
+            ui.tut.anchorMin = new Vector2(0.5f, 0f);
+            ui.tut.anchorMax = new Vector2(0.5f, 0f);
             ui.tut.anchoredPosition = new Vector2(0f, 420f);
             Img(ui.tut, Res.Round(64), new Color(0f, 0f, 0f, 0.35f), c, new Vector2(0f, 0f), new Vector2(760f, 26f), true);
             Txt(ui.tut, "HOLD & DRAG TO MOVE", 64, Color.white, c, new Vector2(0f, 150f));
@@ -50,7 +51,8 @@ namespace AdKit
             ert.SetParent(ui.Root, false);
             ert.anchorMin = Vector2.zero;
             ert.anchorMax = Vector2.one;
-            ert.offsetMin = ert.offsetMax = Vector2.zero;
+            ert.offsetMin = Vector2.zero;
+            ert.offsetMax = Vector2.zero;
             ui.endcard.AddComponent<Image>().color = new Color(0.03f, 0.03f, 0.1f, 0.8f);
             ui.card = Img(ert, Res.Round(64), cardColor, c, new Vector2(0f, 60f), new Vector2(900f, 1000f), true).rectTransform;
             var t = Txt(ui.card, title, 130, titleColor, c, new Vector2(0f, 300f));
@@ -111,7 +113,8 @@ namespace AdKit
         {
             var h = (RectTransform)new GameObject("Hand", typeof(RectTransform)).transform;
             h.SetParent(parent, false);
-            h.anchorMin = h.anchorMax = new Vector2(0.5f, 0.5f);
+            h.anchorMin = new Vector2(0.5f, 0.5f);
+            h.anchorMax = new Vector2(0.5f, 0.5f);
             var art = (RectTransform)new GameObject("art", typeof(RectTransform)).transform;
             art.SetParent(h, false);
             art.localRotation = Quaternion.Euler(0f, 0f, 20f);
@@ -142,7 +145,8 @@ namespace AdKit
             var go = new GameObject("Text", typeof(RectTransform));
             var rt = (RectTransform)go.transform;
             rt.SetParent(parent, false);
-            rt.anchorMin = rt.anchorMax = anchor;
+            rt.anchorMin = anchor;
+            rt.anchorMax = anchor;
             rt.anchoredPosition = pos;
             rt.sizeDelta = new Vector2(1000f, size * 1.4f);
             var t = go.AddComponent<Text>();
@@ -166,7 +170,8 @@ namespace AdKit
             var go = new GameObject("Image", typeof(RectTransform));
             var rt = (RectTransform)go.transform;
             rt.SetParent(parent, false);
-            rt.anchorMin = rt.anchorMax = anchor;
+            rt.anchorMin = anchor;
+            rt.anchorMax = anchor;
             rt.anchoredPosition = pos;
             rt.sizeDelta = size;
             var img = go.AddComponent<Image>();

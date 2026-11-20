@@ -13,13 +13,52 @@ namespace JellyAd.EditorTools
     public static class PlayableBuildTools
     {
         static bool busy;
+        static System.Threading.Timer bgPollTimer;
+        static DateTime lastScriptStamp;
         [InitializeOnLoadMethod]
         static void RunInitialValidation()
         {
-            const string key = "Voodoo.PlayableValidation.SceneSaveV2";
+            Application.runInBackground = true;
+            lastScriptStamp = GetLatestScriptWriteUtc();
+            var ctx = System.Threading.SynchronizationContext.Current;
+            if (ctx != null && bgPollTimer == null)
+            {
+                bgPollTimer = new System.Threading.Timer(_ =>
+                {
+                    try { ctx.Post(__ => CheckForExternalScriptChanges(), null); } catch { }
+                }, null, 2000, 2000);
+            }
+            const string key = "Voodoo.PlayableValidation.RescueRunV2";
             if (SessionState.GetBool(key, false)) return;
             SessionState.SetBool(key, true);
-            EditorApplication.delayCall += All;
+            EditorApplication.delayCall += () =>
+            {
+                PlayableSpriteMaterial.EnsureNow();
+                JellySceneBuilder.BuildRunner();
+                Runner();
+            };
+        }
+
+        static DateTime GetLatestScriptWriteUtc()
+        {
+            DateTime max = DateTime.MinValue;
+            foreach (var f in Directory.GetFiles("Assets", "*.cs", SearchOption.AllDirectories))
+            {
+                var t = File.GetLastWriteTimeUtc(f);
+                if (t > max) max = t;
+            }
+            return max;
+        }
+
+        static void CheckForExternalScriptChanges()
+        {
+            if (busy || EditorApplication.isCompiling || EditorApplication.isUpdating) return;
+            var latest = GetLatestScriptWriteUtc();
+            if (latest > lastScriptStamp)
+            {
+                lastScriptStamp = latest;
+                AssetDatabase.Refresh();
+            }
         }
         const BindingFlags PublicInstance = BindingFlags.Public | BindingFlags.Instance;
 

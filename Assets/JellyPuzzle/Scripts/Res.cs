@@ -7,10 +7,14 @@ namespace JellyAd
     public static class Res
     {
         static Font _font;
+        static Material _fontMat, _spriteMat, _primMat;
         static Sprite _square, _bead, _circle, _soft, _ring;
         static readonly Dictionary<int, Sprite> _round = new Dictionary<int, Sprite>();
 
         public static Font Font => _font ? _font : (_font = Resources.Load<Font>("Fonts/Inter-SemiBold"));
+        public static Material FontMat => _fontMat ? _fontMat : (_fontMat = Resources.Load<Material>("JellyFont"));
+        public static Material SpriteMat => _spriteMat ? _spriteMat : (_spriteMat = Resources.Load<Material>("JellySprite"));
+        public static Material PrimMat => _primMat ? _primMat : (_primMat = Resources.Load<Material>("PlayablePrimMat"));
 
         public static Sprite Square => _square ? _square : (_square = RoundRect(8, 0f, 8));
         public static Sprite Bead => _bead ? _bead : (_bead = RoundRect(32, 8f, 32));
@@ -109,7 +113,7 @@ namespace JellyAd
             go.transform.SetParent(parent, false);
             go.transform.localPosition = pos;
             var sr = go.AddComponent<SpriteRenderer>();
-            sr.sharedMaterial = Resources.Load<Material>("JellySprite");
+            sr.sharedMaterial = SpriteMat;
             sr.sprite = s;
             sr.color = c;
             sr.sortingOrder = order;

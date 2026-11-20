@@ -7,9 +7,9 @@ namespace JellyAd.EditorTools
     [InitializeOnLoad]
     static class PlayableSpriteMaterial
     {
-        static PlayableSpriteMaterial() => EditorApplication.delayCall += EnsureMaterial;
+        static PlayableSpriteMaterial() => EditorApplication.delayCall += EnsureNow;
 
-        static void EnsureMaterial()
+        public static void EnsureNow()
         {
             const string fontPath = "Assets/Resources/Fonts/Inter-SemiBold.ttf";
             var fontImporter = AssetImporter.GetAtPath(fontPath) as TrueTypeFontImporter;
@@ -20,14 +20,34 @@ namespace JellyAd.EditorTools
                 fontImporter.SaveAndReimport();
             }
             const string path = "Assets/Resources/JellySprite.mat";
+            const string primMatPath = "Assets/Resources/PlayablePrimMat.mat";
             const string primitivesPath = "Assets/Resources/PlayablePrimitiveExport.prefab";
-            if (!AssetDatabase.LoadAssetAtPath<GameObject>(primitivesPath))
+            var primShader = Shader.Find("Voodoo/PlayableLit");
+            if (!primShader) primShader = Shader.Find("Unlit/Color");
+            if (!primShader) primShader = Shader.Find("Sprites/Default");
+            var primMat = AssetDatabase.LoadAssetAtPath<Material>(primMatPath);
+            if (!primMat)
+            {
+                primMat = new Material(primShader) { color = Color.white };
+                AssetDatabase.CreateAsset(primMat, primMatPath);
+            }
+            else if (primShader && primMat.shader != primShader)
+            {
+                primMat.shader = primShader;
+                primMat.color = Color.white;
+                EditorUtility.SetDirty(primMat);
+                AssetDatabase.SaveAssets();
+            }
+            var existingPrims = AssetDatabase.LoadAssetAtPath<GameObject>(primitivesPath);
+            if (!existingPrims || existingPrims.GetComponentInChildren<Renderer>()?.sharedMaterial != primMat)
             {
                 var primitives = new GameObject("PlayablePrimitiveExport");
                 foreach (PrimitiveType primitive in System.Enum.GetValues(typeof(PrimitiveType)))
                 {
                     var child = GameObject.CreatePrimitive(primitive);
                     child.transform.SetParent(primitives.transform);
+                    var r = child.GetComponent<Renderer>();
+                    if (r && primMat) r.sharedMaterial = primMat;
                 }
                 PrefabUtility.SaveAsPrefabAsset(primitives, primitivesPath);
                 Object.DestroyImmediate(primitives);

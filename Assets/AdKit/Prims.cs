@@ -1,4 +1,5 @@
 using System.Collections;
+using JellyAd;
 using UnityEngine;
 
 namespace AdKit
@@ -15,7 +16,9 @@ namespace AdKit
             g.transform.SetParent(parent, false);
             g.transform.localPosition = pos;
             g.transform.localScale = scale;
-            SetColor(g.GetComponent<Renderer>(), c);
+            var r = g.GetComponent<Renderer>();
+            if (Res.PrimMat) r.sharedMaterial = Res.PrimMat;
+            SetColor(r, c);
             return g;
         }
 

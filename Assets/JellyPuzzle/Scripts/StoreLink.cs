@@ -6,12 +6,18 @@ namespace JellyAd
         // Store destinations are configured in Playworks, rather than opened as arbitrary URLs.
         public static void Open(string url)
         {
+            Luna.Unity.Analytics.LogEvent(Luna.Unity.Analytics.EventType.EndCardShown);
             Luna.Unity.Playable.InstallFullGame();
         }
 
         public static void NotifyGameEnded()
         {
             Luna.Unity.LifeCycle.GameEnded();
+        }
+
+        public static void LogEvent(string name, int value = 0)
+        {
+            Luna.Unity.Analytics.LogEvent(name, value);
         }
     }
 }
