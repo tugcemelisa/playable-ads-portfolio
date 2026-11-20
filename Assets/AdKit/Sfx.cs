@@ -46,7 +46,9 @@ namespace AdKit
             if (sources != null && sources[0]) return;
             var go = new GameObject("[Sfx]");
             Object.DontDestroyOnLoad(go);
-            if (!Object.FindObjectOfType<AudioListener>()) go.AddComponent<AudioListener>();
+            var mainCam = Camera.main;
+            if (mainCam && !mainCam.GetComponent<AudioListener>()) mainCam.gameObject.AddComponent<AudioListener>();
+            else if (!mainCam) go.AddComponent<AudioListener>();
             sources = new AudioSource[8];
             for (int i = 0; i < sources.Length; i++)
             {

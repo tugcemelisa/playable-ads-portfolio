@@ -784,7 +784,7 @@ namespace RescueRun
                         {
                             // Gate flipped from Red (<0) to Blue (>=0)!
                             Sfx.Play(Sfx.Id.GateGood, 0.9f, 1.25f, 0f, 0.04f);
-                            Burst(new Vector3(g.x, 1.3f, g.z), GateGood, 16);
+                            Burst(new Vector3(g.x, 1.3f, g.z), GateBlue, 16);
                         }
                         else
                         {
