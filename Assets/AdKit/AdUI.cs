@@ -74,13 +74,18 @@ namespace AdKit
             banner.color = color;
             bannerT = 0f;
             banner.gameObject.SetActive(true);
+            Sfx.Play(Sfx.Id.Banner, 0.5f, 1f, 0.04f, 0.12f);
         }
 
         public void ShowDragTutorial(bool on) => tut.gameObject.SetActive(on);
 
         public void ShowEndcard(string sub)
         {
-            if (!EndcardVisible) StoreLink.NotifyGameEnded();
+            if (!EndcardVisible)
+            {
+                StoreLink.NotifyGameEnded();
+                Sfx.Play(Sfx.Id.Banner, 0.75f, 1.08f, 0f, 0.05f);
+            }
             banner.gameObject.SetActive(false);
             tut.gameObject.SetActive(false);
             endSub.text = sub;

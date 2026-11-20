@@ -7,7 +7,10 @@ namespace JellyAd
         public static void Open(string url)
         {
             Luna.Unity.Analytics.LogEvent(Luna.Unity.Analytics.EventType.EndCardShown);
-            Luna.Unity.Playable.InstallFullGame();
+            Luna.Unity.Playable.InstallFullGame(url, url);
+#if UNITY_EDITOR || !UNITY_WEBGL
+            if (!string.IsNullOrEmpty(url)) UnityEngine.Application.OpenURL(url);
+#endif
         }
 
         public static void NotifyGameEnded()

@@ -12,7 +12,7 @@ namespace AdKit
     {
         public enum Id { Tap, Jump, Pop, JellyPop, Land, Error, Win, Fail, GateGood, GateBad, Shot, Hit, Glass, Stomp, Click, Banner }
 
-        public static float Volume = 0.8f;
+        public static float Volume = 0.95f;
         public static bool Muted;
 
         const int Rate = 44100;
@@ -46,13 +46,14 @@ namespace AdKit
             if (sources != null && sources[0]) return;
             var go = new GameObject("[Sfx]");
             Object.DontDestroyOnLoad(go);
+            if (!Object.FindObjectOfType<AudioListener>()) go.AddComponent<AudioListener>();
             sources = new AudioSource[8];
             for (int i = 0; i < sources.Length; i++)
             {
                 sources[i] = go.AddComponent<AudioSource>();
                 sources[i].playOnAwake = false;
+                sources[i].spatialBlend = 0f;
             }
-            // Scenes provide their listener; Playworks handles browser audio without one.
         }
 
     }

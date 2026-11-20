@@ -536,7 +536,7 @@ namespace NumberMatchAd
 
         void OnDown(Vector3 w)
         {
-            if (phase == Phase.End) { Sfx.Play(Sfx.Id.Click); StoreLink.Open(storeUrl); return; }
+            if (phase == Phase.End || (ui != null && ui.EndcardVisible)) { Sfx.Play(Sfx.Id.Click); StoreLink.Open(storeUrl); return; }
             if (phase != Phase.Play || autoPlay) return;
 
             Piece best = null;

@@ -538,12 +538,17 @@ namespace RescueRun
 #endif
             if (down)
             {
-                if (phase == Phase.End) { Sfx.Play(Sfx.Id.Click); StoreLink.Open(storeUrl); return; }
+                if (phase == Phase.End || (ui != null && ui.EndcardVisible))
+                {
+                    Sfx.Play(Sfx.Id.Click, 1f, 1f, 0f, 0.02f);
+                    StoreLink.Open(storeUrl);
+                    return;
+                }
                 if (tutorialActive)
                 {
                     tutorialActive = false;
                     ui.ShowDragTutorial(false);
-                    Sfx.Play(Sfx.Id.Tap, 0.5f);
+                    Sfx.Play(Sfx.Id.Tap, 0.6f);
                 }
                 dragging = true;
                 idleTime = 0f;
@@ -762,6 +767,7 @@ namespace RescueRun
 
                 case 1:
                     var g = gates[idx];
+                    int prevVal = g.val;
                     g.acc += b.dmg;
                     bool changed = false;
                     while (g.acc >= gateHitDamage)
@@ -774,7 +780,16 @@ namespace RescueRun
                     {
                         RefreshGate(g);
                         g.txt.transform.localScale = Vector3.one * 1.28f;
-                        Sfx.Play(Sfx.Id.Tap, 0.35f, g.val >= 0 ? 1.35f : 0.95f, 0.05f, 0.05f);
+                        if (prevVal < 0 && g.val >= 0)
+                        {
+                            // Gate flipped from Red (<0) to Blue (>=0)!
+                            Sfx.Play(Sfx.Id.GateGood, 0.9f, 1.25f, 0f, 0.04f);
+                            Burst(new Vector3(g.x, 1.3f, g.z), GateGood, 16);
+                        }
+                        else
+                        {
+                            Sfx.Play(Sfx.Id.Tap, 0.55f, g.val >= 0 ? 1.38f : 0.95f, 0.05f, 0.045f);
+                        }
                     }
                     StartCoroutine(Punch(g.panel.transform, 0.06f));
                     return true;
@@ -812,7 +827,7 @@ namespace RescueRun
             pod.hit = 1f;
             StartCoroutine(Punch(pod.tr, 0.045f));
             Burst(hitPos, LaserCyan, 3);
-            Sfx.Play(Sfx.Id.Hit, 0.35f, 1.55f, 0.1f, 0.06f);
+            Sfx.Play(Sfx.Id.Glass, 0.45f, pod.isBigTank ? 1.35f : 1.55f, 0.10f, 0.055f);
 
             if (pod.crackRoot)
             {
@@ -836,33 +851,65 @@ namespace RescueRun
         {
             if (pod.broken) return;
             pod.broken = true;
-            Sfx.Play(Sfx.Id.Glass, 1f, 1f, 0.05f, 0.08f);
+            Sfx.Play(Sfx.Id.Glass, 1f, 0.95f, 0.04f, 0.02f);
             Burst(pod.tr.position + Vector3.up * 1.4f, new Color(0.45f, 0.85f, 1f), 28);
             if (pod.glassRen) pod.glassRen.enabled = false;
             if (pod.hpLabel) pod.hpLabel.gameObject.SetActive(false);
             if (pod.helpLabel) pod.helpLabel.gameObject.SetActive(false);
-            if (pod.heroTr) pod.heroTr.gameObject.SetActive(false);
 
             if (freed)
             {
                 if (!pod.isBigTank && weaponTier == 1)
                 {
-                    // Tube broken -> LV+1 Heavy Gunner upgrade + golden ring burst!
+                    // Tube broken -> freed hero leaps out & merges with soldier -> LV+1 Heavy Gunner upgrade!
                     weaponTier = 2;
-                    RebuildSoldiers();
-                    SpawnFloatText(new Vector3(squadX - 0.6f, 2.2f, squadZ), "LV+1", Gold, 1.15f);
-                    Burst(new Vector3(squadX, 0.8f, squadZ), Gold, 24);
-                    Sfx.Play(Sfx.Id.GateGood, 1f, 1.2f, 0f, 0.05f);
+                    Sfx.Play(Sfx.Id.Win, 0.95f, 1.15f, 0f, 0.02f);
+                    Sfx.Play(Sfx.Id.GateGood, 1f, 1.2f, 0f, 0.02f);
                     StoreLink.LogEvent("rescue_run_lv1_upgrade", 1);
+                    if (pod.heroTr)
+                        StartCoroutine(RescueMergeHeroRoutine(pod.heroTr));
+                    else
+                        ApplyLv1UpgradeVisuals();
                 }
                 else if (pod.isBigTank)
                 {
+                    if (pod.heroTr) pod.heroTr.gameObject.SetActive(false);
                     SetSquad(squad + 4);
                     SpawnFloatText(new Vector3(squadX, 2.5f, squadZ), "HERO FREED!", Gold, 1.1f);
                     Burst(new Vector3(squadX, 0.8f, squadZ), Gold, 30);
-                    Sfx.Play(Sfx.Id.Win, 0.9f, 1.1f, 0f, 0.05f);
+                    Sfx.Play(Sfx.Id.Win, 0.95f, 1.1f, 0f, 0.03f);
                 }
             }
+            else if (pod.heroTr)
+            {
+                pod.heroTr.gameObject.SetActive(false);
+            }
+        }
+
+        void ApplyLv1UpgradeVisuals()
+        {
+            RebuildSoldiers();
+            SpawnFloatText(new Vector3(squadX - 0.4f, 2.3f, squadZ), "LV+1", Gold, 1.25f);
+            Burst(new Vector3(squadX, 0.8f, squadZ), Gold, 26);
+        }
+
+        IEnumerator RescueMergeHeroRoutine(Transform freedHero)
+        {
+            freedHero.SetParent(world, true);
+            Vector3 startPos = freedHero.position;
+            Quaternion startRot = freedHero.rotation;
+            for (float t = 0f; t < 1f; t += Time.deltaTime / 0.28f)
+            {
+                if (!freedHero) yield break;
+                Vector3 dst = new Vector3(squadX, 0f, squadZ);
+                Vector3 p = Vector3.Lerp(startPos, dst, t);
+                p.y += Mathf.Sin(t * Mathf.PI) * 1.4f;
+                freedHero.position = p;
+                freedHero.rotation = Quaternion.Slerp(startRot, Quaternion.identity, t);
+                yield return null;
+            }
+            if (freedHero) Destroy(freedHero.gameObject);
+            ApplyLv1UpgradeVisuals();
         }
 
         void UpdatePods(float dt)
@@ -875,6 +922,13 @@ namespace RescueRun
         void UpdateSinglePod(Pod pod, float dt)
         {
             if (pod == null || pod.broken) return;
+
+            pod.hit = Mathf.MoveTowards(pod.hit, 0f, dt * 7f);
+            if (pod.glassRen)
+            {
+                Color baseGlass = pod.isBigTank ? new Color(0.25f, 0.68f, 0.98f) : new Color(0.38f, 0.76f, 1f);
+                SetColor(pod.glassRen, Color.Lerp(baseGlass, Color.white, pod.hit * 0.55f));
+            }
 
             // In Voodoo Ref 1, the giant 1241 tank sits on a wheeled platform on the right lane and rolls forward ahead of the player!
             if (pod.followsPlayer)
@@ -945,7 +999,9 @@ namespace RescueRun
                         if (bossContactTimer >= 0.22f)
                         {
                             bossContactTimer = 0f;
-                            SetSquad(squad - Mathf.Max(1, (squad + 1) / 2));
+                            int loss = Mathf.Max(1, (squad + 1) / 2);
+                            SetSquad(squad - loss);
+                            SpawnFloatText(new Vector3(squadX, 2.2f, squadZ), "-" + loss, new Color(1f, 0.35f, 0.35f), 1.15f);
                             StartCoroutine(Punch(e.tr, 0.15f));
                             StartCoroutine(Shake(0.22f, 0.32f));
                             Sfx.Play(Sfx.Id.Stomp, 0.95f);
@@ -954,6 +1010,8 @@ namespace RescueRun
                     else if (e.isBoss)
                     {
                         SetSquad(Mathf.Max(1, squad - 1));
+                        SpawnFloatText(new Vector3(squadX, 2.2f, squadZ), "-1", new Color(1f, 0.35f, 0.35f), 1.05f);
+                        Sfx.Play(Sfx.Id.Stomp, 0.9f, 0.8f);
                         KillEnemy(e);
                         StartCoroutine(Shake(0.18f, 0.22f));
                         continue;
@@ -961,6 +1019,8 @@ namespace RescueRun
                     else
                     {
                         SetSquad(squad - 1);
+                        SpawnFloatText(new Vector3(squadX, 2.1f, squadZ), "-1", new Color(1f, 0.35f, 0.35f), 0.95f);
+                        Sfx.Play(Sfx.Id.Hit, 0.8f, 0.72f, 0.06f, 0.05f);
                         KillEnemy(e);
                         continue;
                     }

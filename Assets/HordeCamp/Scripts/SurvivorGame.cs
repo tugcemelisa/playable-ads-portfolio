@@ -420,7 +420,7 @@ namespace HordeCamp
 #endif
             if (down)
             {
-                if (phase == Phase.End) { Sfx.Play(Sfx.Id.Click); StoreLink.Open(storeUrl); return; }
+                if (phase == Phase.End || (ui != null && ui.EndcardVisible)) { Sfx.Play(Sfx.Id.Click); StoreLink.Open(storeUrl); return; }
                 if (!dismissedTut) { dismissedTut = true; ui.ShowDragTutorial(false); }
                 touching = true;
                 touchOrigin = pos;

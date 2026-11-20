@@ -117,6 +117,7 @@ namespace JellyAd.EditorTools
 
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
             var cam = camGo.AddComponent<Camera>();
+            camGo.AddComponent<AudioListener>();
             cam.orthographic = ortho;
             cam.orthographicSize = 9.2f;
             cam.fieldOfView = 60f;
