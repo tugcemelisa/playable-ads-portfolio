@@ -5,15 +5,27 @@ using JellyAd;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+#if UNITY_LUNA || LUNA_PLAYWORKS
+using Luna.Unity;
+#else
+namespace Luna.Unity
+{
+    [System.AttributeUsage(System.AttributeTargets.Field)]
+    public sealed class LunaPlaygroundFieldAttribute : System.Attribute
+    {
+        public LunaPlaygroundFieldAttribute(string name = null, int order = 0, string section = null) { }
+    }
+}
+#endif
+
 namespace NumberMatchAd
 {
     /// <summary>
     /// Number Match playable (colour-by-number reveal).
-    /// A picture is shown, then breaks into a numbered grid. A few cells of every colour group are missing:
+    /// A picture is shown, then breaks into a numbered grid at 0.35s. A few cells of every colour group are missing:
     /// drag the coloured tiles from the tray onto a cell with the same number. When every cell of a number
-    /// is filled, that whole colour group reveals with a wave. Finish the picture -> endcard.
-    /// Everything is built from code (Luna friendly: no URP, legacy input, sprites + TextMesh only):
-    /// drop this component on an empty GameObject and press Play.
+    /// is filled, that whole colour group reveals with a wave.
+    /// Includes Voodoo near-miss fail mode (stops with 1 tile / ~92% left when timer hits 00:00 -> DEFEAT + Endcard).
     /// </summary>
     [DisallowMultipleComponent]
     public class NumberMatchGame : MonoBehaviour
@@ -27,21 +39,32 @@ namespace NumberMatchAd
         public int[] missingPerGroup = { 2, 1, 2, 2, 2, 2, 1, 1 };
 
         [Header("Ad")]
+        [LunaPlaygroundField("Game Title", 0, "Ad Settings")]
         public string gameTitle = "COLOR BY NUMBER";
+        [LunaPlaygroundField("Intro Banner", 1, "Ad Settings")]
         public string introBanner = "FIX THE PICTURE!";
         [Tooltip("Big title on the endcard (keep it short, ~10 letters).")]
-        public string endcardTitle = "WELL DONE!";
+        [LunaPlaygroundField("Endcard Title", 2, "Ad Settings")]
+        public string endcardTitle = "SO CLOSE!";
+        [LunaPlaygroundField("CTA Text", 3, "Ad Settings")]
         public string ctaText = "PLAY NOW";
+        [LunaPlaygroundField("Store URL", 4, "Ad Settings")]
         public string storeUrl = "https://play.google.com/store";
         [Tooltip("Force the endcard after this many seconds of play (0 = never).")]
-        public float endcardAfterSeconds = 40f;
+        [LunaPlaygroundField("Round Timer (s)", 5, "Ad Settings")]
+        public float endcardAfterSeconds = 24f;
+        [Tooltip("Voodoo near-miss fail hook: time expires when only 1 tile is left (~92% complete).")]
+        [LunaPlaygroundField("Near-Miss Fail Ending", 6, "Ad Settings")]
+        public bool nearMissEnding = true;
         public bool showTutorial = true;
 
         [Header("Video recording (auto-play)")]
         [Tooltip("The game plays itself with a visible hand. Use with Unity Recorder for the video ad.")]
+        [LunaPlaygroundField("Auto Play (Video Mode)", 7, "Recording")]
         public bool autoPlay;
-        public float autoMoveInterval = 0.35f;
+        public float autoMoveInterval = 0.32f;
         [Tooltip("The hand makes one wrong drop early on, so the video shows the red 'wrong' feedback.")]
+        [LunaPlaygroundField("Scripted Mistake", 8, "Recording")]
         public bool autoPlayOneMistake = true;
         public int randomSeed = 3;
 
@@ -141,8 +164,9 @@ namespace NumberMatchAd
         float playTime, idleTime;
 
         AdUI ui;
-        UnityEngine.UI.Image progressFill;
-        UnityEngine.UI.Text progressText;
+        UnityEngine.UI.Image progressFill, timerBg;
+        UnityEngine.UI.Text progressText, timerText;
+        int totalMissingTiles, placedTiles, lastTimerSec = -1;
 
         // ================================================================ setup
 #if !UNITY_WEBGL
@@ -376,12 +400,18 @@ namespace NumberMatchAd
 
         void BuildUI()
         {
+            totalMissingTiles = Mathf.Max(1, pieces.Count);
             ui = AdUI.Create(endcardTitle, ctaText, new Color(0.33f, 0.22f, 0.62f), new Color(1f, 0.85f, 0.3f));
             var top = new Vector2(0.5f, 1f);
-            AdUI.Txt(ui.Root, gameTitle, 76, Color.white, top, new Vector2(0f, -110f));
-            var barBg = AdUI.Img(ui.Root, Res.Round(128), new Color(0f, 0f, 0f, 0.4f), top, new Vector2(0f, -205f), new Vector2(640f, 46f), true);
+            AdUI.Txt(ui.Root, gameTitle, 72, Color.white, top, new Vector2(-115f, -108f));
+
+            // Voodoo tension countdown pill on top-right
+            timerBg = AdUI.Img(ui.Root, Res.Round(128), new Color(0.18f, 0.12f, 0.36f, 0.88f), top, new Vector2(315f, -108f), new Vector2(220f, 64f), true);
+            timerText = AdUI.Txt(timerBg.transform, "24s", 44, new Color(1f, 0.90f, 0.35f), new Vector2(0.5f, 0.5f), Vector2.zero);
+
+            var barBg = AdUI.Img(ui.Root, Res.Round(128), new Color(0f, 0f, 0f, 0.4f), top, new Vector2(0f, -202f), new Vector2(660f, 48f), true);
             progressFill = AdUI.Img(barBg.transform, Res.Round(128), new Color(0.45f, 0.9f, 0.4f), new Vector2(0f, 0.5f),
-                new Vector2(8f, 0f), new Vector2(0f, 30f), true);
+                new Vector2(8f, 0f), new Vector2(0f, 32f), true);
             progressFill.rectTransform.pivot = new Vector2(0f, 0.5f);
             progressText = AdUI.Txt(barBg.transform, "0%", 40, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 2f));
 
@@ -394,33 +424,34 @@ namespace NumberMatchAd
 
         void UpdateProgress()
         {
-            float p = groups.Count == 0 ? 1f : (float)revealedGroups / groups.Count;
-            progressFill.rectTransform.sizeDelta = new Vector2(Mathf.Max(30f, 624f * p), 30f);
+            float tileFrac = totalMissingTiles == 0 ? 1f : (float)placedTiles / totalMissingTiles;
+            float groupFrac = groups.Count == 0 ? 1f : (float)revealedGroups / groups.Count;
+            float p = Mathf.Max(tileFrac, groupFrac);
+            progressFill.rectTransform.sizeDelta = new Vector2(Mathf.Max(30f, 644f * p), 32f);
             progressText.text = Mathf.RoundToInt(p * 100f) + "%";
         }
 
         // ================================================================ flow
         IEnumerator Intro()
         {
-            // hook: the finished picture...
-            yield return new WaitForSeconds(0.9f);
+            StoreLink.LogEvent("numbermatch_start");
+            // 0.0s hook: show finished picture briefly (0.35s), then immediately shatter into numbered grid!
+            yield return new WaitForSeconds(0.35f);
 
-            // ...breaks into a numbered grid, wave from the centre
             var centre = new Vector3(0f, BoardCenterY, 0f);
             var order = new List<int>();
             for (int i = 0; i < cells.Length; i++) order.Add(i);
             order.Sort((a, b) => (CellPos(a) - centre).sqrMagnitude.CompareTo((CellPos(b) - centre).sqrMagnitude));
             for (int k = 0; k < order.Count; k++)
-                StartCoroutine(MaskCell(order[k], k / (float)order.Count * 0.7f));
+                StartCoroutine(MaskCell(order[k], k / (float)order.Count * 0.42f));
             Sfx.Play(Sfx.Id.Glass, 0.6f);
-            Shake(0.25f, 0.12f);
-            yield return new WaitForSeconds(0.95f);
-
-            for (int k = 0; k < pieces.Count; k++) StartCoroutine(PopIn(pieces[k].t, k * 0.04f));
+            Shake(0.25f, 0.14f);
+            for (int k = 0; k < pieces.Count; k++) StartCoroutine(PopIn(pieces[k].t, 0.15f + k * 0.025f));
             ui.Banner(introBanner, Color.white);
             Sfx.Play(Sfx.Id.Banner);
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.65f);
 
+            // ~1.0s mark: gameplay and tutorial hand begin immediately!
             phase = Phase.Play;
             if (autoPlay) StartCoroutine(AutoPlay());
             else if (showTutorial) ShowTutorial();
@@ -475,8 +506,27 @@ namespace NumberMatchAd
             if (phase != Phase.Play) return;
             playTime += dt;
             if (dragging == null) idleTime += dt;
-            if (!autoPlay && showTutorial && !tutorialVisible && idleTime > 3.5f) ShowTutorial();
-            if (endcardAfterSeconds > 0f && playTime > endcardAfterSeconds) ShowEndcard("So close! Can you finish it?");
+            if (!autoPlay && showTutorial && !tutorialVisible && idleTime > 2.4f) ShowTutorial();
+
+            if (endcardAfterSeconds > 0f && timerText)
+            {
+                int rem = Mathf.Max(0, Mathf.CeilToInt(endcardAfterSeconds - playTime));
+                if (rem != lastTimerSec)
+                {
+                    lastTimerSec = rem;
+                    timerText.text = rem + "s";
+                    if (rem <= 5 && rem > 0)
+                    {
+                        timerBg.color = new Color(0.85f, 0.16f, 0.20f, 0.92f);
+                        timerText.color = Color.white;
+                        Sfx.Play(Sfx.Id.Tap, 0.35f, 1.3f);
+                    }
+                }
+                if (rem <= 5)
+                    timerBg.transform.localScale = Vector3.one * (1f + Mathf.Abs(Mathf.Sin(Time.time * 10f)) * 0.08f);
+                if (playTime >= endcardAfterSeconds)
+                    StartCoroutine(NearMissFail());
+            }
         }
 
         static bool GetPointer(out Vector2 pos, out bool down, out bool held, out bool up)
@@ -578,7 +628,9 @@ namespace NumberMatchAd
         {
             cells[i].filled = true; // logic first, so nothing else can target this cell
             pieces.Remove(p);
+            placedTiles++;
             combo++;
+            UpdateProgress();
             StartCoroutine(PlaceRoutine(p, i));
         }
 
@@ -611,6 +663,12 @@ namespace NumberMatchAd
             foreach (int j in groups[p.num]) if (!cells[j].filled) { complete = false; break; }
             if (complete) RevealGroup(p.num);
             else Burst(to, p.col, 6, 2.5f);
+
+            // Voodoo Near-Miss Fail Hook: when only 1 tile remains (~92% completion), trigger dramatic time-out fail!
+            if (nearMissEnding && pieces.Count == 1 && phase == Phase.Play)
+            {
+                StartCoroutine(NearMissFail());
+            }
         }
 
         IEnumerator RejectAndReturn(Piece p)
@@ -679,9 +737,10 @@ namespace NumberMatchAd
             Shake(0.25f, 0.14f);
             Sfx.Play(Sfx.Id.GateGood);
             Sfx.Play(Sfx.Id.JellyPop, 0.6f);
+            StoreLink.LogEvent("numbermatch_group_reveal");
 
             if (revealedGroups >= groups.Count) StartCoroutine(Complete());
-            else
+            else if (!(nearMissEnding && pieces.Count <= 1))
             {
                 ui.Banner(Praise[praiseIdx++ % Praise.Length], new Color(1f, 0.88f, 0.3f));
             }
@@ -697,7 +756,6 @@ namespace NumberMatchAd
             Color from = cv.sr.color;
             for (float k = 0f; k < 1f; k += Time.deltaTime / 0.45f)
             {
-                // dissolve-ish: flash to white, settle into the true colour, with a little bounce
                 cv.sr.color = k < 0.3f ? Color.Lerp(from, Color.white, k / 0.3f) : Color.Lerp(Color.white, cv.col, (k - 0.3f) / 0.7f);
                 tr.localScale = Vector3.one * (1f + 0.3f * Mathf.Sin(k * Mathf.PI) * (1f - k));
                 yield return null;
@@ -707,10 +765,33 @@ namespace NumberMatchAd
             cv.animating = false;
         }
 
+        IEnumerator NearMissFail()
+        {
+            if (phase != Phase.Play) yield break;
+            phase = Phase.Done;
+            HideTutorial();
+            if (timerText) timerText.text = "0s";
+            if (timerBg) timerBg.color = new Color(0.92f, 0.15f, 0.18f, 0.96f);
+            StoreLink.LogEvent("numbermatch_nearmiss");
+
+            // Highlight the single missing cell in pulsing red/gold so the viewer sees only 1 piece was left!
+            for (int i = 0; i < cells.Length; i++)
+                if (!cells[i].filled) StartCoroutine(WrongFlash(i));
+
+            yield return new WaitForSeconds(0.45f);
+            int pct = Mathf.Clamp(Mathf.RoundToInt((float)placedTiles / Mathf.Max(1, totalMissingTiles) * 100f), 88, 96);
+            ui.Banner("TIME'S UP!  " + pct + "% DONE!", new Color(1f, 0.35f, 0.32f));
+            Sfx.Play(Sfx.Id.Fail);
+            Shake(0.42f, 0.24f);
+            yield return new WaitForSeconds(1.35f);
+            ShowEndcard("Only 1 tile left (" + pct + "%)! Can you finish the picture?");
+        }
+
         IEnumerator Complete()
         {
             phase = Phase.Done;
             HideTutorial();
+            StoreLink.LogEvent("numbermatch_complete");
             yield return new WaitForSeconds(0.7f);
             ui.Banner("COMPLETED!", new Color(0.5f, 1f, 0.45f));
             Sfx.Play(Sfx.Id.Win);
@@ -732,6 +813,7 @@ namespace NumberMatchAd
             HideTutorial();
             if (dragging != null) { var p = dragging; dragging = null; StartCoroutine(ReturnHome(p, 0.15f)); }
             highlighted.Clear();
+            StoreLink.GameEnded();
             ui.ShowEndcard(sub);
             Sfx.Play(Sfx.Id.Win, 0.7f);
         }

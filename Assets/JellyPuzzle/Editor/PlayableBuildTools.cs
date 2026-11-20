@@ -28,14 +28,16 @@ namespace JellyAd.EditorTools
                     try { ctx.Post(__ => CheckForExternalScriptChanges(), null); } catch { }
                 }, null, 2000, 2000);
             }
-            const string key = "Voodoo.PlayableValidation.RescueRunV2";
+            const string key = "Voodoo.PlayableValidation.VoodooThreeV1";
             if (SessionState.GetBool(key, false)) return;
             SessionState.SetBool(key, true);
             EditorApplication.delayCall += () =>
             {
                 PlayableSpriteMaterial.EnsureNow();
                 JellySceneBuilder.BuildRunner();
-                Runner();
+                JellySceneBuilder.BuildSurvivor();
+                JellySceneBuilder.BuildNumberMatch();
+                Build(JellySceneBuilder.RunnerScene, JellySceneBuilder.SurvivorScene, JellySceneBuilder.NumberMatchScene);
             };
         }
 
