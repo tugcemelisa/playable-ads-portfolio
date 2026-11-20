@@ -5,19 +5,6 @@ using JellyAd;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-#if UNITY_LUNA || LUNA_PLAYWORKS
-using Luna.Unity;
-#else
-namespace Luna.Unity
-{
-    [System.AttributeUsage(System.AttributeTargets.Field)]
-    public sealed class LunaPlaygroundFieldAttribute : System.Attribute
-    {
-        public LunaPlaygroundFieldAttribute(string name = null, int order = 0, string section = null) { }
-    }
-}
-#endif
-
 namespace NumberMatchAd
 {
     /// <summary>
