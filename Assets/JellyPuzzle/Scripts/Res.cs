@@ -10,7 +10,7 @@ namespace JellyAd
         static Sprite _square, _bead, _circle, _soft, _ring;
         static readonly Dictionary<int, Sprite> _round = new Dictionary<int, Sprite>();
 
-        public static Font Font => _font ? _font : (_font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"));
+        public static Font Font => _font ? _font : (_font = Resources.Load<Font>("Fonts/Inter-SemiBold"));
 
         public static Sprite Square => _square ? _square : (_square = RoundRect(8, 0f, 8));
         public static Sprite Bead => _bead ? _bead : (_bead = RoundRect(32, 8f, 32));
@@ -109,6 +109,7 @@ namespace JellyAd
             go.transform.SetParent(parent, false);
             go.transform.localPosition = pos;
             var sr = go.AddComponent<SpriteRenderer>();
+            sr.sharedMaterial = Resources.Load<Material>("JellySprite");
             sr.sprite = s;
             sr.color = c;
             sr.sortingOrder = order;
@@ -127,16 +128,16 @@ namespace JellyAd
             go.transform.SetParent(parent, false);
             go.transform.localPosition = pos;
             var tm = go.AddComponent<TextMesh>();
+            var mr = go.GetComponent<MeshRenderer>();
+            mr.sharedMaterial = Font.material;
             tm.font = Font;
             tm.fontSize = 64;
             tm.characterSize = height / 6.4f;
             tm.anchor = TextAnchor.MiddleCenter;
-            tm.alignment = TextAlignment.Center;
-            tm.fontStyle = FontStyle.Bold;
+            tm.offsetZ = -0.02f;
+            // TextMesh.fontStyle is not supported by Playworks.
             tm.color = c;
             tm.text = text;
-            var mr = go.GetComponent<MeshRenderer>();
-            mr.sharedMaterial = Font.material;
             mr.sortingOrder = order;
             return tm;
         }

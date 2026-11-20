@@ -100,14 +100,7 @@ namespace HordeCamp
             RenderSettings.fog = false;
             RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
             RenderSettings.ambientLight = new Color(0.62f, 0.62f, 0.66f);
-            if (!FindAnyObjectByType<Light>())
-            {
-                var l = new GameObject("Sun").AddComponent<Light>();
-                l.type = LightType.Directional;
-                l.intensity = 1.15f;
-                l.shadows = LightShadows.Soft;
-                l.transform.rotation = Quaternion.Euler(55f, -35f, 0f);
-            }
+            // The scene's Sun supplies lighting, including in Playworks.
 
             world = new GameObject("World").transform;
             fx = new GameObject("FX").transform;

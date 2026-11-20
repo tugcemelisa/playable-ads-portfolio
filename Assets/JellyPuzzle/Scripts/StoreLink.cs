@@ -1,25 +1,17 @@
-using UnityEngine;
-#if UNITY_WEBGL && !UNITY_EDITOR
-using System.Runtime.InteropServices;
-#endif
-
 namespace JellyAd
 {
-    /// <summary>CTA: uses mraid.open / FbPlayableAd when the ad network provides it, else opens the URL.</summary>
+    /// <summary>Ad-network CTA and lifecycle bridge, supplied by Unity Playworks.</summary>
     public static class StoreLink
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        [DllImport("__Internal")] static extern void JellyOpenStore(string url);
-#endif
-
+        // Store destinations are configured in Playworks, rather than opened as arbitrary URLs.
         public static void Open(string url)
         {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            JellyOpenStore(url);
-#else
-            Debug.Log("[CTA] Store link: " + url);
-            Application.OpenURL(url);
-#endif
+            Luna.Unity.Playable.InstallFullGame();
+        }
+
+        public static void NotifyGameEnded()
+        {
+            Luna.Unity.LifeCycle.GameEnded();
         }
     }
 }

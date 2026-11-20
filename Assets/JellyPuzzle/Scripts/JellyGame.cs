@@ -275,9 +275,9 @@ namespace JellyAd
         void BuildJellies()
         {
             // Split every colour's pixel count into jellies (30/20/10...), so totals match the picture exactly.
-            int pc = palette.Length;
-            var total = new int[pc];
-            var depthSum = new float[pc];
+            int paletteCount = palette.Length;
+            var total = new int[paletteCount];
+            var depthSum = new float[paletteCount];
             int n = board.N;
             for (int i = 0; i < board.color.Length; i++)
             {
@@ -289,7 +289,7 @@ namespace JellyAd
             }
 
             var chunks = new List<(int col, int cnt, float key)>();
-            for (int col = 0; col < pc; col++)
+            for (int col = 0; col < paletteCount; col++)
             {
                 int rem = total[col];
                 float depth = rem > 0 ? depthSum[col] / rem : 0f;
@@ -463,7 +463,7 @@ namespace JellyAd
             t.font = Res.Font;
             t.text = s;
             t.fontSize = size;
-            t.fontStyle = FontStyle.Bold;
+            t.fontStyle = FontStyle.Normal;
             t.color = c;
             t.alignment = TextAnchor.MiddleCenter;
             t.horizontalOverflow = HorizontalWrapMode.Overflow;
@@ -823,6 +823,7 @@ namespace JellyAd
         {
             if (phase == Phase.End) return;
             phase = Phase.End;
+            StoreLink.NotifyGameEnded();
             tutorialVisible = false;
             hand.gameObject.SetActive(false);
             bannerText.gameObject.SetActive(false);
@@ -892,11 +893,11 @@ namespace JellyAd
         {
             if (dashes == null) return;
             float spacing = perim / dashes.Length;
-            float off = Mathf.Repeat(Time.time * beltSpeed, spacing);
+            float beltOffset = Mathf.Repeat(Time.time * beltSpeed, spacing);
             float w = xMax - xMin, h = yMax - yMin;
             for (int i = 0; i < dashes.Length; i++)
             {
-                float t = Mathf.Repeat(i * spacing + off, perim);
+                float t = Mathf.Repeat(i * spacing + beltOffset, perim);
                 dashes[i].transform.position = BeltPos(t);
                 bool vertical = (t >= w && t < w + h) || t >= 2f * w + h;
                 dashes[i].transform.localRotation = Quaternion.Euler(0f, 0f, vertical ? 90f : 0f);

@@ -558,16 +558,12 @@ namespace NumberMatchAd
             }
             if (best >= 0) { Place(p, best); return; }
 
+            // any other drop is wrong: shake + red tint + error sound, wherever it landed
+            combo = 0;
             int under = CellAt(pos);
-            if (under >= 0 && !cells[under].filled)
-            {
-                combo = 0;
-                StartCoroutine(WrongFlash(under));
-                StartCoroutine(RejectAndReturn(p));
-                Sfx.Play(Sfx.Id.Error, 0.7f, 1f, 0f, 0.15f);
-                return;
-            }
-            StartCoroutine(ReturnHome(p, 0.18f));
+            if (under >= 0 && !cells[under].filled) StartCoroutine(WrongFlash(under));
+            StartCoroutine(RejectAndReturn(p));
+            Sfx.Play(Sfx.Id.Error, 0.7f, 1f, 0f, 0.15f);
         }
 
         int CellAt(Vector3 pos)

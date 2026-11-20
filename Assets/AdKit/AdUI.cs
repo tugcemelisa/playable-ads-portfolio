@@ -78,6 +78,7 @@ namespace AdKit
 
         public void ShowEndcard(string sub)
         {
+            if (!EndcardVisible) StoreLink.NotifyGameEnded();
             banner.gameObject.SetActive(false);
             tut.gameObject.SetActive(false);
             endSub.text = sub;
@@ -148,7 +149,7 @@ namespace AdKit
             t.font = Res.Font;
             t.text = s;
             t.fontSize = size;
-            t.fontStyle = FontStyle.Bold;
+            t.fontStyle = FontStyle.Normal;
             t.color = c;
             t.alignment = TextAnchor.MiddleCenter;
             t.horizontalOverflow = HorizontalWrapMode.Overflow;

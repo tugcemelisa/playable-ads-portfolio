@@ -120,14 +120,7 @@ namespace RescueRun
             RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
             RenderSettings.ambientLight = new Color(0.62f, 0.64f, 0.72f);
 
-            if (!FindAnyObjectByType<Light>())
-            {
-                var l = new GameObject("Sun").AddComponent<Light>();
-                l.type = LightType.Directional;
-                l.intensity = 1.1f;
-                l.shadows = LightShadows.Soft;
-                l.transform.rotation = Quaternion.Euler(55f, -30f, 0f);
-            }
+            // The scene's Sun supplies lighting, including in Playworks.
 
             world = new GameObject("World").transform;
             fx = new GameObject("FX").transform;

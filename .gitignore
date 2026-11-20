@@ -11,6 +11,8 @@
 
 # Luna Playworks build output
 /LunaTemp/
+# Local Playworks project/account configuration
+/luna.json
 
 # IDE / OS
 .vs/

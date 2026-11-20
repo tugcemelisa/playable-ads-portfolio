@@ -92,10 +92,23 @@ namespace JellyAd.EditorTools
         static void CreateScene(string path, bool ortho, System.Type game)
         {
             System.IO.Directory.CreateDirectory("Assets/Scenes");
+
+            // Rebuilding a scene that is already open: Unity won't save over an open scene's path,
+            // so close that copy first (asking to save it if it has unsaved changes).
+            bool replaceAll = false;
+            for (int s = SceneManager.sceneCount - 1; s >= 0; s--)
+            {
+                var open = SceneManager.GetSceneAt(s);
+                if (open.path != path) continue;
+                if (open.isDirty && !EditorSceneManager.SaveModifiedScenesIfUserWantsTo(new[] { open })) return;
+                if (SceneManager.sceneCount > 1) EditorSceneManager.CloseScene(open, true);
+                else replaceAll = true; // it's the only scene: the new one simply replaces it
+            }
+
             // Unity can't add a scene next to an untitled one, so replace it in that case (only if it has no unsaved work).
             var active = SceneManager.GetActiveScene();
-            bool untitled = string.IsNullOrEmpty(active.path);
-            if (untitled && active.isDirty)
+            bool untitled = replaceAll || string.IsNullOrEmpty(active.path);
+            if (!replaceAll && untitled && active.isDirty)
             {
                 Debug.LogWarning("[Voodoo] Save or discard the open untitled scene, then use the Voodoo menu to build " + path);
                 return;

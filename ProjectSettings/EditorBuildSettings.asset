@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/NumberMatch.unity
-    guid: 9a06d75cf4a3d764c9892c2b824ae6ad
+    path: Assets/Scenes/JellyPuzzle.unity
+    guid: b1017461e8308d749bebc64cd7a742c3
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
