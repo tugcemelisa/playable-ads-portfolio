@@ -23,18 +23,46 @@ namespace MobControlAd
         [LunaPlaygroundField("Cannon Fire Rate", 0, "Mob Control Settings")]
         public float fireRate = 8.0f;
 
-        [LunaPlaygroundField("Yellow Block HP", 1, "Mob Control Settings")]
+        [LunaPlaygroundField("Round Duration (s)", 1, "Mob Control Settings")]
+        public float roundDuration = 21.0f;
+
+        [LunaPlaygroundField("Yellow Block HP", 2, "Mob Control Settings")]
         public int yellowBlockStartHp = 60;
 
-        [LunaPlaygroundField("Enemy Base HP", 2, "Mob Control Settings")]
+        [LunaPlaygroundField("Enemy Base HP", 3, "Mob Control Settings")]
         public int enemyBaseStartHp = 50;
 
-        [LunaPlaygroundField("CTA Button Text", 3, "Endcard Settings")]
+        [LunaPlaygroundField("Front Sliding Gate (X)", 0, "Gate Multipliers")]
+        public int frontGateMultiplier = 3;
+
+        [LunaPlaygroundField("Left Gate (X)", 1, "Gate Multipliers")]
+        public int leftGateMultiplier = 2;
+
+        [LunaPlaygroundField("Right Gate (X)", 2, "Gate Multipliers")]
+        public int rightGateMultiplier = 7;
+
+        [LunaPlaygroundField("CTA Button Text", 0, "Endcard & Localization")]
         public string ctaText = "PLAY NOW";
+
+        [LunaPlaygroundField("Defeat Title", 1, "Endcard & Localization")]
+        public string defeatTitle = "DEFEAT...";
+
+        [LunaPlaygroundField("Victory Title", 2, "Endcard & Localization")]
+        public string victoryTitle = "VICTORY!";
+
+        [LunaPlaygroundField("Defeat Subtitle", 3, "Endcard & Localization")]
+        public string defeatSubtitle = "CAN YOU BEAT THE BOSS?";
+
+        [LunaPlaygroundField("Victory Subtitle", 4, "Endcard & Localization")]
+        public string victorySubtitle = "READY FOR LEVEL 2?";
+
+        [LunaPlaygroundField("Tutorial Text", 5, "Endcard & Localization")]
+        public string tutorialText = "<  HOLD & DRAG TO AIM  >";
 
         public enum BackgroundTheme { AlpineWinter = 0, MidnightSlate = 1 }
 
         [Header("Background Theme")]
+        [LunaPlaygroundField("Background Theme", 0, "Visual Settings")]
         public BackgroundTheme backgroundTheme = BackgroundTheme.AlpineWinter;
 
         static readonly Color PurpleMain = new Color(0.50f, 0.10f, 0.96f);
@@ -414,11 +442,11 @@ namespace MobControlAd
 
         void BuildGatesAndYellowBlock()
         {
-            // 1. Front Sliding X3 Gate (z = 3.65f, slides from left to right across the bridge!)
-            CreateGate(0, 3, -0.4f, 3.65f, 1.15f, 1.85f, 1.35f, 0.2f);
+            // 1. Front Sliding Gate (z = 3.65f, slides from left to right across the bridge!)
+            CreateGate(0, Mathf.Max(2, frontGateMultiplier), -0.4f, 3.65f, 1.15f, 1.85f, 1.35f, 0.2f);
 
-            // 2. Left Stationary X2 Gate (z = 5.45f, x = -1.95f)
-            CreateGate(1, 2, -1.95f, 5.45f, 1.25f, 0.0f, 0f, 0f);
+            // 2. Left Stationary Gate (z = 5.45f, x = -1.95f)
+            CreateGate(1, Mathf.Max(2, leftGateMultiplier), -1.95f, 5.45f, 1.25f, 0.0f, 0f, 0f);
 
             // 3. Right Lane Yellow Destructible Block ("60" HP at z = 5.85f, x = 1.85f)
             // Automatically uses Poly Pizza "Cube Bricks" FBX if placed at Assets/MobControl/Resources/Models/CubeBricks.fbx,
@@ -479,8 +507,8 @@ namespace MobControlAd
             }
             _yellowBlockLabel = AdRes.MakeLabel(_yellowBlockRoot, _yellowBlockHp.ToString(), 0.95f, Color.white, 25, new Vector3(0f, 0.72f, -0.90f));
 
-            // 4. Right Lane X7 Gate right behind the Yellow Block (z = 8.15f, x = 1.65f)
-            CreateGate(2, 7, 1.65f, 8.15f, 1.25f, 0.0f, 0f, 0f);
+            // 4. Right Lane Gate right behind the Yellow Block (z = 8.15f, x = 1.65f)
+            CreateGate(2, Mathf.Max(2, rightGateMultiplier), 1.65f, 8.15f, 1.25f, 0.0f, 0f, 0f);
         }
 
         void CreateGate(int bitIndex, int mult, float x, float z, float halfWidth, float moveAmp, float moveSpeed, float phaseOffset)
@@ -564,6 +592,7 @@ namespace MobControlAd
         void BuildUI()
         {
             _ui = AdUI.Create("MOB CONTROL", ctaText, new Color(0.14f, 0.08f, 0.28f), new Color(1f, 0.86f, 0.22f));
+            _ui.SetTutorialText(tutorialText);
             _ui.ShowDragTutorial(true);
 
             var center = new Vector2(0.5f, 0.5f);
@@ -653,7 +682,7 @@ namespace MobControlAd
             AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.32f, 0.09f, 0.72f, 1f), center, Vector2.zero, new Vector2(894f, 256f), true);
             AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.16f), center, new Vector2(0f, 76f), new Vector2(820f, 68f), true);
 
-            _defeatTitleText = AdUI.Txt(_defeatBannerRt, "DEFEAT...", 136, new Color(1f, 0.88f, 0.14f), center, new Vector2(0f, 30f));
+            _defeatTitleText = AdUI.Txt(_defeatBannerRt, defeatTitle, 136, new Color(1f, 0.88f, 0.14f), center, new Vector2(0f, 30f));
             var outline = _defeatTitleText.GetComponent<Outline>();
             if (outline)
             {
@@ -661,7 +690,7 @@ namespace MobControlAd
                 outline.effectDistance = new Vector2(8f, -8f);
             }
 
-            _endSubText = AdUI.Txt(_defeatBannerRt, "CAN YOU BEAT THE BOSS?", 52, new Color(1f, 0.96f, 0.62f), center, new Vector2(0f, -82f));
+            _endSubText = AdUI.Txt(_defeatBannerRt, defeatSubtitle, 52, new Color(1f, 0.96f, 0.62f), center, new Vector2(0f, -82f));
             var subOut = _endSubText.GetComponent<Outline>();
             if (subOut) { subOut.effectColor = new Color(0.18f, 0.04f, 0.44f, 1f); subOut.effectDistance = new Vector2(4.5f, -4.5f); }
 
@@ -803,8 +832,8 @@ namespace MobControlAd
             UpdateSparks(dt);
             UpdateCameraShake(dt);
 
-            // Trigger DEFEAT... climax at 21s if still battling
-            if (_elapsedTime >= 21.0f && !_climaxTriggered)
+            // Trigger DEFEAT... climax when roundDuration expires if still battling
+            if (_elapsedTime >= Mathf.Max(8f, roundDuration) && !_climaxTriggered)
             {
                 TriggerDefeatClimax();
             }
@@ -1235,13 +1264,13 @@ namespace MobControlAd
             if (_topHudRoot) _topHudRoot.SetActive(false);
             if (_defeatTitleText)
             {
-                _defeatTitleText.text = "VICTORY!";
+                _defeatTitleText.text = string.IsNullOrEmpty(victoryTitle) ? "VICTORY!" : victoryTitle;
                 _defeatTitleText.color = new Color(1f, 0.88f, 0.14f); // Bright yellow fill
                 var vOut = _defeatTitleText.GetComponent<Outline>();
                 if (vOut) { vOut.effectColor = new Color(0.06f, 0.48f, 0.16f, 1f); vOut.effectDistance = new Vector2(8f, -8f); } // Rich green stroke
             }
             if (_endSubText)
-                _endSubText.text = "READY FOR LEVEL 2?";
+                _endSubText.text = string.IsNullOrEmpty(victorySubtitle) ? "READY FOR LEVEL 2?" : victorySubtitle;
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
             Luna.Unity.Analytics.LogEvent("mobcontrol_victory", 1);
             StoreLink.NotifyGameEnded();
@@ -1267,14 +1296,14 @@ namespace MobControlAd
 
             if (_defeatTitleText)
             {
-                _defeatTitleText.text = "DEFEAT...";
+                _defeatTitleText.text = string.IsNullOrEmpty(defeatTitle) ? "DEFEAT..." : defeatTitle;
                 // High-contrast complementary golden yellow against the rich purple banner
                 _defeatTitleText.color = new Color(1f, 0.88f, 0.14f);
                 var dOut = _defeatTitleText.GetComponent<Outline>();
                 if (dOut) { dOut.effectColor = new Color(0.24f, 0.04f, 0.48f, 1f); dOut.effectDistance = new Vector2(8f, -8f); }
             }
             if (_endSubText)
-                _endSubText.text = "CAN YOU BEAT THE BOSS?";
+                _endSubText.text = string.IsNullOrEmpty(defeatSubtitle) ? "CAN YOU BEAT THE BOSS?" : defeatSubtitle;
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
             Luna.Unity.Analytics.LogEvent("mobcontrol_defeat", 1);
             StoreLink.NotifyGameEnded();

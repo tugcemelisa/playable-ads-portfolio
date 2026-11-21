@@ -14,7 +14,13 @@ namespace AdKit
         Color bannerColor;
         GameObject endcard;
         RectTransform card, cta, tut, tutHand, tutRing;
-        Text endSub;
+        Text endSub, tutLabel;
+
+        public void SetTutorialText(string text)
+        {
+            if (tutLabel && !string.IsNullOrEmpty(text))
+                tutLabel.text = text;
+        }
 
         public bool EndcardVisible => endcard && endcard.activeSelf;
 
@@ -66,6 +72,7 @@ namespace AdKit
 
             // Single-line symmetric arcade tutorial text (identical left/right arrows, comfortable padding)
             var tutTxt = Txt(ui.tut, "<  HOLD & DRAG TO AIM  >", 50, new Color(1f, 0.92f, 0.28f), c, new Vector2(0f, 44f));
+            ui.tutLabel = tutTxt;
             tutTxt.rectTransform.sizeDelta = new Vector2(880f, 80f);
             tutTxt.horizontalOverflow = HorizontalWrapMode.Overflow;
             tutTxt.verticalOverflow = VerticalWrapMode.Overflow;
