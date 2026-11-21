@@ -260,33 +260,33 @@ namespace RescueRun
 
             // ---------------------------------------------------------- Voodoo Ref 1 exact encounter timeline
             // 1. Horizontal Glass Tube on left lane (8 HP) -> frees hero & gives LV+1 heavy upgrade
-            leftTube = BuildHorizontalTube(-1.85f, 21f, tubeHp);
+            leftTube = BuildHorizontalTube(-1.60f, 21f, tubeHp);
 
             // 2. Giant Vertical Blue Tank on right lane (1241 HP) on a wheeled platform that rolls ahead on the right lane
-            rightTank = BuildBigVerticalTank(1.95f, 17f, tankHp);
+            rightTank = BuildBigVerticalTank(1.65f, 17f, tankHp);
 
             // 3. First red enemy crowd behind the tube
-            AddEnemyGroup(30f, 18, -1.85f, 1.75f, 2.6f);
+            AddEnemyGroup(30f, 18, -1.65f, 1.65f, 2.6f);
 
             // 4. Shootable red gate (-13) on left lane -> player shoots it up to +1 -> +6!
-            AddSingleGate(47f, -1.85f, 3.6f, -13);
+            AddSingleGate(47f, -1.65f, 3.4f, -13);
 
             // 5. Second red enemy crowd + Mid-Boss (372 HP)
-            AddEnemyGroup(60f, 24, -1.85f, 1.85f, 3.2f);
-            midBoss = AddBossUnit(76f, -1.75f, midBossHp, 2.9f, false);
+            AddEnemyGroup(60f, 24, -1.65f, 1.75f, 3.2f);
+            midBoss = AddBossUnit(76f, -1.55f, midBossHp, 2.5f, false);
 
             // 6. Second red enemy crowd + Second shootable red gate (-40) -> shot down to -20 -> reduces squad from 6 to 3
-            AddEnemyGroup(92f, 22, -1.85f, 1.85f, 3.4f);
-            AddSingleGate(108f, -1.85f, 3.6f, -40);
+            AddEnemyGroup(92f, 22, -1.65f, 1.75f, 3.4f);
+            AddSingleGate(108f, -1.65f, 3.4f, -40);
 
             // 7. Final Giant Boss (878 HP) + massive horde + background 158 tube teaser
-            AddEnemyGroup(124f, 28, -1.75f, 1.95f, 4.0f);
-            finalBoss = AddBossUnit(142f, -1.55f, finalBossHp, 3.8f, true);
-            backTube = BuildHorizontalTube(-1.75f, 160f, 158f);
-            AddEnemyGroup(166f, 36, -1.75f, 1.95f, 99f);
+            AddEnemyGroup(124f, 28, -1.55f, 1.85f, 4.0f);
+            finalBoss = AddBossUnit(142f, -1.45f, finalBossHp, 3.3f, true);
+            backTube = BuildHorizontalTube(-1.60f, 160f, 158f);
+            AddEnemyGroup(166f, 36, -1.65f, 1.85f, 99f);
         }
 
-        // ============================================================ builders
+        // ============================================================ builders (using real poly.pizza 3D meshes!)
         GameObject Prim(PrimitiveType t, Transform parent, Vector3 pos, Vector3 scale, Color c)
             => Prims.Make(t, parent, pos, scale, c);
 
@@ -298,135 +298,65 @@ namespace RescueRun
             root.SetParent(world, false);
             if (tier == 1)
             {
-                // Child 0 & 1: Articulated Left & Right Legs with dark combat boots
-                for (int s = -1; s <= 1; s += 2)
-                {
-                    var leg = new GameObject(s < 0 ? "LegL" : "LegR").transform;
-                    leg.SetParent(root, false);
-                    leg.localPosition = new Vector3(s * 0.11f, 0.34f, 0f);
-                    Prim(PrimitiveType.Capsule, leg, new Vector3(0f, -0.14f, 0f), new Vector3(0.16f, 0.18f, 0.16f), new Color(0.12f, 0.34f, 0.78f));
-                    Prim(PrimitiveType.Cube, leg, new Vector3(0f, -0.30f, 0.03f), new Vector3(0.17f, 0.11f, 0.24f), Dark);
-                }
-                // Tactical blue armor torso + chest vest + utility belt + backpack
-                Prim(PrimitiveType.Capsule, root, new Vector3(0f, 0.58f, 0f), new Vector3(0.42f, 0.30f, 0.34f), Blue);
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.62f, 0.03f), new Vector3(0.38f, 0.28f, 0.32f), new Color(0.14f, 0.40f, 0.86f));
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.42f, 0f), new Vector3(0.41f, 0.08f, 0.34f), Dark);
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.62f, -0.18f), new Vector3(0.28f, 0.30f, 0.14f), new Color(0.20f, 0.24f, 0.32f));
-                // Arms + shoulders
-                Prim(PrimitiveType.Capsule, root, new Vector3(-0.25f, 0.60f, 0.08f), new Vector3(0.14f, 0.20f, 0.14f), Blue);
-                Prim(PrimitiveType.Capsule, root, new Vector3(0.25f, 0.60f, 0.12f), new Vector3(0.14f, 0.20f, 0.14f), Blue);
-                // Head + tactical visor goggles + combat helmet
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.00f, 0f), Vector3.one * 0.38f, Skin);
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.01f, 0.15f), new Vector3(0.28f, 0.10f, 0.10f), new Color(0.10f, 0.18f, 0.32f));
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.11f, -0.02f), new Vector3(0.46f, 0.28f, 0.46f), new Color(0.14f, 0.42f, 0.94f));
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.08f, 0.18f), new Vector3(0.38f, 0.06f, 0.14f), new Color(0.10f, 0.32f, 0.78f));
-                // Detailed assault rifle (body, barrel, magazine, glowing muzzle)
-                Prim(PrimitiveType.Cube, root, new Vector3(0.22f, 0.56f, 0.26f), new Vector3(0.10f, 0.13f, 0.46f), Dark);
-                Prim(PrimitiveType.Cube, root, new Vector3(0.22f, 0.46f, 0.28f), new Vector3(0.07f, 0.14f, 0.10f), new Color(0.25f, 0.26f, 0.32f));
-                Prim(PrimitiveType.Cylinder, root, new Vector3(0.22f, 0.58f, 0.54f), new Vector3(0.06f, 0.16f, 0.06f), Dark).transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-                Prim(PrimitiveType.Sphere, root, new Vector3(0.22f, 0.58f, 0.68f), Vector3.one * 0.09f, Gold);
+                // Real poly.pizza SWAT Soldier (/m/Btfn3G5Xv4) + Assault Rifle (/m/XGeBGFQxYg)
+                // Child 0 & 1: Articulated Left & Right Legs (pivoted at hip y = 0.50f)
+                PolyPizzaModels.Part("Swat_LegL", root, new Vector3(-0.09f, 0.50f, 0f), Vector3.one, new Color(0.14f, 0.36f, 0.82f));
+                PolyPizzaModels.Part("Swat_LegR", root, new Vector3(0.09f, 0.50f, 0f), Vector3.one, new Color(0.14f, 0.36f, 0.82f));
+                // SWAT Armor, Tactical Vest/Gear, Skin, Visor
+                PolyPizzaModels.Part("Swat_Armor", root, Vector3.zero, Vector3.one, Blue);
+                PolyPizzaModels.Part("Swat_Gear", root, Vector3.zero, Vector3.one, Dark);
+                PolyPizzaModels.Part("Swat_Skin", root, Vector3.zero, Vector3.one, Skin);
+                PolyPizzaModels.Part("Swat_Visor", root, Vector3.zero, Vector3.one, LaserCyan);
+                // Real poly.pizza Assault Rifle
+                PolyPizzaModels.Part("Rifle1", root, new Vector3(0.14f, 0.62f, 0.25f), Vector3.one, Dark);
+                Prim(PrimitiveType.Sphere, root, new Vector3(0.14f, 0.66f, 0.56f), Vector3.one * 0.08f, Gold);
             }
             else
             {
-                // Child 0 & 1: Heavy Gunner Articulated Armored Legs + Gold Knee Pads
+                // LV+1 Heavy Gunner: Armored poly.pizza SWAT Hero + Gold Trim + Twin poly.pizza Heavy Rifles (/m/Bgvuu4CUMV)
+                var scaleBody = new Vector3(1.18f, 1.08f, 1.16f);
+                PolyPizzaModels.Part("Swat_LegL", root, new Vector3(-0.11f, 0.54f, 0f), scaleBody, HeavyBlue);
+                PolyPizzaModels.Part("Swat_LegR", root, new Vector3(0.11f, 0.54f, 0f), scaleBody, HeavyBlue);
+                PolyPizzaModels.Part("Swat_Armor", root, Vector3.zero, scaleBody, HeavyBlue);
+                PolyPizzaModels.Part("Swat_Gear", root, Vector3.zero, scaleBody, Gold);
+                PolyPizzaModels.Part("Swat_Skin", root, Vector3.zero, scaleBody, Skin);
+                PolyPizzaModels.Part("Swat_Visor", root, Vector3.zero, scaleBody, LaserCyan);
+                // Dorsal plasma reactor & twin HeavyRifle2 laser cannons
+                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.78f, -0.24f), Vector3.one * 0.20f, LaserCyan);
                 for (int s = -1; s <= 1; s += 2)
                 {
-                    var leg = new GameObject(s < 0 ? "LegL" : "LegR").transform;
-                    leg.SetParent(root, false);
-                    leg.localPosition = new Vector3(s * 0.16f, 0.38f, 0f);
-                    Prim(PrimitiveType.Capsule, leg, new Vector3(0f, -0.15f, 0f), new Vector3(0.22f, 0.20f, 0.22f), HeavyBlue);
-                    Prim(PrimitiveType.Cube, leg, new Vector3(0f, -0.12f, 0.10f), new Vector3(0.16f, 0.12f, 0.08f), Gold);
-                    Prim(PrimitiveType.Cube, leg, new Vector3(0f, -0.33f, 0.04f), new Vector3(0.23f, 0.13f, 0.28f), Dark);
+                    PolyPizzaModels.Part("HeavyRifle2", root, new Vector3(s * 0.28f, 0.66f, 0.28f), Vector3.one * 1.05f, Dark);
+                    Prim(PrimitiveType.Sphere, root, new Vector3(s * 0.28f, 0.68f, 0.66f), Vector3.one * 0.14f, LaserCyan);
                 }
-                // Broad Heavy Power-Armor Torso + Gold Chest Crest + Crossed Bandolier + Dorsal Plasma Reactor
-                Prim(PrimitiveType.Capsule, root, new Vector3(0f, 0.66f, 0f), new Vector3(0.62f, 0.36f, 0.48f), HeavyBlue);
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.70f, 0.04f), new Vector3(0.54f, 0.36f, 0.42f), new Color(0.16f, 0.46f, 0.96f));
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.74f, 0.24f), new Vector3(0.26f, 0.18f, 0.06f), Gold);
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.46f, 0f), new Vector3(0.58f, 0.10f, 0.46f), Gold);
-                var belt = Prim(PrimitiveType.Cylinder, root, new Vector3(0f, 0.66f, 0.02f), new Vector3(0.64f, 0.07f, 0.50f), Gold);
-                belt.transform.localRotation = Quaternion.Euler(0f, 0f, 24f);
-                // Dorsal reactor backpack with glowing cyan core
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.72f, -0.26f), new Vector3(0.42f, 0.38f, 0.18f), Dark);
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.74f, -0.34f), Vector3.one * 0.20f, LaserCyan);
-
-                // Bulky Shoulder Pauldrons + Muscular Arms + Twin Rotary Laser Cannons
-                for (int s = -1; s <= 1; s += 2)
-                {
-                    Prim(PrimitiveType.Sphere, root, new Vector3(s * 0.36f, 0.84f, 0f), new Vector3(0.28f, 0.24f, 0.28f), Blue);
-                    Prim(PrimitiveType.Cube, root, new Vector3(s * 0.38f, 0.88f, 0f), new Vector3(0.24f, 0.06f, 0.26f), Gold);
-                    Prim(PrimitiveType.Capsule, root, new Vector3(s * 0.36f, 0.62f, 0.12f), new Vector3(0.18f, 0.22f, 0.18f), HeavyBlue);
-                    // Twin heavy laser cannon housing + gold cooling ring + glowing cyan plasma nozzle
-                    Prim(PrimitiveType.Cube, root, new Vector3(s * 0.38f, 0.56f, 0.32f), new Vector3(0.18f, 0.20f, 0.58f), Dark);
-                    Prim(PrimitiveType.Cube, root, new Vector3(s * 0.38f, 0.56f, 0.46f), new Vector3(0.21f, 0.22f, 0.10f), Gold);
-                    Prim(PrimitiveType.Sphere, root, new Vector3(s * 0.38f, 0.56f, 0.66f), Vector3.one * 0.18f, LaserCyan);
-                }
-
-                // Head + Commander Helmet + Glowing Cyan Tactical Visor + Gold Crest
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.12f, 0f), Vector3.one * 0.42f, Skin);
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.13f, 0.17f), new Vector3(0.32f, 0.11f, 0.10f), LaserCyan);
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.24f, -0.02f), new Vector3(0.50f, 0.30f, 0.50f), Blue);
-                Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.34f, 0.02f), new Vector3(0.10f, 0.12f, 0.44f), Gold);
             }
             return root;
         }
 
         Transform BuildEnemyModel()
         {
+            // Real poly.pizza Zombie (/m/ftpTNkeqGWc) in Voodoo Crimson Horde palette
             var root = new GameObject("Enemy").transform;
             root.SetParent(world, false);
-            // Child 0 & 1: Articulated Left & Right Legs
-            for (int s = -1; s <= 1; s += 2)
-            {
-                var leg = new GameObject(s < 0 ? "LegL" : "LegR").transform;
-                leg.SetParent(root, false);
-                leg.localPosition = new Vector3(s * 0.11f, 0.32f, 0f);
-                Prim(PrimitiveType.Capsule, leg, new Vector3(0f, -0.14f, 0f), new Vector3(0.15f, 0.18f, 0.15f), new Color(0.68f, 0.12f, 0.15f));
-                Prim(PrimitiveType.Cube, leg, new Vector3(0f, -0.29f, 0.02f), new Vector3(0.16f, 0.10f, 0.22f), Dark);
-            }
-            // Crimson torso + dark war belt + shoulder pads + forward arms
-            Prim(PrimitiveType.Capsule, root, new Vector3(0f, 0.56f, 0f), new Vector3(0.42f, 0.28f, 0.34f), Red);
-            Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.40f, 0f), new Vector3(0.40f, 0.08f, 0.32f), Dark);
-            for (int s = -1; s <= 1; s += 2)
-            {
-                Prim(PrimitiveType.Sphere, root, new Vector3(s * 0.25f, 0.72f, 0f), new Vector3(0.18f, 0.16f, 0.18f), Dark);
-                Prim(PrimitiveType.Capsule, root, new Vector3(s * 0.24f, 0.56f, 0.14f), new Vector3(0.13f, 0.18f, 0.13f), Red);
-            }
-            // Head + angry brow + dark helmet
-            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.96f, 0f), Vector3.one * 0.36f, new Color(0.96f, 0.72f, 0.66f));
-            Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.99f, 0.15f), new Vector3(0.26f, 0.06f, 0.09f), Dark);
-            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.07f, -0.02f), new Vector3(0.42f, 0.26f, 0.42f), new Color(0.68f, 0.10f, 0.13f));
+            PolyPizzaModels.Part("Zombie_Clothes", root, Vector3.zero, Vector3.one, new Color(0.72f, 0.12f, 0.15f));
+            PolyPizzaModels.Part("Zombie_Skin", root, Vector3.zero, Vector3.one, Red);
             return root;
         }
 
         Transform BuildBossModel(float scale)
         {
-            // Giant muscular brute from Reference 1: sculpted torso, red war trousers, spiked shoulder armor, fierce face
+            // Giant Muscular Brute Boss using poly.pizza Zombie mesh + heavy war armor (indices >= 3 flash white on hit!)
             var root = new GameObject("Boss").transform;
             root.SetParent(world, false);
             root.localScale = Vector3.one * scale;
-            // Child 0, 1, 2: Legs / red war pants + studded belt (kept at indices 0..2 so hit-flash loop c >= 3 flashes skin!)
-            Prim(PrimitiveType.Capsule, root, new Vector3(-0.24f, 0.28f, 0f), new Vector3(0.30f, 0.28f, 0.30f), new Color(0.72f, 0.12f, 0.16f));
-            Prim(PrimitiveType.Capsule, root, new Vector3(0.24f, 0.28f, 0f), new Vector3(0.30f, 0.28f, 0.30f), new Color(0.72f, 0.12f, 0.16f));
-            Prim(PrimitiveType.Cylinder, root, new Vector3(0f, 0.46f, 0f), new Vector3(0.86f, 0.16f, 0.68f), new Color(0.22f, 0.18f, 0.20f));
-            // Muscular V-taper torso + chest plates (indices >= 3 flash white on hit)
-            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.88f, 0f), new Vector3(1.06f, 0.78f, 0.80f), BossSkin);
-            Prim(PrimitiveType.Sphere, root, new Vector3(-0.22f, 0.98f, 0.24f), new Vector3(0.44f, 0.32f, 0.26f), BossSkin);
-            Prim(PrimitiveType.Sphere, root, new Vector3(0.22f, 0.98f, 0.24f), new Vector3(0.44f, 0.32f, 0.26f), BossSkin);
-            // Battle scars & war paint
-            Prim(PrimitiveType.Cube, root, new Vector3(-0.18f, 0.74f, 0.38f), new Vector3(0.30f, 0.08f, 0.08f), new Color(0.72f, 0.14f, 0.18f));
-            Prim(PrimitiveType.Sphere, root, new Vector3(0.48f, 1.10f, 0.14f), new Vector3(0.32f, 0.28f, 0.28f), new Color(0.78f, 0.16f, 0.20f));
-            // Massive muscular arms + forearms + dark spiked gauntlets
-            for (int s = -1; s <= 1; s += 2)
-            {
-                Prim(PrimitiveType.Capsule, root, new Vector3(s * 0.62f, 0.88f, 0.06f), new Vector3(0.30f, 0.34f, 0.30f), BossSkin);
-                Prim(PrimitiveType.Capsule, root, new Vector3(s * 0.66f, 0.56f, 0.18f), new Vector3(0.26f, 0.24f, 0.26f), BossSkin);
-                Prim(PrimitiveType.Cube, root, new Vector3(s * 0.66f, 0.42f, 0.24f), new Vector3(0.28f, 0.22f, 0.28f), Dark);
-            }
-            // Fierce head + heavy brow + glowing red eyes + dark horns
-            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.36f, 0.08f), Vector3.one * 0.42f, BossSkin);
-            Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.42f, 0.27f), new Vector3(0.32f, 0.07f, 0.10f), Dark);
-            Prim(PrimitiveType.Sphere, root, new Vector3(-0.09f, 1.38f, 0.27f), Vector3.one * 0.07f, new Color(1f, 0.9f, 0.2f));
-            Prim(PrimitiveType.Sphere, root, new Vector3(0.09f, 1.38f, 0.27f), Vector3.one * 0.07f, new Color(1f, 0.9f, 0.2f));
+            var hulkScale = new Vector3(1.26f, 1.02f, 1.24f);
+            // Child 0, 1, 2: War clothes, belt, and dark shoulder armor
+            PolyPizzaModels.Part("Zombie_Clothes", root, Vector3.zero, hulkScale, new Color(0.75f, 0.12f, 0.16f));
+            Prim(PrimitiveType.Cylinder, root, new Vector3(0f, 0.48f, 0f), new Vector3(0.68f, 0.10f, 0.52f), Gold);
+            Prim(PrimitiveType.Sphere, root, new Vector3(0.34f, 0.88f, 0.04f), new Vector3(0.28f, 0.24f, 0.28f), Dark);
+            // Child 3+: Boss Skin mesh & glowing eyes (flashes white when hit!)
+            PolyPizzaModels.Part("Zombie_Skin", root, Vector3.zero, hulkScale, BossSkin);
+            Prim(PrimitiveType.Sphere, root, new Vector3(-0.07f, 1.02f, 0.18f), Vector3.one * 0.06f, Gold);
+            Prim(PrimitiveType.Sphere, root, new Vector3(0.07f, 1.02f, 0.18f), Vector3.one * 0.06f, Gold);
             return root;
         }
 
@@ -435,30 +365,30 @@ namespace RescueRun
             var root = new GameObject("Badge").transform;
             root.SetParent(parent, false);
             root.localPosition = localPos;
-            Prim(PrimitiveType.Cube, root, new Vector3(0f, 0f, 0.09f), new Vector3(size.x + 0.16f, size.y + 0.16f, 0.03f), borderCol);
+            Prim(PrimitiveType.Cube, root, new Vector3(0f, 0f, 0.09f), new Vector3(size.x + 0.14f, size.y + 0.14f, 0.03f), borderCol);
             Prim(PrimitiveType.Cube, root, new Vector3(0f, 0f, 0.06f), new Vector3(size.x, size.y, 0.04f), bgCol);
             return root;
         }
 
         Pod BuildHorizontalTube(float x, float z, float hp)
         {
-            var pod = new Pod { x = x, z = z, hp = hp, maxHp = hp, radiusX = 1.65f, radiusZ = 0.85f, isBigTank = false };
+            var pod = new Pod { x = x, z = z, hp = hp, maxHp = hp, radiusX = 1.55f, radiusZ = 0.85f, isBigTank = false };
             pod.tr = new GameObject("HorizontalTube").transform;
             pod.tr.SetParent(world, false);
             pod.tr.localPosition = new Vector3(x, 0f, z);
 
             // Cradle base & Left/Right metallic end-caps with gold rings
-            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.14f, 0f), new Vector3(2.8f, 0.24f, 1.45f), Dark);
+            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.14f, 0f), new Vector3(2.6f, 0.24f, 1.40f), Dark);
             for (int s = -1; s <= 1; s += 2)
             {
-                var cap = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(s * 1.45f, 0.86f, 0f), new Vector3(1.52f, 0.16f, 1.52f), new Color(0.14f, 0.38f, 0.85f));
+                var cap = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(s * 1.35f, 0.86f, 0f), new Vector3(1.46f, 0.15f, 1.46f), new Color(0.14f, 0.38f, 0.85f));
                 cap.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
-                var ring = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(s * 1.28f, 0.86f, 0f), new Vector3(1.44f, 0.05f, 1.44f), Gold);
+                var ring = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(s * 1.20f, 0.86f, 0f), new Vector3(1.38f, 0.05f, 1.38f), Gold);
                 ring.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
-                Prim(PrimitiveType.Cube, pod.tr, new Vector3(s * 1.45f, 0.18f, 0f), new Vector3(0.42f, 0.34f, 1.55f), Dark);
+                Prim(PrimitiveType.Cube, pod.tr, new Vector3(s * 1.35f, 0.18f, 0f), new Vector3(0.38f, 0.34f, 1.48f), Dark);
             }
             // Horizontal glass cylinder
-            var glass = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.86f, 0f), new Vector3(1.36f, 1.28f, 1.36f), new Color(0.32f, 0.74f, 1f));
+            var glass = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.86f, 0f), new Vector3(1.30f, 1.20f, 1.30f), new Color(0.32f, 0.74f, 1f));
             glass.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
             pod.glassTr = glass.transform;
             pod.glassRen = glass.GetComponent<Renderer>();
@@ -466,15 +396,15 @@ namespace RescueRun
             // Floating trapped hero clearly visible on front face of cylinder
             pod.heroTr = BuildSoldierModel(2);
             pod.heroTr.SetParent(pod.tr, false);
-            pod.heroTr.localPosition = new Vector3(-0.32f, 0.86f, -0.56f);
+            pod.heroTr.localPosition = new Vector3(-0.32f, 0.86f, -0.58f);
             pod.heroTr.localRotation = Quaternion.Euler(0f, 180f, -75f);
-            pod.heroTr.localScale = Vector3.one * 0.88f;
+            pod.heroTr.localScale = Vector3.one * 0.85f;
 
-            // High-contrast framed HP badge ("8" / "158") + speech-bubble "HELP!!" callout
-            var hpBadge = MakeWorldBadge(pod.tr, new Vector3(0f, 0.78f, -1.05f), new Vector2(1.45f, 1.05f), new Color(0.06f, 0.12f, 0.28f), LaserCyan);
-            pod.hpLabel = Res.MakeLabel(hpBadge, Mathf.CeilToInt(hp).ToString(), 1.18f, Color.white, 45, Vector3.zero);
-            var helpBadge = MakeWorldBadge(pod.tr, new Vector3(1.05f, 1.95f, -1.05f), new Vector2(2.15f, 0.82f), new Color(0.14f, 0.10f, 0.06f), Gold);
-            pod.helpLabel = Res.MakeLabel(helpBadge, "HELP!!", 0.76f, Gold, 46, Vector3.zero);
+            // Compact framed HP badge ("8" / "158") + "HELP!!" callout shifted inward so it never overflows screen edges
+            var hpBadge = MakeWorldBadge(pod.tr, new Vector3(0f, 0.78f, -1.05f), new Vector2(1.20f, 0.85f), new Color(0.06f, 0.12f, 0.28f), LaserCyan);
+            pod.hpLabel = Res.MakeLabel(hpBadge, Mathf.CeilToInt(hp).ToString(), 0.88f, Color.white, 45, Vector3.zero);
+            var helpBadge = MakeWorldBadge(pod.tr, new Vector3(0.55f, 1.85f, -1.05f), new Vector2(1.65f, 0.68f), new Color(0.14f, 0.10f, 0.06f), Gold);
+            pod.helpLabel = Res.MakeLabel(helpBadge, "HELP!!", 0.58f, Gold, 46, Vector3.zero);
             billboards.Add(hpBadge);
             billboards.Add(helpBadge);
             return pod;
@@ -485,7 +415,7 @@ namespace RescueRun
             var pod = new Pod
             {
                 x = x, z = z, hp = hp, maxHp = hp,
-                radiusX = 1.65f, radiusZ = 1.45f,
+                radiusX = 1.55f, radiusZ = 1.38f,
                 isBigTank = true, followsPlayer = true
             };
             pod.tr = new GameObject("BigVerticalTank").transform;
@@ -493,53 +423,53 @@ namespace RescueRun
             pod.tr.localPosition = new Vector3(x, 0f, z);
 
             // Wheeled heavy cart base with gold bumper & 4 wheels with hubcaps
-            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.24f, 0f), new Vector3(3.15f, 0.34f, 2.95f), new Color(0.22f, 0.25f, 0.32f));
-            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.26f, -1.48f), new Vector3(2.95f, 0.16f, 0.12f), Gold);
+            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.24f, 0f), new Vector3(2.85f, 0.34f, 2.75f), new Color(0.22f, 0.25f, 0.32f));
+            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.26f, -1.38f), new Vector3(2.65f, 0.16f, 0.12f), Gold);
             for (int sx = -1; sx <= 1; sx += 2)
                 for (int sz = -1; sz <= 1; sz += 2)
                 {
-                    var w = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(sx * 1.58f, 0.26f, sz * 1.05f), new Vector3(0.58f, 0.13f, 0.58f), Dark);
+                    var w = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(sx * 1.44f, 0.26f, sz * 0.98f), new Vector3(0.54f, 0.12f, 0.54f), Dark);
                     w.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
-                    var hub = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(sx * 1.66f, 0.26f, sz * 1.05f), new Vector3(0.28f, 0.06f, 0.28f), Gold);
+                    var hub = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(sx * 1.52f, 0.26f, sz * 0.98f), new Vector3(0.26f, 0.05f, 0.26f), Gold);
                     hub.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
                 }
 
             // Blue metallic tank base & top lid with golden energy rings
-            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.56f, 0f), new Vector3(2.88f, 0.26f, 2.88f), new Color(0.14f, 0.40f, 0.90f));
-            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.78f, 0f), new Vector3(2.74f, 0.05f, 2.74f), Gold);
-            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 4.15f, 0f), new Vector3(2.88f, 0.22f, 2.88f), new Color(0.16f, 0.46f, 0.96f));
-            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 3.95f, 0f), new Vector3(2.74f, 0.05f, 2.74f), Gold);
-            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 4.40f, 0f), new Vector3(1.85f, 0.12f, 1.85f), Dark);
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.56f, 0f), new Vector3(2.65f, 0.24f, 2.65f), new Color(0.14f, 0.40f, 0.90f));
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.78f, 0f), new Vector3(2.52f, 0.05f, 2.52f), Gold);
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 4.05f, 0f), new Vector3(2.65f, 0.22f, 2.65f), new Color(0.16f, 0.46f, 0.96f));
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 3.85f, 0f), new Vector3(2.52f, 0.05f, 2.52f), Gold);
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 4.28f, 0f), new Vector3(1.70f, 0.12f, 1.70f), Dark);
 
             // Tall blue liquid cylinder
-            var glass = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 2.36f, 0f), new Vector3(2.58f, 1.55f, 2.58f), new Color(0.22f, 0.66f, 0.98f));
+            var glass = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 2.30f, 0f), new Vector3(2.38f, 1.50f, 2.38f), new Color(0.22f, 0.66f, 0.98f));
             pod.glassTr = glass.transform;
             pod.glassRen = glass.GetComponent<Renderer>();
 
             // Trapped giant hero floating on the camera side of the cylinder
             pod.heroTr = BuildSoldierModel(2);
             pod.heroTr.SetParent(pod.tr, false);
-            pod.heroTr.localPosition = new Vector3(0f, 1.82f, -1.16f);
+            pod.heroTr.localPosition = new Vector3(0f, 1.65f, -1.12f);
             pod.heroTr.localRotation = Quaternion.Euler(0f, 180f, 0f);
-            pod.heroTr.localScale = Vector3.one * 1.42f;
+            pod.heroTr.localScale = Vector3.one * 1.28f;
 
             // Crack lines container (revealed progressively as HP drops toward 7)
             pod.crackRoot = new GameObject("Cracks").transform;
             pod.crackRoot.SetParent(pod.tr, false);
             for (int i = 0; i < 10; i++)
             {
-                float cy = 1.1f + (i % 5) * 0.55f;
-                float cx = ((i * 37) % 11 - 5) * 0.18f;
-                var cr = Prim(PrimitiveType.Cube, pod.crackRoot, new Vector3(cx, cy, -1.32f), new Vector3(0.98f, 0.055f, 0.04f), new Color(0.92f, 0.98f, 1f));
+                float cy = 1.1f + (i % 5) * 0.52f;
+                float cx = ((i * 37) % 11 - 5) * 0.16f;
+                var cr = Prim(PrimitiveType.Cube, pod.crackRoot, new Vector3(cx, cy, -1.24f), new Vector3(0.90f, 0.055f, 0.04f), new Color(0.92f, 0.98f, 1f));
                 cr.transform.localRotation = Quaternion.Euler(0f, 0f, (i * 53) % 140 - 70);
                 cr.SetActive(false);
             }
 
-            // High-contrast framed "1241" counter & "HELP!!" callout badge
-            var hpBadge = MakeWorldBadge(pod.tr, new Vector3(0f, 1.38f, -1.68f), new Vector2(2.45f, 1.25f), new Color(0.05f, 0.11f, 0.26f), LaserCyan);
-            pod.hpLabel = Res.MakeLabel(hpBadge, Mathf.CeilToInt(hp).ToString(), 1.38f, Color.white, 48, Vector3.zero);
-            var helpBadge = MakeWorldBadge(pod.tr, new Vector3(-1.15f, 3.35f, -1.68f), new Vector2(2.45f, 0.92f), new Color(0.16f, 0.10f, 0.05f), Gold);
-            pod.helpLabel = Res.MakeLabel(helpBadge, "HELP!!", 0.86f, Gold, 49, Vector3.zero);
+            // Compact framed "1241" counter & "HELP!!" callout badge kept well inside right screen border!
+            var hpBadge = MakeWorldBadge(pod.tr, new Vector3(-0.15f, 1.35f, -1.56f), new Vector2(1.85f, 0.96f), new Color(0.05f, 0.11f, 0.26f), LaserCyan);
+            pod.hpLabel = Res.MakeLabel(hpBadge, Mathf.CeilToInt(hp).ToString(), 0.98f, Color.white, 48, Vector3.zero);
+            var helpBadge = MakeWorldBadge(pod.tr, new Vector3(-0.75f, 3.20f, -1.56f), new Vector2(1.75f, 0.72f), new Color(0.16f, 0.10f, 0.05f), Gold);
+            pod.helpLabel = Res.MakeLabel(helpBadge, "HELP!!", 0.62f, Gold, 49, Vector3.zero);
             billboards.Add(hpBadge);
             billboards.Add(helpBadge);
             return pod;
@@ -566,9 +496,9 @@ namespace RescueRun
                 Prim(PrimitiveType.Sphere, g.root, new Vector3(px, 2.40f, z), Vector3.one * 0.30f, Gold);
             }
 
-            // Dark number badge plate in front of gate panel so the number is super crisp
-            var numBadge = MakeWorldBadge(g.root, new Vector3(x, 1.15f, z - 0.26f), new Vector2(2.15f, 1.18f), new Color(0.06f, 0.08f, 0.18f), Color.white);
-            g.txt = Res.MakeLabel(numBadge, "", 1.32f, Color.white, 42, Vector3.zero);
+            // Compact dark number badge plate in front of gate panel
+            var numBadge = MakeWorldBadge(g.root, new Vector3(x, 1.15f, z - 0.26f), new Vector2(1.75f, 0.98f), new Color(0.06f, 0.08f, 0.18f), Color.white);
+            g.txt = Res.MakeLabel(numBadge, "", 1.05f, Color.white, 42, Vector3.zero);
             billboards.Add(numBadge);
             RefreshGate(g);
             gates.Add(g);
@@ -1210,11 +1140,14 @@ namespace RescueRun
                 float phaseT = Time.time * (e.isBoss ? 7f : 14f) + e.x * 2.1f;
                 float bob = Mathf.Abs(Mathf.Sin(phaseT)) * (e.isBoss ? 0.16f : 0.09f);
                 e.tr.localPosition = new Vector3(e.x, bob, e.z);
-                if (!e.isBoss && e.tr.childCount >= 2)
+                if (!e.isBoss)
                 {
-                    float swing = Mathf.Sin(phaseT) * 32f;
-                    e.tr.GetChild(0).localRotation = Quaternion.Euler(swing, 0f, 0f);
-                    e.tr.GetChild(1).localRotation = Quaternion.Euler(-swing, 0f, 0f);
+                    e.tr.localRotation = Quaternion.Euler(0f, 180f, Mathf.Sin(phaseT) * 7f);
+                    if (e.tr.childCount >= 2 && e.hit > 0.01f)
+                    {
+                        var r1 = e.tr.GetChild(1).GetComponent<Renderer>();
+                        if (r1) SetColor(r1, Color.Lerp(Red, Color.white, e.hit * 0.7f));
+                    }
                 }
                 if (e.isBoss)
                 {
@@ -1266,24 +1199,24 @@ namespace RescueRun
             // 0-16m: start on right shooting 1241 tank -> slide left to shoot & break 8 HP tube (LV+1!)
             if (leftTube != null && !leftTube.broken)
             {
-                targetX = squadZ < 4.5f ? 1.65f : -1.85f;
+                targetX = squadZ < 4.5f ? 1.55f : -1.60f;
                 return;
             }
             // 21-33m: briefly slide right to pump the 1241 tank down to ~825, then slide left to flip the -13 gate to +6
-            if (squadZ < 33f) { targetX = 1.75f; return; }
-            if (squadZ < 48f) { targetX = -1.85f; return; }
+            if (squadZ < 33f) { targetX = 1.60f; return; }
+            if (squadZ < 48f) { targetX = -1.65f; return; }
             // 48-57m: shoot the right tank down to 280
             if (squadZ < 57f) { targetX = 1.45f; return; }
             // 57-82m: slide left to gun down the 372 Mid-Boss
-            if (squadZ < 82f) { targetX = -1.65f; return; }
+            if (squadZ < 82f) { targetX = -1.55f; return; }
             // 82-96m: shoot the right tank down to 95
-            if (squadZ < 96f) { targetX = 1.65f; return; }
+            if (squadZ < 96f) { targetX = 1.55f; return; }
             // 96-109m: slide left to shoot the -40 gate down to -20 and pass through it (6 -> 3 soldiers)
-            if (squadZ < 109f) { targetX = -1.85f; return; }
+            if (squadZ < 109f) { targetX = -1.65f; return; }
             // 109-121m: shoot the right tank all the way down to 7 HP!
-            if (squadZ < 121f) { targetX = 1.65f; return; }
+            if (squadZ < 121f) { targetX = 1.55f; return; }
             // 121m+: face the 878 Final Boss on the left lane until he reaches ~170 HP and crushes the squad -> DEFEAT!
-            targetX = -1.55f;
+            targetX = -1.45f;
         }
 
         // ============================================================ results

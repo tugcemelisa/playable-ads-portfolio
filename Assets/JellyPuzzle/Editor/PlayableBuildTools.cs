@@ -56,7 +56,8 @@ namespace JellyAd.EditorTools
             if (latest > lastScriptStamp)
             {
                 lastScriptStamp = latest;
-                AssetDatabase.Refresh();
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+                EditorUtility.RequestScriptReload();
             }
         }
         const BindingFlags PublicInstance = BindingFlags.Public | BindingFlags.Instance;

@@ -193,7 +193,11 @@ namespace AdKit
             rt.anchorMin = anchor;
             rt.anchorMax = anchor;
             rt.anchoredPosition = pos;
-            rt.sizeDelta = new Vector2(1000f, size * 1.45f);
+            float maxW = 840f;
+            var prt = parent as RectTransform;
+            if (prt != null && prt.sizeDelta.x > 50f && prt.sizeDelta.x < 960f)
+                maxW = prt.sizeDelta.x - 28f;
+            rt.sizeDelta = new Vector2(maxW, size * 1.45f);
             var t = go.AddComponent<Text>();
             t.font = Res.Font;
             t.text = s;
@@ -201,15 +205,18 @@ namespace AdKit
             t.fontStyle = FontStyle.Normal;
             t.color = c;
             t.alignment = TextAnchor.MiddleCenter;
-            t.horizontalOverflow = HorizontalWrapMode.Overflow;
-            t.verticalOverflow = VerticalWrapMode.Overflow;
+            t.horizontalOverflow = HorizontalWrapMode.Wrap;
+            t.verticalOverflow = VerticalWrapMode.Truncate;
+            t.resizeTextForBestFit = true;
+            t.resizeTextMinSize = 18;
+            t.resizeTextMaxSize = size;
             t.raycastTarget = false;
             var o = go.AddComponent<Outline>();
             o.effectColor = new Color(0.03f, 0.04f, 0.11f, 0.94f);
-            o.effectDistance = new Vector2(5f, -5f);
+            o.effectDistance = new Vector2(4f, -4f);
             var sh = go.AddComponent<Shadow>();
             sh.effectColor = new Color(0f, 0f, 0f, 0.65f);
-            sh.effectDistance = new Vector2(0f, -8f);
+            sh.effectDistance = new Vector2(0f, -6f);
             return t;
         }
 
