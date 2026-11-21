@@ -133,9 +133,7 @@ namespace MobControlAd
         RectTransform _playNowBtnRt;
         bool _hasInteracted;
         bool _climaxTriggered;
-        bool _climaxWon;
         float _climaxTimer;
-        bool _ended;
         float _elapsedTime;
         float _sfxHitCooldown;
         float _sfxGateCooldown;
@@ -561,13 +559,6 @@ namespace MobControlAd
             float dt = Time.deltaTime;
             _ui?.Tick(dt);
 
-            if (_ended)
-            {
-                if (Input.GetMouseButtonDown(0))
-                    StoreLink.Open(MobControlStoreUrl);
-                return;
-            }
-
             if (_climaxTriggered)
             {
                 _climaxTimer += dt;
@@ -990,7 +981,6 @@ namespace MobControlAd
         {
             if (_climaxTriggered) return;
             _climaxTriggered = true;
-            _climaxWon = true;
             _climaxTimer = 0f;
             _ui.ShowDragTutorial(false);
             if (_defeatTitleText)
@@ -1008,7 +998,6 @@ namespace MobControlAd
         {
             if (_climaxTriggered) return;
             _climaxTriggered = true;
-            _climaxWon = false;
             _climaxTimer = 0f;
             _ui.ShowDragTutorial(false);
 
