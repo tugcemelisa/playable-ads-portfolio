@@ -100,6 +100,7 @@ namespace MobControlAd
             public float spawnPop;
             public bool inTube;
             public float tubeT;
+            public bool hasSkeletalRun;
         }
 
         class MultiplierGate
@@ -198,6 +199,8 @@ namespace MobControlAd
         readonly List<SparkFx> _sparks = new List<SparkFx>();
         GameObject _purpleMobPrefab;
         GameObject _yellowMobPrefab;
+        AnimationClip _purpleRunClip;
+        AnimationClip _yellowRunClip;
         Material _matFriendlyMain, _matFriendlyLight, _matFriendlyDark, _matFriendlyDeep;
         Material _matEnemyMain, _matEnemyAccent, _matGrayCorpse;
 
@@ -228,6 +231,8 @@ namespace MobControlAd
             ApplyThemePalette();
             _purpleMobPrefab = Resources.Load<GameObject>("Models/PurpleMob");
             _yellowMobPrefab = Resources.Load<GameObject>("Models/YellowMob");
+            _purpleRunClip = FindRunClip("Models/PurpleMob");
+            _yellowRunClip = FindRunClip("Models/YellowMob");
             SetupCameraAndSpaceEnvironment();
             BuildWhiteBridge();
             BuildArchedPurpleTube();
@@ -892,6 +897,26 @@ namespace MobControlAd
                     inst.transform.localPosition = new Vector3(0f, -localMin.y * normScale, 0f);
                 }
 
+                // Play the embedded Quaternius "CharacterArmature|Run" skeletal animation clip!
+                var runClip = isPurple ? _purpleRunClip : _yellowRunClip;
+                if (runClip != null)
+                {
+                    var anim = inst.GetComponent<Animation>();
+                    if (!anim) anim = inst.AddComponent<Animation>();
+                    anim.playAutomatically = false;
+                    anim.cullingType = AnimationCullingType.AlwaysAnimate;
+                    anim.AddClip(runClip, "Run");
+                    var st = anim["Run"];
+                    if (st != null)
+                    {
+                        st.wrapMode = WrapMode.Loop;
+                        st.speed = isPurple ? 1.45f : 1.15f;
+                        st.time = Random.Range(0f, Mathf.Max(0.01f, runClip.length));
+                    }
+                    anim.Play("Run");
+                    unit.hasSkeletalRun = true;
+                }
+
                 // Multi-tone theme shading per material slot:
                 // - Friendly (DgOCW9ZCRJ): all clothes/body in harmonious purple (or electric blue) tones
                 // - Enemy (RRliSQBP7r Alien): preserve Eye_Black & Eye_White, paint Alien_Main/Secondary/Tongue bright yellow (or red)
@@ -958,6 +983,21 @@ namespace MobControlAd
             if (isPurple) _purpleMobs.Add(unit);
             else _yellowMobs.Add(unit);
             return unit;
+        }
+
+        static AnimationClip FindRunClip(string resourcePath)
+        {
+            var clips = Resources.LoadAll<AnimationClip>(resourcePath);
+            if (clips == null || clips.Length == 0) return null;
+            AnimationClip walkFallback = null;
+            for (int i = 0; i < clips.Length; i++)
+            {
+                if (!clips[i]) continue;
+                string low = clips[i].name.ToLowerInvariant();
+                if (low.Contains("run")) return clips[i];
+                if (low.Contains("walk") && walkFallback == null) walkFallback = clips[i];
+            }
+            return walkFallback != null ? walkFallback : clips[0];
         }
 
         static bool IsEyeName(string n)
@@ -1399,18 +1439,25 @@ namespace MobControlAd
                 u.spawnPop = Mathf.MoveTowards(u.spawnPop, 0f, dt * 5f);
 
             float popScale = 1f + Mathf.Sin(u.spawnPop * Mathf.PI) * 0.28f;
+            u.body.localScale = Vector3.one * popScale;
+
+            // Real skeletal Run clip is driving the FBX limbs — don't add fake sideways wobble!
+            if (u.hasSkeletalRun)
+            {
+                u.body.localPosition = Vector3.zero;
+                u.body.localRotation = Quaternion.identity;
+                return;
+            }
+
             float cyc = _elapsedTime * 16f + u.phase;
             float bob = Mathf.Abs(Mathf.Sin(cyc)) * 0.10f;
             float swing = Mathf.Sin(cyc) * 38f;
 
             u.body.localPosition = new Vector3(0f, bob, 0f);
-            u.body.localScale = Vector3.one * popScale;
             if (u.leftArm) u.leftArm.localRotation = Quaternion.Euler(swing, 0f, 0f);
             if (u.rightArm) u.rightArm.localRotation = Quaternion.Euler(-swing, 0f, 0f);
             if (u.leftLeg) u.leftLeg.localRotation = Quaternion.Euler(-swing, 0f, 0f);
             if (u.rightLeg) u.rightLeg.localRotation = Quaternion.Euler(swing, 0f, 0f);
-            if (!u.leftLeg)
-                u.body.localRotation = Quaternion.Euler(8f, 0f, Mathf.Sin(cyc) * 9f);
         }
 
         void DamageYellowBlock(int dmg, Vector3 hitPos)
