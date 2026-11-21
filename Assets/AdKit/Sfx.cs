@@ -56,7 +56,9 @@ namespace AdKit
             {
                 sources[i] = go.AddComponent<AudioSource>();
                 sources[i].playOnAwake = false;
+#if !UNITY_LUNA
                 sources[i].spatialBlend = 0f;
+#endif
             }
         }
 

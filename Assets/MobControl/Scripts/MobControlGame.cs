@@ -154,7 +154,7 @@ namespace MobControlAd
             BuildYellowEnemyBase();
             BuildUI();
             SpawnInitialReferenceState();
-            StoreLink.LogEvent("mobcontrol_start");
+            Luna.Unity.Analytics.LogEvent("mobcontrol_start", 1);
         }
 
         void SetupCameraAndSpaceEnvironment()
@@ -670,7 +670,7 @@ namespace MobControlAd
                 {
                     _hasInteracted = true;
                     _ui.ShowDragTutorial(false);
-                    StoreLink.LogEvent("mobcontrol_first_drag");
+                    Luna.Unity.Analytics.LogEvent("mobcontrol_first_drag", 1);
                 }
                 float normX = Mathf.Clamp01(Input.mousePosition.x / Mathf.Max(1f, Screen.width));
                 _targetCannonX = Mathf.Lerp(-2.45f, 2.45f, normX);
@@ -1055,7 +1055,7 @@ namespace MobControlAd
                 _defeatTitleText.color = new Color(0.26f, 0.96f, 0.42f);
             }
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
-            StoreLink.LogEvent("mobcontrol_victory");
+            Luna.Unity.Analytics.LogEvent("mobcontrol_victory", 1);
             StoreLink.NotifyGameEnded();
             Sfx.Play(Sfx.Id.Win, 0.9f);
             TriggerCameraShake(0.45f, 0.25f);
@@ -1083,7 +1083,7 @@ namespace MobControlAd
                 _defeatTitleText.color = PurpleMain;
             }
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
-            StoreLink.LogEvent("mobcontrol_victory");
+            Luna.Unity.Analytics.LogEvent("mobcontrol_defeat", 1);
             StoreLink.NotifyGameEnded();
             Sfx.Play(Sfx.Id.Fail, 0.85f);
             TriggerCameraShake(0.45f, 0.28f);
