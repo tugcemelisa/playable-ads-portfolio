@@ -199,6 +199,7 @@ namespace MobControlAd
         readonly List<SparkFx> _sparks = new List<SparkFx>();
         GameObject _purpleMobPrefab;
         GameObject _yellowMobPrefab;
+        RuntimeAnimatorController _mobRunController;
         AnimationClip _purpleRunClip;
         AnimationClip _yellowRunClip;
         Material _matFriendlyMain, _matFriendlyLight, _matFriendlyDark, _matFriendlyDeep;
@@ -231,6 +232,7 @@ namespace MobControlAd
             ApplyThemePalette();
             _purpleMobPrefab = Resources.Load<GameObject>("Models/PurpleMob");
             _yellowMobPrefab = Resources.Load<GameObject>("Models/YellowMob");
+            _mobRunController = Resources.Load<RuntimeAnimatorController>("Models/MobRunController");
             _purpleRunClip = FindRunClip("Models/PurpleMob");
             _yellowRunClip = FindRunClip("Models/YellowMob");
             SetupCameraAndSpaceEnvironment();
@@ -884,25 +886,40 @@ namespace MobControlAd
                 float modelScale = isPurple ? 0.62f : 0.58f;
                 inst.transform.localScale = Vector3.one * modelScale;
 
-                // Play the embedded Quaternius "CharacterArmature|Run" skeletal animation clip!
-                var runClip = isPurple ? _purpleRunClip : _yellowRunClip;
-                if (runClip != null)
+                // 1. Prefer Mixamo Fast Run via Humanoid AnimatorController (MobRunController.controller)
+                if (_mobRunController != null)
                 {
-                    var anim = inst.GetComponent<Animation>();
-                    if (!anim) anim = inst.AddComponent<Animation>();
-                    anim.playAutomatically = false;
-                    anim.cullingType = AnimationCullingType.AlwaysAnimate;
-                    anim.AddClip(runClip, "Run");
-                    var st = anim["Run"];
-                    if (st != null)
-                    {
-                        st.wrapMode = WrapMode.Loop;
-                        st.speed = isPurple ? 1.45f : 1.15f;
-                        st.time = Random.Range(0f, Mathf.Max(0.01f, runClip.length));
-                    }
-                    anim.Play("Run");
-                    anim.Sample();
+                    var animator = inst.GetComponent<Animator>();
+                    if (!animator) animator = inst.AddComponent<Animator>();
+                    animator.runtimeAnimatorController = _mobRunController;
+                    animator.applyRootMotion = false;
+                    animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+                    animator.speed = isPurple ? 1.25f : 0.96f;
+                    animator.Play(0, 0, Random.Range(0f, 1f));
                     unit.hasSkeletalRun = true;
+                }
+                else
+                {
+                    // 2. Fallback: embedded Quaternius "CharacterArmature|Run" Legacy clip
+                    var runClip = isPurple ? _purpleRunClip : _yellowRunClip;
+                    if (runClip != null)
+                    {
+                        var anim = inst.GetComponent<Animation>();
+                        if (!anim) anim = inst.AddComponent<Animation>();
+                        anim.playAutomatically = false;
+                        anim.cullingType = AnimationCullingType.AlwaysAnimate;
+                        anim.AddClip(runClip, "Run");
+                        var st = anim["Run"];
+                        if (st != null)
+                        {
+                            st.wrapMode = WrapMode.Loop;
+                            st.speed = isPurple ? 1.45f : 1.15f;
+                            st.time = Random.Range(0f, Mathf.Max(0.01f, runClip.length));
+                        }
+                        anim.Play("Run");
+                        anim.Sample();
+                        unit.hasSkeletalRun = true;
+                    }
                 }
 
                 var rends = inst.GetComponentsInChildren<Renderer>(true);
