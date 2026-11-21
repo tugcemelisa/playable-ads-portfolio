@@ -44,18 +44,37 @@ namespace AdKit
             ui.banner = Txt(ui.bannerWrap, "", 92, Color.white, c, new Vector2(0f, 4f));
             ui.bannerWrap.gameObject.SetActive(false);
 
-            // Sleek Voodoo Drag Tutorial with pill track + pulsing ring + hand
+            // Sleek Voodoo Drag Tutorial with prominent high-contrast pill backdrop + glowing rim + hand
             ui.tut = (RectTransform)new GameObject("DragTutorial", typeof(RectTransform)).transform;
             ui.tut.SetParent(ui.Root, false);
             ui.tut.anchorMin = new Vector2(0.5f, 0f);
             ui.tut.anchorMax = new Vector2(0.5f, 0f);
-            ui.tut.anchoredPosition = new Vector2(0f, 410f);
-            Img(ui.tut, Res.Round(64), new Color(0.04f, 0.06f, 0.14f, 0.72f), c, new Vector2(0f, 88f), new Vector2(820f, 210f), true);
-            Img(ui.tut, Res.Round(64), new Color(1f, 1f, 1f, 0.22f), c, new Vector2(0f, 18f), new Vector2(680f, 28f), true);
-            Img(ui.tut, Res.Circle, new Color(1f, 0.84f, 0.25f, 0.85f), c, new Vector2(-325f, 18f), new Vector2(36f, 36f), false);
-            Img(ui.tut, Res.Circle, new Color(1f, 0.84f, 0.25f, 0.85f), c, new Vector2(325f, 18f), new Vector2(36f, 36f), false);
-            Txt(ui.tut, "<  HOLD & DRAG TO MOVE  >", 54, new Color(1f, 0.94f, 0.55f), c, new Vector2(0f, 128f));
+            ui.tut.anchoredPosition = new Vector2(0f, 430f);
+            ui.tut.sizeDelta = new Vector2(960f, 250f);
+
+            // Layer 1: Dark outer shadow
+            Img(ui.tut, Res.Round(64), new Color(0.02f, 0.02f, 0.08f, 0.92f), c, Vector2.zero, new Vector2(960f, 250f), true);
+            // Layer 2: Glowing cyan arcade rim
+            Img(ui.tut, Res.Round(64), new Color(0.25f, 0.88f, 1f, 0.95f), c, Vector2.zero, new Vector2(950f, 240f), true);
+            // Layer 3: Deep purple body
+            Img(ui.tut, Res.Round(64), new Color(0.08f, 0.04f, 0.24f, 0.98f), c, Vector2.zero, new Vector2(934f, 224f), true);
+
+            // Slider guide track + endpoint indicator dots
+            Img(ui.tut, Res.Round(64), new Color(1f, 1f, 1f, 0.20f), c, new Vector2(0f, -48f), new Vector2(760f, 32f), true);
+            Img(ui.tut, Res.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(-350f, -48f), new Vector2(38f, 38f), false);
+            Img(ui.tut, Res.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(350f, -48f), new Vector2(38f, 38f), false);
+
+            // Bold, large, punchy arcade tutorial text (never downscaled)
+            var tutTxt = Txt(ui.tut, "◀   HOLD & DRAG TO AIM!   ▶", 92, new Color(1f, 0.92f, 0.28f), c, new Vector2(0f, 46f));
+            tutTxt.horizontalOverflow = HorizontalWrapMode.Overflow;
+            tutTxt.verticalOverflow = VerticalWrapMode.Overflow;
+            tutTxt.resizeTextForBestFit = false;
+            var tutOut = tutTxt.gameObject.AddComponent<Outline>();
+            tutOut.effectColor = new Color(0.02f, 0.01f, 0.08f, 1f);
+            tutOut.effectDistance = new Vector2(5f, -5f);
+
             ui.tutHand = Hand(ui.tut, out ui.tutRing);
+            ui.tutHand.localScale = Vector3.one * 1.35f;
             ui.tut.gameObject.SetActive(false);
 
             // Multi-layered Voodoo Endcard with 3D glossy CTA button
@@ -139,7 +158,7 @@ namespace AdKit
             }
             if (tut.gameObject.activeSelf)
             {
-                tutHand.anchoredPosition = new Vector2(Mathf.Sin(Time.time * 3.2f) * 285f, -18f);
+                tutHand.anchoredPosition = new Vector2(Mathf.Sin(Time.time * 3.2f) * 320f, -48f);
                 if (tutRing)
                 {
                     float p = 0.85f + 0.25f * Mathf.Sin(Time.time * 7f);

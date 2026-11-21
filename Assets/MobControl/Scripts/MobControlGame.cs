@@ -128,6 +128,9 @@ namespace MobControlAd
         // UI & State
         AdUI _ui;
         GameObject _endOverlayRoot;
+        GameObject _topHudRoot;
+        Text _topBlueMobsText;
+        Text _topEnemyBaseText;
         RectTransform _defeatBannerRt;
         Text _defeatTitleText;
         RectTransform _playNowBtnRt;
@@ -429,6 +432,37 @@ namespace MobControlAd
             _ui = AdUI.Create("MOB CONTROL", ctaText, new Color(0.14f, 0.08f, 0.28f), new Color(1f, 0.86f, 0.22f));
             _ui.ShowDragTutorial(true);
 
+            var center = new Vector2(0.5f, 0.5f);
+
+            // Authentic Top In-Game HUD matching Hypercasual / Mob Control reference
+            _topHudRoot = new GameObject("TopHUD", typeof(RectTransform));
+            var trt = (RectTransform)_topHudRoot.transform;
+            trt.SetParent(_ui.Root, false);
+            trt.anchorMin = new Vector2(0.5f, 1f);
+            trt.anchorMax = new Vector2(0.5f, 1f);
+            trt.anchoredPosition = new Vector2(0f, -120f);
+            trt.sizeDelta = new Vector2(980f, 140f);
+
+            // Left: Player Mob Count Card (Cyan/Purple)
+            AdUI.Img(trt, Res.Round(64), new Color(0.04f, 0.06f, 0.18f, 0.88f), center, new Vector2(-320f, 0f), new Vector2(300f, 110f), true);
+            AdUI.Img(trt, Res.Round(64), new Color(0.25f, 0.88f, 1f, 0.95f), center, new Vector2(-320f, 0f), new Vector2(290f, 100f), true);
+            AdUI.Img(trt, Res.Round(64), new Color(0.08f, 0.04f, 0.24f, 0.98f), center, new Vector2(-320f, 0f), new Vector2(280f, 90f), true);
+            _topBlueMobsText = AdUI.Txt(trt, "MOBS: 0", 48, new Color(0.35f, 0.92f, 1f), center, new Vector2(-320f, 0f));
+
+            // Center: Stage 1 Crest (Gold/Purple)
+            AdUI.Img(trt, Res.Round(64), new Color(0.04f, 0.06f, 0.18f, 0.88f), center, new Vector2(0f, 0f), new Vector2(240f, 120f), true);
+            AdUI.Img(trt, Res.Round(64), new Color(1f, 0.84f, 0.22f, 0.95f), center, new Vector2(0f, 0f), new Vector2(230f, 110f), true);
+            AdUI.Img(trt, Res.Round(64), new Color(0.20f, 0.08f, 0.38f, 0.98f), center, new Vector2(0f, 0f), new Vector2(220f, 100f), true);
+            var stageLbl = AdUI.Txt(trt, "STAGE 1", 52, new Color(1f, 0.92f, 0.35f), center, new Vector2(0f, 0f));
+            var stageOut = stageLbl.gameObject.AddComponent<Outline>();
+            stageOut.effectColor = new Color(0.02f, 0.01f, 0.08f, 1f);
+
+            // Right: Target Enemy Base HP Card (Red/Dark)
+            AdUI.Img(trt, Res.Round(64), new Color(0.04f, 0.06f, 0.18f, 0.88f), center, new Vector2(320f, 0f), new Vector2(300f, 110f), true);
+            AdUI.Img(trt, Res.Round(64), new Color(0.95f, 0.22f, 0.32f, 0.95f), center, new Vector2(320f, 0f), new Vector2(290f, 100f), true);
+            AdUI.Img(trt, Res.Round(64), new Color(0.24f, 0.04f, 0.08f, 0.98f), center, new Vector2(320f, 0f), new Vector2(280f, 90f), true);
+            _topEnemyBaseText = AdUI.Txt(trt, "BASE: " + enemyBaseStartHp, 48, new Color(1f, 0.45f, 0.45f), center, new Vector2(320f, 0f));
+
             // Authentic Mob Control End Screen Overlay (keeps live 3D battlefield visible like ref_end_10.jpg!)
             _endOverlayRoot = new GameObject("MobControlEndOverlay", typeof(RectTransform));
             var ort = (RectTransform)_endOverlayRoot.transform;
@@ -438,8 +472,6 @@ namespace MobControlAd
             ort.offsetMin = Vector2.zero;
             ort.offsetMax = Vector2.zero;
             _endOverlayRoot.AddComponent<Image>().color = new Color(0.01f, 0.01f, 0.04f, 0.32f);
-
-            var center = new Vector2(0.5f, 0.5f);
 
             // Tilted 3D "DEFEAT..." / "VICTORY!" Center Banner matching ref_end_10.jpg
             var defWrap = new GameObject("DefeatBanner", typeof(RectTransform));
