@@ -26,16 +26,16 @@ namespace NumberMatchAd
 
         [Header("Ad")]
         [LunaPlaygroundField("Game Title", 0, "Ad Settings")]
-        public string gameTitle = "COLOR BY NUMBER";
+        public string gameTitle = "NUMBER MATCH";
         [LunaPlaygroundField("Intro Banner", 1, "Ad Settings")]
-        public string introBanner = "FIX THE PICTURE!";
+        public string introBanner = "MATCH NUMBERS!";
         [Tooltip("Big title on the endcard (keep it short, ~10 letters).")]
         [LunaPlaygroundField("Endcard Title", 2, "Ad Settings")]
         public string endcardTitle = "SO CLOSE!";
         [LunaPlaygroundField("CTA Text", 3, "Ad Settings")]
         public string ctaText = "PLAY NOW";
         [LunaPlaygroundField("Store URL", 4, "Ad Settings")]
-        public string storeUrl = "https://play.google.com/store";
+        public string storeUrl = "https://apps.apple.com/us/search?term=Number+Match";
         [Tooltip("Force the endcard after this many seconds of play (0 = never).")]
         [LunaPlaygroundField("Round Timer (s)", 5, "Ad Settings")]
         public float endcardAfterSeconds = 24f;
@@ -60,46 +60,54 @@ namespace NumberMatchAd
         const int TrayPerRow = 7;
         const float SnapRadius = 1.6f; // in cells
 
+        // Exact 16x16 pixel-art layout from number-match-case-study/Assets/Textures/showcase.png
         static readonly string[] DefaultPicture =
         {
-            "................",
-            ".......GG.......",
-            "......RRRR......",
-            ".....RRRRRR.....",
-            "....PPPPPPPP....",
-            "...PPPPPSPPPP...",
-            "...PPSPPPPPSP...",
-            "..CCCCCCCCCCCC..",
-            "..CCCSCCCCSCCC..",
-            "...CCCCCCCCCC...",
-            "...YYOYYOYYOY...",
-            "....YOYYOYYO....",
-            ".....YYOYYO.....",
-            "......OYYO......",
-            ".......YY.......",
-            "................",
+            "0000000000000000",
+            "0000111221110000",
+            "0001233333321000",
+            "0012344554432100",
+            "0023456666543200",
+            "0124567887654210",
+            "0134679999764310",
+            "0235679AA9765320",
+            "0235689BB9865320",
+            "0235678998765320",
+            "0134567887654310",
+            "0123456666543210",
+            "0012334554332100",
+            "0000123333210000",
+            "0000012222100000",
+            "0000000000000000",
         };
 
+        // Exact 12-colour palette sampled from showcase.png
         static Color PaletteColor(char ch)
         {
             switch (ch)
             {
-                case 'G': return new Color(0.36f, 0.80f, 0.32f);
-                case 'R': return new Color(0.94f, 0.22f, 0.30f);
-                case 'P': return new Color(1.00f, 0.62f, 0.80f);
-                case 'S': return new Color(1.00f, 0.90f, 0.30f);
-                case 'C': return new Color(0.50f, 0.30f, 0.20f);
-                case 'Y': return new Color(0.97f, 0.78f, 0.45f);
-                case 'O': return new Color(0.80f, 0.50f, 0.22f);
-                default: return new Color(0.56f, 0.82f, 0.99f);
+                case '0': return new Color(0.949f, 0.549f, 0.749f); // Soft Pink
+                case '1': return new Color(0.902f, 0.251f, 0.702f); // Magenta
+                case '2': return new Color(0.651f, 0.251f, 0.800f); // Orchid Purple
+                case '3': return new Color(0.451f, 0.302f, 0.851f); // Electric Violet
+                case '4': return new Color(0.251f, 0.451f, 0.902f); // Royal Blue
+                case '5': return new Color(0.200f, 0.702f, 0.902f); // Sky Blue
+                case '6': return new Color(0.149f, 0.749f, 0.651f); // Turquoise
+                case '7': return new Color(0.200f, 0.749f, 0.349f); // Emerald Green
+                case '8': return new Color(0.600f, 0.851f, 0.200f); // Lime Green
+                case '9': return new Color(0.949f, 0.800f, 0.149f); // Golden Yellow
+                case 'A': return new Color(0.902f, 0.200f, 0.251f); // Crimson Red
+                case 'B': return new Color(0.949f, 0.451f, 0.149f); // Sunset Orange
+                default:  return new Color(0.949f, 0.549f, 0.749f);
             }
         }
 
-        static readonly Color MaskColor = new Color(0.27f, 0.23f, 0.45f);
-        static readonly Color FilledColor = new Color(0.52f, 0.48f, 0.76f);
-        static readonly Color HighlightColor = new Color(1f, 0.93f, 0.55f);
-        static readonly Color NumberColor = new Color(0.86f, 0.86f, 1f);
-        static readonly string[] Praise = { "GREAT!", "AWESOME!", "PERFECT!", "AMAZING!", "WOW!" };
+        // Deep royal purple board styling matching number-match-case-study
+        static readonly Color MaskColor = new Color(0.16f, 0.12f, 0.32f);
+        static readonly Color FilledColor = new Color(0.38f, 0.30f, 0.62f);
+        static readonly Color HighlightColor = new Color(1f, 0.90f, 0.42f);
+        static readonly Color NumberColor = new Color(0.90f, 0.92f, 1f);
+        static readonly string[] Praise = { "AMAZING!", "BRILLIANT!", "SPECTACULAR!", "UNSTOPPABLE!", "PERFECT!" };
 
         enum Phase { Intro, Play, Done, End }
         Phase phase = Phase.Intro;
@@ -193,12 +201,12 @@ namespace NumberMatchAd
             cam.orthographic = true;
             cam.transform.position = camBase;
             cam.clearFlags = CameraClearFlags.SolidColor;
-            cam.backgroundColor = new Color(0.12f, 0.09f, 0.24f);
+            cam.backgroundColor = new Color(0.06f, 0.04f, 0.14f);
 
             world = new GameObject("World").transform;
             fx = new GameObject("FX").transform;
 
-            bg = Res.Spr("Background", world, Res.Gradient(new Color(0.36f, 0.24f, 0.62f), new Color(0.10f, 0.07f, 0.22f)),
+            bg = Res.Spr("Background", world, Res.Gradient(new Color(0.22f, 0.12f, 0.44f), new Color(0.05f, 0.03f, 0.13f)),
                 Color.white, -100, Vector3.zero, Vector2.one);
 
             BuildPicture();
