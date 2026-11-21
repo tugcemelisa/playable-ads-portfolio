@@ -5,13 +5,13 @@ Games and interactive playable ads are built and exported in **Unity** using **U
 
 ## Projects
 
-| Project | Format | Description |
+| Project | Format | Links & Details |
 |---|---|---|
-| **Mob Control** | Playable Ad + Creative Video | Voodoo-style 3D cannon & mob multiplier playable ad: 4-wheeled purple cannon, arched 3D center tube transport, sliding `X3` / `X2` / `X7` multiplier gates, destructible `60` HP block, yellow enemy base siege (`50` HP), prominent `HOLD & DRAG TO AIM!` tutorial, live HUD, near-miss `DEFEAT...` hook, and Store CTA.<br>🎮 **Play Live (Playworks HTML5):** [Play Mob Control Demo](https://tugcemelisa.github.io/playable-ads-portfolio/mob-control/) |
-| **Number Match** | Playable Ad + Creative Video | 3D colour-by-number pixel art puzzle: complete case study with 9:16 vertical marketing creative video (Adobe After Effects & Adobe Illustrator) and Playworks HTML5 Playable Ad.<br>🎮 **Play Live (Playworks HTML5):** [Play Number Match Demo](https://tugcemelisa.github.io/playable-ads-portfolio/number-match/) · 🎬 **Video:** [Watch on YouTube Shorts](https://youtube.com/shorts/G4jU1Z6JKeI) · 🔗 **Case Study Repo:** [github.com/tugcemelisa/number-match-case-study](https://github.com/tugcemelisa/number-match-case-study) |
-| **Runner** | Playable Ad + Creative Video | 3D castle obstacle runner: swipe steering, jumping, coin & large gem collection, shield invincibility, destructible obstacles, and finish line multiplier gate.<br>🔗 **Original Repo:** [github.com/tugcemelisa/Runner](https://github.com/tugcemelisa/Runner) · 🎮 **Playable Ad:** Integrated in `Assets/Runner/` |
-| **Jelly Flow** | Creative Video | Pixel-art conveyor puzzle 9:16 vertical marketing video creative.<br>🎬 **Video:** [Watch on YouTube Shorts](https://www.youtube.com/shorts/1l0v7LeWNJU) |
-| **MechWars** | Creative Video | Action shooter mobile marketing video creatives.<br>🎬 **Video:** [Watch on TikTok](https://www.tiktok.com/@mechwarsofficial_) |
+| **Mob Control** | Playable Ad + Creative Video | Voodoo-style 3D cannon & mob multiplier playable ad: 4-wheeled purple cannon, arched 3D center tube transport, sliding `X3` / `X2` / `X7` multiplier gates, destructible `60` HP block, yellow enemy base siege (`50` HP), cartoon HUD & endcard CTA.<br>🎮 **Playable Ad:** [Play Live Demo](https://tugcemelisa.github.io/playable-ads-portfolio/mob-control/) · 🎬 **Creative Ad:** *(Coming soon)* · 🔗 **Repo:** [`Assets/MobControl/`](Assets/MobControl/) *(this repository)* |
+| **Number Match** | Playable Ad + Creative Video | 3D colour-by-number pixel art puzzle with wrong-move tension hook, 360° radial colour wave reveals, centered `HURRY UP!` countdown alarm, `00:00` explosion transition, and 3D endcard CTA.<br>🎮 **Playable Ad:** [Play Live Demo](https://tugcemelisa.github.io/playable-ads-portfolio/number-match/) · 🎬 **Creative Ad:** [Watch on YouTube Shorts](https://youtube.com/shorts/G4jU1Z6JKeI) · 🔗 **Repo:** [github.com/tugcemelisa/number-match-case-study](https://github.com/tugcemelisa/number-match-case-study) |
+| **Runner** | Playable Ad + Creative Video | 3D castle obstacle runner with swipe steering, jumping, gem collection, shield invincibility, and destructible obstacles.<br>🎮 **Playable Ad:** *(In progress — `Assets/Runner/`)* · 🎬 **Creative Ad:** *(Coming soon)* · 🔗 **Repo:** [github.com/tugcemelisa/Runner](https://github.com/tugcemelisa/Runner) |
+| **Jelly Flow** | Creative Video | Pixel-art conveyor puzzle 9:16 vertical marketing video creative.<br>🎬 **Creative Ad:** [Watch on YouTube Shorts](https://www.youtube.com/shorts/1l0v7LeWNJU) |
+| **MechWars** | Creative Video | Action shooter mobile marketing video creatives.<br>🎬 **Creative Ad:** [Watch on TikTok](https://www.tiktok.com/@mechwarsofficial_) |
 
 ## Tech Stack
 
