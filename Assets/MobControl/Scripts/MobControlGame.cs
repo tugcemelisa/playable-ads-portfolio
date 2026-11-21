@@ -879,23 +879,10 @@ namespace MobControlAd
                 var inst = Instantiate(customPrefab, body);
                 inst.transform.localPosition = Vector3.zero;
                 inst.transform.localRotation = Quaternion.identity;
-                inst.transform.localScale = Vector3.one;
-
-                var rends = inst.GetComponentsInChildren<Renderer>();
-                Bounds b = new Bounds(inst.transform.position, Vector3.zero);
-                bool hasBounds = false;
-                for (int i = 0; i < rends.Length; i++)
-                {
-                    if (!hasBounds) { b = rends[i].bounds; hasBounds = true; }
-                    else b.Encapsulate(rends[i].bounds);
-                }
-                if (hasBounds && b.size.y > 0.001f)
-                {
-                    float normScale = 1.12f / b.size.y;
-                    inst.transform.localScale = Vector3.one * normScale;
-                    Vector3 localMin = body.InverseTransformPoint(b.min);
-                    inst.transform.localPosition = new Vector3(0f, -localMin.y * normScale, 0f);
-                }
+                // Quaternius FBX characters are ~1.9-2.0m tall with feet at y=0; fixed scale avoids
+                // frame-0 SkinnedMeshRenderer bounds glitches under Legacy Animation!
+                float modelScale = isPurple ? 0.62f : 0.58f;
+                inst.transform.localScale = Vector3.one * modelScale;
 
                 // Play the embedded Quaternius "CharacterArmature|Run" skeletal animation clip!
                 var runClip = isPurple ? _purpleRunClip : _yellowRunClip;
@@ -914,15 +901,19 @@ namespace MobControlAd
                         st.time = Random.Range(0f, Mathf.Max(0.01f, runClip.length));
                     }
                     anim.Play("Run");
+                    anim.Sample();
                     unit.hasSkeletalRun = true;
                 }
 
+                var rends = inst.GetComponentsInChildren<Renderer>(true);
                 // Multi-tone theme shading per material slot:
                 // - Friendly (DgOCW9ZCRJ): all clothes/body in harmonious purple (or electric blue) tones
                 // - Enemy (RRliSQBP7r Alien): preserve Eye_Black & Eye_White, paint Alien_Main/Secondary/Tongue bright yellow (or red)
                 for (int i = 0; i < rends.Length; i++)
                 {
                     var r = rends[i];
+                    if (r is SkinnedMeshRenderer smr)
+                        smr.updateWhenOffscreen = true;
                     unit.renderers.Add(r);
                     var mats = r.sharedMaterials;
                     if (isPurple)
