@@ -198,6 +198,8 @@ namespace MobControlAd
         readonly List<SparkFx> _sparks = new List<SparkFx>();
         GameObject _purpleMobPrefab;
         GameObject _yellowMobPrefab;
+        Material _matFriendlyMain, _matFriendlyLight, _matFriendlyDark, _matFriendlyDeep;
+        Material _matEnemyMain, _matEnemyAccent, _matGrayCorpse;
 
         // UI & State
         AdUI _ui;
@@ -257,6 +259,23 @@ namespace MobControlAd
                 YellowMain = new Color(0.98f, 0.84f, 0.08f);
                 YellowDark = new Color(0.82f, 0.66f, 0.04f);
             }
+
+            // Build shared cached materials for multi-material FBX mobs (zero GC / high batching in Playworks WebGL)
+            _matFriendlyMain  = MakeThemeMat(PurpleMain);
+            _matFriendlyLight = MakeThemeMat(PurpleLight);
+            _matFriendlyDark  = MakeThemeMat(Color.Lerp(PurpleMain, Color.black, 0.34f));
+            _matFriendlyDeep  = MakeThemeMat(Color.Lerp(PurpleMain, Color.black, 0.60f));
+            _matEnemyMain     = MakeThemeMat(YellowMain);
+            _matEnemyAccent   = MakeThemeMat(YellowDark);
+            _matGrayCorpse    = MakeThemeMat(GrayCorpse);
+        }
+
+        static Material MakeThemeMat(Color col)
+        {
+            var baseMat = AdRes.PrimMat;
+            var mat = baseMat ? new Material(baseMat) : new Material(Shader.Find("Standard"));
+            mat.color = col;
+            return mat;
         }
 
         void SetupCameraAndSpaceEnvironment()
@@ -873,48 +892,43 @@ namespace MobControlAd
                     inst.transform.localPosition = new Vector3(0f, -localMin.y * normScale, 0f);
                 }
 
-                // Multi-tone theme palette for friendly (DgOCW9ZCRJ) | Preserve eyes & paint body yellow/red for enemy (RRliSQBP7r)
-                Color[] friendlyTones = { PurpleMain, PurpleLight, Color.Lerp(PurpleMain, Color.black, 0.28f) };
+                // Multi-tone theme shading per material slot:
+                // - Friendly (DgOCW9ZCRJ): all clothes/body in harmonious purple (or electric blue) tones
+                // - Enemy (RRliSQBP7r Alien): preserve Eye_Black & Eye_White, paint Alien_Main/Secondary/Tongue bright yellow (or red)
                 for (int i = 0; i < rends.Length; i++)
                 {
                     var r = rends[i];
                     unit.renderers.Add(r);
+                    var mats = r.sharedMaterials;
                     if (isPurple)
                     {
-                        if (AdRes.PrimMat)
+                        for (int m = 0; m < mats.Length; m++)
                         {
-                            var mats = r.sharedMaterials;
-                            for (int m = 0; m < mats.Length; m++) mats[m] = AdRes.PrimMat;
-                            r.sharedMaterials = mats;
+                            string mn = mats[m] != null ? mats[m].name.ToLowerInvariant() : "";
+                            if (mn.Contains("eye") || mn.Contains("pupil"))
+                                mats[m] = _matFriendlyDeep;
+                            else if (mn.Contains("pants") || mn.Contains("boots") || mn.Contains("hair"))
+                                mats[m] = _matFriendlyDark;
+                            else if (mn.Contains("skin") || mn.Contains("detail") || mn.Contains("white"))
+                                mats[m] = _matFriendlyLight;
+                            else
+                                mats[m] = _matFriendlyMain;
                         }
-                        Prims.SetColor(r, friendlyTones[i % friendlyTones.Length]);
+                        r.sharedMaterials = mats;
                     }
                     else
                     {
                         if (IsEyeMesh(r)) continue;
-                        if (AdRes.PrimMat)
+                        for (int m = 0; m < mats.Length; m++)
                         {
-                            var mats = r.sharedMaterials;
-                            bool hasEyeMat = false;
-                            for (int m = 0; m < mats.Length; m++)
-                            {
-                                if (mats[m] != null && IsEyeName(mats[m].name))
-                                    hasEyeMat = true;
-                                else
-                                    mats[m] = AdRes.PrimMat;
-                            }
-                            r.sharedMaterials = mats;
-                            if (!hasEyeMat) Prims.SetColor(r, YellowMain);
-                            else
-                            {
-                                // Tint non-eye slots via MaterialPropertyBlock on the main material
-                                Prims.SetColor(r, YellowMain);
-                            }
+                            string mn = mats[m] != null ? mats[m].name : "";
+                            if (IsEyeName(mn)) continue; // Keep Eye_Black & Eye_White untouched!
+                            string low = mn.ToLowerInvariant();
+                            mats[m] = (low.Contains("secondary") || low.Contains("tongue"))
+                                ? _matEnemyAccent
+                                : _matEnemyMain;
                         }
-                        else
-                        {
-                            Prims.SetColor(r, YellowMain);
-                        }
+                        r.sharedMaterials = mats;
                     }
                 }
             }
@@ -965,18 +979,22 @@ namespace MobControlAd
 
         void SetStickmanColor(StickmanUnit u, Color c)
         {
+            bool isGray = Mathf.Abs(c.r - GrayCorpse.r) < 0.02f && Mathf.Abs(c.g - GrayCorpse.g) < 0.02f;
             for (int i = 0; i < u.renderers.Count; i++)
             {
                 var r = u.renderers[i];
                 if (!r) continue;
-                // On clash/death, turn EVERY mesh & material (including eyes!) completely gray
-                if (AdRes.PrimMat)
+                // On clash/death, turn EVERY mesh & material slot (including Eye_Black & Eye_White!) completely solid gray
+                if (isGray && _matGrayCorpse != null)
                 {
                     var mats = r.sharedMaterials;
-                    for (int m = 0; m < mats.Length; m++) mats[m] = AdRes.PrimMat;
+                    for (int m = 0; m < mats.Length; m++) mats[m] = _matGrayCorpse;
                     r.sharedMaterials = mats;
                 }
-                Prims.SetColor(r, c);
+                else
+                {
+                    Prims.SetColor(r, c);
+                }
             }
         }
 
