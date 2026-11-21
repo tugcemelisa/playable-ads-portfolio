@@ -35,7 +35,7 @@ namespace MobControlAd
         public enum BackgroundTheme { MidnightSlate, AlpineWinter }
 
         [Header("Background Theme")]
-        public BackgroundTheme backgroundTheme = BackgroundTheme.MidnightSlate;
+        public BackgroundTheme backgroundTheme = BackgroundTheme.AlpineWinter;
 
         static readonly Color PurpleMain = new Color(0.50f, 0.10f, 0.96f);
         static readonly Color PurpleLight = new Color(0.68f, 0.38f, 1.00f);
@@ -321,16 +321,19 @@ namespace MobControlAd
             _targetCannonX = 0.0f;
             _cannonRoot.localPosition = new Vector3(0f, 0f, 1.45f);
 
-            // Gray rectangular chassis platform
-            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(0f, 0.24f, 0f), new Vector3(1.05f, 0.16f, 1.25f), new Color(0.55f, 0.57f, 0.62f));
+            // Stylized metallic chassis platform with dark under-frame and side rails
+            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(0f, 0.19f, 0f), new Vector3(1.12f, 0.10f, 1.32f), new Color(0.24f, 0.26f, 0.32f));
+            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(0f, 0.27f, 0f), new Vector3(1.04f, 0.14f, 1.24f), new Color(0.62f, 0.66f, 0.74f));
+            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(-0.46f, 0.36f, 0f), new Vector3(0.10f, 0.08f, 1.18f), new Color(0.38f, 0.16f, 0.78f));
+            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(0.46f, 0.36f, 0f), new Vector3(0.10f, 0.08f, 1.18f), new Color(0.38f, 0.16f, 0.78f));
 
-            // 4 Black Spoked Wheels (matching VideoReference.mp4)
+            // 4 Chunky Rubber Wheels with Metallic Rims & Purple Center Caps
             Vector3[] wheelOffsets =
             {
-                new Vector3(-0.58f, 0.24f, -0.45f),
-                new Vector3(0.58f, 0.24f, -0.45f),
-                new Vector3(-0.58f, 0.24f, 0.45f),
-                new Vector3(0.58f, 0.24f, 0.45f)
+                new Vector3(-0.60f, 0.25f, -0.45f),
+                new Vector3(0.60f, 0.25f, -0.45f),
+                new Vector3(-0.60f, 0.25f, 0.45f),
+                new Vector3(0.60f, 0.25f, 0.45f)
             };
             foreach (var wo in wheelOffsets)
             {
@@ -338,17 +341,19 @@ namespace MobControlAd
                 wRoot.SetParent(_cannonRoot, false);
                 wRoot.localPosition = wo;
 
-                var tire = Prims.Make(PrimitiveType.Cylinder, wRoot, Vector3.zero, new Vector3(0.48f, 0.11f, 0.48f), new Color(0.14f, 0.15f, 0.17f));
+                var tire = Prims.Make(PrimitiveType.Cylinder, wRoot, Vector3.zero, new Vector3(0.50f, 0.12f, 0.50f), new Color(0.14f, 0.15f, 0.18f));
                 tire.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
-                var hub = Prims.Make(PrimitiveType.Cylinder, wRoot, Vector3.zero, new Vector3(0.22f, 0.13f, 0.22f), new Color(0.42f, 0.44f, 0.48f));
-                hub.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                var rim = Prims.Make(PrimitiveType.Cylinder, wRoot, Vector3.zero, new Vector3(0.30f, 0.135f, 0.30f), new Color(0.76f, 0.80f, 0.86f));
+                rim.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                var cap = Prims.Make(PrimitiveType.Cylinder, wRoot, Vector3.zero, new Vector3(0.14f, 0.15f, 0.14f), PurpleMain);
+                cap.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
                 _cannonWheels.Add(wRoot);
             }
 
-            // Glossy Purple Cannon Barrel with lighter purple top highlight stripe
+            // Glossy Purple Cannon Barrel with power rings, flared muzzle & inner bore
             _cannonBarrel = new GameObject("PurpleBarrel").transform;
             _cannonBarrel.SetParent(_cannonRoot, false);
-            _cannonBarrel.localPosition = new Vector3(0f, 0.56f, -0.15f);
+            _cannonBarrel.localPosition = new Vector3(0f, 0.58f, -0.15f);
             _cannonBarrel.localRotation = Quaternion.Euler(-8f, 0f, 0f);
 
             // Try loading imported Cannon.fbx mesh if available, layered with clean Playworks primitives
@@ -365,15 +370,20 @@ namespace MobControlAd
                 }
             }
 
-            var mainTube = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 0.42f), new Vector3(0.76f, 0.62f, 0.76f), PurpleMain);
+            var mainTube = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 0.42f), new Vector3(0.78f, 0.64f, 0.78f), PurpleMain);
             mainTube.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            // Light purple top stripe along barrel
-            var stripe = Prims.Make(PrimitiveType.Cube, _cannonBarrel, new Vector3(0f, 0.34f, 0.42f), new Vector3(0.24f, 0.08f, 1.10f), PurpleLight);
-            var rearSphere = Prims.Make(PrimitiveType.Sphere, _cannonBarrel, new Vector3(0f, 0f, -0.18f), new Vector3(0.84f, 0.84f, 0.84f), PurpleMain);
-            var muzzleRing = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 1.02f), new Vector3(0.86f, 0.08f, 0.86f), PurpleLight);
+            // Metallic mid power band + light purple highlight stripe
+            var midRing = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 0.42f), new Vector3(0.84f, 0.09f, 0.84f), new Color(0.88f, 0.78f, 1f));
+            midRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            var stripe = Prims.Make(PrimitiveType.Cube, _cannonBarrel, new Vector3(0f, 0.36f, 0.42f), new Vector3(0.22f, 0.08f, 1.08f), PurpleLight);
+            var rearSphere = Prims.Make(PrimitiveType.Sphere, _cannonBarrel, new Vector3(0f, 0f, -0.18f), new Vector3(0.88f, 0.88f, 0.88f), PurpleMain);
+            var rearCap = Prims.Make(PrimitiveType.Sphere, _cannonBarrel, new Vector3(0f, 0f, -0.52f), new Vector3(0.32f, 0.32f, 0.32f), new Color(0.95f, 0.82f, 0.22f));
+            var muzzleRing = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 1.04f), new Vector3(0.92f, 0.10f, 0.92f), PurpleLight);
             muzzleRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            var muzzleBore = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 1.11f), new Vector3(0.62f, 0.04f, 0.62f), new Color(0.08f, 0.04f, 0.14f));
+            muzzleBore.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
-            _muzzleFlash = Prims.Make(PrimitiveType.Sphere, _cannonBarrel, new Vector3(0f, 0f, 1.18f), Vector3.zero, PurpleLight).transform;
+            _muzzleFlash = Prims.Make(PrimitiveType.Sphere, _cannonBarrel, new Vector3(0f, 0f, 1.20f), Vector3.zero, PurpleLight).transform;
         }
 
         void BuildGatesAndYellowBlock()
@@ -385,14 +395,63 @@ namespace MobControlAd
             CreateGate(1, 2, -1.95f, 5.45f, 1.25f, 0.0f, 0f, 0f);
 
             // 3. Right Lane Yellow Destructible Block ("60" HP at z = 5.85f, x = 1.85f)
+            // Automatically uses Poly Pizza "Cube Bricks" FBX if placed at Assets/MobControl/Resources/Models/CubeBricks.fbx,
+            // tinted bright yellow; otherwise renders a stylized 3D yellow brick block!
             _yellowBlockHp = yellowBlockStartHp;
             _yellowBlockRoot = new GameObject("YellowBlock_60").transform;
             _yellowBlockRoot.SetParent(transform, false);
             _yellowBlockRoot.localPosition = new Vector3(1.85f, 0f, 5.85f);
 
-            Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 0.72f, 0f), new Vector3(2.75f, 1.44f, 1.65f), YellowMain);
-            Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 1.40f, 0f), new Vector3(2.68f, 0.12f, 1.58f), new Color(1f, 0.94f, 0.38f));
-            _yellowBlockLabel = AdRes.MakeLabel(_yellowBlockRoot, _yellowBlockHp.ToString(), 0.95f, Color.white, 25, new Vector3(0f, 0.72f, -0.86f));
+            var brickPrefab = Resources.Load<GameObject>("Models/CubeBricks");
+            if (brickPrefab != null)
+            {
+                var inst = Instantiate(brickPrefab, _yellowBlockRoot);
+                inst.name = "CubeBricks_Model";
+                inst.transform.localPosition = Vector3.zero;
+                inst.transform.localRotation = Quaternion.identity;
+                inst.transform.localScale = Vector3.one;
+
+                var rends = inst.GetComponentsInChildren<Renderer>();
+                Bounds b = new Bounds(inst.transform.position, Vector3.zero);
+                bool hasBounds = false;
+                for (int i = 0; i < rends.Length; i++)
+                {
+                    if (AdRes.PrimMat) rends[i].sharedMaterial = AdRes.PrimMat;
+                    Prims.SetColor(rends[i], YellowMain);
+                    if (!hasBounds) { b = rends[i].bounds; hasBounds = true; }
+                    else b.Encapsulate(rends[i].bounds);
+                }
+                if (hasBounds && b.size.x > 0.001f && b.size.y > 0.001f && b.size.z > 0.001f)
+                {
+                    Vector3 targetSize = new Vector3(2.75f, 1.44f, 1.65f);
+                    Vector3 scale = new Vector3(targetSize.x / b.size.x, targetSize.y / b.size.y, targetSize.z / b.size.z);
+                    inst.transform.localScale = scale;
+                    Vector3 localCenter = _yellowBlockRoot.InverseTransformPoint(b.center);
+                    inst.transform.localPosition = new Vector3(-localCenter.x * scale.x, targetSize.y * 0.5f - localCenter.y * scale.y, -localCenter.z * scale.z);
+                }
+            }
+            else
+            {
+                // Stylized 3D yellow brick wall fallback (recessed dark mortar core + beveled yellow bricks)
+                Color mortarCol = new Color(0.56f, 0.42f, 0.04f);
+                Color brickHi = new Color(1f, 0.92f, 0.30f);
+                Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 0.72f, 0f), new Vector3(2.64f, 1.38f, 1.54f), mortarCol);
+                for (int row = 0; row < 3; row++)
+                {
+                    float y = 0.25f + row * 0.47f;
+                    bool stagger = (row % 2) == 1;
+                    int cols = stagger ? 4 : 3;
+                    float brickW = stagger ? 0.64f : 0.86f;
+                    float span = (cols - 1) * (brickW + 0.06f);
+                    for (int col = 0; col < cols; col++)
+                    {
+                        float bx = -span * 0.5f + col * (brickW + 0.06f);
+                        Color bc = ((row + col) % 2 == 0) ? YellowMain : brickHi;
+                        Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(bx, y, 0f), new Vector3(brickW, 0.41f, 1.66f), bc);
+                    }
+                }
+            }
+            _yellowBlockLabel = AdRes.MakeLabel(_yellowBlockRoot, _yellowBlockHp.ToString(), 0.95f, Color.white, 25, new Vector3(0f, 0.72f, -0.90f));
 
             // 4. Right Lane X7 Gate right behind the Yellow Block (z = 8.15f, x = 1.65f)
             CreateGate(2, 7, 1.65f, 8.15f, 1.25f, 0.0f, 0f, 0f);
@@ -405,18 +464,22 @@ namespace MobControlAd
             root.localPosition = new Vector3(x, 0f, z);
 
             float fullW = halfWidth * 2f;
-            Color frameBlack = new Color(0.10f, 0.10f, 0.12f);
+            Color frameDark = new Color(0.16f, 0.14f, 0.24f);
+            Color capGlow = new Color(0.84f, 0.62f, 1.00f);
 
-            // Black U-shaped frame posts & bottom bar (matching VideoReference.mp4!)
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(-halfWidth, 0.58f, 0f), new Vector3(0.18f, 1.16f, 0.18f), frameBlack);
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(halfWidth, 0.58f, 0f), new Vector3(0.18f, 1.16f, 0.18f), frameBlack);
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.08f, 0f), new Vector3(fullW + 0.18f, 0.14f, 0.20f), frameBlack);
-            // White glowing bottom strip
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.15f, -0.06f), new Vector3(fullW - 0.12f, 0.08f, 0.12f), Color.white);
+            // Stylized rounded-cap pillars + base bar + glowing neon trim
+            Prims.Make(PrimitiveType.Cylinder, root, new Vector3(-halfWidth, 0.60f, 0f), new Vector3(0.22f, 0.60f, 0.22f), frameDark);
+            Prims.Make(PrimitiveType.Cylinder, root, new Vector3(halfWidth, 0.60f, 0f), new Vector3(0.22f, 0.60f, 0.22f), frameDark);
+            Prims.Make(PrimitiveType.Sphere, root, new Vector3(-halfWidth, 1.22f, 0f), Vector3.one * 0.26f, capGlow);
+            Prims.Make(PrimitiveType.Sphere, root, new Vector3(halfWidth, 1.22f, 0f), Vector3.one * 0.26f, capGlow);
+            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.08f, 0f), new Vector3(fullW + 0.22f, 0.16f, 0.24f), frameDark);
+            // Glowing bottom & top neon trim bars
+            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.16f, -0.06f), new Vector3(fullW - 0.12f, 0.08f, 0.12f), Color.white);
+            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 1.12f, -0.04f), new Vector3(fullW - 0.12f, 0.07f, 0.10f), capGlow);
 
-            // Glowing purple gate shield
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.62f, 0f), new Vector3(fullW - 0.14f, 0.96f, 0.06f), PurpleGateCol);
-            var label = AdRes.MakeLabel(root, "X" + mult, 0.82f, Color.white, 24, new Vector3(0f, 0.62f, -0.10f));
+            // Glowing purple energy gate shield
+            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.64f, 0f), new Vector3(fullW - 0.14f, 0.96f, 0.06f), PurpleGateCol);
+            var label = AdRes.MakeLabel(root, "X" + mult, 0.82f, Color.white, 24, new Vector3(0f, 0.64f, -0.10f));
 
             _gates.Add(new MultiplierGate
             {
@@ -444,21 +507,31 @@ namespace MobControlAd
             _enemyBaseBody = new GameObject("BaseBody").transform;
             _enemyBaseBody.SetParent(_enemyBaseRoot, false);
 
-            // Two-tier Yellow Fortress Box matching VideoReference.mp4
-            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 0.85f, 0f), new Vector3(2.45f, 1.70f, 1.85f), YellowMain);
-            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 2.25f, 0f), new Vector3(2.65f, 1.25f, 2.05f), YellowMain);
-            // Dark horizontal groove band between tiers
-            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 1.66f, -0.95f), new Vector3(2.25f, 0.18f, 0.14f), new Color(0.18f, 0.16f, 0.06f));
-            // Dark spawn doorway at bottom center
-            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 0.55f, -0.94f), new Vector3(0.75f, 1.10f, 0.12f), new Color(0.12f, 0.10f, 0.05f));
-            // Black scoreboard plate on upper tier
-            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 2.28f, -1.04f), new Vector3(1.85f, 0.82f, 0.10f), new Color(0.12f, 0.12f, 0.14f));
+            // Stylized Two-Tier Yellow Fortress Castle with plinth, battlements & framed gate
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 0.10f, 0f), new Vector3(2.72f, 0.20f, 2.12f), YellowDark);
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 0.92f, 0f), new Vector3(2.48f, 1.66f, 1.88f), YellowMain);
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 2.28f, 0f), new Vector3(2.72f, 1.24f, 2.10f), YellowMain);
+            // Castle battlements / crenellations along top rim
+            for (int bx = -1; bx <= 1; bx++)
+            {
+                Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(bx * 0.96f, 3.04f, -0.84f), new Vector3(0.56f, 0.34f, 0.38f), YellowMain);
+                Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(bx * 0.96f, 3.04f, 0.84f), new Vector3(0.56f, 0.34f, 0.38f), YellowDark);
+            }
+            // Dark horizontal trim band between tiers
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 1.68f, -0.96f), new Vector3(2.54f, 0.16f, 0.14f), new Color(0.28f, 0.22f, 0.06f));
+            // Framed dark spawn doorway at bottom center
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 0.60f, -0.95f), new Vector3(0.96f, 1.20f, 0.10f), YellowDark);
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 0.56f, -0.98f), new Vector3(0.74f, 1.08f, 0.10f), new Color(0.14f, 0.10f, 0.06f));
+            // Crisp dark-slate scoreboard plate with bright yellow bezel
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 2.28f, -1.04f), new Vector3(2.02f, 0.96f, 0.08f), YellowDark);
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 2.28f, -1.08f), new Vector3(1.86f, 0.82f, 0.08f), new Color(0.16f, 0.14f, 0.22f));
 
-            _enemyBaseLabel = AdRes.MakeLabel(_enemyBaseRoot, _enemyBaseHp.ToString(), 0.82f, Color.white, 26, new Vector3(0f, 2.28f, -1.14f));
+            _enemyBaseLabel = AdRes.MakeLabel(_enemyBaseRoot, _enemyBaseHp.ToString(), 0.82f, Color.white, 26, new Vector3(0f, 2.28f, -1.16f));
 
-            // Tall black flagpole + yellow triangular flag on top
-            Prims.Make(PrimitiveType.Cylinder, _enemyBaseBody, new Vector3(0f, 3.65f, 0f), new Vector3(0.12f, 0.85f, 0.12f), new Color(0.12f, 0.12f, 0.14f));
-            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0.45f, 4.15f, 0f), new Vector3(0.85f, 0.48f, 0.08f), YellowMain);
+            // Metallic flagpole with golden finial + yellow banner flag on top
+            Prims.Make(PrimitiveType.Cylinder, _enemyBaseBody, new Vector3(0f, 3.72f, 0f), new Vector3(0.11f, 0.88f, 0.11f), new Color(0.22f, 0.22f, 0.28f));
+            Prims.Make(PrimitiveType.Sphere, _enemyBaseBody, new Vector3(0f, 4.60f, 0f), Vector3.one * 0.20f, YellowMain);
+            Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0.48f, 4.22f, 0f), new Vector3(0.92f, 0.50f, 0.08f), YellowMain);
         }
 
         void BuildUI()
@@ -521,41 +594,49 @@ namespace MobControlAd
             ort.offsetMax = Vector2.zero;
             _endOverlayRoot.AddComponent<Image>().color = new Color(0.08f, 0.04f, 0.22f, 0.54f);
 
-            // Top Cartoon Game Title Ribbon: "MOB CONTROL" (dark purple shadow)
-            AdUI.Img(ort, AdRes.Round(64), new Color(0.20f, 0.04f, 0.50f, 1f), center, new Vector2(0f, 518f), new Vector2(780f, 164f), true);
-            AdUI.Img(ort, AdRes.Round(64), Color.white, center, new Vector2(0f, 530f), new Vector2(756f, 144f), true);
-            AdUI.Img(ort, AdRes.Round(64), new Color(0.46f, 0.14f, 0.96f, 1f), center, new Vector2(0f, 530f), new Vector2(734f, 122f), true);
-            AdUI.Img(ort, AdRes.Round(64), new Color(1f, 1f, 1f, 0.28f), center, new Vector2(0f, 562f), new Vector2(660f, 36f), true);
-            var brandLbl = AdUI.Txt(ort, "MOB CONTROL", 84, new Color(1f, 0.90f, 0.22f), center, new Vector2(0f, 528f));
-            var brandOut = brandLbl.GetComponent<Outline>();
-            if (brandOut) { brandOut.effectColor = new Color(0.22f, 0.05f, 0.52f, 1f); brandOut.effectDistance = new Vector2(6f, -6f); }
+            // Top Official MOB CONTROL Logo Image (loaded from Resources/MobControlLogo.png)
+            var logoTex = Resources.Load<Texture2D>("MobControlLogo");
+            if (logoTex != null)
+            {
+                var logoGo = new GameObject("MobControlLogoImg", typeof(RectTransform), typeof(Image));
+                var lrt = (RectTransform)logoGo.transform;
+                lrt.SetParent(ort, false);
+                lrt.anchorMin = center;
+                lrt.anchorMax = center;
+                lrt.anchoredPosition = new Vector2(0f, 545f);
+                lrt.sizeDelta = new Vector2(780f, 435f);
+                var limg = logoGo.GetComponent<Image>();
+                limg.sprite = Sprite.Create(logoTex, new Rect(0, 0, logoTex.width, logoTex.height), new Vector2(0.5f, 0.5f), 100f);
+                limg.preserveAspect = true;
+                limg.raycastTarget = false;
+            }
 
-            // Tilted Juicy Cartoon "DEFEAT..." / "VICTORY!" Center Card (deep indigo-purple shadow)
+            // Tilted Juicy Cartoon "DEFEAT..." / "VICTORY!" Center Card (high-contrast complementary yellow on rich purple!)
             var defWrap = new GameObject("DefeatBanner", typeof(RectTransform));
             _defeatBannerRt = (RectTransform)defWrap.transform;
             _defeatBannerRt.SetParent(ort, false);
             _defeatBannerRt.anchorMin = center;
             _defeatBannerRt.anchorMax = center;
-            _defeatBannerRt.anchoredPosition = new Vector2(0f, 95f);
+            _defeatBannerRt.anchoredPosition = new Vector2(0f, 80f);
             _defeatBannerRt.sizeDelta = new Vector2(960f, 340f);
             _defeatBannerRt.localRotation = Quaternion.Euler(0f, 0f, 3.0f);
 
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.12f, 0.04f, 0.34f, 1f), center, new Vector2(0f, -18f), new Vector2(944f, 304f), true);
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), Color.white, center, Vector2.zero, new Vector2(920f, 282f), true);
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.24f, 0.10f, 0.54f, 1f), center, Vector2.zero, new Vector2(894f, 256f), true);
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.14f), center, new Vector2(0f, 76f), new Vector2(820f, 68f), true);
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.16f, 0.04f, 0.42f, 1f), center, new Vector2(0f, -18f), new Vector2(944f, 304f), true);
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(1f, 0.88f, 0.18f, 1f), center, Vector2.zero, new Vector2(920f, 282f), true);
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.32f, 0.09f, 0.72f, 1f), center, Vector2.zero, new Vector2(894f, 256f), true);
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.16f), center, new Vector2(0f, 76f), new Vector2(820f, 68f), true);
 
-            _defeatTitleText = AdUI.Txt(_defeatBannerRt, "DEFEAT...", 136, new Color(1f, 0.86f, 0.22f), center, new Vector2(0f, 28f));
+            _defeatTitleText = AdUI.Txt(_defeatBannerRt, "DEFEAT...", 136, new Color(1f, 0.88f, 0.14f), center, new Vector2(0f, 30f));
             var outline = _defeatTitleText.GetComponent<Outline>();
             if (outline)
             {
-                outline.effectColor = new Color(0.42f, 0.20f, 0.02f, 1f);
+                outline.effectColor = new Color(0.24f, 0.04f, 0.48f, 1f);
                 outline.effectDistance = new Vector2(8f, -8f);
             }
 
-            var subLbl = AdUI.Txt(_defeatBannerRt, "CAN YOU BEAT THE BOSS?", 52, new Color(0.55f, 0.94f, 1f), center, new Vector2(0f, -82f));
+            var subLbl = AdUI.Txt(_defeatBannerRt, "CAN YOU BEAT THE BOSS?", 52, new Color(1f, 0.96f, 0.62f), center, new Vector2(0f, -82f));
             var subOut = subLbl.GetComponent<Outline>();
-            if (subOut) { subOut.effectColor = new Color(0.06f, 0.26f, 0.42f, 1f); subOut.effectDistance = new Vector2(4f, -4f); }
+            if (subOut) { subOut.effectColor = new Color(0.18f, 0.04f, 0.44f, 1f); subOut.effectDistance = new Vector2(4.5f, -4.5f); }
 
             // Chunky Cartoon 3D Glossy Green "PLAY NOW!" CTA Button (deep forest green shadow, no black!)
             var ctaGo = new GameObject("PlayNowCTA", typeof(RectTransform));
@@ -1115,7 +1196,8 @@ namespace MobControlAd
             if (_defeatTitleText)
             {
                 _defeatTitleText.text = "DEFEAT...";
-                _defeatTitleText.color = PurpleMain;
+                // High-contrast complementary golden yellow against the rich purple banner
+                _defeatTitleText.color = new Color(1f, 0.88f, 0.14f);
             }
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
             Luna.Unity.Analytics.LogEvent("mobcontrol_defeat", 1);
