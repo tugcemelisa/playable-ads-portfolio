@@ -1,7 +1,7 @@
 # Playable Ads & Creative Video Portfolio
 
 Playable ads and video creatives by **Melisa Tuğçe Haspolat**.  
-Games and interactive playable ads are built and exported in **Unity** using **Unity Playworks (Luna)**, while motion design, visual hooks, and video editing are crafted with **Adobe After Effects** and **Higgsfield AI**.
+Games and interactive playable ads are built and exported in **Unity** using **Unity Playworks (Luna)**, while motion design, visual hooks, UI art, and video editing are crafted with **Adobe After Effects** and **Adobe Illustrator / Photoshop**.
 
 ## Projects
 
@@ -16,7 +16,7 @@ Games and interactive playable ads are built and exported in **Unity** using **U
 ## Tech Stack
 
 - **Unity 6000.0 LTS & Unity Playworks (Luna 7.2.0)** — Interactive 3D playable ad development and single-package HTML5 export
-- **Adobe After Effects, Adobe Illustrator & Higgsfield AI** — Motion design, 9:16 vertical creative video hooks, vector UI badges, voiceover & 3D endcards
+- **Adobe After Effects & Adobe Illustrator / Photoshop** — Motion design, 9:16 vertical creative video hooks, vector UI badges, raster art, voiceover & 3D endcards
 - **Procedural & Baked WAV SFX** — Lightweight audio pipeline for Playworks HTML5 size budgets
 - **Shared `AdKit`** — Interactive drag tutorial hand, dynamic HUD, endcard + store CTA (`Luna.Unity.Playable.InstallFullGame`)
 
