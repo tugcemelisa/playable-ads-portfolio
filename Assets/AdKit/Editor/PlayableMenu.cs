@@ -155,6 +155,15 @@ namespace AdKit.EditorTools
                     File.WriteAllText(jsFile, js);
                 }
             }
+
+            var iframePath = Path.Combine(rootDir, "iframe.html");
+            if (File.Exists(iframePath))
+            {
+                var iframe = File.ReadAllText(iframePath).Replace(
+                    "Luna.Unity.Playable.InstallFullGame=function(){",
+                    "Luna.Unity.Playable.InstallFullGame=function(t,e){var u=t||e||\"https://apps.apple.com/us/app/mob-control/id1562817072\";try{window.open(u,\"_blank\")}catch(_){}");
+                File.WriteAllText(iframePath, iframe);
+            }
         }
 
         static void CopyDirectory(string source, string destination)

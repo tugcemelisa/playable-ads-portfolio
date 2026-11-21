@@ -18,7 +18,7 @@ namespace MobControlAd
     /// </summary>
     public class MobControlGame : MonoBehaviour
     {
-        public const string MobControlStoreUrl = "https://play.google.com/store/apps/details?id=com.vincentb.MobControl&gl=IN";
+        public const string MobControlStoreUrl = "https://apps.apple.com/us/app/mob-control/id1562817072";
 
         [LunaPlaygroundField("Cannon Fire Rate", 0, "Mob Control Settings")]
         public float fireRate = 8.0f;

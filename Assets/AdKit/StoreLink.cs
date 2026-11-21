@@ -3,10 +3,13 @@ namespace AdKit
     /// <summary>Ad-network CTA and lifecycle bridge, supplied by Unity Playworks.</summary>
     public static class StoreLink
     {
-        public static void Open(string url = "https://play.google.com/store/apps/details?id=com.vincentb.MobControl&gl=IN")
+        public static void Open(string url = "https://apps.apple.com/us/app/mob-control/id1562817072")
         {
             Luna.Unity.Analytics.LogEvent(Luna.Unity.Analytics.EventType.EndCardShown);
-            Luna.Unity.Playable.InstallFullGame();
+            if (!string.IsNullOrEmpty(url))
+                Luna.Unity.Playable.InstallFullGame(url, url);
+            else
+                Luna.Unity.Playable.InstallFullGame();
 #if !UNITY_LUNA
             if (!string.IsNullOrEmpty(url))
                 UnityEngine.Application.OpenURL(url);
