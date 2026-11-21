@@ -142,5 +142,18 @@ namespace JellyAd.EditorTools
         public static void Numbers() => Build(JellySceneBuilder.NumberMatchScene);
         [MenuItem("Voodoo/Playable Builds/Build All Four %#F8")]
         public static void All() => Build(JellySceneBuilder.JellyScene, JellySceneBuilder.NumberMatchScene, JellySceneBuilder.RunnerScene, JellySceneBuilder.SurvivorScene);
+
+        [MenuItem("Voodoo/Record Rescue Run Creative Video (1080x1920)")]
+        public static void RecordRescueRunVideo()
+        {
+            EditorSceneManager.OpenScene(JellySceneBuilder.RunnerScene);
+            var rec = UnityEngine.Object.FindFirstObjectByType<RescueRun.RescueRunVideoRecorder>();
+            if (!rec)
+            {
+                var go = new GameObject("RescueRunVideoRecorder");
+                rec = go.AddComponent<RescueRun.RescueRunVideoRecorder>();
+            }
+            EditorApplication.isPlaying = true;
+        }
     }
 }
