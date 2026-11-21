@@ -12,7 +12,7 @@ namespace AdKit
         static Sprite _square, _bead, _circle, _soft, _ring;
         static readonly Dictionary<int, Sprite> _round = new Dictionary<int, Sprite>();
 
-        public static Font Font => _font ? _font : (_font = Resources.Load<Font>("Fonts/Inter-SemiBold"));
+        public static Font Font => _font ? _font : (_font = Resources.Load<Font>("Fonts/Bangers-Regular") ?? Resources.Load<Font>("Fonts/Inter-SemiBold"));
         public static Material FontMat => _fontMat ? _fontMat : (_fontMat = Resources.Load<Material>("JellyFont"));
         public static Material SpriteMat => _spriteMat ? _spriteMat : (_spriteMat = Resources.Load<Material>("JellySprite"));
         public static Material PrimMat => _primMat ? _primMat : (_primMat = Resources.Load<Material>("PlayablePrimMat"));

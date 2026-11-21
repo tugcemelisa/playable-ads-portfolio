@@ -32,7 +32,7 @@ namespace MobControlAd
         [LunaPlaygroundField("CTA Button Text", 3, "Endcard Settings")]
         public string ctaText = "PLAY NOW";
 
-        public enum BackgroundTheme { MidnightSlate, AlpineWinter }
+        public enum BackgroundTheme { AlpineWinter = 0, MidnightSlate = 1 }
 
         [Header("Background Theme")]
         public BackgroundTheme backgroundTheme = BackgroundTheme.AlpineWinter;
