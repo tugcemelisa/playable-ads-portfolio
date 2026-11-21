@@ -9,7 +9,7 @@ namespace AdKit
     {
         static Font _font;
         static Material _fontMat, _spriteMat, _primMat;
-        static Sprite _square, _bead, _circle, _soft, _ring;
+        static Sprite _square, _bead, _circle, _soft, _ring, _pill;
         static readonly Dictionary<int, Sprite> _round = new Dictionary<int, Sprite>();
 
         public static Font Font => _font ? _font : (_font = Resources.Load<Font>("Fonts/Bangers-Regular") ?? Resources.Load<Font>("Fonts/Inter-SemiBold"));
@@ -22,6 +22,7 @@ namespace AdKit
         public static Sprite Circle => _circle ? _circle : (_circle = Disc(128, false));
         public static Sprite Soft => _soft ? _soft : (_soft = Disc(128, true));
         public static Sprite Ring => _ring ? _ring : (_ring = RingTex(128, 0.72f));
+        public static Sprite Pill => _pill ? _pill : (_pill = PillRect(256, 72));
 
         /// <summary>Rounded rect with 9-slice border. Lower ppu = bigger corners in world units.</summary>
         public static Sprite Round(int ppu)
@@ -53,6 +54,28 @@ namespace AdKit
             t.Apply(false, true);
             return Sprite.Create(t, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), ppu, 0,
                 SpriteMeshType.FullRect, new Vector4(border, border, border, border));
+        }
+
+        static Sprite PillRect(int w, int h)
+        {
+            var t = new Texture2D(w, h, TextureFormat.RGBA32, false)
+            { wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear };
+            var px = new Color32[w * h];
+            float r = h * 0.5f;
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                {
+                    float cx = x + 0.5f;
+                    float cy = y + 0.5f;
+                    float dx = Mathf.Max(0f, Mathf.Max(r - cx, cx - (w - r)));
+                    float dy = cy - r;
+                    float dist = Mathf.Sqrt(dx * dx + dy * dy);
+                    float a = Mathf.Clamp01(r - dist + 0.5f);
+                    px[y * w + x] = new Color32(255, 255, 255, (byte)(a * 255));
+                }
+            t.SetPixels32(px);
+            t.Apply(false, true);
+            return Sprite.Create(t, new Rect(0, 0, w, h), new Vector2(0.5f, 0.5f), 100f);
         }
 
         static Sprite Disc(int size, bool soft)

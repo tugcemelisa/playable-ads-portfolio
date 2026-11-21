@@ -786,14 +786,14 @@ namespace MobControlAd
             _playNowBtnRt.sizeDelta = new Vector2(740f, 210f);
 
             GetCtaPalette(ctaColor, out Color ctaMain, out Color ctaBevel, out Color ctaShadow, out Color ctaTextCol);
-            bool ctaSliced = ctaShape == CtaButtonShape.Rounded;
-            Sprite ctaSprite = ctaSliced ? AdRes.Round(64) : AdRes.Square;
+            // Use dedicated non-sliced Pill sprite for Rounded so Playworks WebGL always renders smooth pill ends!
+            Sprite ctaSprite = (ctaShape == CtaButtonShape.Rounded) ? AdRes.Pill : AdRes.Square;
 
-            AdUI.Img(_playNowBtnRt, ctaSprite, ctaShadow, center, new Vector2(0f, -18f), new Vector2(736f, 204f), ctaSliced);
-            AdUI.Img(_playNowBtnRt, ctaSprite, Color.white, center, new Vector2(0f, 0f), new Vector2(716f, 186f), ctaSliced);
-            AdUI.Img(_playNowBtnRt, ctaSprite, ctaBevel, center, new Vector2(0f, -10f), new Vector2(694f, 166f), ctaSliced);
-            AdUI.Img(_playNowBtnRt, ctaSprite, ctaMain, center, new Vector2(0f, 6f), new Vector2(690f, 158f), ctaSliced);
-            AdUI.Img(_playNowBtnRt, ctaSprite, new Color(1f, 1f, 1f, 0.34f), center, new Vector2(0f, 48f), new Vector2(620f, 44f), ctaSliced);
+            AdUI.Img(_playNowBtnRt, ctaSprite, ctaShadow, center, new Vector2(0f, -18f), new Vector2(736f, 204f), false);
+            AdUI.Img(_playNowBtnRt, ctaSprite, Color.white, center, new Vector2(0f, 0f), new Vector2(716f, 186f), false);
+            AdUI.Img(_playNowBtnRt, ctaSprite, ctaBevel, center, new Vector2(0f, -10f), new Vector2(694f, 166f), false);
+            AdUI.Img(_playNowBtnRt, ctaSprite, ctaMain, center, new Vector2(0f, 6f), new Vector2(690f, 158f), false);
+            AdUI.Img(_playNowBtnRt, ctaSprite, new Color(1f, 1f, 1f, 0.34f), center, new Vector2(0f, 48f), new Vector2(580f, 42f), false);
             string ctaDisplay = string.IsNullOrEmpty(ctaText) ? "PLAY NOW!" : (ctaText.EndsWith("!") ? ctaText : ctaText + "!");
             var ctaLbl = AdUI.Txt(_playNowBtnRt, ctaDisplay, 92, ctaTextCol, center, new Vector2(0f, 6f));
             var ctaOut = ctaLbl.GetComponent<Outline>();
