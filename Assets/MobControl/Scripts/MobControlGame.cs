@@ -140,6 +140,7 @@ namespace MobControlAd
         Text _topEnemyBaseText;
         RectTransform _defeatBannerRt;
         Text _defeatTitleText;
+        Text _endSubText;
         RectTransform _playNowBtnRt;
         bool _hasInteracted;
         bool _climaxTriggered;
@@ -634,8 +635,8 @@ namespace MobControlAd
                 outline.effectDistance = new Vector2(8f, -8f);
             }
 
-            var subLbl = AdUI.Txt(_defeatBannerRt, "CAN YOU BEAT THE BOSS?", 52, new Color(1f, 0.96f, 0.62f), center, new Vector2(0f, -82f));
-            var subOut = subLbl.GetComponent<Outline>();
+            _endSubText = AdUI.Txt(_defeatBannerRt, "CAN YOU BEAT THE BOSS?", 52, new Color(1f, 0.96f, 0.62f), center, new Vector2(0f, -82f));
+            var subOut = _endSubText.GetComponent<Outline>();
             if (subOut) { subOut.effectColor = new Color(0.18f, 0.04f, 0.44f, 1f); subOut.effectDistance = new Vector2(4.5f, -4.5f); }
 
             // Chunky Cartoon 3D Glossy Green "PLAY NOW!" CTA Button (deep forest green shadow, no black!)
@@ -1168,8 +1169,12 @@ namespace MobControlAd
             if (_defeatTitleText)
             {
                 _defeatTitleText.text = "VICTORY!";
-                _defeatTitleText.color = new Color(0.26f, 0.96f, 0.42f);
+                _defeatTitleText.color = new Color(1f, 0.88f, 0.14f); // Bright yellow fill
+                var vOut = _defeatTitleText.GetComponent<Outline>();
+                if (vOut) { vOut.effectColor = new Color(0.06f, 0.48f, 0.16f, 1f); vOut.effectDistance = new Vector2(8f, -8f); } // Rich green stroke
             }
+            if (_endSubText)
+                _endSubText.text = "READY FOR LEVEL 2?";
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
             Luna.Unity.Analytics.LogEvent("mobcontrol_victory", 1);
             StoreLink.NotifyGameEnded();
@@ -1198,7 +1203,11 @@ namespace MobControlAd
                 _defeatTitleText.text = "DEFEAT...";
                 // High-contrast complementary golden yellow against the rich purple banner
                 _defeatTitleText.color = new Color(1f, 0.88f, 0.14f);
+                var dOut = _defeatTitleText.GetComponent<Outline>();
+                if (dOut) { dOut.effectColor = new Color(0.24f, 0.04f, 0.48f, 1f); dOut.effectDistance = new Vector2(8f, -8f); }
             }
+            if (_endSubText)
+                _endSubText.text = "CAN YOU BEAT THE BOSS?";
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
             Luna.Unity.Analytics.LogEvent("mobcontrol_defeat", 1);
             StoreLink.NotifyGameEnded();
