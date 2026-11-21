@@ -127,9 +127,13 @@ namespace MobControlAd
 
         // UI & State
         AdUI _ui;
-        GameObject _defeatBannerObj;
+        GameObject _endOverlayRoot;
+        RectTransform _defeatBannerRt;
+        Text _defeatTitleText;
+        RectTransform _playNowBtnRt;
         bool _hasInteracted;
         bool _climaxTriggered;
+        bool _climaxWon;
         float _climaxTimer;
         bool _ended;
         float _elapsedTime;
@@ -427,28 +431,60 @@ namespace MobControlAd
             _ui = AdUI.Create("MOB CONTROL", ctaText, new Color(0.14f, 0.08f, 0.28f), new Color(1f, 0.86f, 0.22f));
             _ui.ShowDragTutorial(true);
 
-            // Create dramatic center-screen "DEFEAT..." banner matching ref_late_08.jpg
-            var defWrap = new GameObject("DefeatBanner", typeof(RectTransform));
-            var drt = (RectTransform)defWrap.transform;
-            drt.SetParent(_ui.Root, false);
-            drt.anchorMin = new Vector2(0.5f, 0.5f);
-            drt.anchorMax = new Vector2(0.5f, 0.5f);
-            drt.anchoredPosition = new Vector2(0f, 40f);
-            drt.sizeDelta = new Vector2(980f, 240f);
+            // Authentic Mob Control End Screen Overlay (keeps live 3D battlefield visible like ref_end_10.jpg!)
+            _endOverlayRoot = new GameObject("MobControlEndOverlay", typeof(RectTransform));
+            var ort = (RectTransform)_endOverlayRoot.transform;
+            ort.SetParent(_ui.Root, false);
+            ort.anchorMin = Vector2.zero;
+            ort.anchorMax = Vector2.one;
+            ort.offsetMin = Vector2.zero;
+            ort.offsetMax = Vector2.zero;
+            _endOverlayRoot.AddComponent<Image>().color = new Color(0.01f, 0.01f, 0.04f, 0.32f);
 
-            var defShadow = AdUI.Txt(drt, "DEFEAT...", 152, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 0f));
-            defShadow.color = PurpleMain;
-            var outline = defShadow.GetComponent<Outline>();
+            var center = new Vector2(0.5f, 0.5f);
+
+            // Tilted 3D "DEFEAT..." / "VICTORY!" Center Banner matching ref_end_10.jpg
+            var defWrap = new GameObject("DefeatBanner", typeof(RectTransform));
+            _defeatBannerRt = (RectTransform)defWrap.transform;
+            _defeatBannerRt.SetParent(ort, false);
+            _defeatBannerRt.anchorMin = center;
+            _defeatBannerRt.anchorMax = center;
+            _defeatBannerRt.anchoredPosition = new Vector2(0f, 110f);
+            _defeatBannerRt.sizeDelta = new Vector2(980f, 240f);
+            _defeatBannerRt.localRotation = Quaternion.Euler(0f, 0f, 3.5f);
+
+            // Outer black drop-shadow plate behind DEFEAT... letters
+            AdUI.Img(_defeatBannerRt, Res.Round(64), new Color(0.03f, 0.02f, 0.07f, 0.88f), center, new Vector2(0f, -6f), new Vector2(940f, 195f), true);
+            AdUI.Img(_defeatBannerRt, Res.Round(64), new Color(1f, 1f, 1f, 0.96f), center, Vector2.zero, new Vector2(920f, 178f), true);
+            AdUI.Img(_defeatBannerRt, Res.Round(64), new Color(0.10f, 0.04f, 0.22f, 0.96f), center, Vector2.zero, new Vector2(900f, 160f), true);
+
+            _defeatTitleText = AdUI.Txt(_defeatBannerRt, "DEFEAT...", 138, PurpleMain, center, new Vector2(0f, 4f));
+            var outline = _defeatTitleText.GetComponent<Outline>();
             if (outline)
             {
                 outline.effectColor = Color.white;
-                outline.effectDistance = new Vector2(8f, -8f);
+                outline.effectDistance = new Vector2(7f, -7f);
             }
-            _defeatBannerObj = defWrap;
-            _defeatBannerObj.SetActive(false);
 
-            var btn = _ui.Card.parent.gameObject.AddComponent<Button>();
-            btn.onClick.AddListener(() => StoreLink.Open(MobControlStoreUrl));
+            // Sleek Bottom 3D Glossy "PLAY NOW" CTA Button (no fake text box covering the 3D scene!)
+            var ctaGo = new GameObject("PlayNowCTA", typeof(RectTransform));
+            _playNowBtnRt = (RectTransform)ctaGo.transform;
+            _playNowBtnRt.SetParent(ort, false);
+            _playNowBtnRt.anchorMin = center;
+            _playNowBtnRt.anchorMax = center;
+            _playNowBtnRt.anchoredPosition = new Vector2(0f, -470f);
+            _playNowBtnRt.sizeDelta = new Vector2(660f, 182f);
+
+            AdUI.Img(_playNowBtnRt, Res.Round(64), new Color(0.07f, 0.42f, 0.14f, 1f), center, new Vector2(0f, -14f), new Vector2(660f, 176f), true);
+            AdUI.Img(_playNowBtnRt, Res.Round(64), new Color(0.20f, 0.86f, 0.32f, 1f), center, new Vector2(0f, 2f), new Vector2(652f, 170f), true);
+            AdUI.Img(_playNowBtnRt, Res.Round(64), new Color(1f, 1f, 1f, 0.28f), center, new Vector2(0f, 46f), new Vector2(600f, 52f), true);
+            var ctaLbl = AdUI.Txt(_playNowBtnRt, ctaText, 82, Color.white, center, new Vector2(0f, 4f));
+            var ctaOut = ctaLbl.GetComponent<Outline>();
+            if (ctaOut) ctaOut.effectDistance = new Vector2(5f, -5f);
+
+            var fullBtn = _endOverlayRoot.AddComponent<Button>();
+            fullBtn.onClick.AddListener(() => StoreLink.Open(MobControlStoreUrl));
+            _endOverlayRoot.SetActive(false);
         }
 
         void SpawnInitialReferenceState()
@@ -535,11 +571,18 @@ namespace MobControlAd
             if (_climaxTriggered)
             {
                 _climaxTimer += dt;
-                if (_climaxTimer >= 1.45f)
+                float pop = _climaxTimer < 0.22f
+                    ? Mathf.Lerp(0.35f, 1.12f, _climaxTimer / 0.22f)
+                    : Mathf.Lerp(1.12f, 1.0f, Mathf.Clamp01((_climaxTimer - 0.22f) / 0.14f));
+                if (_defeatBannerRt) _defeatBannerRt.localScale = Vector3.one * pop;
+                if (_playNowBtnRt)
                 {
-                    if (_defeatBannerObj) _defeatBannerObj.SetActive(false);
-                    _ended = true;
-                    _ui.ShowEndcard("Can You Multiply Through the X7 Gate?\nPlay Mob Control Now!");
+                    float pulse = 1.0f + 0.06f * Mathf.Sin(Time.time * 6.5f);
+                    _playNowBtnRt.localScale = Vector3.one * pulse;
+                }
+                if (_climaxTimer >= 0.35f && Input.GetMouseButtonDown(0))
+                {
+                    StoreLink.Open(MobControlStoreUrl);
                 }
                 return;
             }
@@ -939,19 +982,51 @@ namespace MobControlAd
 
             if (_enemyBaseHp <= 0 && !_climaxTriggered)
             {
-                Sfx.Play(Sfx.Id.Win, 0.9f);
-                _climaxTriggered = true;
-                _climaxTimer = 0.8f;
+                TriggerVictoryClimax();
             }
+        }
+
+        void TriggerVictoryClimax()
+        {
+            if (_climaxTriggered) return;
+            _climaxTriggered = true;
+            _climaxWon = true;
+            _climaxTimer = 0f;
+            _ui.ShowDragTutorial(false);
+            if (_defeatTitleText)
+            {
+                _defeatTitleText.text = "VICTORY!";
+                _defeatTitleText.color = new Color(0.22f, 0.92f, 0.38f);
+            }
+            if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
+            StoreLink.NotifyGameEnded();
+            Sfx.Play(Sfx.Id.Win, 0.9f);
+            TriggerCameraShake(0.45f, 0.25f);
         }
 
         void TriggerDefeatClimax()
         {
             if (_climaxTriggered) return;
             _climaxTriggered = true;
+            _climaxWon = false;
             _climaxTimer = 0f;
             _ui.ShowDragTutorial(false);
-            if (_defeatBannerObj) _defeatBannerObj.SetActive(true);
+
+            // Turn yellow stickmen closest to the Purple Cannon charcoal gray (matching ref_end_10.jpg!)
+            for (int i = 0; i < _yellowMobs.Count; i++)
+            {
+                var ym = _yellowMobs[i];
+                if (ym.root && ym.root.localPosition.z < 3.6f)
+                    SetStickmanColor(ym, GrayCorpse);
+            }
+
+            if (_defeatTitleText)
+            {
+                _defeatTitleText.text = "DEFEAT...";
+                _defeatTitleText.color = PurpleMain;
+            }
+            if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
+            StoreLink.NotifyGameEnded();
             Sfx.Play(Sfx.Id.Fail, 0.85f);
             TriggerCameraShake(0.45f, 0.28f);
         }
