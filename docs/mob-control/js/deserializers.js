@@ -1779,11 +1779,11 @@ Deserializers.isAntiAliasingEnabled = "False";
 
 Deserializers.isRuntimeAnalysisEnabledForCode = "True";
 
-Deserializers.runtimeAnalysisExcludedClassesCount = "1714";
+Deserializers.runtimeAnalysisExcludedClassesCount = "1693";
 
-Deserializers.runtimeAnalysisExcludedMethodsCount = "4605";
+Deserializers.runtimeAnalysisExcludedMethodsCount = "4621";
 
-Deserializers.runtimeAnalysisExcludedModules = "physics3d, physics2d, particle-system, reflection, prefabs, mecanim-wasm";
+Deserializers.runtimeAnalysisExcludedModules = "physics2d, particle-system, reflection, mecanim-wasm";
 
 Deserializers.isRuntimeAnalysisEnabledForShaders = "True";
 
@@ -1803,7 +1803,7 @@ Deserializers.graphicsConstraint = 24;
 
 Deserializers.linearColorSpace = false;
 
-Deserializers.buildID = "93a4b620-d187-4544-8a5a-f3e6fdb0c873";
+Deserializers.buildID = "65e9e223-a591-48c6-8d26-7191cbfcee19";
 
 Deserializers.runtimeInitializeOnLoadInfos = [[["UnityEngine","Experimental","Rendering","ScriptableRuntimeReflectionSystemSettings","ScriptingDirtyReflectionSystemInstance"]],[["UnityEngine","AI","NavMesh","ClearPreUpdateListeners"]],[],[],[]];
 

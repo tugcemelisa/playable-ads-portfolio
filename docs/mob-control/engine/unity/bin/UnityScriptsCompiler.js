@@ -842,17 +842,10 @@ if ( TRACE ) { TRACE( "AdKit.Sfx#Init", this ); }
                     if (AdKit.Sfx.sources == null || !UnityEngine.Object.op_Implicit(AdKit.Sfx.sources[0])) {
                         var go = new UnityEngine.GameObject.$ctor2("[Sfx]");
                         UnityEngine.Object.DontDestroyOnLoad(go);
-                        var mainCam = UnityEngine.Camera.main;
-                        if (UnityEngine.Object.op_Implicit(mainCam) && !UnityEngine.Object.op_Implicit(mainCam.GetComponent(UnityEngine.AudioListener))) {
-                            /* Playworks AudioListener omitted */
-                        } else if (!UnityEngine.Object.op_Implicit(mainCam)) {
-                            /* Playworks AudioListener omitted */
-                        }
                         AdKit.Sfx.sources = System.Array.init(8, null, UnityEngine.AudioSource);
                         for (var i = 0; i < AdKit.Sfx.sources.length; i = (i + 1) | 0) {
                             AdKit.Sfx.sources[i] = go.AddComponent(UnityEngine.AudioSource);
                             AdKit.Sfx.sources[i].playOnAwake = false;
-                            AdKit.Sfx.sources[i].spatialBlend = 0.0;
                         }
                     }
                 },
@@ -1605,7 +1598,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#Start", this ); }
                 this.BuildYellowEnemyBase();
                 this.BuildUI();
                 this.SpawnInitialReferenceState();
-                AdKit.StoreLink.LogEvent("mobcontrol_start");
+                Luna.Unity.Analytics.LogEvent$1("mobcontrol_start", 1);
             },
             /*MobControlAd.MobControlGame.Start end.*/
 
@@ -1618,9 +1611,6 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#SetupCameraAndSpaceEnvironmen
                 if (!UnityEngine.Object.op_Implicit(this._cam)) {
                     var go = ($t = new UnityEngine.GameObject.$ctor2("Main Camera"), $t.tag = "MainCamera", $t);
                     this._cam = go.AddComponent(UnityEngine.Camera);
-                }
-                if (!UnityEngine.Object.op_Implicit(this._cam.GetComponent(UnityEngine.AudioListener))) {
-                    /* Playworks AudioListener omitted */
                 }
                 this._cam.orthographic = false;
                 this._cam.fieldOfView = 50.0;
@@ -2054,7 +2044,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#HandleCannonAndInput", this )
                     if (!this._hasInteracted) {
                         this._hasInteracted = true;
                         this._ui.ShowDragTutorial(false);
-                        AdKit.StoreLink.LogEvent("mobcontrol_first_drag");
+                        Luna.Unity.Analytics.LogEvent$1("mobcontrol_first_drag", 1);
                     }
                     var normX = Math.max(0, Math.min(1, UnityEngine.Input.mousePosition.x / UnityEngine.Mathf.Max(1.0, UnityEngine.Screen.width)));
                     this._targetCannonX = pc.math.lerp(-2.45, 2.45, normX);
@@ -2409,7 +2399,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#TriggerVictoryClimax", this )
                     if (UnityEngine.Object.op_Implicit(this._endOverlayRoot)) {
                         this._endOverlayRoot.SetActive(true);
                     }
-                    AdKit.StoreLink.LogEvent("mobcontrol_victory");
+                    Luna.Unity.Analytics.LogEvent$1("mobcontrol_victory", 1);
                     AdKit.StoreLink.NotifyGameEnded();
                     AdKit.Sfx.Play(AdKit.Sfx.Id.Win, 0.9);
                     this.TriggerCameraShake(0.45, 0.25);
@@ -2443,7 +2433,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#TriggerDefeatClimax", this );
                 if (UnityEngine.Object.op_Implicit(this._endOverlayRoot)) {
                     this._endOverlayRoot.SetActive(true);
                 }
-                AdKit.StoreLink.LogEvent("mobcontrol_victory");
+                Luna.Unity.Analytics.LogEvent$1("mobcontrol_defeat", 1);
                 AdKit.StoreLink.NotifyGameEnded();
                 AdKit.Sfx.Play(AdKit.Sfx.Id.Fail, 0.85);
                 this.TriggerCameraShake(0.45, 0.28);
