@@ -102,11 +102,11 @@ namespace NumberMatchAd
             }
         }
 
-        // Deep royal purple board styling matching number-match-case-study
-        static readonly Color MaskColor = new Color(0.16f, 0.12f, 0.32f);
-        static readonly Color FilledColor = new Color(0.38f, 0.30f, 0.62f);
-        static readonly Color HighlightColor = new Color(1f, 0.90f, 0.42f);
-        static readonly Color NumberColor = new Color(0.90f, 0.92f, 1f);
+        // Board styling matching number-match-case-study (BoardRenderer.MaskColor + GameHud palette)
+        static readonly Color MaskColor = new Color(0.30f, 0.30f, 0.34f);
+        static readonly Color FilledColor = new Color(0.42f, 0.36f, 0.56f);
+        static readonly Color HighlightColor = new Color(1f, 0.88f, 0.36f);
+        static readonly Color NumberColor = new Color(0.96f, 0.96f, 1f);
         static readonly string[] Praise = { "AMAZING!", "BRILLIANT!", "SPECTACULAR!", "UNSTOPPABLE!", "PERFECT!" };
 
         enum Phase { Intro, Play, Done, End }
@@ -118,7 +118,7 @@ namespace NumberMatchAd
             public Color col;
             public bool filled, revealed, animating;
             public SpriteRenderer sr;
-            public TextMesh tm;
+            public UnityEngine.UI.Text numText;
         }
 
         class Piece
@@ -298,14 +298,47 @@ namespace NumberMatchAd
                 Vector2.one * (BoardWorld + 0.7f), true);
             AdRes.Spr("Frame", board, AdRes.Round(160), new Color(0.16f, 0.12f, 0.31f), -20, centre, Vector2.one * (BoardWorld + 0.4f), true);
 
+            // Single shared World-Space Canvas for all board cell numbers (renders crisply in Playworks WebGL!)
+            var numCanvasGo = new GameObject("BoardNumbersCanvas", typeof(RectTransform));
+            var numCanvasRt = (RectTransform)numCanvasGo.transform;
+            numCanvasRt.SetParent(board, false);
+            numCanvasRt.localPosition = new Vector3(0f, BoardCenterY, -0.02f);
+            const float ppu = 100f;
+            numCanvasRt.localScale = Vector3.one / ppu;
+            numCanvasRt.sizeDelta = new Vector2(BoardWorld * ppu, BoardWorld * ppu);
+            var numCanvas = numCanvasGo.AddComponent<Canvas>();
+            numCanvas.renderMode = RenderMode.WorldSpace;
+            numCanvas.overrideSorting = true;
+            numCanvas.sortingOrder = 2;
+
             var round = AdRes.Round(Mathf.RoundToInt(44f / (cell * 0.22f)));
+            int cellFontSize = Mathf.Max(22, Mathf.RoundToInt(cell * ppu * 0.56f));
             for (int i = 0; i < cells.Length; i++)
             {
                 var cv = cells[i];
+                var cpos = CellPos(i);
                 // intro starts with the finished picture: the hook
-                cv.sr = AdRes.Spr("Cell", board, round, cv.col, 0, CellPos(i), Vector2.one * cell * 0.9f, true);
-                cv.tm = AdRes.Txt(cv.sr.transform, "n", cv.num.ToString(), cell * 0.58f, NumberColor, 1, new Vector3(0f, -cell * 0.02f, 0f));
-                cv.tm.gameObject.SetActive(false);
+                cv.sr = AdRes.Spr("Cell", board, round, cv.col, 0, cpos, Vector2.one * cell * 0.9f, true);
+
+                var txtGo = new GameObject("n_" + i, typeof(RectTransform));
+                var trt = (RectTransform)txtGo.transform;
+                trt.SetParent(numCanvasRt, false);
+                trt.anchoredPosition = new Vector2(cpos.x * ppu, (cpos.y - BoardCenterY) * ppu);
+                trt.sizeDelta = new Vector2(cell * ppu, cell * ppu);
+                var ut = txtGo.AddComponent<UnityEngine.UI.Text>();
+                ut.font = AdRes.Font;
+                ut.text = cv.num.ToString();
+                ut.fontSize = cellFontSize;
+                ut.color = NumberColor;
+                ut.alignment = TextAnchor.MiddleCenter;
+                ut.horizontalOverflow = HorizontalWrapMode.Overflow;
+                ut.verticalOverflow = VerticalWrapMode.Overflow;
+                ut.raycastTarget = false;
+                var outl = txtGo.AddComponent<UnityEngine.UI.Outline>();
+                outl.effectColor = new Color(0.08f, 0.05f, 0.18f, 0.85f);
+                outl.effectDistance = new Vector2(2f, -2f);
+                txtGo.SetActive(false);
+                cv.numText = ut;
             }
         }
 
@@ -467,7 +500,7 @@ namespace NumberMatchAd
             }
             tr.localScale = Vector3.one;
             cv.sr.color = to;
-            cv.tm.gameObject.SetActive(true);
+            if (cv.numText) cv.numText.gameObject.SetActive(true);
         }
 
         IEnumerator PopIn(Transform t, float delay)
@@ -746,7 +779,7 @@ namespace NumberMatchAd
             if (delay > 0f) yield return new WaitForSeconds(delay);
             var cv = cells[i];
             cv.animating = true;
-            cv.tm.gameObject.SetActive(false);
+            if (cv.numText) cv.numText.gameObject.SetActive(false);
             var tr = cv.sr.transform;
             Color from = cv.sr.color;
             for (float k = 0f; k < 1f; k += Time.deltaTime / 0.45f)
