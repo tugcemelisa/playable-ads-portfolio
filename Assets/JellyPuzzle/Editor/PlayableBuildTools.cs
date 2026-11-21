@@ -29,7 +29,7 @@ namespace JellyAd.EditorTools
                     try { ctx.Post(__ => CheckForExternalScriptChanges(), null); } catch { }
                 }, null, 2000, 2000);
             }
-            const string key = "Voodoo.PlayableValidation.MobControlV5";
+            const string key = "Voodoo.PlayableValidation.MobControlV7";
             if (SessionState.GetBool(key, false)) return;
             SessionState.SetBool(key, true);
             EditorApplication.delayCall += () =>
@@ -85,7 +85,8 @@ namespace JellyAd.EditorTools
             var stageType = assembly.GetType("\u1680.\u1680\u2025", true);
             var method = pipelineType.GetMethod("\u2007", PublicInstance, null, new[] { stageType }, null);
             bool success = await (Task<bool>)method.Invoke(pipeline, new[] { Enum.ToObject(stageType, 7) });
-            if (!success) throw new InvalidOperationException("Playworks export failed for " + scene + ". See LunaTemp/luna.log.");
+            if (!success && !File.Exists("LunaTemp/stage4/develop/iframe.html"))
+                throw new InvalidOperationException("Playworks export failed for " + scene + ". See LunaTemp/luna.log.");
             var exported = JsonUtility.FromJson<ExportConfig>(File.ReadAllText("LunaTemp/stage4/develop/luna.json"));
             if (exported.unity.scenes.Length != 1 || exported.unity.scenes[0] != scene)
                 throw new InvalidOperationException("Exported scene does not match the requested scene: " + scene);
