@@ -38,16 +38,16 @@ public class CharacterScript : MonoBehaviour
                 transform.Translate(shift, 0, 0);
             }
 
-            if(Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0)
+            if(Input.GetKeyDown(KeyCode.Space) && rb.linearVelocity.y == 0)
             {
                 rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);  
                                 
             }
-            if(rb.velocity.y > 0)   
+            if(rb.linearVelocity.y > 0)   
             {
                 anim.SetBool("jump", true);  
             }
-            if(rb.velocity.y == 0)
+            if(rb.linearVelocity.y == 0)
             {
                 anim.SetBool("jump", false); 
             } 
