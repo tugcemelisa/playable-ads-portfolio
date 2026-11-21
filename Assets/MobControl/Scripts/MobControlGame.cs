@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using AdKit;
-using JellyAd;
 using Luna.Unity;
-using RescueRun;
 using UnityEngine;
 using UnityEngine.UI;
 
