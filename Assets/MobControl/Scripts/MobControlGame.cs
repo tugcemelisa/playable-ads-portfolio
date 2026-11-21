@@ -881,7 +881,7 @@ namespace MobControlAd
                 inst.transform.localRotation = Quaternion.identity;
                 // Quaternius FBX characters are ~1.9-2.0m tall with feet at y=0; fixed scale avoids
                 // frame-0 SkinnedMeshRenderer bounds glitches under Legacy Animation!
-                float modelScale = isPurple ? 0.62f : 0.58f;
+                float modelScale = isPurple ? 0.44f : 0.42f;
                 inst.transform.localScale = Vector3.one * modelScale;
 
                 // Play the embedded Quaternius "CharacterArmature|Run" skeletal animation clip!
