@@ -844,9 +844,9 @@ if ( TRACE ) { TRACE( "AdKit.Sfx#Init", this ); }
                         UnityEngine.Object.DontDestroyOnLoad(go);
                         var mainCam = UnityEngine.Camera.main;
                         if (UnityEngine.Object.op_Implicit(mainCam) && !UnityEngine.Object.op_Implicit(mainCam.GetComponent(UnityEngine.AudioListener))) {
-                            mainCam.gameObject.AddComponent(UnityEngine.AudioListener);
+                            /* Playworks AudioListener omitted */
                         } else if (!UnityEngine.Object.op_Implicit(mainCam)) {
-                            go.AddComponent(UnityEngine.AudioListener);
+                            /* Playworks AudioListener omitted */
                         }
                         AdKit.Sfx.sources = System.Array.init(8, null, UnityEngine.AudioSource);
                         for (var i = 0; i < AdKit.Sfx.sources.length; i = (i + 1) | 0) {
@@ -1622,7 +1622,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#SetupCameraAndSpaceEnvironmen
                     this._cam = go.AddComponent(UnityEngine.Camera);
                 }
                 if (!UnityEngine.Object.op_Implicit(this._cam.GetComponent(UnityEngine.AudioListener))) {
-                    this._cam.gameObject.AddComponent(UnityEngine.AudioListener);
+                    /* Playworks AudioListener omitted */
                 }
                 this._cam.orthographic = false;
                 this._cam.fieldOfView = 50.0;

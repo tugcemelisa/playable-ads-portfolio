@@ -165,8 +165,10 @@ namespace MobControlAd
                 var go = new GameObject("Main Camera") { tag = "MainCamera" };
                 _cam = go.AddComponent<Camera>();
             }
+#if !UNITY_LUNA
             if (!_cam.GetComponent<AudioListener>())
                 _cam.gameObject.AddComponent<AudioListener>();
+#endif
 
             _cam.orthographic = false;
             _cam.fieldOfView = 50f;
