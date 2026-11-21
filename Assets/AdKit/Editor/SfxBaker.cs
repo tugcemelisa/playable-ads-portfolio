@@ -10,7 +10,6 @@ namespace AdKit.EditorTools
         const int Rate = 44100;
         [InitializeOnLoadMethod]
         static void ScheduleBake() { EditorApplication.delayCall += BakeMissing; }
-        [MenuItem("Voodoo/Bake Playable Audio")]
         public static void BakeMissing()
         {
             const string folder = "Assets/Resources/AdKitSfx";

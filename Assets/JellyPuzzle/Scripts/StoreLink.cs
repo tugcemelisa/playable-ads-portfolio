@@ -3,12 +3,13 @@ namespace JellyAd
     /// <summary>Ad-network CTA and lifecycle bridge, supplied by Unity Playworks.</summary>
     public static class StoreLink
     {
-        // Store destinations are configured in Playworks, rather than opened as arbitrary URLs.
-        public static void Open(string url)
+        public static void Open(string url = "https://play.google.com/store/apps/details?id=com.vincentb.MobControl&gl=IN")
         {
             Luna.Unity.Analytics.LogEvent(Luna.Unity.Analytics.EventType.EndCardShown);
             Luna.Unity.Playable.InstallFullGame();
-            UnityEngine.Debug.Log("[Voodoo Playworks CTA] InstallFullGame() triggered.");
+            if (!string.IsNullOrEmpty(url))
+                UnityEngine.Application.OpenURL(url);
+            UnityEngine.Debug.Log("[Voodoo Playworks CTA] InstallFullGame() -> " + url);
         }
 
         public static void NotifyGameEnded()

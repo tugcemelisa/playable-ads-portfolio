@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/RescueRun.unity
-    guid: 3071c5088cec8884cb823a6a18bf89cf
+    path: Assets/Scenes/MobControl.unity
+    guid: c5e6d764590c96b4496ceb956f348e41
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

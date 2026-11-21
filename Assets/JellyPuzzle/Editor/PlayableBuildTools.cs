@@ -15,6 +15,7 @@ namespace JellyAd.EditorTools
         static bool busy;
         static System.Threading.Timer bgPollTimer;
         static DateTime lastScriptStamp;
+
         [InitializeOnLoadMethod]
         static void RunInitialValidation()
         {
@@ -28,13 +29,14 @@ namespace JellyAd.EditorTools
                     try { ctx.Post(__ => CheckForExternalScriptChanges(), null); } catch { }
                 }, null, 2000, 2000);
             }
-            const string key = "Voodoo.PlayableValidation.RescueRunV4";
+            const string key = "Voodoo.PlayableValidation.MobControlV5";
             if (SessionState.GetBool(key, false)) return;
             SessionState.SetBool(key, true);
             EditorApplication.delayCall += () =>
             {
                 PlayableSpriteMaterial.EnsureNow();
-                Runner();
+                JellySceneBuilder.BuildMobControl();
+                MobControl();
             };
         }
 
@@ -60,10 +62,9 @@ namespace JellyAd.EditorTools
                 EditorUtility.RequestScriptReload();
             }
         }
+
         const BindingFlags PublicInstance = BindingFlags.Public | BindingFlags.Instance;
 
-        // Adapter pinned to the locally installed Playworks 7.2.0 export pipeline.
-        // Fail explicitly if the SDK changes; never silently produce another target.
         static async Task Export(string scene)
         {
             var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == "EditorScripts");
@@ -91,7 +92,6 @@ namespace JellyAd.EditorTools
             string name = Path.GetFileNameWithoutExtension(scene);
             string output = "Builds/Playables/" + name;
             CopyDirectory("LunaTemp/stage4/develop", output);
-            // A portfolio preview has no local diagnostics server to receive tracing requests.
             var htmlPath = output + "/iframe.html";
             File.WriteAllText(htmlPath, File.ReadAllText(htmlPath).Replace("window.DEVELOP=!0", "window.DEVELOP=!1"));
             File.WriteAllText(output + "/index.html", "<!doctype html><html lang=\"en\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>" + name + " — Playable Demo</title><style>html,body{margin:0;height:100%;background:#101427}body{display:grid;place-items:center}iframe{border:0;width:min(100vw,56.25vh);height:100dvh}</style><iframe title=\"Playable demo\" src=\"iframe.html\" allow=\"autoplay; fullscreen\"></iframe></html>");
@@ -99,18 +99,21 @@ namespace JellyAd.EditorTools
             File.WriteAllText(output + "/build-info.txt", "Scene: " + scene + "\nSDK: Playworks 7.2.0\nBuilt UTC: " + DateTime.UtcNow.ToString("O") + "\n");
             Debug.Log("[Voodoo] Playable exported: " + Path.GetFullPath(output));
         }
+
         [Serializable] class ExportConfig { public ExportUnity unity; }
         [Serializable] class ExportUnity { public string[] scenes; }
+
         static void CopyDirectory(string source, string destination)
         {
             Directory.CreateDirectory(destination);
             foreach (var file in Directory.GetFiles(source)) File.Copy(file, Path.Combine(destination, Path.GetFileName(file)), true);
             foreach (var directory in Directory.GetDirectories(source)) CopyDirectory(directory, Path.Combine(destination, Path.GetFileName(directory)));
         }
+
         static async void Build(params string[] scenes)
         {
             if (busy || EditorApplication.isPlayingOrWillChangePlaymode) return;
-            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            EditorSceneManager.SaveOpenScenes();
             busy = true;
             try
             {
@@ -125,35 +128,26 @@ namespace JellyAd.EditorTools
             catch (Exception e) { Debug.LogException(e); }
             finally { busy = false; }
         }
+
         static void Prepare(string scene)
         {
-            if (!File.Exists(scene)) throw new FileNotFoundException(scene);
+            if (!File.Exists(scene)) JellySceneBuilder.BuildMobControl();
             EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(scene, true) };
             EditorSceneManager.OpenScene(scene);
             EditorApplication.ExecuteMenuItem("Tools/Unity Playworks Plugin");
         }
-        [MenuItem("Voodoo/Playable Builds/Jelly Flow")]
-        public static void Jelly() => Build(JellySceneBuilder.JellyScene);
-        [MenuItem("Voodoo/Playable Builds/Rescue Run")]
-        public static void Runner() => Build(JellySceneBuilder.RunnerScene);
-        [MenuItem("Voodoo/Playable Builds/Last Camp")]
-        public static void Camp() => Build(JellySceneBuilder.SurvivorScene);
-        [MenuItem("Voodoo/Playable Builds/Number Match")]
-        public static void Numbers() => Build(JellySceneBuilder.NumberMatchScene);
-        [MenuItem("Voodoo/Playable Builds/Build All Four %#F8")]
-        public static void All() => Build(JellySceneBuilder.JellyScene, JellySceneBuilder.NumberMatchScene, JellySceneBuilder.RunnerScene, JellySceneBuilder.SurvivorScene);
 
-        [MenuItem("Voodoo/Record Rescue Run Creative Video (1080x1920)")]
-        public static void RecordRescueRunVideo()
+        [MenuItem("Voodoo/Mob Control")]
+        public static void MobControl()
         {
-            EditorSceneManager.OpenScene(JellySceneBuilder.RunnerScene);
-            var rec = UnityEngine.Object.FindFirstObjectByType<RescueRun.RescueRunVideoRecorder>();
-            if (!rec)
-            {
-                var go = new GameObject("RescueRunVideoRecorder");
-                rec = go.AddComponent<RescueRun.RescueRunVideoRecorder>();
-            }
-            EditorApplication.isPlaying = true;
+            JellySceneBuilder.BuildMobControl();
+            Build(JellySceneBuilder.MobControlScene);
         }
+
+        public static void Jelly() => Build(JellySceneBuilder.JellyScene);
+        public static void Runner() => Build(JellySceneBuilder.RunnerScene);
+        public static void Camp() => Build(JellySceneBuilder.SurvivorScene);
+        public static void Numbers() => Build(JellySceneBuilder.NumberMatchScene);
+        public static void All() => Build(JellySceneBuilder.MobControlScene, JellySceneBuilder.NumberMatchScene, JellySceneBuilder.RunnerScene, JellySceneBuilder.SurvivorScene);
     }
 }
