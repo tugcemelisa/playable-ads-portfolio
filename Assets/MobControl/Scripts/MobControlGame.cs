@@ -60,12 +60,16 @@ namespace MobControlAd
         public string tutorialText = "<  HOLD & DRAG TO AIM  >";
 
         public enum BackgroundTheme { AlpineWinter = 0, MidnightSlate = 1 }
+        public enum CharacterStyle { StylizedModels = 0, ClassicStickmen = 1 }
         public enum CtaButtonColor { Green = 0, Blue = 1, Yellow = 2, Red = 3, Purple = 4 }
         public enum CtaButtonShape { Rounded = 0, Sharp = 1 }
 
         [Header("Background Theme")]
         [LunaPlaygroundField("Background Theme", 0, "Visual Settings")]
         public BackgroundTheme backgroundTheme = BackgroundTheme.AlpineWinter;
+
+        [LunaPlaygroundField("Character Style", 1, "Visual Settings")]
+        public CharacterStyle characterStyle = CharacterStyle.StylizedModels;
 
         [LunaPlaygroundField("CTA Button Color", 6, "Endcard & Localization")]
         public CtaButtonColor ctaColor = CtaButtonColor.Green;
@@ -192,6 +196,8 @@ namespace MobControlAd
         readonly List<SmokePuff> _puffs = new List<SmokePuff>();
         readonly List<RingFx> _rings = new List<RingFx>();
         readonly List<SparkFx> _sparks = new List<SparkFx>();
+        GameObject _purpleMobPrefab;
+        GameObject _yellowMobPrefab;
 
         // UI & State
         AdUI _ui;
@@ -218,6 +224,8 @@ namespace MobControlAd
         void Start()
         {
             ApplyThemePalette();
+            _purpleMobPrefab = Resources.Load<GameObject>("Models/PurpleMob");
+            _yellowMobPrefab = Resources.Load<GameObject>("Models/YellowMob");
             SetupCameraAndSpaceEnvironment();
             BuildWhiteBridge();
             BuildArchedPurpleTube();
@@ -838,38 +846,137 @@ namespace MobControlAd
             };
 
             Color col = isPurple ? PurpleMain : YellowMain;
+            GameObject customPrefab = (characterStyle == CharacterStyle.StylizedModels)
+                ? (isPurple ? _purpleMobPrefab : _yellowMobPrefab)
+                : null;
 
-            // Glossy 3D Rounded Stickman (matching LowPoly_Stickaman_Running.fbx & VideoReference.mp4!)
-            var head = Prims.Make(PrimitiveType.Sphere, body, new Vector3(0f, 0.88f, 0f), new Vector3(0.36f, 0.36f, 0.36f), col);
-            var torso = Prims.Make(PrimitiveType.Capsule, body, new Vector3(0f, 0.52f, 0f), new Vector3(0.26f, 0.24f, 0.22f), col);
-            var lArm = Prims.Make(PrimitiveType.Capsule, body, new Vector3(-0.19f, 0.54f, 0f), new Vector3(0.11f, 0.18f, 0.11f), col);
-            var rArm = Prims.Make(PrimitiveType.Capsule, body, new Vector3(0.19f, 0.54f, 0f), new Vector3(0.11f, 0.18f, 0.11f), col);
-            var lLeg = Prims.Make(PrimitiveType.Capsule, body, new Vector3(-0.09f, 0.20f, 0f), new Vector3(0.12f, 0.20f, 0.12f), col);
-            var rLeg = Prims.Make(PrimitiveType.Capsule, body, new Vector3(0.09f, 0.20f, 0f), new Vector3(0.12f, 0.20f, 0.12f), col);
+            if (customPrefab != null)
+            {
+                var inst = Instantiate(customPrefab, body);
+                inst.transform.localPosition = Vector3.zero;
+                inst.transform.localRotation = Quaternion.identity;
+                inst.transform.localScale = Vector3.one;
 
-            unit.leftArm = lArm.transform;
-            unit.rightArm = rArm.transform;
-            unit.leftLeg = lLeg.transform;
-            unit.rightLeg = rLeg.transform;
+                var rends = inst.GetComponentsInChildren<Renderer>();
+                Bounds b = new Bounds(inst.transform.position, Vector3.zero);
+                bool hasBounds = false;
+                for (int i = 0; i < rends.Length; i++)
+                {
+                    if (!hasBounds) { b = rends[i].bounds; hasBounds = true; }
+                    else b.Encapsulate(rends[i].bounds);
+                }
+                if (hasBounds && b.size.y > 0.001f)
+                {
+                    float normScale = 1.12f / b.size.y;
+                    inst.transform.localScale = Vector3.one * normScale;
+                    Vector3 localMin = body.InverseTransformPoint(b.min);
+                    inst.transform.localPosition = new Vector3(0f, -localMin.y * normScale, 0f);
+                }
 
-            unit.renderers.Add(head.GetComponent<Renderer>());
-            unit.renderers.Add(torso.GetComponent<Renderer>());
-            unit.renderers.Add(lArm.GetComponent<Renderer>());
-            unit.renderers.Add(rArm.GetComponent<Renderer>());
-            unit.renderers.Add(lLeg.GetComponent<Renderer>());
-            unit.renderers.Add(rLeg.GetComponent<Renderer>());
+                // Multi-tone theme palette for friendly (DgOCW9ZCRJ) | Preserve eyes & paint body yellow/red for enemy (RRliSQBP7r)
+                Color[] friendlyTones = { PurpleMain, PurpleLight, Color.Lerp(PurpleMain, Color.black, 0.28f) };
+                for (int i = 0; i < rends.Length; i++)
+                {
+                    var r = rends[i];
+                    unit.renderers.Add(r);
+                    if (isPurple)
+                    {
+                        if (AdRes.PrimMat)
+                        {
+                            var mats = r.sharedMaterials;
+                            for (int m = 0; m < mats.Length; m++) mats[m] = AdRes.PrimMat;
+                            r.sharedMaterials = mats;
+                        }
+                        Prims.SetColor(r, friendlyTones[i % friendlyTones.Length]);
+                    }
+                    else
+                    {
+                        if (IsEyeMesh(r)) continue;
+                        if (AdRes.PrimMat)
+                        {
+                            var mats = r.sharedMaterials;
+                            bool hasEyeMat = false;
+                            for (int m = 0; m < mats.Length; m++)
+                            {
+                                if (mats[m] != null && IsEyeName(mats[m].name))
+                                    hasEyeMat = true;
+                                else
+                                    mats[m] = AdRes.PrimMat;
+                            }
+                            r.sharedMaterials = mats;
+                            if (!hasEyeMat) Prims.SetColor(r, YellowMain);
+                            else
+                            {
+                                // Tint non-eye slots via MaterialPropertyBlock on the main material
+                                Prims.SetColor(r, YellowMain);
+                            }
+                        }
+                        else
+                        {
+                            Prims.SetColor(r, YellowMain);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Classic Mob Control Glossy 3D Rounded Stickman
+                var head = Prims.Make(PrimitiveType.Sphere, body, new Vector3(0f, 0.88f, 0f), new Vector3(0.36f, 0.36f, 0.36f), col);
+                var torso = Prims.Make(PrimitiveType.Capsule, body, new Vector3(0f, 0.52f, 0f), new Vector3(0.26f, 0.24f, 0.22f), col);
+                var lArm = Prims.Make(PrimitiveType.Capsule, body, new Vector3(-0.19f, 0.54f, 0f), new Vector3(0.11f, 0.18f, 0.11f), col);
+                var rArm = Prims.Make(PrimitiveType.Capsule, body, new Vector3(0.19f, 0.54f, 0f), new Vector3(0.11f, 0.18f, 0.11f), col);
+                var lLeg = Prims.Make(PrimitiveType.Capsule, body, new Vector3(-0.09f, 0.20f, 0f), new Vector3(0.12f, 0.20f, 0.12f), col);
+                var rLeg = Prims.Make(PrimitiveType.Capsule, body, new Vector3(0.09f, 0.20f, 0f), new Vector3(0.12f, 0.20f, 0.12f), col);
+
+                unit.leftArm = lArm.transform;
+                unit.rightArm = rArm.transform;
+                unit.leftLeg = lLeg.transform;
+                unit.rightLeg = rLeg.transform;
+
+                unit.renderers.Add(head.GetComponent<Renderer>());
+                unit.renderers.Add(torso.GetComponent<Renderer>());
+                unit.renderers.Add(lArm.GetComponent<Renderer>());
+                unit.renderers.Add(rArm.GetComponent<Renderer>());
+                unit.renderers.Add(lLeg.GetComponent<Renderer>());
+                unit.renderers.Add(rLeg.GetComponent<Renderer>());
+            }
 
             if (isPurple) _purpleMobs.Add(unit);
             else _yellowMobs.Add(unit);
             return unit;
         }
 
+        static bool IsEyeName(string n)
+        {
+            if (string.IsNullOrEmpty(n)) return false;
+            string low = n.ToLowerInvariant();
+            return low.Contains("eye") || low.Contains("pupil") || low.Contains("iris") || low.Contains("cornea");
+        }
+
+        static bool IsEyeMesh(Renderer r)
+        {
+            if (!r) return false;
+            if (IsEyeName(r.name)) return true;
+            var mats = r.sharedMaterials;
+            if (mats != null && mats.Length == 1 && mats[0] != null && IsEyeName(mats[0].name))
+                return true;
+            return false;
+        }
+
         void SetStickmanColor(StickmanUnit u, Color c)
         {
             for (int i = 0; i < u.renderers.Count; i++)
             {
-                if (u.renderers[i])
-                    Prims.SetColor(u.renderers[i], c);
+                var r = u.renderers[i];
+                if (!r) continue;
+                // On clash/death, turn EVERY mesh & material (including eyes!) completely gray
+                if (AdRes.PrimMat)
+                {
+                    var mats = r.sharedMaterials;
+                    for (int m = 0; m < mats.Length; m++) mats[m] = AdRes.PrimMat;
+                    r.sharedMaterials = mats;
+                }
+                Prims.SetColor(r, c);
             }
         }
 
@@ -1284,6 +1391,8 @@ namespace MobControlAd
             if (u.rightArm) u.rightArm.localRotation = Quaternion.Euler(-swing, 0f, 0f);
             if (u.leftLeg) u.leftLeg.localRotation = Quaternion.Euler(-swing, 0f, 0f);
             if (u.rightLeg) u.rightLeg.localRotation = Quaternion.Euler(swing, 0f, 0f);
+            if (!u.leftLeg)
+                u.body.localRotation = Quaternion.Euler(8f, 0f, Mathf.Sin(cyc) * 9f);
         }
 
         void DamageYellowBlock(int dmg, Vector3 hitPos)
