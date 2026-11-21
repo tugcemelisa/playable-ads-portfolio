@@ -152,8 +152,15 @@ namespace JellyAd
             go.transform.SetParent(parent, false);
             go.transform.localPosition = pos;
             var l = go.AddComponent<Label>();
-            l.shadow = Txt(go.transform, "shadow", text, height, new Color(0f, 0f, 0f, 0.55f), order - 1,
-                new Vector3(height * 0.06f, -height * 0.08f, 0f));
+            Color outlineCol = new Color(0.04f, 0.05f, 0.11f, 0.96f);
+            float d = height * 0.045f;
+            l.outlines = new TextMesh[4];
+            l.outlines[0] = Txt(go.transform, "o0", text, height, outlineCol, order - 1, new Vector3(-d, 0f, 0.018f));
+            l.outlines[1] = Txt(go.transform, "o1", text, height, outlineCol, order - 1, new Vector3(d, 0f, 0.018f));
+            l.outlines[2] = Txt(go.transform, "o2", text, height, outlineCol, order - 1, new Vector3(0f, -d, 0.018f));
+            l.outlines[3] = Txt(go.transform, "o3", text, height, outlineCol, order - 1, new Vector3(0f, d, 0.018f));
+            l.shadow = Txt(go.transform, "shadow", text, height, new Color(0f, 0f, 0f, 0.85f), order - 2,
+                new Vector3(height * 0.055f, -height * 0.085f, 0.036f));
             l.main = Txt(go.transform, "main", text, height, c, order, Vector3.zero);
             return l;
         }
@@ -162,10 +169,18 @@ namespace JellyAd
     public class Label : MonoBehaviour
     {
         public TextMesh main, shadow;
+        public TextMesh[] outlines;
         public string Text
         {
             get => main.text;
-            set { main.text = value; shadow.text = value; }
+            set
+            {
+                main.text = value;
+                if (shadow) shadow.text = value;
+                if (outlines != null)
+                    for (int i = 0; i < outlines.Length; i++)
+                        if (outlines[i]) outlines[i].text = value;
+            }
         }
     }
 }

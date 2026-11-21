@@ -28,12 +28,13 @@ namespace JellyAd.EditorTools
                     try { ctx.Post(__ => CheckForExternalScriptChanges(), null); } catch { }
                 }, null, 2000, 2000);
             }
-            const string key = "Voodoo.PlayableValidation.VoodooThreeV3";
+            const string key = "Voodoo.PlayableValidation.RescueRunV4";
             if (SessionState.GetBool(key, false)) return;
             SessionState.SetBool(key, true);
             EditorApplication.delayCall += () =>
             {
                 PlayableSpriteMaterial.EnsureNow();
+                Runner();
             };
         }
 

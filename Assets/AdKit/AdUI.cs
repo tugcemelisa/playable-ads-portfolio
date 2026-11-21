@@ -4,15 +4,17 @@ using JellyAd;
 
 namespace AdKit
 {
-    /// <summary>Shared screen-space UI for playables: banner, endcard + CTA, drag tutorial hand.</summary>
+    /// <summary>Shared screen-space UI for playables: banner with pill backdrop, Voodoo endcard + 3D CTA, drag tutorial hand.</summary>
     public class AdUI
     {
         public RectTransform Root;
+        RectTransform bannerWrap;
+        Image bannerBg;
         Text banner;
         float bannerT = -1f;
         Color bannerColor;
         GameObject endcard;
-        RectTransform card, cta, tut, tutHand;
+        RectTransform card, cta, tut, tutHand, tutRing;
         Text endSub;
 
         public bool EndcardVisible => endcard && endcard.activeSelf;
@@ -31,21 +33,32 @@ namespace AdKit
             ui.Root = (RectTransform)go.transform;
             var c = new Vector2(0.5f, 0.5f);
 
-            ui.banner = Txt(ui.Root, "", 110, Color.white, c, new Vector2(0f, 420f));
-            ui.banner.gameObject.SetActive(false);
+            // Pop-in Banner with dark high-contrast pill backdrop
+            ui.bannerWrap = (RectTransform)new GameObject("BannerWrap", typeof(RectTransform)).transform;
+            ui.bannerWrap.SetParent(ui.Root, false);
+            ui.bannerWrap.anchorMin = c;
+            ui.bannerWrap.anchorMax = c;
+            ui.bannerWrap.anchoredPosition = new Vector2(0f, 430f);
+            ui.bannerWrap.sizeDelta = new Vector2(920f, 155f);
+            ui.bannerBg = Img(ui.bannerWrap, Res.Round(64), new Color(0.05f, 0.07f, 0.16f, 0.84f), c, Vector2.zero, new Vector2(900f, 148f), true);
+            ui.banner = Txt(ui.bannerWrap, "", 92, Color.white, c, new Vector2(0f, 4f));
+            ui.bannerWrap.gameObject.SetActive(false);
 
-            // drag tutorial
+            // Sleek Voodoo Drag Tutorial with pill track + pulsing ring + hand
             ui.tut = (RectTransform)new GameObject("DragTutorial", typeof(RectTransform)).transform;
             ui.tut.SetParent(ui.Root, false);
             ui.tut.anchorMin = new Vector2(0.5f, 0f);
             ui.tut.anchorMax = new Vector2(0.5f, 0f);
-            ui.tut.anchoredPosition = new Vector2(0f, 420f);
-            Img(ui.tut, Res.Round(64), new Color(0f, 0f, 0f, 0.35f), c, new Vector2(0f, 0f), new Vector2(760f, 26f), true);
-            Txt(ui.tut, "HOLD & DRAG TO MOVE", 64, Color.white, c, new Vector2(0f, 150f));
-            ui.tutHand = Hand(ui.tut);
+            ui.tut.anchoredPosition = new Vector2(0f, 410f);
+            Img(ui.tut, Res.Round(64), new Color(0.04f, 0.06f, 0.14f, 0.72f), c, new Vector2(0f, 88f), new Vector2(820f, 210f), true);
+            Img(ui.tut, Res.Round(64), new Color(1f, 1f, 1f, 0.22f), c, new Vector2(0f, 18f), new Vector2(680f, 28f), true);
+            Img(ui.tut, Res.Circle, new Color(1f, 0.84f, 0.25f, 0.85f), c, new Vector2(-325f, 18f), new Vector2(36f, 36f), false);
+            Img(ui.tut, Res.Circle, new Color(1f, 0.84f, 0.25f, 0.85f), c, new Vector2(325f, 18f), new Vector2(36f, 36f), false);
+            Txt(ui.tut, "<  HOLD & DRAG TO MOVE  >", 54, new Color(1f, 0.94f, 0.55f), c, new Vector2(0f, 128f));
+            ui.tutHand = Hand(ui.tut, out ui.tutRing);
             ui.tut.gameObject.SetActive(false);
 
-            // endcard
+            // Multi-layered Voodoo Endcard with 3D glossy CTA button
             ui.endcard = new GameObject("Endcard", typeof(RectTransform));
             var ert = (RectTransform)ui.endcard.transform;
             ert.SetParent(ui.Root, false);
@@ -53,13 +66,31 @@ namespace AdKit
             ert.anchorMax = Vector2.one;
             ert.offsetMin = Vector2.zero;
             ert.offsetMax = Vector2.zero;
-            ui.endcard.AddComponent<Image>().color = new Color(0.03f, 0.03f, 0.1f, 0.8f);
-            ui.card = Img(ert, Res.Round(64), cardColor, c, new Vector2(0f, 60f), new Vector2(900f, 1000f), true).rectTransform;
-            var t = Txt(ui.card, title, 130, titleColor, c, new Vector2(0f, 300f));
-            t.GetComponent<Outline>().effectDistance = new Vector2(7f, -7f);
-            ui.endSub = Txt(ui.card, "", 58, Color.white, c, new Vector2(0f, 110f));
-            ui.cta = Img(ui.card, Res.Round(64), new Color(0.3f, 0.85f, 0.35f), c, new Vector2(0f, -320f), new Vector2(640f, 170f), true).rectTransform;
-            Txt(ui.cta, ctaText, 82, Color.white, c, new Vector2(0f, 4f));
+            ui.endcard.AddComponent<Image>().color = new Color(0.02f, 0.03f, 0.09f, 0.84f);
+
+            // Card outer golden border + inner body + top header ribbon
+            var outerBorder = Img(ert, Res.Round(64), new Color(titleColor.r, titleColor.g, titleColor.b, 0.95f), c, new Vector2(0f, 55f), new Vector2(932f, 1044f), true).rectTransform;
+            ui.card = Img(outerBorder, Res.Round(64), cardColor, c, Vector2.zero, new Vector2(900f, 1012f), true).rectTransform;
+            Img(ui.card, Res.Round(64), new Color(0f, 0f, 0f, 0.28f), c, new Vector2(0f, 315f), new Vector2(820f, 185f), true);
+            Img(ui.card, Res.Round(64), new Color(1f, 1f, 1f, 0.08f), c, new Vector2(0f, 385f), new Vector2(780f, 38f), true);
+
+            var t = Txt(ui.card, title, 108, titleColor, c, new Vector2(0f, 318f));
+            t.GetComponent<Outline>().effectDistance = new Vector2(6f, -6f);
+            ui.endSub = Txt(ui.card, "", 52, new Color(0.94f, 0.96f, 1f), c, new Vector2(0f, 125f));
+
+            // 3D Glossy Green CTA Button (shadow lip + main face + top specular shine)
+            ui.cta = (RectTransform)new GameObject("CTA", typeof(RectTransform)).transform;
+            ui.cta.SetParent(ui.card, false);
+            ui.cta.anchorMin = c;
+            ui.cta.anchorMax = c;
+            ui.cta.anchoredPosition = new Vector2(0f, -330f);
+            ui.cta.sizeDelta = new Vector2(680f, 186f);
+            Img(ui.cta, Res.Round(64), new Color(0.08f, 0.44f, 0.14f), c, new Vector2(0f, -14f), new Vector2(680f, 178f), true);
+            Img(ui.cta, Res.Round(64), new Color(0.22f, 0.86f, 0.32f), c, new Vector2(0f, 2f), new Vector2(672f, 172f), true);
+            Img(ui.cta, Res.Round(64), new Color(1f, 1f, 1f, 0.26f), c, new Vector2(0f, 48f), new Vector2(620f, 54f), true);
+            var ctaTxt = Txt(ui.cta, ctaText, 82, Color.white, c, new Vector2(0f, 4f));
+            ctaTxt.GetComponent<Outline>().effectDistance = new Vector2(5f, -5f);
+
             ui.endcard.SetActive(false);
             return ui;
         }
@@ -72,8 +103,9 @@ namespace AdKit
             banner.text = text;
             bannerColor = color;
             banner.color = color;
+            bannerBg.color = new Color(0.05f, 0.07f, 0.16f, 0.84f);
             bannerT = 0f;
-            banner.gameObject.SetActive(true);
+            bannerWrap.gameObject.SetActive(true);
             Sfx.Play(Sfx.Id.Banner, 0.5f, 1f, 0.04f, 0.12f);
         }
 
@@ -86,10 +118,10 @@ namespace AdKit
                 StoreLink.NotifyGameEnded();
                 Sfx.Play(Sfx.Id.Banner, 0.75f, 1.08f, 0f, 0.05f);
             }
-            banner.gameObject.SetActive(false);
+            bannerWrap.gameObject.SetActive(false);
             tut.gameObject.SetActive(false);
             endSub.text = sub;
-            card.localScale = Vector3.one * 0.6f;
+            card.parent.localScale = Vector3.one * 0.6f;
             endcard.SetActive(true);
         }
 
@@ -98,28 +130,36 @@ namespace AdKit
             if (bannerT >= 0f)
             {
                 bannerT += dt;
-                var rt = banner.rectTransform;
                 float k = bannerT / 0.25f;
-                rt.localScale = Vector3.one * (k < 0.7f ? Mathf.Lerp(0f, 1.2f, k / 0.7f) : (k < 1f ? Mathf.Lerp(1.2f, 1f, (k - 0.7f) / 0.3f) : 1f));
-                float fade = Mathf.Clamp01((bannerT - 1.4f) / 0.25f);
+                bannerWrap.localScale = Vector3.one * (k < 0.7f ? Mathf.Lerp(0f, 1.15f, k / 0.7f) : (k < 1f ? Mathf.Lerp(1.15f, 1f, (k - 0.7f) / 0.3f) : 1f));
+                float fade = Mathf.Clamp01((bannerT - 1.45f) / 0.25f);
                 banner.color = new Color(bannerColor.r, bannerColor.g, bannerColor.b, 1f - fade);
-                if (fade >= 1f) { bannerT = -1f; banner.gameObject.SetActive(false); }
+                bannerBg.color = new Color(0.05f, 0.07f, 0.16f, 0.84f * (1f - fade));
+                if (fade >= 1f) { bannerT = -1f; bannerWrap.gameObject.SetActive(false); }
             }
             if (tut.gameObject.activeSelf)
-                tutHand.anchoredPosition = new Vector2(Mathf.Sin(Time.time * 3f) * 300f, -40f);
+            {
+                tutHand.anchoredPosition = new Vector2(Mathf.Sin(Time.time * 3.2f) * 285f, -18f);
+                if (tutRing)
+                {
+                    float p = 0.85f + 0.25f * Mathf.Sin(Time.time * 7f);
+                    tutRing.localScale = Vector3.one * p;
+                }
+            }
             if (EndcardVisible)
             {
-                cta.localScale = Vector3.one * (1f + 0.06f * Mathf.Sin(Time.time * 6f));
-                card.localScale = Vector3.Lerp(card.localScale, Vector3.one, 1f - Mathf.Exp(-10f * dt));
+                cta.localScale = Vector3.one * (1f + 0.06f * Mathf.Sin(Time.time * 6.5f));
+                card.parent.localScale = Vector3.Lerp(card.parent.localScale, Vector3.one, 1f - Mathf.Exp(-10f * dt));
             }
         }
 
-        static RectTransform Hand(Transform parent)
+        static RectTransform Hand(Transform parent, out RectTransform pulseRing)
         {
             var h = (RectTransform)new GameObject("Hand", typeof(RectTransform)).transform;
             h.SetParent(parent, false);
             h.anchorMin = new Vector2(0.5f, 0.5f);
             h.anchorMax = new Vector2(0.5f, 0.5f);
+            pulseRing = Img(h, Res.Ring, new Color(1f, 0.86f, 0.28f, 0.75f), new Vector2(0.5f, 0.5f), new Vector2(0f, 12f), new Vector2(115f, 115f), false).rectTransform;
             var art = (RectTransform)new GameObject("art", typeof(RectTransform)).transform;
             art.SetParent(h, false);
             art.localRotation = Quaternion.Euler(0f, 0f, 20f);
@@ -132,8 +172,8 @@ namespace AdKit
             }
             for (int pass = 0; pass < 2; pass++)
             {
-                var c = pass == 0 ? new Color(0.1f, 0.1f, 0.16f) : Color.white;
-                float g = pass == 0 ? 10f : 0f;
+                var c = pass == 0 ? new Color(0.08f, 0.09f, 0.16f) : Color.white;
+                float g = pass == 0 ? 12f : 0f;
                 var r = Res.Round(256);
                 Img(art, r, c, new Vector2(0.5f, 0.5f), new Vector2(0f, -40f), new Vector2(34f + g, 100f + g), true);
                 Img(art, r, c, new Vector2(0.5f, 0.5f), new Vector2(28f, -70f), new Vector2(30f + g, 60f + g), true);
@@ -153,7 +193,7 @@ namespace AdKit
             rt.anchorMin = anchor;
             rt.anchorMax = anchor;
             rt.anchoredPosition = pos;
-            rt.sizeDelta = new Vector2(1000f, size * 1.4f);
+            rt.sizeDelta = new Vector2(1000f, size * 1.45f);
             var t = go.AddComponent<Text>();
             t.font = Res.Font;
             t.text = s;
@@ -165,8 +205,11 @@ namespace AdKit
             t.verticalOverflow = VerticalWrapMode.Overflow;
             t.raycastTarget = false;
             var o = go.AddComponent<Outline>();
-            o.effectColor = new Color(0f, 0f, 0f, 0.6f);
-            o.effectDistance = new Vector2(4f, -4f);
+            o.effectColor = new Color(0.03f, 0.04f, 0.11f, 0.94f);
+            o.effectDistance = new Vector2(5f, -5f);
+            var sh = go.AddComponent<Shadow>();
+            sh.effectColor = new Color(0f, 0f, 0f, 0.65f);
+            sh.effectDistance = new Vector2(0f, -8f);
             return t;
         }
 

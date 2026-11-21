@@ -127,6 +127,10 @@ namespace RescueRun
         readonly List<Transform> billboards = new List<Transform>();
         Vector3 shakeOffset;
 
+        // Top 2D HUD elements
+        Image hudProgressFill, hudSquadPill, hudTankPill;
+        Text hudSquadText, hudTankText;
+
         // ============================================================ setup
         void Start()
         {
@@ -150,16 +154,23 @@ namespace RescueRun
 
             world = new GameObject("World").transform;
             fx = new GameObject("FX").transform;
-            ui = AdUI.Create(gameTitle, ctaText, new Color(0.16f, 0.28f, 0.58f), Gold);
+            ui = AdUI.Create(gameTitle, ctaText, new Color(0.12f, 0.22f, 0.48f), Gold);
+            BuildTopHud();
             AddEndcardMascots();
 
             squad = Mathf.Max(1, startSquad);
             BuildBridgeLevel();
 
-            squadLabel = Res.MakeLabel(world, squad.ToString(), 0.85f, Color.white, 50, Vector3.zero);
-            billboards.Add(squadLabel.transform);
+            // Squad counter badge with dark backing disc
+            var sqRoot = new GameObject("SquadBadge").transform;
+            sqRoot.SetParent(world, false);
+            Prim(PrimitiveType.Cube, sqRoot, new Vector3(0f, 0f, 0.08f), new Vector3(1.05f, 0.78f, 0.04f), new Color(0.06f, 0.10f, 0.24f));
+            Prim(PrimitiveType.Cube, sqRoot, new Vector3(0f, 0f, 0.10f), new Vector3(1.17f, 0.90f, 0.03f), Gold);
+            squadLabel = Res.MakeLabel(sqRoot, squad.ToString(), 0.78f, Color.white, 50, Vector3.zero);
+            billboards.Add(sqRoot);
             RebuildSoldiers();
             UpdateCamera(true);
+            UpdateTopHud();
 
             // 0s Instant Action Hook: game starts running & shooting immediately at 0.0s!
             phase = Phase.Run;
@@ -168,6 +179,52 @@ namespace RescueRun
             {
                 tutorialActive = true;
                 ui.ShowDragTutorial(true);
+            }
+        }
+
+        void BuildTopHud()
+        {
+            var top = new Vector2(0.5f, 1f);
+            // Stage progress bar
+            var barBg = AdUI.Img(ui.Root, Res.Round(64), new Color(0.04f, 0.06f, 0.15f, 0.78f), top, new Vector2(0f, -72f), new Vector2(720f, 44f), true);
+            hudProgressFill = AdUI.Img(barBg.transform, Res.Round(64), LaserCyan, new Vector2(0f, 0.5f), new Vector2(8f, 0f), new Vector2(40f, 28f), true);
+            hudProgressFill.rectTransform.pivot = new Vector2(0f, 0.5f);
+            AdUI.Txt(barBg.transform, "BRIDGE RESCUE", 28, new Color(1f, 1f, 1f, 0.9f), new Vector2(0.5f, 0.5f), new Vector2(0f, 1f));
+            var bossTag = AdUI.Img(barBg.transform, Res.Round(64), new Color(0.88f, 0.18f, 0.22f), new Vector2(1f, 0.5f), new Vector2(-10f, 0f), new Vector2(115f, 42f), true);
+            AdUI.Txt(bossTag.transform, "BOSS", 26, Gold, new Vector2(0.5f, 0.5f), Vector2.zero);
+
+            // Left Squad & Weapon Tier Pill
+            hudSquadPill = AdUI.Img(ui.Root, Res.Round(64), new Color(0.10f, 0.28f, 0.68f, 0.88f), top, new Vector2(-235f, -142f), new Vector2(410f, 62f), true);
+            hudSquadText = AdUI.Txt(hudSquadPill.transform, "SQUAD: 1  |  LV 1", 34, Color.white, new Vector2(0.5f, 0.5f), Vector2.zero);
+
+            // Right Giant Tank Rescue Status Pill
+            hudTankPill = AdUI.Img(ui.Root, Res.Round(64), new Color(0.08f, 0.22f, 0.48f, 0.88f), top, new Vector2(235f, -142f), new Vector2(410f, 62f), true);
+            hudTankText = AdUI.Txt(hudTankPill.transform, "TANK: 1241 HP", 34, LaserCyan, new Vector2(0.5f, 0.5f), Vector2.zero);
+
+            ui.Root.SetAsLastSibling();
+        }
+
+        void UpdateTopHud()
+        {
+            if (!hudProgressFill) return;
+            float prog = Mathf.Clamp01(squadZ / 140f);
+            hudProgressFill.rectTransform.sizeDelta = new Vector2(Mathf.Max(32f, 704f * prog), 28f);
+            if (hudSquadText)
+            {
+                bool lv2 = weaponTier >= 2;
+                hudSquadText.text = "SQUAD: " + squad + (lv2 ? "  |  LV 2 MAX" : "  |  LV 1");
+                hudSquadText.color = lv2 ? Gold : Color.white;
+                hudSquadPill.color = lv2 ? new Color(0.24f, 0.42f, 0.88f, 0.94f) : new Color(0.10f, 0.28f, 0.68f, 0.88f);
+            }
+            if (hudTankText && rightTank != null)
+            {
+                int thp = Mathf.Max(0, Mathf.CeilToInt(rightTank.hp));
+                hudTankText.text = thp <= 0 ? "TANK: FREED!" : "TANK: " + thp + " HP";
+                bool low = thp <= 50;
+                hudTankText.color = low ? Gold : LaserCyan;
+                hudTankPill.color = low ? new Color(0.78f, 0.16f, 0.20f, 0.94f) : new Color(0.08f, 0.22f, 0.48f, 0.88f);
+                if (low)
+                    hudTankPill.transform.localScale = Vector3.one * (1f + Mathf.Abs(Mathf.Sin(Time.time * 9f)) * 0.06f);
             }
         }
 
@@ -241,27 +298,74 @@ namespace RescueRun
             root.SetParent(world, false);
             if (tier == 1)
             {
-                // Starter blue soldier with helmet and rifle
-                Prim(PrimitiveType.Capsule, root, new Vector3(0f, 0.42f, 0f), new Vector3(0.45f, 0.42f, 0.40f), Blue);
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.96f, 0f), Vector3.one * 0.40f, Skin);
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.07f, -0.02f), new Vector3(0.46f, 0.30f, 0.46f), new Color(0.15f, 0.42f, 0.92f));
-                Prim(PrimitiveType.Cube, root, new Vector3(0.20f, 0.52f, 0.24f), new Vector3(0.10f, 0.12f, 0.48f), Dark);
+                // Child 0 & 1: Articulated Left & Right Legs with dark combat boots
+                for (int s = -1; s <= 1; s += 2)
+                {
+                    var leg = new GameObject(s < 0 ? "LegL" : "LegR").transform;
+                    leg.SetParent(root, false);
+                    leg.localPosition = new Vector3(s * 0.11f, 0.34f, 0f);
+                    Prim(PrimitiveType.Capsule, leg, new Vector3(0f, -0.14f, 0f), new Vector3(0.16f, 0.18f, 0.16f), new Color(0.12f, 0.34f, 0.78f));
+                    Prim(PrimitiveType.Cube, leg, new Vector3(0f, -0.30f, 0.03f), new Vector3(0.17f, 0.11f, 0.24f), Dark);
+                }
+                // Tactical blue armor torso + chest vest + utility belt + backpack
+                Prim(PrimitiveType.Capsule, root, new Vector3(0f, 0.58f, 0f), new Vector3(0.42f, 0.30f, 0.34f), Blue);
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.62f, 0.03f), new Vector3(0.38f, 0.28f, 0.32f), new Color(0.14f, 0.40f, 0.86f));
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.42f, 0f), new Vector3(0.41f, 0.08f, 0.34f), Dark);
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.62f, -0.18f), new Vector3(0.28f, 0.30f, 0.14f), new Color(0.20f, 0.24f, 0.32f));
+                // Arms + shoulders
+                Prim(PrimitiveType.Capsule, root, new Vector3(-0.25f, 0.60f, 0.08f), new Vector3(0.14f, 0.20f, 0.14f), Blue);
+                Prim(PrimitiveType.Capsule, root, new Vector3(0.25f, 0.60f, 0.12f), new Vector3(0.14f, 0.20f, 0.14f), Blue);
+                // Head + tactical visor goggles + combat helmet
+                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.00f, 0f), Vector3.one * 0.38f, Skin);
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.01f, 0.15f), new Vector3(0.28f, 0.10f, 0.10f), new Color(0.10f, 0.18f, 0.32f));
+                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.11f, -0.02f), new Vector3(0.46f, 0.28f, 0.46f), new Color(0.14f, 0.42f, 0.94f));
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.08f, 0.18f), new Vector3(0.38f, 0.06f, 0.14f), new Color(0.10f, 0.32f, 0.78f));
+                // Detailed assault rifle (body, barrel, magazine, glowing muzzle)
+                Prim(PrimitiveType.Cube, root, new Vector3(0.22f, 0.56f, 0.26f), new Vector3(0.10f, 0.13f, 0.46f), Dark);
+                Prim(PrimitiveType.Cube, root, new Vector3(0.22f, 0.46f, 0.28f), new Vector3(0.07f, 0.14f, 0.10f), new Color(0.25f, 0.26f, 0.32f));
+                Prim(PrimitiveType.Cylinder, root, new Vector3(0.22f, 0.58f, 0.54f), new Vector3(0.06f, 0.16f, 0.06f), Dark).transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                Prim(PrimitiveType.Sphere, root, new Vector3(0.22f, 0.58f, 0.68f), Vector3.one * 0.09f, Gold);
             }
             else
             {
-                // LV+1 Heavy Gunner: wider armored body, golden ammo belt, cap, twin glowing blue laser cannons
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.48f, 0f), new Vector3(0.76f, 0.66f, 0.68f), HeavyBlue);
-                // Gold ammo bandolier across chest
-                var belt = Prim(PrimitiveType.Cylinder, root, new Vector3(0f, 0.50f, 0f), new Vector3(0.79f, 0.08f, 0.71f), Gold);
-                belt.transform.localRotation = Quaternion.Euler(0f, 0f, 22f);
-                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.04f, 0f), Vector3.one * 0.42f, Skin);
-                Prim(PrimitiveType.Cylinder, root, new Vector3(0f, 1.22f, 0f), new Vector3(0.46f, 0.08f, 0.46f), Blue);
-                // Twin heavy gun barrels + glowing cyan tips
+                // Child 0 & 1: Heavy Gunner Articulated Armored Legs + Gold Knee Pads
                 for (int s = -1; s <= 1; s += 2)
                 {
-                    Prim(PrimitiveType.Cube, root, new Vector3(s * 0.36f, 0.54f, 0.28f), new Vector3(0.16f, 0.18f, 0.62f), Dark);
-                    Prim(PrimitiveType.Sphere, root, new Vector3(s * 0.36f, 0.54f, 0.62f), Vector3.one * 0.16f, LaserCyan);
+                    var leg = new GameObject(s < 0 ? "LegL" : "LegR").transform;
+                    leg.SetParent(root, false);
+                    leg.localPosition = new Vector3(s * 0.16f, 0.38f, 0f);
+                    Prim(PrimitiveType.Capsule, leg, new Vector3(0f, -0.15f, 0f), new Vector3(0.22f, 0.20f, 0.22f), HeavyBlue);
+                    Prim(PrimitiveType.Cube, leg, new Vector3(0f, -0.12f, 0.10f), new Vector3(0.16f, 0.12f, 0.08f), Gold);
+                    Prim(PrimitiveType.Cube, leg, new Vector3(0f, -0.33f, 0.04f), new Vector3(0.23f, 0.13f, 0.28f), Dark);
                 }
+                // Broad Heavy Power-Armor Torso + Gold Chest Crest + Crossed Bandolier + Dorsal Plasma Reactor
+                Prim(PrimitiveType.Capsule, root, new Vector3(0f, 0.66f, 0f), new Vector3(0.62f, 0.36f, 0.48f), HeavyBlue);
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.70f, 0.04f), new Vector3(0.54f, 0.36f, 0.42f), new Color(0.16f, 0.46f, 0.96f));
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.74f, 0.24f), new Vector3(0.26f, 0.18f, 0.06f), Gold);
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.46f, 0f), new Vector3(0.58f, 0.10f, 0.46f), Gold);
+                var belt = Prim(PrimitiveType.Cylinder, root, new Vector3(0f, 0.66f, 0.02f), new Vector3(0.64f, 0.07f, 0.50f), Gold);
+                belt.transform.localRotation = Quaternion.Euler(0f, 0f, 24f);
+                // Dorsal reactor backpack with glowing cyan core
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.72f, -0.26f), new Vector3(0.42f, 0.38f, 0.18f), Dark);
+                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.74f, -0.34f), Vector3.one * 0.20f, LaserCyan);
+
+                // Bulky Shoulder Pauldrons + Muscular Arms + Twin Rotary Laser Cannons
+                for (int s = -1; s <= 1; s += 2)
+                {
+                    Prim(PrimitiveType.Sphere, root, new Vector3(s * 0.36f, 0.84f, 0f), new Vector3(0.28f, 0.24f, 0.28f), Blue);
+                    Prim(PrimitiveType.Cube, root, new Vector3(s * 0.38f, 0.88f, 0f), new Vector3(0.24f, 0.06f, 0.26f), Gold);
+                    Prim(PrimitiveType.Capsule, root, new Vector3(s * 0.36f, 0.62f, 0.12f), new Vector3(0.18f, 0.22f, 0.18f), HeavyBlue);
+                    // Twin heavy laser cannon housing + gold cooling ring + glowing cyan plasma nozzle
+                    Prim(PrimitiveType.Cube, root, new Vector3(s * 0.38f, 0.56f, 0.32f), new Vector3(0.18f, 0.20f, 0.58f), Dark);
+                    Prim(PrimitiveType.Cube, root, new Vector3(s * 0.38f, 0.56f, 0.46f), new Vector3(0.21f, 0.22f, 0.10f), Gold);
+                    Prim(PrimitiveType.Sphere, root, new Vector3(s * 0.38f, 0.56f, 0.66f), Vector3.one * 0.18f, LaserCyan);
+                }
+
+                // Head + Commander Helmet + Glowing Cyan Tactical Visor + Gold Crest
+                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.12f, 0f), Vector3.one * 0.42f, Skin);
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.13f, 0.17f), new Vector3(0.32f, 0.11f, 0.10f), LaserCyan);
+                Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.24f, -0.02f), new Vector3(0.50f, 0.30f, 0.50f), Blue);
+                Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.34f, 0.02f), new Vector3(0.10f, 0.12f, 0.44f), Gold);
             }
             return root;
         }
@@ -270,33 +374,69 @@ namespace RescueRun
         {
             var root = new GameObject("Enemy").transform;
             root.SetParent(world, false);
-            Prim(PrimitiveType.Capsule, root, new Vector3(0f, 0.40f, 0f), new Vector3(0.44f, 0.40f, 0.38f), Red);
-            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.92f, 0f), Vector3.one * 0.38f, new Color(0.95f, 0.72f, 0.68f));
-            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.03f, -0.02f), new Vector3(0.44f, 0.28f, 0.44f), new Color(0.75f, 0.12f, 0.15f));
+            // Child 0 & 1: Articulated Left & Right Legs
+            for (int s = -1; s <= 1; s += 2)
+            {
+                var leg = new GameObject(s < 0 ? "LegL" : "LegR").transform;
+                leg.SetParent(root, false);
+                leg.localPosition = new Vector3(s * 0.11f, 0.32f, 0f);
+                Prim(PrimitiveType.Capsule, leg, new Vector3(0f, -0.14f, 0f), new Vector3(0.15f, 0.18f, 0.15f), new Color(0.68f, 0.12f, 0.15f));
+                Prim(PrimitiveType.Cube, leg, new Vector3(0f, -0.29f, 0.02f), new Vector3(0.16f, 0.10f, 0.22f), Dark);
+            }
+            // Crimson torso + dark war belt + shoulder pads + forward arms
+            Prim(PrimitiveType.Capsule, root, new Vector3(0f, 0.56f, 0f), new Vector3(0.42f, 0.28f, 0.34f), Red);
+            Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.40f, 0f), new Vector3(0.40f, 0.08f, 0.32f), Dark);
+            for (int s = -1; s <= 1; s += 2)
+            {
+                Prim(PrimitiveType.Sphere, root, new Vector3(s * 0.25f, 0.72f, 0f), new Vector3(0.18f, 0.16f, 0.18f), Dark);
+                Prim(PrimitiveType.Capsule, root, new Vector3(s * 0.24f, 0.56f, 0.14f), new Vector3(0.13f, 0.18f, 0.13f), Red);
+            }
+            // Head + angry brow + dark helmet
+            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.96f, 0f), Vector3.one * 0.36f, new Color(0.96f, 0.72f, 0.66f));
+            Prim(PrimitiveType.Cube, root, new Vector3(0f, 0.99f, 0.15f), new Vector3(0.26f, 0.06f, 0.09f), Dark);
+            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.07f, -0.02f), new Vector3(0.42f, 0.26f, 0.42f), new Color(0.68f, 0.10f, 0.13f));
             return root;
         }
 
         Transform BuildBossModel(float scale)
         {
-            // Giant muscular brute from Reference 1: bare pinkish torso, red trousers, shoulder scar, thick arms
+            // Giant muscular brute from Reference 1: sculpted torso, red war trousers, spiked shoulder armor, fierce face
             var root = new GameObject("Boss").transform;
             root.SetParent(world, false);
             root.localScale = Vector3.one * scale;
-            // Legs / red pants
-            Prim(PrimitiveType.Capsule, root, new Vector3(-0.22f, 0.28f, 0f), new Vector3(0.28f, 0.28f, 0.28f), new Color(0.72f, 0.12f, 0.16f));
-            Prim(PrimitiveType.Capsule, root, new Vector3(0.22f, 0.28f, 0f), new Vector3(0.28f, 0.28f, 0.28f), new Color(0.72f, 0.12f, 0.16f));
-            Prim(PrimitiveType.Cylinder, root, new Vector3(0f, 0.45f, 0f), new Vector3(0.82f, 0.16f, 0.65f), new Color(0.75f, 0.14f, 0.18f));
-            // Bulky torso + belly
-            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.86f, 0f), new Vector3(1.02f, 0.76f, 0.78f), BossSkin);
-            // Belly wound / scar detail + right shoulder red mark
-            Prim(PrimitiveType.Sphere, root, new Vector3(-0.18f, 0.72f, 0.34f), new Vector3(0.32f, 0.22f, 0.14f), new Color(0.68f, 0.16f, 0.18f));
-            Prim(PrimitiveType.Sphere, root, new Vector3(0.46f, 1.06f, 0.16f), new Vector3(0.26f, 0.26f, 0.22f), new Color(0.75f, 0.18f, 0.20f));
-            // Muscular arms
-            Prim(PrimitiveType.Capsule, root, new Vector3(-0.58f, 0.82f, 0.08f), new Vector3(0.28f, 0.36f, 0.28f), BossSkin);
-            Prim(PrimitiveType.Capsule, root, new Vector3(0.58f, 0.82f, 0.08f), new Vector3(0.28f, 0.36f, 0.28f), BossSkin);
-            // Bald head + angry brow
-            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.32f, 0.08f), Vector3.one * 0.38f, BossSkin);
-            Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.38f, 0.25f), new Vector3(0.26f, 0.05f, 0.08f), Dark);
+            // Child 0, 1, 2: Legs / red war pants + studded belt (kept at indices 0..2 so hit-flash loop c >= 3 flashes skin!)
+            Prim(PrimitiveType.Capsule, root, new Vector3(-0.24f, 0.28f, 0f), new Vector3(0.30f, 0.28f, 0.30f), new Color(0.72f, 0.12f, 0.16f));
+            Prim(PrimitiveType.Capsule, root, new Vector3(0.24f, 0.28f, 0f), new Vector3(0.30f, 0.28f, 0.30f), new Color(0.72f, 0.12f, 0.16f));
+            Prim(PrimitiveType.Cylinder, root, new Vector3(0f, 0.46f, 0f), new Vector3(0.86f, 0.16f, 0.68f), new Color(0.22f, 0.18f, 0.20f));
+            // Muscular V-taper torso + chest plates (indices >= 3 flash white on hit)
+            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 0.88f, 0f), new Vector3(1.06f, 0.78f, 0.80f), BossSkin);
+            Prim(PrimitiveType.Sphere, root, new Vector3(-0.22f, 0.98f, 0.24f), new Vector3(0.44f, 0.32f, 0.26f), BossSkin);
+            Prim(PrimitiveType.Sphere, root, new Vector3(0.22f, 0.98f, 0.24f), new Vector3(0.44f, 0.32f, 0.26f), BossSkin);
+            // Battle scars & war paint
+            Prim(PrimitiveType.Cube, root, new Vector3(-0.18f, 0.74f, 0.38f), new Vector3(0.30f, 0.08f, 0.08f), new Color(0.72f, 0.14f, 0.18f));
+            Prim(PrimitiveType.Sphere, root, new Vector3(0.48f, 1.10f, 0.14f), new Vector3(0.32f, 0.28f, 0.28f), new Color(0.78f, 0.16f, 0.20f));
+            // Massive muscular arms + forearms + dark spiked gauntlets
+            for (int s = -1; s <= 1; s += 2)
+            {
+                Prim(PrimitiveType.Capsule, root, new Vector3(s * 0.62f, 0.88f, 0.06f), new Vector3(0.30f, 0.34f, 0.30f), BossSkin);
+                Prim(PrimitiveType.Capsule, root, new Vector3(s * 0.66f, 0.56f, 0.18f), new Vector3(0.26f, 0.24f, 0.26f), BossSkin);
+                Prim(PrimitiveType.Cube, root, new Vector3(s * 0.66f, 0.42f, 0.24f), new Vector3(0.28f, 0.22f, 0.28f), Dark);
+            }
+            // Fierce head + heavy brow + glowing red eyes + dark horns
+            Prim(PrimitiveType.Sphere, root, new Vector3(0f, 1.36f, 0.08f), Vector3.one * 0.42f, BossSkin);
+            Prim(PrimitiveType.Cube, root, new Vector3(0f, 1.42f, 0.27f), new Vector3(0.32f, 0.07f, 0.10f), Dark);
+            Prim(PrimitiveType.Sphere, root, new Vector3(-0.09f, 1.38f, 0.27f), Vector3.one * 0.07f, new Color(1f, 0.9f, 0.2f));
+            Prim(PrimitiveType.Sphere, root, new Vector3(0.09f, 1.38f, 0.27f), Vector3.one * 0.07f, new Color(1f, 0.9f, 0.2f));
+            return root;
+        }
+
+        Transform MakeWorldBadge(Transform parent, Vector3 localPos, Vector2 size, Color bgCol, Color borderCol)
+        {
+            var root = new GameObject("Badge").transform;
+            root.SetParent(parent, false);
+            root.localPosition = localPos;
+            Prim(PrimitiveType.Cube, root, new Vector3(0f, 0f, 0.09f), new Vector3(size.x + 0.16f, size.y + 0.16f, 0.03f), borderCol);
+            Prim(PrimitiveType.Cube, root, new Vector3(0f, 0f, 0.06f), new Vector3(size.x, size.y, 0.04f), bgCol);
             return root;
         }
 
@@ -307,31 +447,36 @@ namespace RescueRun
             pod.tr.SetParent(world, false);
             pod.tr.localPosition = new Vector3(x, 0f, z);
 
-            // Left & right blue metallic end-caps
+            // Cradle base & Left/Right metallic end-caps with gold rings
+            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.14f, 0f), new Vector3(2.8f, 0.24f, 1.45f), Dark);
             for (int s = -1; s <= 1; s += 2)
             {
-                var cap = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(s * 1.45f, 0.82f, 0f), new Vector3(1.45f, 0.16f, 1.45f), new Color(0.14f, 0.38f, 0.85f));
+                var cap = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(s * 1.45f, 0.86f, 0f), new Vector3(1.52f, 0.16f, 1.52f), new Color(0.14f, 0.38f, 0.85f));
                 cap.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
-                Prim(PrimitiveType.Cube, pod.tr, new Vector3(s * 1.45f, 0.14f, 0f), new Vector3(0.38f, 0.28f, 1.5f), Dark);
+                var ring = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(s * 1.28f, 0.86f, 0f), new Vector3(1.44f, 0.05f, 1.44f), Gold);
+                ring.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                Prim(PrimitiveType.Cube, pod.tr, new Vector3(s * 1.45f, 0.18f, 0f), new Vector3(0.42f, 0.34f, 1.55f), Dark);
             }
             // Horizontal glass cylinder
-            var glass = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.82f, 0f), new Vector3(1.32f, 1.35f, 1.32f), new Color(0.38f, 0.76f, 1f));
+            var glass = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.86f, 0f), new Vector3(1.36f, 1.28f, 1.36f), new Color(0.32f, 0.74f, 1f));
             glass.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
             pod.glassTr = glass.transform;
             pod.glassRen = glass.GetComponent<Renderer>();
 
-            // Floating trapped hero inside
+            // Floating trapped hero clearly visible on front face of cylinder
             pod.heroTr = BuildSoldierModel(2);
             pod.heroTr.SetParent(pod.tr, false);
-            pod.heroTr.localPosition = new Vector3(-0.35f, 0.82f, -0.45f);
+            pod.heroTr.localPosition = new Vector3(-0.32f, 0.86f, -0.56f);
             pod.heroTr.localRotation = Quaternion.Euler(0f, 180f, -75f);
-            pod.heroTr.localScale = Vector3.one * 0.85f;
+            pod.heroTr.localScale = Vector3.one * 0.88f;
 
-            // Big front HP number ("8" / "158") + yellow "HELP!!"
-            pod.hpLabel = Res.MakeLabel(pod.tr, Mathf.CeilToInt(hp).ToString(), 1.35f, Color.white, 45, new Vector3(0f, 0.65f, -0.85f));
-            pod.helpLabel = Res.MakeLabel(pod.tr, "HELP!!", 0.82f, Gold, 46, new Vector3(0.95f, 1.72f, -0.85f));
-            billboards.Add(pod.hpLabel.transform);
-            billboards.Add(pod.helpLabel.transform);
+            // High-contrast framed HP badge ("8" / "158") + speech-bubble "HELP!!" callout
+            var hpBadge = MakeWorldBadge(pod.tr, new Vector3(0f, 0.78f, -1.05f), new Vector2(1.45f, 1.05f), new Color(0.06f, 0.12f, 0.28f), LaserCyan);
+            pod.hpLabel = Res.MakeLabel(hpBadge, Mathf.CeilToInt(hp).ToString(), 1.18f, Color.white, 45, Vector3.zero);
+            var helpBadge = MakeWorldBadge(pod.tr, new Vector3(1.05f, 1.95f, -1.05f), new Vector2(2.15f, 0.82f), new Color(0.14f, 0.10f, 0.06f), Gold);
+            pod.helpLabel = Res.MakeLabel(helpBadge, "HELP!!", 0.76f, Gold, 46, Vector3.zero);
+            billboards.Add(hpBadge);
+            billboards.Add(helpBadge);
             return pod;
         }
 
@@ -347,31 +492,36 @@ namespace RescueRun
             pod.tr.SetParent(world, false);
             pod.tr.localPosition = new Vector3(x, 0f, z);
 
-            // Wheeled heavy cart base (like Ref 1 right-side tank on wheels)
-            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.22f, 0f), new Vector3(3.1f, 0.32f, 2.9f), new Color(0.24f, 0.26f, 0.32f));
+            // Wheeled heavy cart base with gold bumper & 4 wheels with hubcaps
+            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.24f, 0f), new Vector3(3.15f, 0.34f, 2.95f), new Color(0.22f, 0.25f, 0.32f));
+            Prim(PrimitiveType.Cube, pod.tr, new Vector3(0f, 0.26f, -1.48f), new Vector3(2.95f, 0.16f, 0.12f), Gold);
             for (int sx = -1; sx <= 1; sx += 2)
                 for (int sz = -1; sz <= 1; sz += 2)
                 {
-                    var w = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(sx * 1.55f, 0.24f, sz * 1.05f), new Vector3(0.55f, 0.12f, 0.55f), Dark);
+                    var w = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(sx * 1.58f, 0.26f, sz * 1.05f), new Vector3(0.58f, 0.13f, 0.58f), Dark);
                     w.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                    var hub = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(sx * 1.66f, 0.26f, sz * 1.05f), new Vector3(0.28f, 0.06f, 0.28f), Gold);
+                    hub.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
                 }
 
-            // Blue metallic tank base & top lid
-            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.56f, 0f), new Vector3(2.85f, 0.26f, 2.85f), new Color(0.16f, 0.42f, 0.92f));
-            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 4.15f, 0f), new Vector3(2.85f, 0.22f, 2.85f), new Color(0.18f, 0.48f, 0.96f));
-            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 4.38f, 0f), new Vector3(1.8f, 0.10f, 1.8f), Dark);
+            // Blue metallic tank base & top lid with golden energy rings
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.56f, 0f), new Vector3(2.88f, 0.26f, 2.88f), new Color(0.14f, 0.40f, 0.90f));
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 0.78f, 0f), new Vector3(2.74f, 0.05f, 2.74f), Gold);
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 4.15f, 0f), new Vector3(2.88f, 0.22f, 2.88f), new Color(0.16f, 0.46f, 0.96f));
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 3.95f, 0f), new Vector3(2.74f, 0.05f, 2.74f), Gold);
+            Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 4.40f, 0f), new Vector3(1.85f, 0.12f, 1.85f), Dark);
 
             // Tall blue liquid cylinder
-            var glass = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 2.35f, 0f), new Vector3(2.58f, 1.55f, 2.58f), new Color(0.25f, 0.68f, 0.98f));
+            var glass = Prim(PrimitiveType.Cylinder, pod.tr, new Vector3(0f, 2.36f, 0f), new Vector3(2.58f, 1.55f, 2.58f), new Color(0.22f, 0.66f, 0.98f));
             pod.glassTr = glass.transform;
             pod.glassRen = glass.GetComponent<Renderer>();
 
-            // Trapped giant hero floating in the front of the cylinder
+            // Trapped giant hero floating on the camera side of the cylinder
             pod.heroTr = BuildSoldierModel(2);
             pod.heroTr.SetParent(pod.tr, false);
-            pod.heroTr.localPosition = new Vector3(0f, 1.75f, -1.08f);
+            pod.heroTr.localPosition = new Vector3(0f, 1.82f, -1.16f);
             pod.heroTr.localRotation = Quaternion.Euler(0f, 180f, 0f);
-            pod.heroTr.localScale = Vector3.one * 1.45f;
+            pod.heroTr.localScale = Vector3.one * 1.42f;
 
             // Crack lines container (revealed progressively as HP drops toward 7)
             pod.crackRoot = new GameObject("Cracks").transform;
@@ -380,16 +530,18 @@ namespace RescueRun
             {
                 float cy = 1.1f + (i % 5) * 0.55f;
                 float cx = ((i * 37) % 11 - 5) * 0.18f;
-                var cr = Prim(PrimitiveType.Cube, pod.crackRoot, new Vector3(cx, cy, -1.30f), new Vector3(0.95f, 0.045f, 0.04f), new Color(0.88f, 0.96f, 1f));
+                var cr = Prim(PrimitiveType.Cube, pod.crackRoot, new Vector3(cx, cy, -1.32f), new Vector3(0.98f, 0.055f, 0.04f), new Color(0.92f, 0.98f, 1f));
                 cr.transform.localRotation = Quaternion.Euler(0f, 0f, (i * 53) % 140 - 70);
                 cr.SetActive(false);
             }
 
-            // Huge "1241" counter & "HELP!!" callout
-            pod.hpLabel = Res.MakeLabel(pod.tr, Mathf.CeilToInt(hp).ToString(), 1.65f, Color.white, 48, new Vector3(0f, 1.55f, -1.55f));
-            pod.helpLabel = Res.MakeLabel(pod.tr, "HELP!!", 0.98f, Gold, 49, new Vector3(-1.35f, 3.25f, -1.55f));
-            billboards.Add(pod.hpLabel.transform);
-            billboards.Add(pod.helpLabel.transform);
+            // High-contrast framed "1241" counter & "HELP!!" callout badge
+            var hpBadge = MakeWorldBadge(pod.tr, new Vector3(0f, 1.38f, -1.68f), new Vector2(2.45f, 1.25f), new Color(0.05f, 0.11f, 0.26f), LaserCyan);
+            pod.hpLabel = Res.MakeLabel(hpBadge, Mathf.CeilToInt(hp).ToString(), 1.38f, Color.white, 48, Vector3.zero);
+            var helpBadge = MakeWorldBadge(pod.tr, new Vector3(-1.15f, 3.35f, -1.68f), new Vector2(2.45f, 0.92f), new Color(0.16f, 0.10f, 0.05f), Gold);
+            pod.helpLabel = Res.MakeLabel(helpBadge, "HELP!!", 0.86f, Gold, 49, Vector3.zero);
+            billboards.Add(hpBadge);
+            billboards.Add(helpBadge);
             return pod;
         }
 
@@ -399,17 +551,25 @@ namespace RescueRun
             g.root = new GameObject("Gate").transform;
             g.root.SetParent(world, false);
 
-            var p = Prim(PrimitiveType.Cube, g.root, new Vector3(x, 1.05f, z), new Vector3(width, 1.95f, 0.22f), Color.white);
+            var p = Prim(PrimitiveType.Cube, g.root, new Vector3(x, 1.08f, z), new Vector3(width, 1.98f, 0.18f), Color.white);
             g.panel = p.GetComponent<Renderer>();
-            var top = Prim(PrimitiveType.Cube, g.root, new Vector3(x, 2.10f, z), new Vector3(width + 0.2f, 0.22f, 0.34f), Color.white);
+            var top = Prim(PrimitiveType.Cube, g.root, new Vector3(x, 2.16f, z), new Vector3(width + 0.32f, 0.28f, 0.38f), Color.white);
             g.frame = top.GetComponent<Renderer>();
+            Prim(PrimitiveType.Cube, g.root, new Vector3(x, 0.10f, z), new Vector3(width + 0.24f, 0.16f, 0.32f), Dark);
 
-            // Side posts
+            // Side tech pillars with gold trim & top beacon spheres
             for (int s = -1; s <= 1; s += 2)
-                Prim(PrimitiveType.Cube, g.root, new Vector3(x + s * (width * 0.5f + 0.12f), 1.05f, z), new Vector3(0.24f, 2.25f, 0.36f), Dark);
+            {
+                float px = x + s * (width * 0.5f + 0.14f);
+                Prim(PrimitiveType.Cube, g.root, new Vector3(px, 1.12f, z), new Vector3(0.28f, 2.28f, 0.40f), Dark);
+                Prim(PrimitiveType.Cube, g.root, new Vector3(px, 1.12f, z - 0.18f), new Vector3(0.12f, 1.85f, 0.08f), Gold);
+                Prim(PrimitiveType.Sphere, g.root, new Vector3(px, 2.40f, z), Vector3.one * 0.30f, Gold);
+            }
 
-            g.txt = Res.MakeLabel(g.root, "", 1.45f, Color.white, 42, new Vector3(x, 1.12f, z - 0.35f));
-            billboards.Add(g.txt.transform);
+            // Dark number badge plate in front of gate panel so the number is super crisp
+            var numBadge = MakeWorldBadge(g.root, new Vector3(x, 1.15f, z - 0.26f), new Vector2(2.15f, 1.18f), new Color(0.06f, 0.08f, 0.18f), Color.white);
+            g.txt = Res.MakeLabel(numBadge, "", 1.32f, Color.white, 42, Vector3.zero);
+            billboards.Add(numBadge);
             RefreshGate(g);
             gates.Add(g);
         }
@@ -417,11 +577,12 @@ namespace RescueRun
         void RefreshGate(Gate g)
         {
             bool good = g.val >= 0;
-            var col = good ? new Color(0.28f, 0.68f, 1f) : new Color(0.95f, 0.32f, 0.32f);
-            var topCol = good ? new Color(0.15f, 0.45f, 0.88f) : new Color(0.75f, 0.18f, 0.18f);
+            var col = good ? new Color(0.22f, 0.64f, 1f) : new Color(0.94f, 0.26f, 0.28f);
+            var topCol = good ? new Color(0.12f, 0.42f, 0.88f) : new Color(0.72f, 0.14f, 0.16f);
             SetColor(g.panel, col);
             SetColor(g.frame, topCol);
             g.txt.Text = g.val > 0 ? "+" + g.val : g.val.ToString();
+            g.txt.main.color = good ? new Color(0.55f, 0.96f, 1f) : Color.white;
         }
 
         void AddEnemyGroup(float z, int count, float centerX, float halfWidth, float hp)
@@ -450,14 +611,15 @@ namespace RescueRun
             b.tr.localPosition = new Vector3(x, 0f, z);
             b.tr.localRotation = Quaternion.Euler(0f, 180f, 0f);
 
-            // Overhead red HP bar with numeric label ("372" / "878") matching Reference 1
+            // Overhead framed red HP bar with high-contrast numeric label ("372" / "878")
             var bar = new GameObject("BossBar").transform;
             bar.SetParent(b.tr, false);
-            bar.localPosition = new Vector3(0f, 1.72f, 0f);
+            bar.localPosition = new Vector3(0f, 1.82f, 0f);
             bar.localScale = Vector3.one / scale;
-            Prim(PrimitiveType.Cube, bar, Vector3.zero, new Vector3(3.4f, 0.56f, 0.12f), Dark);
-            b.barFill = Prim(PrimitiveType.Cube, bar, new Vector3(0f, 0f, -0.06f), new Vector3(3.24f, 0.42f, 0.12f), new Color(0.95f, 0.24f, 0.18f)).transform;
-            b.hpLabel = Res.MakeLabel(bar, Mathf.CeilToInt(hp).ToString(), 0.78f, Color.white, 55, new Vector3(0f, 0.02f, -0.22f));
+            Prim(PrimitiveType.Cube, bar, new Vector3(0f, 0f, 0.04f), new Vector3(3.62f, 0.72f, 0.10f), Gold);
+            Prim(PrimitiveType.Cube, bar, Vector3.zero, new Vector3(3.46f, 0.58f, 0.12f), Dark);
+            b.barFill = Prim(PrimitiveType.Cube, bar, new Vector3(0f, 0f, -0.06f), new Vector3(3.24f, 0.42f, 0.12f), new Color(0.95f, 0.22f, 0.18f)).transform;
+            b.hpLabel = Res.MakeLabel(bar, Mathf.CeilToInt(hp).ToString(), 0.76f, Color.white, 55, new Vector3(0f, 0.02f, -0.26f));
             b.barRoot = bar;
             billboards.Add(bar);
 
@@ -468,11 +630,19 @@ namespace RescueRun
         void AddEndcardMascots()
         {
             var c = new Vector2(0.5f, 0.5f);
+            // Near-miss tank progress badge on Endcard
+            var barBg = AdUI.Img(ui.Card, Res.Round(64), new Color(0.05f, 0.08f, 0.20f, 0.92f), c, new Vector2(0f, 12f), new Vector2(720f, 68f), true);
+            var fill = AdUI.Img(barBg.transform, Res.Round(64), new Color(0.95f, 0.28f, 0.24f), new Vector2(0f, 0.5f), new Vector2(10f, 0f), new Vector2(675f, 48f), true);
+            fill.rectTransform.pivot = new Vector2(0f, 0.5f);
+            AdUI.Txt(barBg.transform, "HERO TANK: 7 HP LEFT (99%)", 34, Gold, c, Vector2.zero);
+
             for (int i = 0; i < 3; i++)
             {
-                var b = AdUI.Img(ui.Card, Res.Round(128), i == 1 ? Gold : Blue, c, new Vector2((i - 1) * 190f, -110f), new Vector2(125f, 155f), true);
-                AdUI.Img(b.transform, Res.Circle, Skin, c, new Vector2(0f, 70f), new Vector2(102f, 102f), false);
-                AdUI.Img(b.transform, Res.Round(128), i == 1 ? Gold : HeavyBlue, c, new Vector2(0f, 112f), new Vector2(124f, 52f), true);
+                bool center = i == 1;
+                var b = AdUI.Img(ui.Card, Res.Round(128), center ? Gold : Blue, c, new Vector2((i - 1) * 205f, -135f), new Vector2(140f, 165f), true);
+                AdUI.Img(b.transform, Res.Circle, Skin, c, new Vector2(0f, 68f), new Vector2(106f, 106f), false);
+                AdUI.Img(b.transform, Res.Round(128), center ? new Color(0.18f, 0.48f, 0.98f) : HeavyBlue, c, new Vector2(0f, 112f), new Vector2(130f, 52f), true);
+                AdUI.Img(b.transform, Res.Round(64), Dark, c, new Vector2(0f, 66f), new Vector2(82f, 26f), true);
             }
         }
 
@@ -482,6 +652,7 @@ namespace RescueRun
             float dt = Time.deltaTime;
             ui.Tick(dt);
             HandleInput();
+            UpdateTopHud();
 
             if (phase == Phase.Run || phase == Phase.Boss)
             {
@@ -573,7 +744,7 @@ namespace RescueRun
             if (squadLabel)
             {
                 squadLabel.Text = squad.ToString();
-                squadLabel.transform.localScale = Vector3.one * 1.45f;
+                squadLabel.transform.parent.localScale = Vector3.one * 1.42f;
             }
         }
 
@@ -615,15 +786,23 @@ namespace RescueRun
                     offset = new Vector3(col * 0.72f + (row % 2 == 0 ? 0.25f : 0f), 0f, -row * 0.68f);
                 }
                 var slot = new Vector3(Mathf.Clamp(squadX + offset.x, -RoadHalf + 0.4f, RoadHalf - 0.4f), 0f, squadZ + offset.z);
-                if (running) slot.y = Mathf.Abs(Mathf.Sin(Time.time * 15f + i * 1.3f)) * 0.12f;
+                float phaseTime = Time.time * 16f + i * 1.3f;
+                if (running) slot.y = Mathf.Abs(Mathf.Sin(phaseTime)) * 0.11f;
                 var tr = soldiers[i];
                 tr.localPosition = snap ? slot : Vector3.Lerp(tr.localPosition, slot, 1f - Mathf.Exp(-14f * dt));
+                if (tr.childCount >= 2)
+                {
+                    float swing = running ? Mathf.Sin(phaseTime) * 34f : 0f;
+                    tr.GetChild(0).localRotation = Quaternion.Euler(swing, 0f, 0f);
+                    tr.GetChild(1).localRotation = Quaternion.Euler(-swing, 0f, 0f);
+                }
             }
             if (squadLabel)
             {
-                squadLabel.transform.position = new Vector3(squadX, 2.2f + SquadRadius * 0.25f, squadZ);
-                squadLabel.transform.localScale = Vector3.Lerp(squadLabel.transform.localScale, Vector3.one, 1f - Mathf.Exp(-10f * dt));
-                squadLabel.gameObject.SetActive(squad > 1);
+                var badgeTr = squadLabel.transform.parent;
+                badgeTr.position = new Vector3(squadX, 2.35f + SquadRadius * 0.25f, squadZ);
+                badgeTr.localScale = Vector3.Lerp(badgeTr.localScale, Vector3.one, 1f - Mathf.Exp(-10f * dt));
+                badgeTr.gameObject.SetActive(squad > 1);
             }
         }
 
@@ -854,8 +1033,8 @@ namespace RescueRun
             Sfx.Play(Sfx.Id.Glass, 1f, 0.95f, 0.04f, 0.02f);
             Burst(pod.tr.position + Vector3.up * 1.4f, new Color(0.45f, 0.85f, 1f), 28);
             if (pod.glassRen) pod.glassRen.enabled = false;
-            if (pod.hpLabel) pod.hpLabel.gameObject.SetActive(false);
-            if (pod.helpLabel) pod.helpLabel.gameObject.SetActive(false);
+            if (pod.hpLabel) pod.hpLabel.transform.parent.gameObject.SetActive(false);
+            if (pod.helpLabel) pod.helpLabel.transform.parent.gameObject.SetActive(false);
 
             if (freed)
             {
@@ -940,8 +1119,8 @@ namespace RescueRun
 
             if (pod.helpLabel)
             {
-                float pulse = 1f + 0.15f * Mathf.Sin(Time.time * 9f);
-                pod.helpLabel.transform.localScale = Vector3.one * pulse;
+                float pulse = 1f + 0.14f * Mathf.Sin(Time.time * 9f);
+                pod.helpLabel.transform.parent.localScale = Vector3.one * pulse;
             }
 
             // If player runs past the horizontal tube without breaking it
@@ -1028,8 +1207,15 @@ namespace RescueRun
                 if (dz < -4f) { e.alive = false; Destroy(e.tr.gameObject); continue; }
 
                 e.hit = Mathf.MoveTowards(e.hit, 0f, dt * 6f);
-                float bob = Mathf.Abs(Mathf.Sin(Time.time * (e.isBoss ? 7f : 12f) + e.x)) * (e.isBoss ? 0.16f : 0.10f);
+                float phaseT = Time.time * (e.isBoss ? 7f : 14f) + e.x * 2.1f;
+                float bob = Mathf.Abs(Mathf.Sin(phaseT)) * (e.isBoss ? 0.16f : 0.09f);
                 e.tr.localPosition = new Vector3(e.x, bob, e.z);
+                if (!e.isBoss && e.tr.childCount >= 2)
+                {
+                    float swing = Mathf.Sin(phaseT) * 32f;
+                    e.tr.GetChild(0).localRotation = Quaternion.Euler(swing, 0f, 0f);
+                    e.tr.GetChild(1).localRotation = Quaternion.Euler(-swing, 0f, 0f);
+                }
                 if (e.isBoss)
                 {
                     // Flash white when hit like Ref 1 at 00:17

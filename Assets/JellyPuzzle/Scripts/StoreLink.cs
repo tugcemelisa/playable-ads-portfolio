@@ -7,10 +7,8 @@ namespace JellyAd
         public static void Open(string url)
         {
             Luna.Unity.Analytics.LogEvent(Luna.Unity.Analytics.EventType.EndCardShown);
-            Luna.Unity.Playable.InstallFullGame(url, url);
-#if UNITY_EDITOR || !UNITY_WEBGL
-            if (!string.IsNullOrEmpty(url)) UnityEngine.Application.OpenURL(url);
-#endif
+            Luna.Unity.Playable.InstallFullGame();
+            UnityEngine.Debug.Log("[Voodoo Playworks CTA] InstallFullGame() triggered.");
         }
 
         public static void NotifyGameEnded()
