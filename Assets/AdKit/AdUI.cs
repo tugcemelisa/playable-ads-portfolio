@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace AdKit
@@ -39,7 +39,7 @@ namespace AdKit
             ui.bannerWrap.anchorMax = c;
             ui.bannerWrap.anchoredPosition = new Vector2(0f, 430f);
             ui.bannerWrap.sizeDelta = new Vector2(920f, 155f);
-            ui.bannerBg = Img(ui.bannerWrap, Res.Round(64), new Color(0.05f, 0.07f, 0.16f, 0.84f), c, Vector2.zero, new Vector2(900f, 148f), true);
+            ui.bannerBg = Img(ui.bannerWrap, AdRes.Round(64), new Color(0.05f, 0.07f, 0.16f, 0.84f), c, Vector2.zero, new Vector2(900f, 148f), true);
             ui.banner = Txt(ui.bannerWrap, "", 92, Color.white, c, new Vector2(0f, 4f));
             ui.bannerWrap.gameObject.SetActive(false);
 
@@ -52,16 +52,16 @@ namespace AdKit
             ui.tut.sizeDelta = new Vector2(960f, 250f);
 
             // Layer 1: Dark outer shadow
-            Img(ui.tut, Res.Round(64), new Color(0.02f, 0.02f, 0.08f, 0.92f), c, Vector2.zero, new Vector2(960f, 250f), true);
+            Img(ui.tut, AdRes.Round(64), new Color(0.02f, 0.02f, 0.08f, 0.92f), c, Vector2.zero, new Vector2(960f, 250f), true);
             // Layer 2: Glowing cyan arcade rim
-            Img(ui.tut, Res.Round(64), new Color(0.25f, 0.88f, 1f, 0.95f), c, Vector2.zero, new Vector2(950f, 240f), true);
+            Img(ui.tut, AdRes.Round(64), new Color(0.25f, 0.88f, 1f, 0.95f), c, Vector2.zero, new Vector2(950f, 240f), true);
             // Layer 3: Deep purple body
-            Img(ui.tut, Res.Round(64), new Color(0.08f, 0.04f, 0.24f, 0.98f), c, Vector2.zero, new Vector2(934f, 224f), true);
+            Img(ui.tut, AdRes.Round(64), new Color(0.08f, 0.04f, 0.24f, 0.98f), c, Vector2.zero, new Vector2(934f, 224f), true);
 
             // Slider guide track + endpoint indicator dots
-            Img(ui.tut, Res.Round(64), new Color(1f, 1f, 1f, 0.20f), c, new Vector2(0f, -48f), new Vector2(760f, 32f), true);
-            Img(ui.tut, Res.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(-350f, -48f), new Vector2(38f, 38f), false);
-            Img(ui.tut, Res.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(350f, -48f), new Vector2(38f, 38f), false);
+            Img(ui.tut, AdRes.Round(64), new Color(1f, 1f, 1f, 0.20f), c, new Vector2(0f, -48f), new Vector2(760f, 32f), true);
+            Img(ui.tut, AdRes.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(-350f, -48f), new Vector2(38f, 38f), false);
+            Img(ui.tut, AdRes.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(350f, -48f), new Vector2(38f, 38f), false);
 
             // Bold, large, punchy arcade tutorial text (never downscaled)
             var tutTxt = Txt(ui.tut, "◀   HOLD & DRAG TO AIM!   ▶", 92, new Color(1f, 0.92f, 0.28f), c, new Vector2(0f, 46f));
@@ -87,10 +87,10 @@ namespace AdKit
             ui.endcard.AddComponent<Image>().color = new Color(0.02f, 0.03f, 0.09f, 0.84f);
 
             // Card outer golden border + inner body + top header ribbon
-            var outerBorder = Img(ert, Res.Round(64), new Color(titleColor.r, titleColor.g, titleColor.b, 0.95f), c, new Vector2(0f, 55f), new Vector2(932f, 1044f), true).rectTransform;
-            ui.card = Img(outerBorder, Res.Round(64), cardColor, c, Vector2.zero, new Vector2(900f, 1012f), true).rectTransform;
-            Img(ui.card, Res.Round(64), new Color(0f, 0f, 0f, 0.28f), c, new Vector2(0f, 315f), new Vector2(820f, 185f), true);
-            Img(ui.card, Res.Round(64), new Color(1f, 1f, 1f, 0.08f), c, new Vector2(0f, 385f), new Vector2(780f, 38f), true);
+            var outerBorder = Img(ert, AdRes.Round(64), new Color(titleColor.r, titleColor.g, titleColor.b, 0.95f), c, new Vector2(0f, 55f), new Vector2(932f, 1044f), true).rectTransform;
+            ui.card = Img(outerBorder, AdRes.Round(64), cardColor, c, Vector2.zero, new Vector2(900f, 1012f), true).rectTransform;
+            Img(ui.card, AdRes.Round(64), new Color(0f, 0f, 0f, 0.28f), c, new Vector2(0f, 315f), new Vector2(820f, 185f), true);
+            Img(ui.card, AdRes.Round(64), new Color(1f, 1f, 1f, 0.08f), c, new Vector2(0f, 385f), new Vector2(780f, 38f), true);
 
             var t = Txt(ui.card, title, 108, titleColor, c, new Vector2(0f, 318f));
             t.GetComponent<Outline>().effectDistance = new Vector2(6f, -6f);
@@ -103,9 +103,9 @@ namespace AdKit
             ui.cta.anchorMax = c;
             ui.cta.anchoredPosition = new Vector2(0f, -330f);
             ui.cta.sizeDelta = new Vector2(680f, 186f);
-            Img(ui.cta, Res.Round(64), new Color(0.08f, 0.44f, 0.14f), c, new Vector2(0f, -14f), new Vector2(680f, 178f), true);
-            Img(ui.cta, Res.Round(64), new Color(0.22f, 0.86f, 0.32f), c, new Vector2(0f, 2f), new Vector2(672f, 172f), true);
-            Img(ui.cta, Res.Round(64), new Color(1f, 1f, 1f, 0.26f), c, new Vector2(0f, 48f), new Vector2(620f, 54f), true);
+            Img(ui.cta, AdRes.Round(64), new Color(0.08f, 0.44f, 0.14f), c, new Vector2(0f, -14f), new Vector2(680f, 178f), true);
+            Img(ui.cta, AdRes.Round(64), new Color(0.22f, 0.86f, 0.32f), c, new Vector2(0f, 2f), new Vector2(672f, 172f), true);
+            Img(ui.cta, AdRes.Round(64), new Color(1f, 1f, 1f, 0.26f), c, new Vector2(0f, 48f), new Vector2(620f, 54f), true);
             var ctaTxt = Txt(ui.cta, ctaText, 82, Color.white, c, new Vector2(0f, 4f));
             ctaTxt.GetComponent<Outline>().effectDistance = new Vector2(5f, -5f);
 
@@ -177,7 +177,7 @@ namespace AdKit
             h.SetParent(parent, false);
             h.anchorMin = new Vector2(0.5f, 0.5f);
             h.anchorMax = new Vector2(0.5f, 0.5f);
-            pulseRing = Img(h, Res.Ring, new Color(1f, 0.86f, 0.28f, 0.75f), new Vector2(0.5f, 0.5f), new Vector2(0f, 12f), new Vector2(115f, 115f), false).rectTransform;
+            pulseRing = Img(h, AdRes.Ring, new Color(1f, 0.86f, 0.28f, 0.75f), new Vector2(0.5f, 0.5f), new Vector2(0f, 12f), new Vector2(115f, 115f), false).rectTransform;
             var art = (RectTransform)new GameObject("art", typeof(RectTransform)).transform;
             art.SetParent(h, false);
             art.localRotation = Quaternion.Euler(0f, 0f, 20f);
@@ -192,7 +192,7 @@ namespace AdKit
             {
                 var c = pass == 0 ? new Color(0.08f, 0.09f, 0.16f) : Color.white;
                 float g = pass == 0 ? 12f : 0f;
-                var r = Res.Round(256);
+                var r = AdRes.Round(256);
                 Img(art, r, c, new Vector2(0.5f, 0.5f), new Vector2(0f, -40f), new Vector2(34f + g, 100f + g), true);
                 Img(art, r, c, new Vector2(0.5f, 0.5f), new Vector2(28f, -70f), new Vector2(30f + g, 60f + g), true);
                 Img(art, r, c, new Vector2(0.5f, 0.5f), new Vector2(52f, -80f), new Vector2(28f + g, 52f + g), true);
@@ -217,7 +217,7 @@ namespace AdKit
                 maxW = prt.sizeDelta.x - 28f;
             rt.sizeDelta = new Vector2(maxW, size * 1.45f);
             var t = go.AddComponent<Text>();
-            t.font = Res.Font;
+            t.font = AdRes.Font;
             t.text = s;
             t.fontSize = size;
             t.fontStyle = FontStyle.Normal;

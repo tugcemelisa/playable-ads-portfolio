@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using AdKit;
 using UnityEngine;
@@ -206,7 +206,7 @@ namespace NumberMatchAd
             world = new GameObject("World").transform;
             fx = new GameObject("FX").transform;
 
-            bg = Res.Spr("Background", world, Res.Gradient(new Color(0.22f, 0.12f, 0.44f), new Color(0.05f, 0.03f, 0.13f)),
+            bg = AdRes.Spr("Background", world, AdRes.Gradient(new Color(0.22f, 0.12f, 0.44f), new Color(0.05f, 0.03f, 0.13f)),
                 Color.white, -100, Vector3.zero, Vector2.one);
 
             BuildPicture();
@@ -294,17 +294,17 @@ namespace NumberMatchAd
             var board = new GameObject("Board").transform;
             board.SetParent(world, false);
             var centre = new Vector3(0f, BoardCenterY, 0f);
-            Res.Spr("FrameOuter", board, Res.Round(160), new Color(0.55f, 0.42f, 0.92f), -21, centre + new Vector3(0f, -0.08f, 0f),
+            AdRes.Spr("FrameOuter", board, AdRes.Round(160), new Color(0.55f, 0.42f, 0.92f), -21, centre + new Vector3(0f, -0.08f, 0f),
                 Vector2.one * (BoardWorld + 0.7f), true);
-            Res.Spr("Frame", board, Res.Round(160), new Color(0.16f, 0.12f, 0.31f), -20, centre, Vector2.one * (BoardWorld + 0.4f), true);
+            AdRes.Spr("Frame", board, AdRes.Round(160), new Color(0.16f, 0.12f, 0.31f), -20, centre, Vector2.one * (BoardWorld + 0.4f), true);
 
-            var round = Res.Round(Mathf.RoundToInt(44f / (cell * 0.22f)));
+            var round = AdRes.Round(Mathf.RoundToInt(44f / (cell * 0.22f)));
             for (int i = 0; i < cells.Length; i++)
             {
                 var cv = cells[i];
                 // intro starts with the finished picture: the hook
-                cv.sr = Res.Spr("Cell", board, round, cv.col, 0, CellPos(i), Vector2.one * cell * 0.9f, true);
-                cv.tm = Res.Txt(cv.sr.transform, "n", cv.num.ToString(), cell * 0.58f, NumberColor, 1, new Vector3(0f, -cell * 0.02f, 0f));
+                cv.sr = AdRes.Spr("Cell", board, round, cv.col, 0, CellPos(i), Vector2.one * cell * 0.9f, true);
+                cv.tm = AdRes.Txt(cv.sr.transform, "n", cv.num.ToString(), cell * 0.58f, NumberColor, 1, new Vector3(0f, -cell * 0.02f, 0f));
                 cv.tm.gameObject.SetActive(false);
             }
         }
@@ -322,9 +322,9 @@ namespace NumberMatchAd
             int rows = Mathf.Max(1, Mathf.CeilToInt(missing.Count / (float)TrayPerRow));
             float trayH = rows * TrayRowGap + 0.5f;
             float trayCentreY = TrayY - (rows - 1) * TrayRowGap * 0.5f;
-            Res.Spr("TrayOuter", tray, Res.Round(160), new Color(0.55f, 0.42f, 0.92f), -21, new Vector3(0f, trayCentreY - 0.08f, 0f),
+            AdRes.Spr("TrayOuter", tray, AdRes.Round(160), new Color(0.55f, 0.42f, 0.92f), -21, new Vector3(0f, trayCentreY - 0.08f, 0f),
                 new Vector2(BoardWorld + 0.7f, trayH + 0.3f), true);
-            Res.Spr("TrayBg", tray, Res.Round(160), new Color(0.16f, 0.12f, 0.31f), -20, new Vector3(0f, trayCentreY, 0f),
+            AdRes.Spr("TrayBg", tray, AdRes.Round(160), new Color(0.16f, 0.12f, 0.31f), -20, new Vector3(0f, trayCentreY, 0f),
                 new Vector2(BoardWorld + 0.4f, trayH), true);
 
             for (int k = 0; k < missing.Count; k++)
@@ -348,15 +348,15 @@ namespace NumberMatchAd
             p.group = go.AddComponent<SortingGroup>();
             p.group.sortingOrder = 10;
 
-            var r = Res.Round(150);
-            Res.Spr("shadow", p.t, r, new Color(0f, 0f, 0f, 0.35f), 0, new Vector3(0.04f, -0.1f, 0f), Vector2.one * PieceSize, true);
-            Res.Spr("side", p.t, r, col * 0.68f, 1, new Vector3(0f, -0.07f, 0f), Vector2.one * PieceSize, true);
-            Res.Spr("top", p.t, r, col, 2, Vector3.zero, Vector2.one * PieceSize, true);
-            Res.Spr("gloss", p.t, r, new Color(1f, 1f, 1f, 0.28f), 3, new Vector3(0f, PieceSize * 0.22f, 0f),
+            var r = AdRes.Round(150);
+            AdRes.Spr("shadow", p.t, r, new Color(0f, 0f, 0f, 0.35f), 0, new Vector3(0.04f, -0.1f, 0f), Vector2.one * PieceSize, true);
+            AdRes.Spr("side", p.t, r, col * 0.68f, 1, new Vector3(0f, -0.07f, 0f), Vector2.one * PieceSize, true);
+            AdRes.Spr("top", p.t, r, col, 2, Vector3.zero, Vector2.one * PieceSize, true);
+            AdRes.Spr("gloss", p.t, r, new Color(1f, 1f, 1f, 0.28f), 3, new Vector3(0f, PieceSize * 0.22f, 0f),
                 new Vector2(PieceSize * 0.78f, PieceSize * 0.34f), true);
 
             bool light = col.r * 0.3f + col.g * 0.59f + col.b * 0.11f > 0.72f;
-            var label = Res.MakeLabel(p.t, num.ToString(), PieceSize * 0.62f, light ? new Color(0.2f, 0.14f, 0.32f) : Color.white, 5,
+            var label = AdRes.MakeLabel(p.t, num.ToString(), PieceSize * 0.62f, light ? new Color(0.2f, 0.14f, 0.32f) : Color.white, 5,
                 new Vector3(0f, -0.02f, 0f));
             if (light) label.shadow.color = new Color(1f, 1f, 1f, 0.45f);
             return p;
@@ -367,12 +367,12 @@ namespace NumberMatchAd
             hand = new GameObject("Hand").transform;
             hand.SetParent(world, false);
             hand.gameObject.AddComponent<SortingGroup>().sortingOrder = 200;
-            handRing = Res.Spr("ring", hand, Res.Ring, new Color(1f, 1f, 1f, 0f), 0, Vector3.zero, Vector2.one * 0.9f);
+            handRing = AdRes.Spr("ring", hand, AdRes.Ring, new Color(1f, 1f, 1f, 0f), 0, Vector3.zero, Vector2.one * 0.9f);
             handArt = new GameObject("art").transform;
             handArt.SetParent(hand, false);
             handArt.localRotation = Quaternion.Euler(0f, 0f, 25f);
             var custom = Resources.Load<Sprite>("hand");
-            if (custom) Res.Spr("img", handArt, custom, Color.white, 2, new Vector3(0.3f, -0.6f, 0f), Vector2.one);
+            if (custom) AdRes.Spr("img", handArt, custom, Color.white, 2, new Vector3(0.3f, -0.6f, 0f), Vector2.one);
             else
             {
                 HandShape(handArt, new Color(0.1f, 0.1f, 0.16f), 0.08f, 1);
@@ -383,12 +383,12 @@ namespace NumberMatchAd
 
         static void HandShape(Transform p, Color c, float g, int order)
         {
-            var r = Res.Round(512);
-            Res.Spr("finger", p, r, c, order, new Vector3(0f, -0.38f, 0f), new Vector2(0.26f + g, 0.8f + g), true);
-            Res.Spr("k1", p, r, c, order, new Vector3(0.21f, -0.62f, 0f), new Vector2(0.22f + g, 0.46f + g), true);
-            Res.Spr("k2", p, r, c, order, new Vector3(0.39f, -0.7f, 0f), new Vector2(0.2f + g, 0.4f + g), true);
-            Res.Spr("palm", p, r, c, order, new Vector3(0.16f, -0.98f, 0f), new Vector2(0.68f + g, 0.62f + g), true);
-            var th = Res.Spr("thumb", p, r, c, order, new Vector3(-0.2f, -0.86f, 0f), new Vector2(0.22f + g, 0.5f + g), true);
+            var r = AdRes.Round(512);
+            AdRes.Spr("finger", p, r, c, order, new Vector3(0f, -0.38f, 0f), new Vector2(0.26f + g, 0.8f + g), true);
+            AdRes.Spr("k1", p, r, c, order, new Vector3(0.21f, -0.62f, 0f), new Vector2(0.22f + g, 0.46f + g), true);
+            AdRes.Spr("k2", p, r, c, order, new Vector3(0.39f, -0.7f, 0f), new Vector2(0.2f + g, 0.4f + g), true);
+            AdRes.Spr("palm", p, r, c, order, new Vector3(0.16f, -0.98f, 0f), new Vector2(0.68f + g, 0.62f + g), true);
+            var th = AdRes.Spr("thumb", p, r, c, order, new Vector3(-0.2f, -0.86f, 0f), new Vector2(0.22f + g, 0.5f + g), true);
             th.transform.localRotation = Quaternion.Euler(0f, 0f, 40f);
         }
 
@@ -400,18 +400,18 @@ namespace NumberMatchAd
             AdUI.Txt(ui.Root, gameTitle, 72, Color.white, top, new Vector2(-115f, -108f));
 
             // Voodoo tension countdown pill on top-right
-            timerBg = AdUI.Img(ui.Root, Res.Round(128), new Color(0.18f, 0.12f, 0.36f, 0.88f), top, new Vector2(315f, -108f), new Vector2(220f, 64f), true);
+            timerBg = AdUI.Img(ui.Root, AdRes.Round(128), new Color(0.18f, 0.12f, 0.36f, 0.88f), top, new Vector2(315f, -108f), new Vector2(220f, 64f), true);
             timerText = AdUI.Txt(timerBg.transform, "24s", 44, new Color(1f, 0.90f, 0.35f), new Vector2(0.5f, 0.5f), Vector2.zero);
 
-            var barBg = AdUI.Img(ui.Root, Res.Round(128), new Color(0f, 0f, 0f, 0.4f), top, new Vector2(0f, -202f), new Vector2(660f, 48f), true);
-            progressFill = AdUI.Img(barBg.transform, Res.Round(128), new Color(0.45f, 0.9f, 0.4f), new Vector2(0f, 0.5f),
+            var barBg = AdUI.Img(ui.Root, AdRes.Round(128), new Color(0f, 0f, 0f, 0.4f), top, new Vector2(0f, -202f), new Vector2(660f, 48f), true);
+            progressFill = AdUI.Img(barBg.transform, AdRes.Round(128), new Color(0.45f, 0.9f, 0.4f), new Vector2(0f, 0.5f),
                 new Vector2(8f, 0f), new Vector2(0f, 32f), true);
             progressFill.rectTransform.pivot = new Vector2(0f, 0.5f);
             progressText = AdUI.Txt(barBg.transform, "0%", 40, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, 2f));
 
             // finished picture on the endcard
             var pic = Sprite.Create(pictureTex, new Rect(0, 0, N, N), new Vector2(0.5f, 0.5f), N);
-            AdUI.Img(ui.Card, Res.Round(64), new Color(1f, 1f, 1f, 0.9f), new Vector2(0.5f, 0.5f), new Vector2(0f, -95f), new Vector2(300f, 300f), true);
+            AdUI.Img(ui.Card, AdRes.Round(64), new Color(1f, 1f, 1f, 0.9f), new Vector2(0.5f, 0.5f), new Vector2(0f, -95f), new Vector2(300f, 300f), true);
             AdUI.Img(ui.Card, pic, Color.white, new Vector2(0.5f, 0.5f), new Vector2(0f, -95f), new Vector2(276f, 276f), false);
             UpdateProgress();
         }
@@ -862,7 +862,7 @@ namespace NumberMatchAd
             var vel = new Vector3[n];
             for (int k = 0; k < n; k++)
             {
-                parts[k] = Res.Spr("frag", fx, Res.Square, k % 2 == 0 ? c : c * 0.75f, 50, pos, Vector2.one * cell * Random.Range(0.25f, 0.4f)).transform;
+                parts[k] = AdRes.Spr("frag", fx, AdRes.Square, k % 2 == 0 ? c : c * 0.75f, 50, pos, Vector2.one * cell * Random.Range(0.25f, 0.4f)).transform;
                 parts[k].localRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
                 float a = (k + Random.value * 0.5f) / n * Mathf.PI * 2f;
                 vel[k] = new Vector3(Mathf.Cos(a), Mathf.Sin(a) + 0.8f, 0f) * Random.Range(2.5f, 4f);
@@ -877,7 +877,7 @@ namespace NumberMatchAd
             for (int k = 0; k < n; k++)
             {
                 var tint = Color.Lerp(c, Color.white, Random.Range(0f, 0.5f));
-                parts[k] = Res.Spr("spark", fx, Res.Circle, tint, 51, pos, Vector2.one * Random.Range(0.15f, 0.35f)).transform;
+                parts[k] = AdRes.Spr("spark", fx, AdRes.Circle, tint, 51, pos, Vector2.one * Random.Range(0.15f, 0.35f)).transform;
                 float a = Random.value * Mathf.PI * 2f;
                 vel[k] = new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0f) * speed * Random.Range(0.4f, 1f);
             }
@@ -906,7 +906,7 @@ namespace NumberMatchAd
 
         void FloatText(Vector3 pos, string s, Color c)
         {
-            var l = Res.MakeLabel(fx, s, cell * 1.4f, c, 71, pos);
+            var l = AdRes.MakeLabel(fx, s, cell * 1.4f, c, 71, pos);
             l.GetComponentInChildren<MeshRenderer>().sortingOrder = 71;
             StartCoroutine(FloatRoutine(l));
         }

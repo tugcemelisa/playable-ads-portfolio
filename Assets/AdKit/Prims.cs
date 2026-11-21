@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace AdKit
@@ -16,7 +16,7 @@ namespace AdKit
             g.transform.localPosition = pos;
             g.transform.localScale = scale;
             var r = g.GetComponent<Renderer>();
-            if (Res.PrimMat) r.sharedMaterial = Res.PrimMat;
+            if (AdRes.PrimMat) r.sharedMaterial = AdRes.PrimMat;
             SetColor(r, c);
             return g;
         }

@@ -124,10 +124,10 @@ namespace AdKit.EditorTools
             string output = "Builds/Playables/" + name;
             CopyDirectory("LunaTemp/stage4/develop", output);
             var htmlPath = output + "/iframe.html";
-            File.WriteAllText(htmlPath, File.ReadAllText(htmlPath).Replace("window.DEVELOP=!0", "window.DEVELOP=!1"));
-            File.WriteAllText(output + "/index.html",
-                "<!doctype html><html lang=\"en\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>" +
-                name + " — Playable Demo</title><style>html,body{margin:0;height:100%;background:#101427}body{display:grid;place-items:center}iframe{border:0;width:min(100vw,56.25vh);height:100dvh}</style><iframe title=\"Playable demo\" src=\"iframe.html\" allow=\"autoplay; fullscreen\"></iframe></html>");
+            var htmlContent = File.ReadAllText(htmlPath).Replace("window.DEVELOP=!0", "window.DEVELOP=!1");
+            File.WriteAllText(htmlPath, htmlContent);
+            // Serve Playworks top-level as index.html so GitHub Pages never stalls inside a nested iframe
+            File.WriteAllText(output + "/index.html", htmlContent);
             if (File.Exists(output + "/luna.json")) File.Delete(output + "/luna.json");
             File.WriteAllText(output + "/build-info.txt", "Scene: " + scene + "\nSDK: Playworks 7.2.0\nBuilt UTC: " + DateTime.UtcNow.ToString("O") + "\n");
 

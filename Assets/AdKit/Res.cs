@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace AdKit
 {
     /// <summary>Procedural sprites / text helpers so playables need minimal imported art (keeps build tiny).</summary>
-    public static class Res
+    public static class AdRes
     {
         static Font _font;
         static Material _fontMat, _spriteMat, _primMat;
