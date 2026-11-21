@@ -60,16 +60,25 @@ namespace MobControlAd
         public string tutorialText = "<  HOLD & DRAG TO AIM  >";
 
         public enum BackgroundTheme { AlpineWinter = 0, MidnightSlate = 1 }
+        public enum CtaButtonColor { Green = 0, Blue = 1, Yellow = 2, Red = 3, Purple = 4 }
+        public enum CtaButtonShape { Rounded = 0, Sharp = 1 }
 
         [Header("Background Theme")]
         [LunaPlaygroundField("Background Theme", 0, "Visual Settings")]
         public BackgroundTheme backgroundTheme = BackgroundTheme.AlpineWinter;
 
-        static readonly Color PurpleMain = new Color(0.50f, 0.10f, 0.96f);
-        static readonly Color PurpleLight = new Color(0.68f, 0.38f, 1.00f);
-        static readonly Color PurpleGateCol = new Color(0.58f, 0.22f, 0.98f, 0.88f);
-        static readonly Color YellowMain = new Color(0.98f, 0.84f, 0.08f);
-        static readonly Color YellowDark = new Color(0.82f, 0.66f, 0.04f);
+        [LunaPlaygroundField("CTA Button Color", 6, "Endcard & Localization")]
+        public CtaButtonColor ctaColor = CtaButtonColor.Green;
+
+        [LunaPlaygroundField("CTA Button Shape", 7, "Endcard & Localization")]
+        public CtaButtonShape ctaShape = CtaButtonShape.Rounded;
+
+        // Active theme colors (AlpineWinter: Purple vs Yellow | MidnightSlate: Electric Blue vs Vivid Red)
+        Color PurpleMain = new Color(0.50f, 0.10f, 0.96f);
+        Color PurpleLight = new Color(0.68f, 0.38f, 1.00f);
+        Color PurpleGateCol = new Color(0.58f, 0.22f, 0.98f, 0.88f);
+        Color YellowMain = new Color(0.98f, 0.84f, 0.08f);
+        Color YellowDark = new Color(0.82f, 0.66f, 0.04f);
         static readonly Color GrayCorpse = new Color(0.36f, 0.38f, 0.42f);
 
         class StickmanUnit
@@ -208,6 +217,7 @@ namespace MobControlAd
 
         void Start()
         {
+            ApplyThemePalette();
             SetupCameraAndSpaceEnvironment();
             BuildWhiteBridge();
             BuildArchedPurpleTube();
@@ -217,6 +227,28 @@ namespace MobControlAd
             BuildUI();
             SpawnInitialReferenceState();
             Luna.Unity.Analytics.LogEvent("mobcontrol_start", 1);
+        }
+
+        void ApplyThemePalette()
+        {
+            if (backgroundTheme == BackgroundTheme.MidnightSlate)
+            {
+                // Night theme: Electric Blue (friendly) vs Vivid Red (enemy)
+                PurpleMain = new Color(0.10f, 0.56f, 1.00f);
+                PurpleLight = new Color(0.42f, 0.82f, 1.00f);
+                PurpleGateCol = new Color(0.14f, 0.62f, 1.00f, 0.88f);
+                YellowMain = new Color(0.96f, 0.18f, 0.22f);
+                YellowDark = new Color(0.66f, 0.08f, 0.12f);
+            }
+            else
+            {
+                // Alpine Winter theme: Vivid Purple (friendly) vs Golden Yellow (enemy)
+                PurpleMain = new Color(0.50f, 0.10f, 0.96f);
+                PurpleLight = new Color(0.68f, 0.38f, 1.00f);
+                PurpleGateCol = new Color(0.58f, 0.22f, 0.98f, 0.88f);
+                YellowMain = new Color(0.98f, 0.84f, 0.08f);
+                YellowDark = new Color(0.82f, 0.66f, 0.04f);
+            }
         }
 
         void SetupCameraAndSpaceEnvironment()
@@ -486,9 +518,10 @@ namespace MobControlAd
             }
             else
             {
-                // Stylized 3D yellow brick wall fallback (recessed dark mortar core + beveled yellow bricks)
-                Color mortarCol = new Color(0.56f, 0.42f, 0.04f);
-                Color brickHi = new Color(1f, 0.92f, 0.30f);
+                // Stylized 3D brick wall fallback (recessed dark mortar core + beveled bricks, themed to Yellow or Red)
+                bool isBlueRed = backgroundTheme == BackgroundTheme.MidnightSlate;
+                Color mortarCol = isBlueRed ? new Color(0.42f, 0.05f, 0.08f) : new Color(0.56f, 0.42f, 0.04f);
+                Color brickHi = isBlueRed ? new Color(1.00f, 0.38f, 0.38f) : new Color(1f, 0.92f, 0.30f);
                 Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 0.72f, 0f), new Vector3(2.64f, 1.32f, 1.54f), mortarCol);
                 for (int row = 0; row < 3; row++)
                 {
@@ -608,38 +641,47 @@ namespace MobControlAd
             trt.anchoredPosition = new Vector2(0f, -125f);
             trt.sizeDelta = new Vector2(990f, 150f);
 
-            // Left: Cartoon Purple Mob Count Pill (same font size 44 + generous padding + dark purple shadow)
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.16f, 0.04f, 0.44f, 1f), center, new Vector2(-330f, -10f), new Vector2(304f, 114f), true);
+            // Theme-matched UI palette (AlpineWinter: Purple/Yellow | MidnightSlate: Electric Blue/Crimson Red)
+            bool isBlueRed = backgroundTheme == BackgroundTheme.MidnightSlate;
+            Color mobFill = isBlueRed ? new Color(0.10f, 0.50f, 0.96f, 1f) : new Color(0.36f, 0.14f, 0.90f, 1f);
+            Color mobShadow = isBlueRed ? new Color(0.03f, 0.18f, 0.46f, 1f) : new Color(0.16f, 0.04f, 0.44f, 1f);
+            Color stageFill = isBlueRed ? new Color(0.18f, 0.72f, 0.88f, 1f) : new Color(1f, 0.72f, 0.10f, 1f);
+            Color stageShadow = isBlueRed ? new Color(0.05f, 0.28f, 0.42f, 1f) : new Color(0.54f, 0.30f, 0.02f, 1f);
+            Color baseFill = isBlueRed ? new Color(0.95f, 0.20f, 0.24f, 1f) : new Color(0.95f, 0.24f, 0.28f, 1f);
+            Color baseShadow = isBlueRed ? new Color(0.46f, 0.04f, 0.08f, 1f) : new Color(0.48f, 0.05f, 0.08f, 1f);
+
+            // Left: Cartoon Mob Count Pill (same font size 44 + generous padding + theme-matched dark shadow)
+            AdUI.Img(trt, AdRes.Round(64), mobShadow, center, new Vector2(-330f, -10f), new Vector2(304f, 114f), true);
             AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(-330f, 0f), new Vector2(292f, 102f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.36f, 0.14f, 0.90f, 1f), center, new Vector2(-330f, 0f), new Vector2(278f, 88f), true);
+            AdUI.Img(trt, AdRes.Round(64), mobFill, center, new Vector2(-330f, 0f), new Vector2(278f, 88f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.26f), center, new Vector2(-330f, 22f), new Vector2(236f, 24f), true);
             _topBlueMobsText = AdUI.Txt(trt, "MOBS: 0", 44, Color.white, center, new Vector2(-330f, -1f));
             _topBlueMobsText.resizeTextForBestFit = false;
             var mobOut = _topBlueMobsText.GetComponent<Outline>();
-            if (mobOut) { mobOut.effectColor = new Color(0.16f, 0.04f, 0.44f, 1f); mobOut.effectDistance = new Vector2(3.5f, -3.5f); }
+            if (mobOut) { mobOut.effectColor = mobShadow; mobOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
-            // Center: Cartoon Gold Stage Pill (same font size 44 + generous padding + dark amber shadow)
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.54f, 0.30f, 0.02f, 1f), center, new Vector2(0f, -10f), new Vector2(304f, 114f), true);
+            // Center: Cartoon Stage Pill (same font size 44 + generous padding + theme-matched dark shadow)
+            AdUI.Img(trt, AdRes.Round(64), stageShadow, center, new Vector2(0f, -10f), new Vector2(304f, 114f), true);
             AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(0f, 0f), new Vector2(292f, 102f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 0.72f, 0.10f, 1f), center, new Vector2(0f, 0f), new Vector2(278f, 88f), true);
+            AdUI.Img(trt, AdRes.Round(64), stageFill, center, new Vector2(0f, 0f), new Vector2(278f, 88f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.34f), center, new Vector2(0f, 22f), new Vector2(236f, 24f), true);
             var stageLbl = AdUI.Txt(trt, "STAGE 1", 44, Color.white, center, new Vector2(0f, -1f));
             stageLbl.resizeTextForBestFit = false;
             var stageOut = stageLbl.GetComponent<Outline>();
-            if (stageOut) { stageOut.effectColor = new Color(0.54f, 0.30f, 0.02f, 1f); stageOut.effectDistance = new Vector2(3.5f, -3.5f); }
+            if (stageOut) { stageOut.effectColor = stageShadow; stageOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
-            // Right: Cartoon Red Enemy Base HP Pill (same font size 44 + generous padding + dark crimson shadow)
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.48f, 0.05f, 0.08f, 1f), center, new Vector2(330f, -10f), new Vector2(304f, 114f), true);
+            // Right: Cartoon Enemy Base HP Pill (same font size 44 + generous padding + theme-matched dark shadow)
+            AdUI.Img(trt, AdRes.Round(64), baseShadow, center, new Vector2(330f, -10f), new Vector2(304f, 114f), true);
             AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(330f, 0f), new Vector2(292f, 102f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.95f, 0.24f, 0.28f, 1f), center, new Vector2(330f, 0f), new Vector2(278f, 88f), true);
+            AdUI.Img(trt, AdRes.Round(64), baseFill, center, new Vector2(330f, 0f), new Vector2(278f, 88f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.28f), center, new Vector2(330f, 22f), new Vector2(236f, 24f), true);
             _topEnemyBaseText = AdUI.Txt(trt, "BASE: " + enemyBaseStartHp, 44, Color.white, center, new Vector2(330f, -1f));
             _topEnemyBaseText.resizeTextForBestFit = false;
             var baseOut = _topEnemyBaseText.GetComponent<Outline>();
-            if (baseOut) { baseOut.effectColor = new Color(0.48f, 0.05f, 0.08f, 1f); baseOut.effectDistance = new Vector2(3.5f, -3.5f); }
+            if (baseOut) { baseOut.effectColor = baseShadow; baseOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
             // =========================================================================
-            // CARTOON ART STYLE END CARD OVERLAY (Color-matched dark shadows, no black!)
+            // CARTOON ART STYLE END CARD OVERLAY (Theme-matched dark shadows, no black!)
             // =========================================================================
             _endOverlayRoot = new GameObject("MobControlEndOverlay", typeof(RectTransform));
             var ort = (RectTransform)_endOverlayRoot.transform;
@@ -648,7 +690,9 @@ namespace MobControlAd
             ort.anchorMax = Vector2.one;
             ort.offsetMin = Vector2.zero;
             ort.offsetMax = Vector2.zero;
-            _endOverlayRoot.AddComponent<Image>().color = new Color(0.08f, 0.04f, 0.22f, 0.54f);
+            _endOverlayRoot.AddComponent<Image>().color = isBlueRed
+                ? new Color(0.03f, 0.08f, 0.20f, 0.56f)
+                : new Color(0.08f, 0.04f, 0.22f, 0.54f);
 
             // Top Official MOB CONTROL Logo Image (loaded from Resources/MobControlLogo.png)
             var logoTex = Resources.Load<Texture2D>("MobControlLogo");
@@ -667,7 +711,7 @@ namespace MobControlAd
                 limg.raycastTarget = false;
             }
 
-            // Tilted Juicy Cartoon "DEFEAT..." / "VICTORY!" Center Card (high-contrast complementary yellow on rich purple!)
+            // Tilted Juicy Cartoon "DEFEAT..." / "VICTORY!" Center Card (theme-matched high contrast!)
             var defWrap = new GameObject("DefeatBanner", typeof(RectTransform));
             _defeatBannerRt = (RectTransform)defWrap.transform;
             _defeatBannerRt.SetParent(ort, false);
@@ -677,24 +721,29 @@ namespace MobControlAd
             _defeatBannerRt.sizeDelta = new Vector2(960f, 340f);
             _defeatBannerRt.localRotation = Quaternion.Euler(0f, 0f, 3.0f);
 
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.16f, 0.04f, 0.42f, 1f), center, new Vector2(0f, -18f), new Vector2(944f, 304f), true);
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(1f, 0.88f, 0.18f, 1f), center, Vector2.zero, new Vector2(920f, 282f), true);
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.32f, 0.09f, 0.72f, 1f), center, Vector2.zero, new Vector2(894f, 256f), true);
+            Color cardShadow = isBlueRed ? new Color(0.03f, 0.14f, 0.38f, 1f) : new Color(0.16f, 0.04f, 0.42f, 1f);
+            Color cardBorder = isBlueRed ? new Color(1f, 0.30f, 0.32f, 1f) : new Color(1f, 0.88f, 0.18f, 1f);
+            Color cardFill   = isBlueRed ? new Color(0.08f, 0.34f, 0.78f, 1f) : new Color(0.32f, 0.09f, 0.72f, 1f);
+            Color titleStroke = isBlueRed ? new Color(0.46f, 0.04f, 0.08f, 1f) : new Color(0.24f, 0.04f, 0.48f, 1f);
+
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), cardShadow, center, new Vector2(0f, -18f), new Vector2(944f, 304f), true);
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), cardBorder, center, Vector2.zero, new Vector2(920f, 282f), true);
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), cardFill, center, Vector2.zero, new Vector2(894f, 256f), true);
             AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.16f), center, new Vector2(0f, 76f), new Vector2(820f, 68f), true);
 
             _defeatTitleText = AdUI.Txt(_defeatBannerRt, defeatTitle, 136, new Color(1f, 0.88f, 0.14f), center, new Vector2(0f, 30f));
             var outline = _defeatTitleText.GetComponent<Outline>();
             if (outline)
             {
-                outline.effectColor = new Color(0.24f, 0.04f, 0.48f, 1f);
+                outline.effectColor = titleStroke;
                 outline.effectDistance = new Vector2(8f, -8f);
             }
 
-            _endSubText = AdUI.Txt(_defeatBannerRt, defeatSubtitle, 52, new Color(1f, 0.96f, 0.62f), center, new Vector2(0f, -82f));
+            _endSubText = AdUI.Txt(_defeatBannerRt, defeatSubtitle, 52, isBlueRed ? Color.white : new Color(1f, 0.96f, 0.62f), center, new Vector2(0f, -82f));
             var subOut = _endSubText.GetComponent<Outline>();
-            if (subOut) { subOut.effectColor = new Color(0.18f, 0.04f, 0.44f, 1f); subOut.effectDistance = new Vector2(4.5f, -4.5f); }
+            if (subOut) { subOut.effectColor = cardShadow; subOut.effectDistance = new Vector2(4.5f, -4.5f); }
 
-            // Chunky Cartoon 3D Glossy Green "PLAY NOW!" CTA Button (deep forest green shadow, no black!)
+            // Configurable Cartoon / Sharp 3D Glossy CTA Button (Text, Color & Rounded/Sharp Shape via Playworks Playground!)
             var ctaGo = new GameObject("PlayNowCTA", typeof(RectTransform));
             _playNowBtnRt = (RectTransform)ctaGo.transform;
             _playNowBtnRt.SetParent(ort, false);
@@ -703,18 +752,56 @@ namespace MobControlAd
             _playNowBtnRt.anchoredPosition = new Vector2(0f, -455f);
             _playNowBtnRt.sizeDelta = new Vector2(740f, 210f);
 
-            AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(0.04f, 0.34f, 0.11f, 1f), center, new Vector2(0f, -18f), new Vector2(736f, 204f), true);
-            AdUI.Img(_playNowBtnRt, AdRes.Round(64), Color.white, center, new Vector2(0f, 0f), new Vector2(716f, 186f), true);
-            AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(0.08f, 0.56f, 0.20f, 1f), center, new Vector2(0f, -10f), new Vector2(694f, 166f), true);
-            AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(0.24f, 0.92f, 0.36f, 1f), center, new Vector2(0f, 6f), new Vector2(690f, 158f), true);
-            AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.36f), center, new Vector2(0f, 48f), new Vector2(620f, 44f), true);
-            var ctaLbl = AdUI.Txt(_playNowBtnRt, ctaText + "!", 92, Color.white, center, new Vector2(0f, 6f));
+            GetCtaPalette(ctaColor, out Color ctaMain, out Color ctaBevel, out Color ctaShadow, out Color ctaTextCol);
+            bool ctaSliced = ctaShape == CtaButtonShape.Rounded;
+            Sprite ctaSprite = ctaSliced ? AdRes.Round(64) : AdRes.Square;
+
+            AdUI.Img(_playNowBtnRt, ctaSprite, ctaShadow, center, new Vector2(0f, -18f), new Vector2(736f, 204f), ctaSliced);
+            AdUI.Img(_playNowBtnRt, ctaSprite, Color.white, center, new Vector2(0f, 0f), new Vector2(716f, 186f), ctaSliced);
+            AdUI.Img(_playNowBtnRt, ctaSprite, ctaBevel, center, new Vector2(0f, -10f), new Vector2(694f, 166f), ctaSliced);
+            AdUI.Img(_playNowBtnRt, ctaSprite, ctaMain, center, new Vector2(0f, 6f), new Vector2(690f, 158f), ctaSliced);
+            AdUI.Img(_playNowBtnRt, ctaSprite, new Color(1f, 1f, 1f, 0.34f), center, new Vector2(0f, 48f), new Vector2(620f, 44f), ctaSliced);
+            string ctaDisplay = string.IsNullOrEmpty(ctaText) ? "PLAY NOW!" : (ctaText.EndsWith("!") ? ctaText : ctaText + "!");
+            var ctaLbl = AdUI.Txt(_playNowBtnRt, ctaDisplay, 92, ctaTextCol, center, new Vector2(0f, 6f));
             var ctaOut = ctaLbl.GetComponent<Outline>();
-            if (ctaOut) { ctaOut.effectColor = new Color(0.05f, 0.36f, 0.12f, 1f); ctaOut.effectDistance = new Vector2(6f, -6f); }
+            if (ctaOut) { ctaOut.effectColor = ctaShadow; ctaOut.effectDistance = new Vector2(6f, -6f); }
 
             var fullBtn = _endOverlayRoot.AddComponent<Button>();
             fullBtn.onClick.AddListener(() => StoreLink.Open(MobControlStoreUrl));
             _endOverlayRoot.SetActive(false);
+        }
+
+        static void GetCtaPalette(CtaButtonColor col, out Color main, out Color bevel, out Color shadow, out Color txt)
+        {
+            txt = Color.white;
+            switch (col)
+            {
+                case CtaButtonColor.Blue:
+                    main = new Color(0.14f, 0.62f, 1.00f, 1f);
+                    bevel = new Color(0.06f, 0.36f, 0.74f, 1f);
+                    shadow = new Color(0.03f, 0.18f, 0.44f, 1f);
+                    break;
+                case CtaButtonColor.Yellow:
+                    main = new Color(1.00f, 0.80f, 0.12f, 1f);
+                    bevel = new Color(0.78f, 0.50f, 0.04f, 1f);
+                    shadow = new Color(0.46f, 0.24f, 0.02f, 1f);
+                    break;
+                case CtaButtonColor.Red:
+                    main = new Color(0.96f, 0.22f, 0.26f, 1f);
+                    bevel = new Color(0.68f, 0.08f, 0.12f, 1f);
+                    shadow = new Color(0.42f, 0.04f, 0.08f, 1f);
+                    break;
+                case CtaButtonColor.Purple:
+                    main = new Color(0.56f, 0.20f, 0.98f, 1f);
+                    bevel = new Color(0.34f, 0.08f, 0.68f, 1f);
+                    shadow = new Color(0.18f, 0.04f, 0.42f, 1f);
+                    break;
+                default: // Green
+                    main = new Color(0.24f, 0.92f, 0.36f, 1f);
+                    bevel = new Color(0.08f, 0.56f, 0.20f, 1f);
+                    shadow = new Color(0.04f, 0.34f, 0.11f, 1f);
+                    break;
+            }
         }
 
         void SpawnInitialReferenceState()
@@ -1297,10 +1384,10 @@ namespace MobControlAd
             if (_defeatTitleText)
             {
                 _defeatTitleText.text = string.IsNullOrEmpty(defeatTitle) ? "DEFEAT..." : defeatTitle;
-                // High-contrast complementary golden yellow against the rich purple banner
-                _defeatTitleText.color = new Color(1f, 0.88f, 0.14f);
+                bool isBlueRed = backgroundTheme == BackgroundTheme.MidnightSlate;
+                _defeatTitleText.color = isBlueRed ? new Color(1f, 0.34f, 0.34f) : new Color(1f, 0.88f, 0.14f);
                 var dOut = _defeatTitleText.GetComponent<Outline>();
-                if (dOut) { dOut.effectColor = new Color(0.24f, 0.04f, 0.48f, 1f); dOut.effectDistance = new Vector2(8f, -8f); }
+                if (dOut) { dOut.effectColor = isBlueRed ? new Color(0.46f, 0.04f, 0.08f, 1f) : new Color(0.24f, 0.04f, 0.48f, 1f); dOut.effectDistance = new Vector2(8f, -8f); }
             }
             if (_endSubText)
                 _endSubText.text = string.IsNullOrEmpty(defeatSubtitle) ? "CAN YOU BEAT THE BOSS?" : defeatSubtitle;
