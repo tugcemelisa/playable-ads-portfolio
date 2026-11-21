@@ -7,8 +7,10 @@ namespace AdKit
         {
             Luna.Unity.Analytics.LogEvent(Luna.Unity.Analytics.EventType.EndCardShown);
             Luna.Unity.Playable.InstallFullGame();
+#if !UNITY_LUNA
             if (!string.IsNullOrEmpty(url))
                 UnityEngine.Application.OpenURL(url);
+#endif
             UnityEngine.Debug.Log("[Voodoo Playworks CTA] InstallFullGame() -> " + url);
         }
 

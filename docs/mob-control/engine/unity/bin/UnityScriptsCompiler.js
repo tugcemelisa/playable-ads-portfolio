@@ -1,9 +1,286 @@
-if ( TRACE ) { TRACE( JSON.parse( '["AdKit.AdUI#Create","AdKit.AdUI#Hand","AdKit.AdUI#Txt","AdKit.AdUI#Img","AdKit.AdUI#EndcardVisible#get","AdKit.AdUI#Card#get","AdKit.AdUI#init","AdKit.AdUI#Banner","AdKit.AdUI#ShowDragTutorial","AdKit.AdUI#ShowEndcard","AdKit.AdUI#Tick","AdKit.Label#Text#get","AdKit.Label#Text#set","AdKit.Prims#init","AdKit.Prims#Make","AdKit.Prims#SetColor","AdKit.Prims#Figure","AdKit.Prims#Burst","AdKit.Prims#BurstRoutine","AdKit.Res#Font#get","AdKit.Res#FontMat#get","AdKit.Res#SpriteMat#get","AdKit.Res#PrimMat#get","AdKit.Res#Square#get","AdKit.Res#Bead#get","AdKit.Res#Circle#get","AdKit.Res#Soft#get","AdKit.Res#Ring#get","AdKit.Res#init","AdKit.Res#Round","AdKit.Res#RoundRect","AdKit.Res#Disc","AdKit.Res#RingTex","AdKit.Res#Gradient","AdKit.Res#Spr","AdKit.Res#Txt","AdKit.Res#MakeLabel","AdKit.Sfx#init","AdKit.Sfx#Override","AdKit.Sfx#Play","AdKit.Sfx#Init","AdKit.StoreLink#Open","AdKit.StoreLink#NotifyGameEnded","AdKit.StoreLink#GameEnded","AdKit.StoreLink#LogEvent","CFX_AutoDestructShuriken#OnEnable","CFX_AutoDestructShuriken#CheckIfAlive","CFX_AutoRotate#init","CFX_AutoRotate#Update","CFX_LightFlicker#init","CFX_LightFlicker#Awake","CFX_LightFlicker#OnEnable","CFX_LightFlicker#Update","CFX_LightIntensityFade#init","CFX_LightIntensityFade#Start","CFX_LightIntensityFade#OnEnable","CFX_LightIntensityFade#Update","CharacterCs#Start","CharacterScript#Start","CharacterScript#Update","CharacterScript#FixedUpdate","CharacterScript#DeactivateShield","CharacterScript#OnCollisionEnter","CharacterScript#OnTriggerEnter","For#Start","For#Update","GameManager#init","GameManager#Start","GameManager#CreateLocation","GameManager#RestartGame","GameManager#GenerateObject","GameManager#Update","HomeWork3#Start","HomeWork3#Update","List#init","List#Start","MobControlAd.MobControlGame#init","MobControlAd.MobControlGame#init","MobControlAd.MobControlGame#Awake","MobControlAd.MobControlGame#Start","MobControlAd.MobControlGame#SetupCameraAndSpaceEnvironment","MobControlAd.MobControlGame#BuildWhiteBridge","MobControlAd.MobControlGame#BuildArchedPurpleTube","MobControlAd.MobControlGame#SampleTubeSpline","MobControlAd.MobControlGame#BuildPurpleCannon","MobControlAd.MobControlGame#BuildGatesAndYellowBlock","MobControlAd.MobControlGame#CreateGate","MobControlAd.MobControlGame#BuildYellowEnemyBase","MobControlAd.MobControlGame#BuildUI","MobControlAd.MobControlGame#SpawnInitialReferenceState","MobControlAd.MobControlGame#SpawnStickman","MobControlAd.MobControlGame#SetStickmanColor","MobControlAd.MobControlGame#Update","MobControlAd.MobControlGame#HandleCannonAndInput","MobControlAd.MobControlGame#FirePurpleStickman","MobControlAd.MobControlGame#UpdateGates","MobControlAd.MobControlGame#UpdateYellowWaves","MobControlAd.MobControlGame#UpdateStickmen","MobControlAd.MobControlGame#UpdateTubeBulge","MobControlAd.MobControlGame#AnimateStickmanRun","MobControlAd.MobControlGame#DamageYellowBlock","MobControlAd.MobControlGame#DamageEnemyBase","MobControlAd.MobControlGame#TriggerVictoryClimax","MobControlAd.MobControlGame#TriggerDefeatClimax","MobControlAd.MobControlGame#SpawnWhiteSmoke","MobControlAd.MobControlGame#UpdateSmokePuffs","MobControlAd.MobControlGame#TriggerCameraShake","MobControlAd.MobControlGame#UpdateCameraShake","MobControlAd.MobControlGame.SmokePuff#init","MobControlAd.MobControlGame.StickmanUnit#init","NumberMatchAd.NumberMatchGame#init","NumberMatchAd.NumberMatchGame#PaletteColor","NumberMatchAd.NumberMatchGame#HandShape","NumberMatchAd.NumberMatchGame#GetPointer","NumberMatchAd.NumberMatchGame#Smooth","NumberMatchAd.NumberMatchGame#BackOut","NumberMatchAd.NumberMatchGame#init","NumberMatchAd.NumberMatchGame#Awake","NumberMatchAd.NumberMatchGame#CaptureShots","NumberMatchAd.NumberMatchGame#Start","NumberMatchAd.NumberMatchGame#FitCamera","NumberMatchAd.NumberMatchGame#BuildPicture","NumberMatchAd.NumberMatchGame#Similar","NumberMatchAd.NumberMatchGame#Idx","NumberMatchAd.NumberMatchGame#CellPos","NumberMatchAd.NumberMatchGame#BuildBoard","NumberMatchAd.NumberMatchGame#BuildTray","NumberMatchAd.NumberMatchGame#MakePiece","NumberMatchAd.NumberMatchGame#BuildHand","NumberMatchAd.NumberMatchGame#BuildUI","NumberMatchAd.NumberMatchGame#UpdateProgress","NumberMatchAd.NumberMatchGame#Intro","NumberMatchAd.NumberMatchGame#MaskCell","NumberMatchAd.NumberMatchGame#PopIn","NumberMatchAd.NumberMatchGame#Update","NumberMatchAd.NumberMatchGame#OnDown","NumberMatchAd.NumberMatchGame#BeginDrag","NumberMatchAd.NumberMatchGame#DragTo","NumberMatchAd.NumberMatchGame#Release","NumberMatchAd.NumberMatchGame#ResolveDrop","NumberMatchAd.NumberMatchGame#CellAt","NumberMatchAd.NumberMatchGame#Place","NumberMatchAd.NumberMatchGame#PlaceRoutine","NumberMatchAd.NumberMatchGame#RejectAndReturn","NumberMatchAd.NumberMatchGame#ReturnHome","NumberMatchAd.NumberMatchGame#WrongFlash","NumberMatchAd.NumberMatchGame#RevealGroup","NumberMatchAd.NumberMatchGame#RevealCell","NumberMatchAd.NumberMatchGame#NearMissFail","NumberMatchAd.NumberMatchGame#Complete","NumberMatchAd.NumberMatchGame#ShowEndcard","NumberMatchAd.NumberMatchGame#UpdateHighlights","NumberMatchAd.NumberMatchGame#Shake","NumberMatchAd.NumberMatchGame#UpdateShake","NumberMatchAd.NumberMatchGame#Punch","NumberMatchAd.NumberMatchGame#PunchDelayed","NumberMatchAd.NumberMatchGame#Fragments","NumberMatchAd.NumberMatchGame#Burst","NumberMatchAd.NumberMatchGame#Fly","NumberMatchAd.NumberMatchGame#FloatText","NumberMatchAd.NumberMatchGame#FloatRoutine","NumberMatchAd.NumberMatchGame#BestPiece","NumberMatchAd.NumberMatchGame#ShowTutorial","NumberMatchAd.NumberMatchGame#HideTutorial","NumberMatchAd.NumberMatchGame#TutorialLoop","NumberMatchAd.NumberMatchGame#HandPress","NumberMatchAd.NumberMatchGame#AutoPlay","NumberMatchAd.NumberMatchGame#MoveHand","NumberMatchAd.NumberMatchGame#FarWrongCell","NumberMatchAd.NumberMatchGame.CellV#init","NumberMatchAd.NumberMatchGame.Piece#init","ObstacleDestroy#OnTriggerEnter","Spiski#init","Spiski#Start"]' ) ); }
+if ( TRACE ) { TRACE( JSON.parse( '["AdKit.AdRes#Font#get","AdKit.AdRes#FontMat#get","AdKit.AdRes#SpriteMat#get","AdKit.AdRes#PrimMat#get","AdKit.AdRes#Square#get","AdKit.AdRes#Bead#get","AdKit.AdRes#Circle#get","AdKit.AdRes#Soft#get","AdKit.AdRes#Ring#get","AdKit.AdRes#init","AdKit.AdRes#Round","AdKit.AdRes#RoundRect","AdKit.AdRes#Disc","AdKit.AdRes#RingTex","AdKit.AdRes#Gradient","AdKit.AdRes#Spr","AdKit.AdRes#Txt","AdKit.AdRes#MakeLabel","AdKit.AdUI#Create","AdKit.AdUI#Hand","AdKit.AdUI#Txt","AdKit.AdUI#Img","AdKit.AdUI#EndcardVisible#get","AdKit.AdUI#Card#get","AdKit.AdUI#init","AdKit.AdUI#Banner","AdKit.AdUI#ShowDragTutorial","AdKit.AdUI#ShowEndcard","AdKit.AdUI#Tick","AdKit.Label#Text#get","AdKit.Label#Text#set","AdKit.Prims#init","AdKit.Prims#Make","AdKit.Prims#SetColor","AdKit.Prims#Figure","AdKit.Prims#Burst","AdKit.Prims#BurstRoutine","AdKit.Sfx#init","AdKit.Sfx#Override","AdKit.Sfx#Play","AdKit.Sfx#Init","AdKit.StoreLink#Open","AdKit.StoreLink#NotifyGameEnded","AdKit.StoreLink#GameEnded","AdKit.StoreLink#LogEvent","CFX_AutoDestructShuriken#OnEnable","CFX_AutoDestructShuriken#CheckIfAlive","CFX_AutoRotate#init","CFX_AutoRotate#Update","CFX_LightFlicker#init","CFX_LightFlicker#Awake","CFX_LightFlicker#OnEnable","CFX_LightFlicker#Update","CFX_LightIntensityFade#init","CFX_LightIntensityFade#Start","CFX_LightIntensityFade#OnEnable","CFX_LightIntensityFade#Update","CharacterCs#Start","CharacterScript#Start","CharacterScript#Update","CharacterScript#FixedUpdate","CharacterScript#DeactivateShield","CharacterScript#OnCollisionEnter","CharacterScript#OnTriggerEnter","For#Start","For#Update","GameManager#init","GameManager#Start","GameManager#CreateLocation","GameManager#RestartGame","GameManager#GenerateObject","GameManager#Update","HomeWork3#Start","HomeWork3#Update","List#init","List#Start","MobControlAd.MobControlGame#init","MobControlAd.MobControlGame#init","MobControlAd.MobControlGame#Awake","MobControlAd.MobControlGame#Start","MobControlAd.MobControlGame#SetupCameraAndSpaceEnvironment","MobControlAd.MobControlGame#BuildWhiteBridge","MobControlAd.MobControlGame#BuildArchedPurpleTube","MobControlAd.MobControlGame#SampleTubeSpline","MobControlAd.MobControlGame#BuildPurpleCannon","MobControlAd.MobControlGame#BuildGatesAndYellowBlock","MobControlAd.MobControlGame#CreateGate","MobControlAd.MobControlGame#BuildYellowEnemyBase","MobControlAd.MobControlGame#BuildUI","MobControlAd.MobControlGame#SpawnInitialReferenceState","MobControlAd.MobControlGame#SpawnStickman","MobControlAd.MobControlGame#SetStickmanColor","MobControlAd.MobControlGame#Update","MobControlAd.MobControlGame#HandleCannonAndInput","MobControlAd.MobControlGame#FirePurpleStickman","MobControlAd.MobControlGame#UpdateGates","MobControlAd.MobControlGame#UpdateYellowWaves","MobControlAd.MobControlGame#UpdateStickmen","MobControlAd.MobControlGame#UpdateTubeBulge","MobControlAd.MobControlGame#AnimateStickmanRun","MobControlAd.MobControlGame#DamageYellowBlock","MobControlAd.MobControlGame#DamageEnemyBase","MobControlAd.MobControlGame#TriggerVictoryClimax","MobControlAd.MobControlGame#TriggerDefeatClimax","MobControlAd.MobControlGame#SpawnWhiteSmoke","MobControlAd.MobControlGame#UpdateSmokePuffs","MobControlAd.MobControlGame#TriggerCameraShake","MobControlAd.MobControlGame#UpdateCameraShake","MobControlAd.MobControlGame.SmokePuff#init","MobControlAd.MobControlGame.StickmanUnit#init","NumberMatchAd.NumberMatchGame#init","NumberMatchAd.NumberMatchGame#PaletteColor","NumberMatchAd.NumberMatchGame#HandShape","NumberMatchAd.NumberMatchGame#GetPointer","NumberMatchAd.NumberMatchGame#Smooth","NumberMatchAd.NumberMatchGame#BackOut","NumberMatchAd.NumberMatchGame#init","NumberMatchAd.NumberMatchGame#Awake","NumberMatchAd.NumberMatchGame#CaptureShots","NumberMatchAd.NumberMatchGame#Start","NumberMatchAd.NumberMatchGame#FitCamera","NumberMatchAd.NumberMatchGame#BuildPicture","NumberMatchAd.NumberMatchGame#Similar","NumberMatchAd.NumberMatchGame#Idx","NumberMatchAd.NumberMatchGame#CellPos","NumberMatchAd.NumberMatchGame#BuildBoard","NumberMatchAd.NumberMatchGame#BuildTray","NumberMatchAd.NumberMatchGame#MakePiece","NumberMatchAd.NumberMatchGame#BuildHand","NumberMatchAd.NumberMatchGame#BuildUI","NumberMatchAd.NumberMatchGame#UpdateProgress","NumberMatchAd.NumberMatchGame#Intro","NumberMatchAd.NumberMatchGame#MaskCell","NumberMatchAd.NumberMatchGame#PopIn","NumberMatchAd.NumberMatchGame#Update","NumberMatchAd.NumberMatchGame#OnDown","NumberMatchAd.NumberMatchGame#BeginDrag","NumberMatchAd.NumberMatchGame#DragTo","NumberMatchAd.NumberMatchGame#Release","NumberMatchAd.NumberMatchGame#ResolveDrop","NumberMatchAd.NumberMatchGame#CellAt","NumberMatchAd.NumberMatchGame#Place","NumberMatchAd.NumberMatchGame#PlaceRoutine","NumberMatchAd.NumberMatchGame#RejectAndReturn","NumberMatchAd.NumberMatchGame#ReturnHome","NumberMatchAd.NumberMatchGame#WrongFlash","NumberMatchAd.NumberMatchGame#RevealGroup","NumberMatchAd.NumberMatchGame#RevealCell","NumberMatchAd.NumberMatchGame#NearMissFail","NumberMatchAd.NumberMatchGame#Complete","NumberMatchAd.NumberMatchGame#ShowEndcard","NumberMatchAd.NumberMatchGame#UpdateHighlights","NumberMatchAd.NumberMatchGame#Shake","NumberMatchAd.NumberMatchGame#UpdateShake","NumberMatchAd.NumberMatchGame#Punch","NumberMatchAd.NumberMatchGame#PunchDelayed","NumberMatchAd.NumberMatchGame#Fragments","NumberMatchAd.NumberMatchGame#Burst","NumberMatchAd.NumberMatchGame#Fly","NumberMatchAd.NumberMatchGame#FloatText","NumberMatchAd.NumberMatchGame#FloatRoutine","NumberMatchAd.NumberMatchGame#BestPiece","NumberMatchAd.NumberMatchGame#ShowTutorial","NumberMatchAd.NumberMatchGame#HideTutorial","NumberMatchAd.NumberMatchGame#TutorialLoop","NumberMatchAd.NumberMatchGame#HandPress","NumberMatchAd.NumberMatchGame#AutoPlay","NumberMatchAd.NumberMatchGame#MoveHand","NumberMatchAd.NumberMatchGame#FarWrongCell","NumberMatchAd.NumberMatchGame.CellV#init","NumberMatchAd.NumberMatchGame.Piece#init","ObstacleDestroy#OnTriggerEnter","Spiski#init","Spiski#Start"]' ) ); }
 /**
  * @compiler Bridge.NET 17.9.42-luna
  */
 Bridge.assembly("UnityScriptsCompiler", function ($asm, globals) {
     "use strict";
+
+    /*AdKit.AdRes start.*/
+    Bridge.define("AdKit.AdRes", {
+        statics: {
+            fields: {
+                _font: null,
+                _fontMat: null,
+                _spriteMat: null,
+                _primMat: null,
+                _square: null,
+                _bead: null,
+                _circle: null,
+                _soft: null,
+                _ring: null,
+                _round: null
+            },
+            props: {
+                Font: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Font#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._font) ? AdKit.AdRes._font : (($t = UnityEngine.Resources.Load(UnityEngine.Font, "Fonts/Inter-SemiBold"), AdKit.AdRes._font = $t, $t));
+                    }
+                },
+                FontMat: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#FontMat#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._fontMat) ? AdKit.AdRes._fontMat : (($t = UnityEngine.Resources.Load(UnityEngine.Material, "JellyFont"), AdKit.AdRes._fontMat = $t, $t));
+                    }
+                },
+                SpriteMat: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#SpriteMat#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._spriteMat) ? AdKit.AdRes._spriteMat : (($t = UnityEngine.Resources.Load(UnityEngine.Material, "JellySprite"), AdKit.AdRes._spriteMat = $t, $t));
+                    }
+                },
+                PrimMat: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#PrimMat#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._primMat) ? AdKit.AdRes._primMat : (($t = UnityEngine.Resources.Load(UnityEngine.Material, "PlayablePrimMat"), AdKit.AdRes._primMat = $t, $t));
+                    }
+                },
+                Square: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Square#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._square) ? AdKit.AdRes._square : (($t = AdKit.AdRes.RoundRect(8, 0.0, 8), AdKit.AdRes._square = $t, $t));
+                    }
+                },
+                Bead: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Bead#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._bead) ? AdKit.AdRes._bead : (($t = AdKit.AdRes.RoundRect(32, 8.0, 32), AdKit.AdRes._bead = $t, $t));
+                    }
+                },
+                Circle: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Circle#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._circle) ? AdKit.AdRes._circle : (($t = AdKit.AdRes.Disc(128, false), AdKit.AdRes._circle = $t, $t));
+                    }
+                },
+                Soft: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Soft#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._soft) ? AdKit.AdRes._soft : (($t = AdKit.AdRes.Disc(128, true), AdKit.AdRes._soft = $t, $t));
+                    }
+                },
+                Ring: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Ring#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._ring) ? AdKit.AdRes._ring : (($t = AdKit.AdRes.RingTex(128, 0.72), AdKit.AdRes._ring = $t, $t));
+                    }
+                }
+            },
+            ctors: {
+                init: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#init", this ); }
+
+                    this._round = new (System.Collections.Generic.Dictionary$2(System.Int32,UnityEngine.Sprite)).ctor();
+                }
+            },
+            methods: {
+                /*AdKit.AdRes.Round:static start.*/
+                Round: function (ppu) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Round", this ); }
+
+                    var s = { };
+                    if (AdKit.AdRes._round.tryGetValue(ppu, s) && UnityEngine.Object.op_Implicit(s.v)) {
+                        return s.v;
+                    }
+                    s.v = AdKit.AdRes.RoundRect(128, 40.0, ppu, 44.0);
+                    AdKit.AdRes._round.setItem(ppu, s.v);
+                    return s.v;
+                },
+                /*AdKit.AdRes.Round:static end.*/
+
+                /*AdKit.AdRes.RoundRect:static start.*/
+                RoundRect: function (size, radius, ppu, border) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#RoundRect", this ); }
+
+                    var $t;
+                    if (border === void 0) { border = 0.0; }
+                    var t = ($t = new UnityEngine.Texture2D.$ctor11(size, size, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
+                    var px = System.Array.init(Bridge.Int.mul(size, size), function (){
+                        return new UnityEngine.Color32();
+                    }, UnityEngine.Color32);
+                    for (var y = 0; y < size; y = (y + 1) | 0) {
+                        for (var x = 0; x < size; x = (x + 1) | 0) {
+                            var a = 1.0;
+                            if (radius > 0.0) {
+                                var dx = UnityEngine.Mathf.Max(0.0, UnityEngine.Mathf.Max(radius - (x + 0.5), x + 0.5 - (size - radius)));
+                                var dy = UnityEngine.Mathf.Max(0.0, UnityEngine.Mathf.Max(radius - (y + 0.5), y + 0.5 - (size - radius)));
+                                a = Math.max(0, Math.min(1, radius - Math.sqrt(dx * dx + dy * dy) + 0.5));
+                            }
+                            px[((Bridge.Int.mul(y, size) + x) | 0)] = new UnityEngine.Color32.$ctor1(255, 255, 255, Bridge.Int.clipu8(a * 255.0));
+                        }
+                    }
+                    t.SetPixels32$1(px);
+                    t.Apply$1(false, true);
+                    return UnityEngine.Sprite.Create$4(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, size, size), new pc.Vec2( 0.5, 0.5 ), ppu, 0, UnityEngine.SpriteMeshType.FullRect, new pc.Vec4( border, border, border, border ));
+                },
+                /*AdKit.AdRes.RoundRect:static end.*/
+
+                /*AdKit.AdRes.Disc:static start.*/
+                Disc: function (size, soft) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Disc", this ); }
+
+                    var $t;
+                    var t = ($t = new UnityEngine.Texture2D.$ctor11(size, size, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
+                    var px = System.Array.init(Bridge.Int.mul(size, size), function (){
+                        return new UnityEngine.Color32();
+                    }, UnityEngine.Color32);
+                    var h = size * 0.5;
+                    for (var y = 0; y < size; y = (y + 1) | 0) {
+                        for (var x = 0; x < size; x = (x + 1) | 0) {
+                            var d = new pc.Vec2( x + 0.5 - h, y + 0.5 - h ).length() / h;
+                            var a = (soft ? Math.pow(Math.max(0, Math.min(1, 1.0 - d)), 1.5) : Math.max(0, Math.min(1, (1.0 - d) * h)));
+                            px[((Bridge.Int.mul(y, size) + x) | 0)] = new UnityEngine.Color32.$ctor1(255, 255, 255, Bridge.Int.clipu8(a * 255.0));
+                        }
+                    }
+                    t.SetPixels32$1(px);
+                    t.Apply$1(false, true);
+                    return UnityEngine.Sprite.Create$1(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, size, size), new pc.Vec2( 0.5, 0.5 ), size);
+                },
+                /*AdKit.AdRes.Disc:static end.*/
+
+                /*AdKit.AdRes.RingTex:static start.*/
+                RingTex: function (size, inner) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#RingTex", this ); }
+
+                    var $t;
+                    var t = ($t = new UnityEngine.Texture2D.$ctor11(size, size, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
+                    var px = System.Array.init(Bridge.Int.mul(size, size), function (){
+                        return new UnityEngine.Color32();
+                    }, UnityEngine.Color32);
+                    var h = size * 0.5;
+                    for (var y = 0; y < size; y = (y + 1) | 0) {
+                        for (var x = 0; x < size; x = (x + 1) | 0) {
+                            var d = new pc.Vec2( x + 0.5 - h, y + 0.5 - h ).length() / h;
+                            var a = Math.max(0, Math.min(1, (1.0 - d) * h)) * Math.max(0, Math.min(1, (d - inner) * h));
+                            px[((Bridge.Int.mul(y, size) + x) | 0)] = new UnityEngine.Color32.$ctor1(255, 255, 255, Bridge.Int.clipu8(a * 255.0));
+                        }
+                    }
+                    t.SetPixels32$1(px);
+                    t.Apply$1(false, true);
+                    return UnityEngine.Sprite.Create$1(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, size, size), new pc.Vec2( 0.5, 0.5 ), size);
+                },
+                /*AdKit.AdRes.RingTex:static end.*/
+
+                /*AdKit.AdRes.Gradient:static start.*/
+                Gradient: function (top, bottom) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Gradient", this ); }
+
+                    var $t;
+                    var t = ($t = new UnityEngine.Texture2D.$ctor11(64, 64, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
+                    var px = System.Array.init(4096, function (){
+                        return new UnityEngine.Color();
+                    }, UnityEngine.Color);
+                    for (var y = 0; y < 64; y = (y + 1) | 0) {
+                        var c = pc.Color.lerp( bottom, top, y / 63.0 );
+                        for (var x = 0; x < 64; x = (x + 1) | 0) {
+                            px[((Bridge.Int.mul(y, 64) + x) | 0)] = c.$clone();
+                        }
+                    }
+                    t.SetPixels$1(px);
+                    t.Apply$1(false, true);
+                    return UnityEngine.Sprite.Create$1(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, 64.0, 64.0), new pc.Vec2( 0.5, 0.5 ), 64.0);
+                },
+                /*AdKit.AdRes.Gradient:static end.*/
+
+                /*AdKit.AdRes.Spr:static start.*/
+                Spr: function (name, parent, s, c, order, pos, size, sliced) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Spr", this ); }
+
+                    if (sliced === void 0) { sliced = false; }
+                    var go = new UnityEngine.GameObject.$ctor2(name);
+                    go.transform.SetParent(parent, false);
+                    go.transform.localPosition = pos.$clone();
+                    var sr = go.AddComponent(UnityEngine.SpriteRenderer);
+                    sr.sharedMaterial = AdKit.AdRes.SpriteMat;
+                    sr.sprite = s;
+                    sr.color = c.$clone();
+                    sr.sortingOrder = order;
+                    if (sliced) {
+                        sr.drawMode = UnityEngine.SpriteDrawMode.Sliced;
+                        sr.size = size.$clone();
+                    } else {
+                        go.transform.localScale = new pc.Vec3( size.x, size.y, 1.0 );
+                    }
+                    return sr;
+                },
+                /*AdKit.AdRes.Spr:static end.*/
+
+                /*AdKit.AdRes.Txt:static start.*/
+                Txt: function (parent, name, text, height, c, order, pos) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Txt", this ); }
+
+                    var go = new UnityEngine.GameObject.$ctor2(name);
+                    go.transform.SetParent(parent, false);
+                    go.transform.localPosition = pos.$clone();
+                    var tm = go.AddComponent(UnityEngine.TextMesh);
+                    var mr = go.GetComponent(UnityEngine.MeshRenderer);
+                    mr.sharedMaterial = AdKit.AdRes.Font.material;
+                    tm.font = AdKit.AdRes.Font;
+                    tm.fontSize = 64;
+                    tm.characterSize = height / 6.4;
+                    tm.anchor = UnityEngine.TextAnchor.MiddleCenter;
+                    tm.offsetZ = -0.02;
+                    tm.color = c.$clone();
+                    tm.text = text;
+                    mr.sortingOrder = order;
+                    return tm;
+                },
+                /*AdKit.AdRes.Txt:static end.*/
+
+                /*AdKit.AdRes.MakeLabel:static start.*/
+                MakeLabel: function (parent, text, height, c, order, pos) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#MakeLabel", this ); }
+
+                    var go = new UnityEngine.GameObject.$ctor2("Label");
+                    go.transform.SetParent(parent, false);
+                    go.transform.localPosition = pos.$clone();
+                    var i = go.AddComponent(AdKit.Label);
+                    var outlineCol = new pc.Color( 0.04, 0.05, 0.11, 0.96 );
+                    var d = height * 0.045;
+                    i.outlines = System.Array.init(4, null, UnityEngine.TextMesh);
+                    i.outlines[0] = AdKit.AdRes.Txt(go.transform, "o0", text, height, outlineCol.$clone(), ((order - 1) | 0), new pc.Vec3( 0.0 - d, 0.0, 0.018 ));
+                    i.outlines[1] = AdKit.AdRes.Txt(go.transform, "o1", text, height, outlineCol.$clone(), ((order - 1) | 0), new pc.Vec3( d, 0.0, 0.018 ));
+                    i.outlines[2] = AdKit.AdRes.Txt(go.transform, "o2", text, height, outlineCol.$clone(), ((order - 1) | 0), new pc.Vec3( 0.0, 0.0 - d, 0.018 ));
+                    i.outlines[3] = AdKit.AdRes.Txt(go.transform, "o3", text, height, outlineCol.$clone(), ((order - 1) | 0), new pc.Vec3( 0.0, d, 0.018 ));
+                    i.shadow = AdKit.AdRes.Txt(go.transform, "shadow", text, height, new pc.Color( 0.0, 0.0, 0.0, 0.85 ), ((order - 2) | 0), new pc.Vec3( height * 0.055, (0.0 - height) * 0.085, 0.036 ));
+                    i.main = AdKit.AdRes.Txt(go.transform, "main", text, height, c.$clone(), order, pc.Vec3.ZERO.clone());
+                    return i;
+                },
+                /*AdKit.AdRes.MakeLabel:static end.*/
+
+
+            }
+        }
+    });
+    /*AdKit.AdRes end.*/
 
     /*AdKit.AdUI start.*/
     Bridge.define("AdKit.AdUI", {
@@ -30,7 +307,7 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Create", this ); }
                     ui.bannerWrap.anchorMax = c.$clone();
                     ui.bannerWrap.anchoredPosition = new pc.Vec2( 0.0, 430.0 );
                     ui.bannerWrap.sizeDelta = new pc.Vec2( 920.0, 155.0 );
-                    ui.bannerBg = AdKit.AdUI.Img(ui.bannerWrap, AdKit.Res.Round(64), new pc.Color( 0.05, 0.07, 0.16, 0.84 ), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 900.0, 148.0 ), true);
+                    ui.bannerBg = AdKit.AdUI.Img(ui.bannerWrap, AdKit.AdRes.Round(64), new pc.Color( 0.05, 0.07, 0.16, 0.84 ), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 900.0, 148.0 ), true);
                     ui.banner = AdKit.AdUI.Txt(ui.bannerWrap, "", 92, new pc.Color( 1, 1, 1, 1 ), c.$clone(), new pc.Vec2( 0.0, 4.0 ));
                     ui.bannerWrap.gameObject.SetActive(false);
                     ui.tut = Bridge.cast(new UnityEngine.GameObject.$ctor3("DragTutorial", UnityEngine.RectTransform).transform, UnityEngine.RectTransform);
@@ -39,12 +316,12 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Create", this ); }
                     ui.tut.anchorMax = new pc.Vec2( 0.5, 0.0 );
                     ui.tut.anchoredPosition = new pc.Vec2( 0.0, 430.0 );
                     ui.tut.sizeDelta = new pc.Vec2( 960.0, 250.0 );
-                    AdKit.AdUI.Img(ui.tut, AdKit.Res.Round(64), new pc.Color( 0.02, 0.02, 0.08, 0.92 ), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 960.0, 250.0 ), true);
-                    AdKit.AdUI.Img(ui.tut, AdKit.Res.Round(64), new pc.Color( 0.25, 0.88, 1.0, 0.95 ), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 950.0, 240.0 ), true);
-                    AdKit.AdUI.Img(ui.tut, AdKit.Res.Round(64), new pc.Color( 0.08, 0.04, 0.24, 0.98 ), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 934.0, 224.0 ), true);
-                    AdKit.AdUI.Img(ui.tut, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.2 ), c.$clone(), new pc.Vec2( 0.0, -48.0 ), new pc.Vec2( 760.0, 32.0 ), true);
-                    AdKit.AdUI.Img(ui.tut, AdKit.Res.Circle, new pc.Color( 0.25, 0.88, 1.0, 0.95 ), c.$clone(), new pc.Vec2( -350.0, -48.0 ), new pc.Vec2( 38.0, 38.0 ), false);
-                    AdKit.AdUI.Img(ui.tut, AdKit.Res.Circle, new pc.Color( 0.25, 0.88, 1.0, 0.95 ), c.$clone(), new pc.Vec2( 350.0, -48.0 ), new pc.Vec2( 38.0, 38.0 ), false);
+                    AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Round(64), new pc.Color( 0.02, 0.02, 0.08, 0.92 ), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 960.0, 250.0 ), true);
+                    AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Round(64), new pc.Color( 0.25, 0.88, 1.0, 0.95 ), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 950.0, 240.0 ), true);
+                    AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Round(64), new pc.Color( 0.08, 0.04, 0.24, 0.98 ), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 934.0, 224.0 ), true);
+                    AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.2 ), c.$clone(), new pc.Vec2( 0.0, -48.0 ), new pc.Vec2( 760.0, 32.0 ), true);
+                    AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Circle, new pc.Color( 0.25, 0.88, 1.0, 0.95 ), c.$clone(), new pc.Vec2( -350.0, -48.0 ), new pc.Vec2( 38.0, 38.0 ), false);
+                    AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Circle, new pc.Color( 0.25, 0.88, 1.0, 0.95 ), c.$clone(), new pc.Vec2( 350.0, -48.0 ), new pc.Vec2( 38.0, 38.0 ), false);
                     var tutTxt = AdKit.AdUI.Txt(ui.tut, "\u25c0   HOLD & DRAG TO AIM!   \u25b6", 92, new pc.Color( 1.0, 0.92, 0.28, 1 ), c.$clone(), new pc.Vec2( 0.0, 46.0 ));
                     tutTxt.horizontalOverflow = UnityEngine.HorizontalWrapMode.Overflow;
                     tutTxt.verticalOverflow = UnityEngine.VerticalWrapMode.Overflow;
@@ -63,10 +340,10 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Create", this ); }
                     ert.offsetMin = pc.Vec2.ZERO.clone();
                     ert.offsetMax = pc.Vec2.ZERO.clone();
                     ui.endcard.AddComponent(UnityEngine.UI.Image).color = new pc.Color( 0.02, 0.03, 0.09, 0.84 );
-                    var outerBorder = AdKit.AdUI.Img(ert, AdKit.Res.Round(64), new pc.Color( titleColor.r, titleColor.g, titleColor.b, 0.95 ), c.$clone(), new pc.Vec2( 0.0, 55.0 ), new pc.Vec2( 932.0, 1044.0 ), true).rectTransform;
-                    ui.card = AdKit.AdUI.Img(outerBorder, AdKit.Res.Round(64), cardColor.$clone(), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 900.0, 1012.0 ), true).rectTransform;
-                    AdKit.AdUI.Img(ui.card, AdKit.Res.Round(64), new pc.Color( 0.0, 0.0, 0.0, 0.28 ), c.$clone(), new pc.Vec2( 0.0, 315.0 ), new pc.Vec2( 820.0, 185.0 ), true);
-                    AdKit.AdUI.Img(ui.card, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.08 ), c.$clone(), new pc.Vec2( 0.0, 385.0 ), new pc.Vec2( 780.0, 38.0 ), true);
+                    var outerBorder = AdKit.AdUI.Img(ert, AdKit.AdRes.Round(64), new pc.Color( titleColor.r, titleColor.g, titleColor.b, 0.95 ), c.$clone(), new pc.Vec2( 0.0, 55.0 ), new pc.Vec2( 932.0, 1044.0 ), true).rectTransform;
+                    ui.card = AdKit.AdUI.Img(outerBorder, AdKit.AdRes.Round(64), cardColor.$clone(), c.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 900.0, 1012.0 ), true).rectTransform;
+                    AdKit.AdUI.Img(ui.card, AdKit.AdRes.Round(64), new pc.Color( 0.0, 0.0, 0.0, 0.28 ), c.$clone(), new pc.Vec2( 0.0, 315.0 ), new pc.Vec2( 820.0, 185.0 ), true);
+                    AdKit.AdUI.Img(ui.card, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.08 ), c.$clone(), new pc.Vec2( 0.0, 385.0 ), new pc.Vec2( 780.0, 38.0 ), true);
                     var t = AdKit.AdUI.Txt(ui.card, title, 108, titleColor.$clone(), c.$clone(), new pc.Vec2( 0.0, 318.0 ));
                     t.GetComponent(UnityEngine.UI.Outline).effectDistance = new pc.Vec2( 6.0, -6.0 );
                     ui.endSub = AdKit.AdUI.Txt(ui.card, "", 52, new pc.Color( 0.94, 0.96, 1.0, 1 ), c.$clone(), new pc.Vec2( 0.0, 125.0 ));
@@ -76,9 +353,9 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Create", this ); }
                     ui.cta.anchorMax = c.$clone();
                     ui.cta.anchoredPosition = new pc.Vec2( 0.0, -330.0 );
                     ui.cta.sizeDelta = new pc.Vec2( 680.0, 186.0 );
-                    AdKit.AdUI.Img(ui.cta, AdKit.Res.Round(64), new pc.Color( 0.08, 0.44, 0.14, 1 ), c.$clone(), new pc.Vec2( 0.0, -14.0 ), new pc.Vec2( 680.0, 178.0 ), true);
-                    AdKit.AdUI.Img(ui.cta, AdKit.Res.Round(64), new pc.Color( 0.22, 0.86, 0.32, 1 ), c.$clone(), new pc.Vec2( 0.0, 2.0 ), new pc.Vec2( 672.0, 172.0 ), true);
-                    AdKit.AdUI.Img(ui.cta, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.26 ), c.$clone(), new pc.Vec2( 0.0, 48.0 ), new pc.Vec2( 620.0, 54.0 ), true);
+                    AdKit.AdUI.Img(ui.cta, AdKit.AdRes.Round(64), new pc.Color( 0.08, 0.44, 0.14, 1 ), c.$clone(), new pc.Vec2( 0.0, -14.0 ), new pc.Vec2( 680.0, 178.0 ), true);
+                    AdKit.AdUI.Img(ui.cta, AdKit.AdRes.Round(64), new pc.Color( 0.22, 0.86, 0.32, 1 ), c.$clone(), new pc.Vec2( 0.0, 2.0 ), new pc.Vec2( 672.0, 172.0 ), true);
+                    AdKit.AdUI.Img(ui.cta, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.26 ), c.$clone(), new pc.Vec2( 0.0, 48.0 ), new pc.Vec2( 620.0, 54.0 ), true);
                     var ctaTxt = AdKit.AdUI.Txt(ui.cta, ctaText, 82, new pc.Color( 1, 1, 1, 1 ), c.$clone(), new pc.Vec2( 0.0, 4.0 ));
                     ctaTxt.GetComponent(UnityEngine.UI.Outline).effectDistance = new pc.Vec2( 5.0, -5.0 );
                     ui.endcard.SetActive(false);
@@ -94,7 +371,7 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Hand", this ); }
                     h.SetParent(parent, false);
                     h.anchorMin = new pc.Vec2( 0.5, 0.5 );
                     h.anchorMax = new pc.Vec2( 0.5, 0.5 );
-                    pulseRing.v = AdKit.AdUI.Img(h, AdKit.Res.Ring, new pc.Color( 1.0, 0.86, 0.28, 0.75 ), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 0.0, 12.0 ), new pc.Vec2( 115.0, 115.0 ), false).rectTransform;
+                    pulseRing.v = AdKit.AdUI.Img(h, AdKit.AdRes.Ring, new pc.Color( 1.0, 0.86, 0.28, 0.75 ), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 0.0, 12.0 ), new pc.Vec2( 115.0, 115.0 ), false).rectTransform;
                     var art = Bridge.cast(new UnityEngine.GameObject.$ctor3("art", UnityEngine.RectTransform).transform, UnityEngine.RectTransform);
                     art.SetParent(h, false);
                     art.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 20.0 );
@@ -107,7 +384,7 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Hand", this ); }
                     for (var pass = 0; pass < 2; pass = (pass + 1) | 0) {
                         var c = ((pass === 0) ? new pc.Color( 0.08, 0.09, 0.16, 1 ) : new pc.Color( 1, 1, 1, 1 ));
                         var g = ((pass === 0) ? 12.0 : 0.0);
-                        var r = AdKit.Res.Round(256);
+                        var r = AdKit.AdRes.Round(256);
                         AdKit.AdUI.Img(art, r, c.$clone(), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 0.0, -40.0 ), new pc.Vec2( 34.0 + g, 100.0 + g ), true);
                         AdKit.AdUI.Img(art, r, c.$clone(), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 28.0, -70.0 ), new pc.Vec2( 30.0 + g, 60.0 + g ), true);
                         AdKit.AdUI.Img(art, r, c.$clone(), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 52.0, -80.0 ), new pc.Vec2( 28.0 + g, 52.0 + g ), true);
@@ -136,7 +413,7 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Txt", this ); }
                     }
                     rt.sizeDelta = new pc.Vec2( maxW, size * 1.45 );
                     var t = go.AddComponent(UnityEngine.UI.Text);
-                    t.font = AdKit.Res.Font;
+                    t.font = AdKit.AdRes.Font;
                     t.text = s;
                     t.fontSize = size;
                     t.fontStyle = UnityEngine.FontStyle.Normal;
@@ -354,8 +631,8 @@ if ( TRACE ) { TRACE( "AdKit.Prims#Make", this ); }
                     g.transform.localPosition = pos.$clone();
                     g.transform.localScale = scale.$clone();
                     var r = g.GetComponent(UnityEngine.Renderer);
-                    if (UnityEngine.Object.op_Implicit(AdKit.Res.PrimMat)) {
-                        r.sharedMaterial = AdKit.Res.PrimMat;
+                    if (UnityEngine.Object.op_Implicit(AdKit.AdRes.PrimMat)) {
+                        r.sharedMaterial = AdKit.AdRes.PrimMat;
                     }
                     AdKit.Prims.SetColor(r, c.$clone());
                     return g;
@@ -493,283 +770,6 @@ if ( TRACE ) { TRACE( "AdKit.Prims#BurstRoutine", this ); }
         }
     });
     /*AdKit.Prims end.*/
-
-    /*AdKit.Res start.*/
-    Bridge.define("AdKit.Res", {
-        statics: {
-            fields: {
-                _font: null,
-                _fontMat: null,
-                _spriteMat: null,
-                _primMat: null,
-                _square: null,
-                _bead: null,
-                _circle: null,
-                _soft: null,
-                _ring: null,
-                _round: null
-            },
-            props: {
-                Font: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#Font#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._font) ? AdKit.Res._font : (($t = UnityEngine.Resources.Load(UnityEngine.Font, "Fonts/Inter-SemiBold"), AdKit.Res._font = $t, $t));
-                    }
-                },
-                FontMat: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#FontMat#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._fontMat) ? AdKit.Res._fontMat : (($t = UnityEngine.Resources.Load(UnityEngine.Material, "JellyFont"), AdKit.Res._fontMat = $t, $t));
-                    }
-                },
-                SpriteMat: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#SpriteMat#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._spriteMat) ? AdKit.Res._spriteMat : (($t = UnityEngine.Resources.Load(UnityEngine.Material, "JellySprite"), AdKit.Res._spriteMat = $t, $t));
-                    }
-                },
-                PrimMat: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#PrimMat#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._primMat) ? AdKit.Res._primMat : (($t = UnityEngine.Resources.Load(UnityEngine.Material, "PlayablePrimMat"), AdKit.Res._primMat = $t, $t));
-                    }
-                },
-                Square: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#Square#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._square) ? AdKit.Res._square : (($t = AdKit.Res.RoundRect(8, 0.0, 8), AdKit.Res._square = $t, $t));
-                    }
-                },
-                Bead: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#Bead#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._bead) ? AdKit.Res._bead : (($t = AdKit.Res.RoundRect(32, 8.0, 32), AdKit.Res._bead = $t, $t));
-                    }
-                },
-                Circle: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#Circle#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._circle) ? AdKit.Res._circle : (($t = AdKit.Res.Disc(128, false), AdKit.Res._circle = $t, $t));
-                    }
-                },
-                Soft: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#Soft#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._soft) ? AdKit.Res._soft : (($t = AdKit.Res.Disc(128, true), AdKit.Res._soft = $t, $t));
-                    }
-                },
-                Ring: {
-                    get: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#Ring#get", this ); }
-
-                        var $t;
-                        return UnityEngine.Object.op_Implicit(AdKit.Res._ring) ? AdKit.Res._ring : (($t = AdKit.Res.RingTex(128, 0.72), AdKit.Res._ring = $t, $t));
-                    }
-                }
-            },
-            ctors: {
-                init: function () {
-if ( TRACE ) { TRACE( "AdKit.Res#init", this ); }
-
-                    this._round = new (System.Collections.Generic.Dictionary$2(System.Int32,UnityEngine.Sprite)).ctor();
-                }
-            },
-            methods: {
-                /*AdKit.Res.Round:static start.*/
-                Round: function (ppu) {
-if ( TRACE ) { TRACE( "AdKit.Res#Round", this ); }
-
-                    var s = { };
-                    if (AdKit.Res._round.tryGetValue(ppu, s) && UnityEngine.Object.op_Implicit(s.v)) {
-                        return s.v;
-                    }
-                    s.v = AdKit.Res.RoundRect(128, 40.0, ppu, 44.0);
-                    AdKit.Res._round.setItem(ppu, s.v);
-                    return s.v;
-                },
-                /*AdKit.Res.Round:static end.*/
-
-                /*AdKit.Res.RoundRect:static start.*/
-                RoundRect: function (size, radius, ppu, border) {
-if ( TRACE ) { TRACE( "AdKit.Res#RoundRect", this ); }
-
-                    var $t;
-                    if (border === void 0) { border = 0.0; }
-                    var t = ($t = new UnityEngine.Texture2D.$ctor11(size, size, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
-                    var px = System.Array.init(Bridge.Int.mul(size, size), function (){
-                        return new UnityEngine.Color32();
-                    }, UnityEngine.Color32);
-                    for (var y = 0; y < size; y = (y + 1) | 0) {
-                        for (var x = 0; x < size; x = (x + 1) | 0) {
-                            var a = 1.0;
-                            if (radius > 0.0) {
-                                var dx = UnityEngine.Mathf.Max(0.0, UnityEngine.Mathf.Max(radius - (x + 0.5), x + 0.5 - (size - radius)));
-                                var dy = UnityEngine.Mathf.Max(0.0, UnityEngine.Mathf.Max(radius - (y + 0.5), y + 0.5 - (size - radius)));
-                                a = Math.max(0, Math.min(1, radius - Math.sqrt(dx * dx + dy * dy) + 0.5));
-                            }
-                            px[((Bridge.Int.mul(y, size) + x) | 0)] = new UnityEngine.Color32.$ctor1(255, 255, 255, Bridge.Int.clipu8(a * 255.0));
-                        }
-                    }
-                    t.SetPixels32$1(px);
-                    t.Apply$1(false, true);
-                    return UnityEngine.Sprite.Create$4(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, size, size), new pc.Vec2( 0.5, 0.5 ), ppu, 0, UnityEngine.SpriteMeshType.FullRect, new pc.Vec4( border, border, border, border ));
-                },
-                /*AdKit.Res.RoundRect:static end.*/
-
-                /*AdKit.Res.Disc:static start.*/
-                Disc: function (size, soft) {
-if ( TRACE ) { TRACE( "AdKit.Res#Disc", this ); }
-
-                    var $t;
-                    var t = ($t = new UnityEngine.Texture2D.$ctor11(size, size, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
-                    var px = System.Array.init(Bridge.Int.mul(size, size), function (){
-                        return new UnityEngine.Color32();
-                    }, UnityEngine.Color32);
-                    var h = size * 0.5;
-                    for (var y = 0; y < size; y = (y + 1) | 0) {
-                        for (var x = 0; x < size; x = (x + 1) | 0) {
-                            var d = new pc.Vec2( x + 0.5 - h, y + 0.5 - h ).length() / h;
-                            var a = (soft ? Math.pow(Math.max(0, Math.min(1, 1.0 - d)), 1.5) : Math.max(0, Math.min(1, (1.0 - d) * h)));
-                            px[((Bridge.Int.mul(y, size) + x) | 0)] = new UnityEngine.Color32.$ctor1(255, 255, 255, Bridge.Int.clipu8(a * 255.0));
-                        }
-                    }
-                    t.SetPixels32$1(px);
-                    t.Apply$1(false, true);
-                    return UnityEngine.Sprite.Create$1(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, size, size), new pc.Vec2( 0.5, 0.5 ), size);
-                },
-                /*AdKit.Res.Disc:static end.*/
-
-                /*AdKit.Res.RingTex:static start.*/
-                RingTex: function (size, inner) {
-if ( TRACE ) { TRACE( "AdKit.Res#RingTex", this ); }
-
-                    var $t;
-                    var t = ($t = new UnityEngine.Texture2D.$ctor11(size, size, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
-                    var px = System.Array.init(Bridge.Int.mul(size, size), function (){
-                        return new UnityEngine.Color32();
-                    }, UnityEngine.Color32);
-                    var h = size * 0.5;
-                    for (var y = 0; y < size; y = (y + 1) | 0) {
-                        for (var x = 0; x < size; x = (x + 1) | 0) {
-                            var d = new pc.Vec2( x + 0.5 - h, y + 0.5 - h ).length() / h;
-                            var a = Math.max(0, Math.min(1, (1.0 - d) * h)) * Math.max(0, Math.min(1, (d - inner) * h));
-                            px[((Bridge.Int.mul(y, size) + x) | 0)] = new UnityEngine.Color32.$ctor1(255, 255, 255, Bridge.Int.clipu8(a * 255.0));
-                        }
-                    }
-                    t.SetPixels32$1(px);
-                    t.Apply$1(false, true);
-                    return UnityEngine.Sprite.Create$1(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, size, size), new pc.Vec2( 0.5, 0.5 ), size);
-                },
-                /*AdKit.Res.RingTex:static end.*/
-
-                /*AdKit.Res.Gradient:static start.*/
-                Gradient: function (top, bottom) {
-if ( TRACE ) { TRACE( "AdKit.Res#Gradient", this ); }
-
-                    var $t;
-                    var t = ($t = new UnityEngine.Texture2D.$ctor11(64, 64, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
-                    var px = System.Array.init(4096, function (){
-                        return new UnityEngine.Color();
-                    }, UnityEngine.Color);
-                    for (var y = 0; y < 64; y = (y + 1) | 0) {
-                        var c = pc.Color.lerp( bottom, top, y / 63.0 );
-                        for (var x = 0; x < 64; x = (x + 1) | 0) {
-                            px[((Bridge.Int.mul(y, 64) + x) | 0)] = c.$clone();
-                        }
-                    }
-                    t.SetPixels$1(px);
-                    t.Apply$1(false, true);
-                    return UnityEngine.Sprite.Create$1(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, 64.0, 64.0), new pc.Vec2( 0.5, 0.5 ), 64.0);
-                },
-                /*AdKit.Res.Gradient:static end.*/
-
-                /*AdKit.Res.Spr:static start.*/
-                Spr: function (name, parent, s, c, order, pos, size, sliced) {
-if ( TRACE ) { TRACE( "AdKit.Res#Spr", this ); }
-
-                    if (sliced === void 0) { sliced = false; }
-                    var go = new UnityEngine.GameObject.$ctor2(name);
-                    go.transform.SetParent(parent, false);
-                    go.transform.localPosition = pos.$clone();
-                    var sr = go.AddComponent(UnityEngine.SpriteRenderer);
-                    sr.sharedMaterial = AdKit.Res.SpriteMat;
-                    sr.sprite = s;
-                    sr.color = c.$clone();
-                    sr.sortingOrder = order;
-                    if (sliced) {
-                        sr.drawMode = UnityEngine.SpriteDrawMode.Sliced;
-                        sr.size = size.$clone();
-                    } else {
-                        go.transform.localScale = new pc.Vec3( size.x, size.y, 1.0 );
-                    }
-                    return sr;
-                },
-                /*AdKit.Res.Spr:static end.*/
-
-                /*AdKit.Res.Txt:static start.*/
-                Txt: function (parent, name, text, height, c, order, pos) {
-if ( TRACE ) { TRACE( "AdKit.Res#Txt", this ); }
-
-                    var go = new UnityEngine.GameObject.$ctor2(name);
-                    go.transform.SetParent(parent, false);
-                    go.transform.localPosition = pos.$clone();
-                    var tm = go.AddComponent(UnityEngine.TextMesh);
-                    var mr = go.GetComponent(UnityEngine.MeshRenderer);
-                    mr.sharedMaterial = AdKit.Res.Font.material;
-                    tm.font = AdKit.Res.Font;
-                    tm.fontSize = 64;
-                    tm.characterSize = height / 6.4;
-                    tm.anchor = UnityEngine.TextAnchor.MiddleCenter;
-                    tm.offsetZ = -0.02;
-                    tm.color = c.$clone();
-                    tm.text = text;
-                    mr.sortingOrder = order;
-                    return tm;
-                },
-                /*AdKit.Res.Txt:static end.*/
-
-                /*AdKit.Res.MakeLabel:static start.*/
-                MakeLabel: function (parent, text, height, c, order, pos) {
-if ( TRACE ) { TRACE( "AdKit.Res#MakeLabel", this ); }
-
-                    var go = new UnityEngine.GameObject.$ctor2("Label");
-                    go.transform.SetParent(parent, false);
-                    go.transform.localPosition = pos.$clone();
-                    var i = go.AddComponent(AdKit.Label);
-                    var outlineCol = new pc.Color( 0.04, 0.05, 0.11, 0.96 );
-                    var d = height * 0.045;
-                    i.outlines = System.Array.init(4, null, UnityEngine.TextMesh);
-                    i.outlines[0] = AdKit.Res.Txt(go.transform, "o0", text, height, outlineCol.$clone(), ((order - 1) | 0), new pc.Vec3( 0.0 - d, 0.0, 0.018 ));
-                    i.outlines[1] = AdKit.Res.Txt(go.transform, "o1", text, height, outlineCol.$clone(), ((order - 1) | 0), new pc.Vec3( d, 0.0, 0.018 ));
-                    i.outlines[2] = AdKit.Res.Txt(go.transform, "o2", text, height, outlineCol.$clone(), ((order - 1) | 0), new pc.Vec3( 0.0, 0.0 - d, 0.018 ));
-                    i.outlines[3] = AdKit.Res.Txt(go.transform, "o3", text, height, outlineCol.$clone(), ((order - 1) | 0), new pc.Vec3( 0.0, d, 0.018 ));
-                    i.shadow = AdKit.Res.Txt(go.transform, "shadow", text, height, new pc.Color( 0.0, 0.0, 0.0, 0.85 ), ((order - 2) | 0), new pc.Vec3( height * 0.055, (0.0 - height) * 0.085, 0.036 ));
-                    i.main = AdKit.Res.Txt(go.transform, "main", text, height, c.$clone(), order, pc.Vec3.ZERO.clone());
-                    return i;
-                },
-                /*AdKit.Res.MakeLabel:static end.*/
-
-
-            }
-        }
-    });
-    /*AdKit.Res end.*/
 
     /*AdKit.Sfx start.*/
     Bridge.define("AdKit.Sfx", {
@@ -1745,8 +1745,8 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildPurpleCannon", this ); }
                     try {
                         while ($t1.moveNext()) {
                             var r = $t1.Current;
-                            if (Bridge.cast(AdKit.Res.PrimMat, System.Boolean)) {
-                                r.sharedMaterial = AdKit.Res.PrimMat;
+                            if (UnityEngine.Object.op_Implicit(AdKit.AdRes.PrimMat)) {
+                                r.sharedMaterial = AdKit.AdRes.PrimMat;
                             }
                             AdKit.Prims.SetColor(r, MobControlAd.MobControlGame.PurpleMain.$clone());
                         }
@@ -1778,7 +1778,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildGatesAndYellowBlock", th
                 this._yellowBlockRoot.localPosition = new pc.Vec3( 1.85, 0.0, 5.85 );
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._yellowBlockRoot, new pc.Vec3( 0.0, 0.72, 0.0 ), new pc.Vec3( 2.75, 1.44, 1.65 ), MobControlAd.MobControlGame.YellowMain.$clone());
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._yellowBlockRoot, new pc.Vec3( 0.0, 1.4, 0.0 ), new pc.Vec3( 2.68, 0.12, 1.58 ), new pc.Color( 1.0, 0.94, 0.38, 1 ));
-                this._yellowBlockLabel = AdKit.Res.MakeLabel(this._yellowBlockRoot, Bridge.toString(this._yellowBlockHp), 0.95, new pc.Color( 1, 1, 1, 1 ), 25, new pc.Vec3( 0.0, 0.72, -0.86 ));
+                this._yellowBlockLabel = AdKit.AdRes.MakeLabel(this._yellowBlockRoot, Bridge.toString(this._yellowBlockHp), 0.95, new pc.Color( 1, 1, 1, 1 ), 25, new pc.Vec3( 0.0, 0.72, -0.86 ));
                 this.CreateGate(2, 7, 1.65, 8.15, 1.25, 0.0, 0.0, 0.0);
             },
             /*MobControlAd.MobControlGame.BuildGatesAndYellowBlock end.*/
@@ -1798,7 +1798,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#CreateGate", this ); }
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, root, new pc.Vec3( 0.0, 0.08, 0.0 ), new pc.Vec3( fullW + 0.18, 0.14, 0.2 ), frameBlack.$clone());
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, root, new pc.Vec3( 0.0, 0.15, -0.06 ), new pc.Vec3( fullW - 0.12, 0.08, 0.12 ), new pc.Color( 1, 1, 1, 1 ));
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, root, new pc.Vec3( 0.0, 0.62, 0.0 ), new pc.Vec3( fullW - 0.14, 0.96, 0.06 ), MobControlAd.MobControlGame.PurpleGateCol.$clone());
-                var label = AdKit.Res.MakeLabel(root, "X" + mult, 0.82, new pc.Color( 1, 1, 1, 1 ), 24, new pc.Vec3( 0.0, 0.62, -0.1 ));
+                var label = AdKit.AdRes.MakeLabel(root, "X" + mult, 0.82, new pc.Color( 1, 1, 1, 1 ), 24, new pc.Vec3( 0.0, 0.62, -0.1 ));
                 this._gates.add(($t = new MobControlAd.MobControlGame.MultiplierGate(), $t.root = root, $t.label = label, $t.multiplier = mult, $t.z = z, $t.baseX = x, $t.currentX = x, $t.halfWidth = halfWidth, $t.moveAmp = moveAmp, $t.moveSpeed = moveSpeed, $t.phaseOffset = phaseOffset, $t.bitIndex = bitIndex, $t));
             },
             /*MobControlAd.MobControlGame.CreateGate end.*/
@@ -1818,7 +1818,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildYellowEnemyBase", this )
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 1.66, -0.95 ), new pc.Vec3( 2.25, 0.18, 0.14 ), new pc.Color( 0.18, 0.16, 0.06, 1 ));
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 0.55, -0.94 ), new pc.Vec3( 0.75, 1.1, 0.12 ), new pc.Color( 0.12, 0.1, 0.05, 1 ));
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 2.28, -1.04 ), new pc.Vec3( 1.85, 0.82, 0.1 ), new pc.Color( 0.12, 0.12, 0.14, 1 ));
-                this._enemyBaseLabel = AdKit.Res.MakeLabel(this._enemyBaseRoot, Bridge.toString(this._enemyBaseHp), 0.82, new pc.Color( 1, 1, 1, 1 ), 26, new pc.Vec3( 0.0, 2.28, -1.14 ));
+                this._enemyBaseLabel = AdKit.AdRes.MakeLabel(this._enemyBaseRoot, Bridge.toString(this._enemyBaseHp), 0.82, new pc.Color( 1, 1, 1, 1 ), 26, new pc.Vec3( 0.0, 2.28, -1.14 ));
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._enemyBaseBody, new pc.Vec3( 0.0, 3.65, 0.0 ), new pc.Vec3( 0.12, 0.85, 0.12 ), new pc.Color( 0.12, 0.12, 0.14, 1 ));
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.45, 4.15, 0.0 ), new pc.Vec3( 0.85, 0.48, 0.08 ), MobControlAd.MobControlGame.YellowMain.$clone());
             },
@@ -1838,30 +1838,30 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
                 trt.anchorMax = new pc.Vec2( 0.5, 1.0 );
                 trt.anchoredPosition = new pc.Vec2( 0.0, -125.0 );
                 trt.sizeDelta = new pc.Vec2( 990.0, 150.0 );
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 0.05, 0.03, 0.12, 1.0 ), center.$clone(), new pc.Vec2( -330.0, -8.0 ), new pc.Vec2( 314.0, 122.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( -330.0, 0.0 ), new pc.Vec2( 300.0, 108.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 0.36, 0.14, 0.9, 1.0 ), center.$clone(), new pc.Vec2( -330.0, 0.0 ), new pc.Vec2( 286.0, 94.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.26 ), center.$clone(), new pc.Vec2( -330.0, 24.0 ), new pc.Vec2( 246.0, 28.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.05, 0.03, 0.12, 1.0 ), center.$clone(), new pc.Vec2( -330.0, -8.0 ), new pc.Vec2( 314.0, 122.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( -330.0, 0.0 ), new pc.Vec2( 300.0, 108.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.36, 0.14, 0.9, 1.0 ), center.$clone(), new pc.Vec2( -330.0, 0.0 ), new pc.Vec2( 286.0, 94.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.26 ), center.$clone(), new pc.Vec2( -330.0, 24.0 ), new pc.Vec2( 246.0, 28.0 ), true);
                 this._topBlueMobsText = AdKit.AdUI.Txt(trt, "MOBS: 0", 52, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( -330.0, -2.0 ));
                 var mobOut = this._topBlueMobsText.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(mobOut)) {
                     mobOut.effectColor = new pc.Color( 0.05, 0.02, 0.14, 1.0 );
                     mobOut.effectDistance = new pc.Vec2( 4.0, -4.0 );
                 }
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 0.05, 0.03, 0.12, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -8.0 ), new pc.Vec2( 274.0, 134.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 260.0, 120.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 1.0, 0.72, 0.1, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 244.0, 104.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.35 ), center.$clone(), new pc.Vec2( 0.0, 28.0 ), new pc.Vec2( 204.0, 28.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.05, 0.03, 0.12, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -8.0 ), new pc.Vec2( 274.0, 134.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 260.0, 120.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 0.72, 0.1, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 244.0, 104.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.35 ), center.$clone(), new pc.Vec2( 0.0, 28.0 ), new pc.Vec2( 204.0, 28.0 ), true);
                 var stageLbl = AdKit.AdUI.Txt(trt, "STAGE 1", 56, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, -2.0 ));
                 var stageOut = stageLbl.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(stageOut)) {
                     stageOut.effectColor = new pc.Color( 0.36, 0.16, 0.02, 1.0 );
                     stageOut.effectDistance = new pc.Vec2( 4.0, -4.0 );
                 }
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 0.05, 0.03, 0.12, 1.0 ), center.$clone(), new pc.Vec2( 330.0, -8.0 ), new pc.Vec2( 314.0, 122.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 330.0, 0.0 ), new pc.Vec2( 300.0, 108.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 0.95, 0.24, 0.28, 1.0 ), center.$clone(), new pc.Vec2( 330.0, 0.0 ), new pc.Vec2( 286.0, 94.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.28 ), center.$clone(), new pc.Vec2( 330.0, 24.0 ), new pc.Vec2( 246.0, 28.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.05, 0.03, 0.12, 1.0 ), center.$clone(), new pc.Vec2( 330.0, -8.0 ), new pc.Vec2( 314.0, 122.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 330.0, 0.0 ), new pc.Vec2( 300.0, 108.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.95, 0.24, 0.28, 1.0 ), center.$clone(), new pc.Vec2( 330.0, 0.0 ), new pc.Vec2( 286.0, 94.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.28 ), center.$clone(), new pc.Vec2( 330.0, 24.0 ), new pc.Vec2( 246.0, 28.0 ), true);
                 this._topEnemyBaseText = AdKit.AdUI.Txt(trt, "BASE: " + this.enemyBaseStartHp, 52, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 330.0, -2.0 ));
                 var baseOut = this._topEnemyBaseText.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(baseOut)) {
@@ -1876,10 +1876,10 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
                 ort.offsetMin = pc.Vec2.ZERO.clone();
                 ort.offsetMax = pc.Vec2.ZERO.clone();
                 this._endOverlayRoot.AddComponent(UnityEngine.UI.Image).color = new pc.Color( 0.04, 0.02, 0.12, 0.56 );
-                AdKit.AdUI.Img(ort, AdKit.Res.Round(64), new pc.Color( 0.05, 0.02, 0.12, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 520.0 ), new pc.Vec2( 780.0, 164.0 ), true);
-                AdKit.AdUI.Img(ort, AdKit.Res.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 530.0 ), new pc.Vec2( 756.0, 144.0 ), true);
-                AdKit.AdUI.Img(ort, AdKit.Res.Round(64), new pc.Color( 0.46, 0.14, 0.96, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 530.0 ), new pc.Vec2( 734.0, 122.0 ), true);
-                AdKit.AdUI.Img(ort, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.28 ), center.$clone(), new pc.Vec2( 0.0, 562.0 ), new pc.Vec2( 660.0, 36.0 ), true);
+                AdKit.AdUI.Img(ort, AdKit.AdRes.Round(64), new pc.Color( 0.05, 0.02, 0.12, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 520.0 ), new pc.Vec2( 780.0, 164.0 ), true);
+                AdKit.AdUI.Img(ort, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 530.0 ), new pc.Vec2( 756.0, 144.0 ), true);
+                AdKit.AdUI.Img(ort, AdKit.AdRes.Round(64), new pc.Color( 0.46, 0.14, 0.96, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 530.0 ), new pc.Vec2( 734.0, 122.0 ), true);
+                AdKit.AdUI.Img(ort, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.28 ), center.$clone(), new pc.Vec2( 0.0, 562.0 ), new pc.Vec2( 660.0, 36.0 ), true);
                 var brandLbl = AdKit.AdUI.Txt(ort, "MOB CONTROL", 84, new pc.Color( 1.0, 0.9, 0.22, 1 ), center.$clone(), new pc.Vec2( 0.0, 528.0 ));
                 var brandOut = brandLbl.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(brandOut)) {
@@ -1894,10 +1894,10 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
                 this._defeatBannerRt.anchoredPosition = new pc.Vec2( 0.0, 95.0 );
                 this._defeatBannerRt.sizeDelta = new pc.Vec2( 960.0, 340.0 );
                 this._defeatBannerRt.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 3.0 );
-                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.Res.Round(64), new pc.Color( 0.04, 0.02, 0.1, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -18.0 ), new pc.Vec2( 944.0, 304.0 ), true);
-                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.Res.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 920.0, 282.0 ), true);
-                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.Res.Round(64), new pc.Color( 0.14, 0.06, 0.34, 1.0 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 894.0, 256.0 ), true);
-                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.14 ), center.$clone(), new pc.Vec2( 0.0, 76.0 ), new pc.Vec2( 820.0, 68.0 ), true);
+                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), new pc.Color( 0.04, 0.02, 0.1, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -18.0 ), new pc.Vec2( 944.0, 304.0 ), true);
+                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 920.0, 282.0 ), true);
+                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), new pc.Color( 0.14, 0.06, 0.34, 1.0 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 894.0, 256.0 ), true);
+                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.14 ), center.$clone(), new pc.Vec2( 0.0, 76.0 ), new pc.Vec2( 820.0, 68.0 ), true);
                 this._defeatTitleText = AdKit.AdUI.Txt(this._defeatBannerRt, "DEFEAT...", 136, new pc.Color( 1.0, 0.86, 0.22, 1 ), center.$clone(), new pc.Vec2( 0.0, 28.0 ));
                 var outline = this._defeatTitleText.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(outline)) {
@@ -1917,11 +1917,11 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
                 this._playNowBtnRt.anchorMax = center.$clone();
                 this._playNowBtnRt.anchoredPosition = new pc.Vec2( 0.0, -455.0 );
                 this._playNowBtnRt.sizeDelta = new pc.Vec2( 740.0, 210.0 );
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.Res.Round(64), new pc.Color( 0.04, 0.02, 0.1, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -18.0 ), new pc.Vec2( 736.0, 204.0 ), true);
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.Res.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 716.0, 186.0 ), true);
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.Res.Round(64), new pc.Color( 0.06, 0.52, 0.18, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -10.0 ), new pc.Vec2( 694.0, 166.0 ), true);
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.Res.Round(64), new pc.Color( 0.24, 0.92, 0.36, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 6.0 ), new pc.Vec2( 690.0, 158.0 ), true);
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.36 ), center.$clone(), new pc.Vec2( 0.0, 48.0 ), new pc.Vec2( 620.0, 44.0 ), true);
+                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 0.04, 0.02, 0.1, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -18.0 ), new pc.Vec2( 736.0, 204.0 ), true);
+                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 716.0, 186.0 ), true);
+                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 0.06, 0.52, 0.18, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -10.0 ), new pc.Vec2( 694.0, 166.0 ), true);
+                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 0.24, 0.92, 0.36, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 6.0 ), new pc.Vec2( 690.0, 158.0 ), true);
+                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.36 ), center.$clone(), new pc.Vec2( 0.0, 48.0 ), new pc.Vec2( 620.0, 44.0 ), true);
                 var ctaLbl = AdKit.AdUI.Txt(this._playNowBtnRt, (this.ctaText || "") + "!", 92, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 6.0 ));
                 var ctaOut = ctaLbl.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(ctaOut)) {
@@ -2668,12 +2668,12 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#PaletteColor", this ); }
                 HandShape: function (p, c, g, order) {
 if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#HandShape", this ); }
 
-                    var r = AdKit.Res.Round(512);
-                    AdKit.Res.Spr("finger", p, r, c.$clone(), order, new pc.Vec3( 0.0, -0.38, 0.0 ), new pc.Vec2( 0.26 + g, 0.8 + g ), true);
-                    AdKit.Res.Spr("k1", p, r, c.$clone(), order, new pc.Vec3( 0.21, -0.62, 0.0 ), new pc.Vec2( 0.22 + g, 0.46 + g ), true);
-                    AdKit.Res.Spr("k2", p, r, c.$clone(), order, new pc.Vec3( 0.39, -0.7, 0.0 ), new pc.Vec2( 0.2 + g, 0.4 + g ), true);
-                    AdKit.Res.Spr("palm", p, r, c.$clone(), order, new pc.Vec3( 0.16, -0.98, 0.0 ), new pc.Vec2( 0.68 + g, 0.62 + g ), true);
-                    var th = AdKit.Res.Spr("thumb", p, r, c.$clone(), order, new pc.Vec3( -0.2, -0.86, 0.0 ), new pc.Vec2( 0.22 + g, 0.5 + g ), true);
+                    var r = AdKit.AdRes.Round(512);
+                    AdKit.AdRes.Spr("finger", p, r, c.$clone(), order, new pc.Vec3( 0.0, -0.38, 0.0 ), new pc.Vec2( 0.26 + g, 0.8 + g ), true);
+                    AdKit.AdRes.Spr("k1", p, r, c.$clone(), order, new pc.Vec3( 0.21, -0.62, 0.0 ), new pc.Vec2( 0.22 + g, 0.46 + g ), true);
+                    AdKit.AdRes.Spr("k2", p, r, c.$clone(), order, new pc.Vec3( 0.39, -0.7, 0.0 ), new pc.Vec2( 0.2 + g, 0.4 + g ), true);
+                    AdKit.AdRes.Spr("palm", p, r, c.$clone(), order, new pc.Vec3( 0.16, -0.98, 0.0 ), new pc.Vec2( 0.68 + g, 0.62 + g ), true);
+                    var th = AdKit.AdRes.Spr("thumb", p, r, c.$clone(), order, new pc.Vec3( -0.2, -0.86, 0.0 ), new pc.Vec2( 0.22 + g, 0.5 + g ), true);
                     th.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 40.0 );
                 },
                 /*NumberMatchAd.NumberMatchGame.HandShape:static end.*/
@@ -2893,7 +2893,7 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#Start", this ); }
                 this.cam.backgroundColor = new pc.Color( 0.06, 0.04, 0.14, 1 );
                 this.world = new UnityEngine.GameObject.$ctor2("World").transform;
                 this.fx = new UnityEngine.GameObject.$ctor2("FX").transform;
-                this.bg = AdKit.Res.Spr("Background", this.world, AdKit.Res.Gradient(new pc.Color( 0.22, 0.12, 0.44, 1 ), new pc.Color( 0.05, 0.03, 0.13, 1 )), new pc.Color( 1, 1, 1, 1 ), -100, pc.Vec3.ZERO.clone(), pc.Vec2.ONE.clone());
+                this.bg = AdKit.AdRes.Spr("Background", this.world, AdKit.AdRes.Gradient(new pc.Color( 0.22, 0.12, 0.44, 1 ), new pc.Color( 0.05, 0.03, 0.13, 1 )), new pc.Color( 1, 1, 1, 1 ), -100, pc.Vec3.ZERO.clone(), pc.Vec2.ONE.clone());
                 this.BuildPicture();
                 this.BuildBoard();
                 this.BuildTray();
@@ -3022,13 +3022,13 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#BuildBoard", this ); }
                 var board = new UnityEngine.GameObject.$ctor2("Board").transform;
                 board.SetParent(this.world, false);
                 var centre = new pc.Vec3( 0.0, 1.7, 0.0 );
-                AdKit.Res.Spr("FrameOuter", board, AdKit.Res.Round(160), new pc.Color( 0.55, 0.42, 0.92, 1 ), -21, centre.$clone().add( new pc.Vec3( 0.0, -0.08, 0.0 ) ), pc.Vec2.ONE.clone().scale( 10.3 ), true);
-                AdKit.Res.Spr("Frame", board, AdKit.Res.Round(160), new pc.Color( 0.16, 0.12, 0.31, 1 ), -20, centre.$clone(), pc.Vec2.ONE.clone().scale( 10.0 ), true);
-                var round = AdKit.Res.Round(Math.round(44.0 / (this.cell * 0.22)));
+                AdKit.AdRes.Spr("FrameOuter", board, AdKit.AdRes.Round(160), new pc.Color( 0.55, 0.42, 0.92, 1 ), -21, centre.$clone().add( new pc.Vec3( 0.0, -0.08, 0.0 ) ), pc.Vec2.ONE.clone().scale( 10.3 ), true);
+                AdKit.AdRes.Spr("Frame", board, AdKit.AdRes.Round(160), new pc.Color( 0.16, 0.12, 0.31, 1 ), -20, centre.$clone(), pc.Vec2.ONE.clone().scale( 10.0 ), true);
+                var round = AdKit.AdRes.Round(Math.round(44.0 / (this.cell * 0.22)));
                 for (var i = 0; i < this.cells.length; i = (i + 1) | 0) {
                     var cv = this.cells[i];
-                    cv.sr = AdKit.Res.Spr("Cell", board, round, cv.col.$clone(), 0, this.CellPos(i), pc.Vec2.ONE.clone().scale( this.cell ).scale( 0.9 ), true);
-                    cv.tm = AdKit.Res.Txt(cv.sr.transform, "n", Bridge.toString(cv.num), this.cell * 0.58, NumberMatchAd.NumberMatchGame.NumberColor.$clone(), 1, new pc.Vec3( 0.0, (0.0 - this.cell) * 0.02, 0.0 ));
+                    cv.sr = AdKit.AdRes.Spr("Cell", board, round, cv.col.$clone(), 0, this.CellPos(i), pc.Vec2.ONE.clone().scale( this.cell ).scale( 0.9 ), true);
+                    cv.tm = AdKit.AdRes.Txt(cv.sr.transform, "n", Bridge.toString(cv.num), this.cell * 0.58, NumberMatchAd.NumberMatchGame.NumberColor.$clone(), 1, new pc.Vec3( 0.0, (0.0 - this.cell) * 0.02, 0.0 ));
                     cv.tm.gameObject.SetActive(false);
                 }
             },
@@ -3059,8 +3059,8 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#BuildTray", this ); }
                 var rows = UnityEngine.Mathf.Max(1, Math.ceil(missing.Count / 7.0));
                 var trayH = rows * 1.32 + 0.5;
                 var trayCentreY = -5.55 - (((rows - 1) | 0)) * 1.32 * 0.5;
-                AdKit.Res.Spr("TrayOuter", tray, AdKit.Res.Round(160), new pc.Color( 0.55, 0.42, 0.92, 1 ), -21, new pc.Vec3( 0.0, trayCentreY - 0.08, 0.0 ), new pc.Vec2( 10.3, trayH + 0.3 ), true);
-                AdKit.Res.Spr("TrayBg", tray, AdKit.Res.Round(160), new pc.Color( 0.16, 0.12, 0.31, 1 ), -20, new pc.Vec3( 0.0, trayCentreY, 0.0 ), new pc.Vec2( 10.0, trayH ), true);
+                AdKit.AdRes.Spr("TrayOuter", tray, AdKit.AdRes.Round(160), new pc.Color( 0.55, 0.42, 0.92, 1 ), -21, new pc.Vec3( 0.0, trayCentreY - 0.08, 0.0 ), new pc.Vec2( 10.3, trayH + 0.3 ), true);
+                AdKit.AdRes.Spr("TrayBg", tray, AdKit.AdRes.Round(160), new pc.Color( 0.16, 0.12, 0.31, 1 ), -20, new pc.Vec3( 0.0, trayCentreY, 0.0 ), new pc.Vec2( 10.0, trayH ), true);
                 for (var l = 0; l < missing.Count; l = (l + 1) | 0) {
                     var row = (Bridge.Int.div(l, 7)) | 0;
                     var inRow = UnityEngine.Mathf.Min(7, ((missing.Count - Bridge.Int.mul(row, 7)) | 0));
@@ -3084,13 +3084,13 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#MakePiece", this ); }
                 p.t.localScale = pc.Vec3.ZERO.clone();
                 p.group = go.AddComponent(UnityEngine.Rendering.SortingGroup);
                 p.group.sortingOrder = 10;
-                var r = AdKit.Res.Round(150);
-                AdKit.Res.Spr("shadow", p.t, r, new pc.Color( 0.0, 0.0, 0.0, 0.35 ), 0, new pc.Vec3( 0.04, -0.1, 0.0 ), pc.Vec2.ONE.clone().scale( 1.02 ), true);
-                AdKit.Res.Spr("side", p.t, r, new pc.Color( col.r * 0.68, col.g * 0.68, col.b * 0.68, col.a * 0.68 ), 1, new pc.Vec3( 0.0, -0.07, 0.0 ), pc.Vec2.ONE.clone().scale( 1.02 ), true);
-                AdKit.Res.Spr("top", p.t, r, col.$clone(), 2, pc.Vec3.ZERO.clone(), pc.Vec2.ONE.clone().scale( 1.02 ), true);
-                AdKit.Res.Spr("gloss", p.t, r, new pc.Color( 1.0, 1.0, 1.0, 0.28 ), 3, new pc.Vec3( 0.0, 0.2244, 0.0 ), new pc.Vec2( 0.795599937, 0.3468 ), true);
+                var r = AdKit.AdRes.Round(150);
+                AdKit.AdRes.Spr("shadow", p.t, r, new pc.Color( 0.0, 0.0, 0.0, 0.35 ), 0, new pc.Vec3( 0.04, -0.1, 0.0 ), pc.Vec2.ONE.clone().scale( 1.02 ), true);
+                AdKit.AdRes.Spr("side", p.t, r, new pc.Color( col.r * 0.68, col.g * 0.68, col.b * 0.68, col.a * 0.68 ), 1, new pc.Vec3( 0.0, -0.07, 0.0 ), pc.Vec2.ONE.clone().scale( 1.02 ), true);
+                AdKit.AdRes.Spr("top", p.t, r, col.$clone(), 2, pc.Vec3.ZERO.clone(), pc.Vec2.ONE.clone().scale( 1.02 ), true);
+                AdKit.AdRes.Spr("gloss", p.t, r, new pc.Color( 1.0, 1.0, 1.0, 0.28 ), 3, new pc.Vec3( 0.0, 0.2244, 0.0 ), new pc.Vec2( 0.795599937, 0.3468 ), true);
                 var light = col.r * 0.3 + col.g * 0.59 + col.b * 0.11 > 0.72;
-                var label = AdKit.Res.MakeLabel(p.t, Bridge.toString(num), 0.6324, light ? new pc.Color( 0.2, 0.14, 0.32, 1 ) : new pc.Color( 1, 1, 1, 1 ), 5, new pc.Vec3( 0.0, -0.02, 0.0 ));
+                var label = AdKit.AdRes.MakeLabel(p.t, Bridge.toString(num), 0.6324, light ? new pc.Color( 0.2, 0.14, 0.32, 1 ) : new pc.Color( 1, 1, 1, 1 ), 5, new pc.Vec3( 0.0, -0.02, 0.0 ));
                 if (light) {
                     label.shadow.color = new pc.Color( 1.0, 1.0, 1.0, 0.45 );
                 }
@@ -3105,13 +3105,13 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#BuildHand", this ); }
                 this.hand = new UnityEngine.GameObject.$ctor2("Hand").transform;
                 this.hand.SetParent(this.world, false);
                 this.hand.gameObject.AddComponent(UnityEngine.Rendering.SortingGroup).sortingOrder = 200;
-                this.handRing = AdKit.Res.Spr("ring", this.hand, AdKit.Res.Ring, new pc.Color( 1.0, 1.0, 1.0, 0.0 ), 0, pc.Vec3.ZERO.clone(), pc.Vec2.ONE.clone().scale( 0.9 ));
+                this.handRing = AdKit.AdRes.Spr("ring", this.hand, AdKit.AdRes.Ring, new pc.Color( 1.0, 1.0, 1.0, 0.0 ), 0, pc.Vec3.ZERO.clone(), pc.Vec2.ONE.clone().scale( 0.9 ));
                 this.handArt = new UnityEngine.GameObject.$ctor2("art").transform;
                 this.handArt.SetParent(this.hand, false);
                 this.handArt.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 25.0 );
                 var custom = UnityEngine.Resources.Load(UnityEngine.Sprite, "hand");
                 if (UnityEngine.Object.op_Implicit(custom)) {
-                    AdKit.Res.Spr("img", this.handArt, custom, new pc.Color( 1, 1, 1, 1 ), 2, new pc.Vec3( 0.3, -0.6, 0.0 ), pc.Vec2.ONE.clone());
+                    AdKit.AdRes.Spr("img", this.handArt, custom, new pc.Color( 1, 1, 1, 1 ), 2, new pc.Vec3( 0.3, -0.6, 0.0 ), pc.Vec2.ONE.clone());
                 } else {
                     NumberMatchAd.NumberMatchGame.HandShape(this.handArt, new pc.Color( 0.1, 0.1, 0.16, 1 ), 0.08, 1);
                     NumberMatchAd.NumberMatchGame.HandShape(this.handArt, new pc.Color( 1, 1, 1, 1 ), 0.0, 2);
@@ -3128,14 +3128,14 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#BuildUI", this ); }
                 this.ui = AdKit.AdUI.Create(this.endcardTitle, this.ctaText, new pc.Color( 0.33, 0.22, 0.62, 1 ), new pc.Color( 1.0, 0.85, 0.3, 1 ));
                 var top = new pc.Vec2( 0.5, 1.0 );
                 AdKit.AdUI.Txt(this.ui.Root, this.gameTitle, 72, new pc.Color( 1, 1, 1, 1 ), top.$clone(), new pc.Vec2( -115.0, -108.0 ));
-                this.timerBg = AdKit.AdUI.Img(this.ui.Root, AdKit.Res.Round(128), new pc.Color( 0.18, 0.12, 0.36, 0.88 ), top.$clone(), new pc.Vec2( 315.0, -108.0 ), new pc.Vec2( 220.0, 64.0 ), true);
+                this.timerBg = AdKit.AdUI.Img(this.ui.Root, AdKit.AdRes.Round(128), new pc.Color( 0.18, 0.12, 0.36, 0.88 ), top.$clone(), new pc.Vec2( 315.0, -108.0 ), new pc.Vec2( 220.0, 64.0 ), true);
                 this.timerText = AdKit.AdUI.Txt(this.timerBg.transform, "24s", 44, new pc.Color( 1.0, 0.9, 0.35, 1 ), new pc.Vec2( 0.5, 0.5 ), pc.Vec2.ZERO.clone());
-                var barBg = AdKit.AdUI.Img(this.ui.Root, AdKit.Res.Round(128), new pc.Color( 0.0, 0.0, 0.0, 0.4 ), top.$clone(), new pc.Vec2( 0.0, -202.0 ), new pc.Vec2( 660.0, 48.0 ), true);
-                this.progressFill = AdKit.AdUI.Img(barBg.transform, AdKit.Res.Round(128), new pc.Color( 0.45, 0.9, 0.4, 1 ), new pc.Vec2( 0.0, 0.5 ), new pc.Vec2( 8.0, 0.0 ), new pc.Vec2( 0.0, 32.0 ), true);
+                var barBg = AdKit.AdUI.Img(this.ui.Root, AdKit.AdRes.Round(128), new pc.Color( 0.0, 0.0, 0.0, 0.4 ), top.$clone(), new pc.Vec2( 0.0, -202.0 ), new pc.Vec2( 660.0, 48.0 ), true);
+                this.progressFill = AdKit.AdUI.Img(barBg.transform, AdKit.AdRes.Round(128), new pc.Color( 0.45, 0.9, 0.4, 1 ), new pc.Vec2( 0.0, 0.5 ), new pc.Vec2( 8.0, 0.0 ), new pc.Vec2( 0.0, 32.0 ), true);
                 this.progressFill.rectTransform.pivot = new pc.Vec2( 0.0, 0.5 );
                 this.progressText = AdKit.AdUI.Txt(barBg.transform, "0%", 40, new pc.Color( 1, 1, 1, 1 ), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 0.0, 2.0 ));
                 var pic = UnityEngine.Sprite.Create$1(this.pictureTex, new UnityEngine.Rect.$ctor1(0.0, 0.0, this.N, this.N), new pc.Vec2( 0.5, 0.5 ), this.N);
-                AdKit.AdUI.Img(this.ui.Card, AdKit.Res.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.9 ), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 0.0, -95.0 ), new pc.Vec2( 300.0, 300.0 ), true);
+                AdKit.AdUI.Img(this.ui.Card, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.9 ), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 0.0, -95.0 ), new pc.Vec2( 300.0, 300.0 ), true);
                 AdKit.AdUI.Img(this.ui.Card, pic, new pc.Color( 1, 1, 1, 1 ), new pc.Vec2( 0.5, 0.5 ), new pc.Vec2( 0.0, -95.0 ), new pc.Vec2( 276.0, 276.0 ), false);
                 this.UpdateProgress();
             },
@@ -4404,7 +4404,7 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#Fragments", this ); }
                     return new UnityEngine.Vector3();
                 }, UnityEngine.Vector3);
                 for (var i = 0; i < j; i = (i + 1) | 0) {
-                    parts[i] = AdKit.Res.Spr("frag", this.fx, AdKit.Res.Square, (i % 2 === 0) ? c.$clone() : (new pc.Color( c.r * 0.75, c.g * 0.75, c.b * 0.75, c.a * 0.75 )), 50, pos.$clone(), pc.Vec2.ONE.clone().scale( this.cell ).scale( UnityEngine.Random.Range$1(0.25, 0.4) )).transform;
+                    parts[i] = AdKit.AdRes.Spr("frag", this.fx, AdKit.AdRes.Square, (i % 2 === 0) ? c.$clone() : (new pc.Color( c.r * 0.75, c.g * 0.75, c.b * 0.75, c.a * 0.75 )), 50, pos.$clone(), pc.Vec2.ONE.clone().scale( this.cell ).scale( UnityEngine.Random.Range$1(0.25, 0.4) )).transform;
                     parts[i].localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, UnityEngine.Random.Range$1(0.0, 360.0) );
                     var a = (i + UnityEngine.Random.value * 0.5) / j * 3.14159274 * 2.0;
                     vel[i] = new pc.Vec3( Math.cos(a), Math.sin(a) + 0.8, 0.0 ).clone().scale( UnityEngine.Random.Range$1(2.5, 4.0) );
@@ -4423,7 +4423,7 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#Burst", this ); }
                 }, UnityEngine.Vector3);
                 for (var i = 0; i < n; i = (i + 1) | 0) {
                     var tint = pc.Color.lerp( c, new pc.Color( 1, 1, 1, 1 ), UnityEngine.Random.Range$1(0.0, 0.5) );
-                    parts[i] = AdKit.Res.Spr("spark", this.fx, AdKit.Res.Circle, tint.$clone(), 51, pos.$clone(), pc.Vec2.ONE.clone().scale( UnityEngine.Random.Range$1(0.15, 0.35) )).transform;
+                    parts[i] = AdKit.AdRes.Spr("spark", this.fx, AdKit.AdRes.Circle, tint.$clone(), 51, pos.$clone(), pc.Vec2.ONE.clone().scale( UnityEngine.Random.Range$1(0.15, 0.35) )).transform;
                     var a = UnityEngine.Random.value * 3.14159274 * 2.0;
                     vel[i] = new pc.Vec3( Math.cos(a), Math.sin(a), 0.0 ).clone().scale( speed ).clone().scale( UnityEngine.Random.Range$1(0.4, 1.0) );
                 }
@@ -4524,7 +4524,7 @@ if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#Fly", this ); }
             FloatText: function (pos, s, c) {
 if ( TRACE ) { TRACE( "NumberMatchAd.NumberMatchGame#FloatText", this ); }
 
-                var i = AdKit.Res.MakeLabel(this.fx, s, this.cell * 1.4, c.$clone(), 71, pos.$clone());
+                var i = AdKit.AdRes.MakeLabel(this.fx, s, this.cell * 1.4, c.$clone(), 71, pos.$clone());
                 i.GetComponentInChildren(UnityEngine.MeshRenderer).sortingOrder = 71;
                 this.StartCoroutine$1(this.FloatRoutine(i));
             },
@@ -5287,6 +5287,10 @@ if ( TRACE ) { TRACE( "Spiski#Start", this ); }
     $m("MobControlAd.MobControlGame.SmokePuff", function () { return {"td":$n[9].MobControlGame,"att":1048579,"a":1,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"life","t":4,"rt":$n[1].Single,"sn":"life","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"maxLife","t":4,"rt":$n[1].Single,"sn":"maxLife","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"tr","t":4,"rt":$n[2].Transform,"sn":"tr"},{"a":2,"n":"vel","t":4,"rt":$n[2].Vector3,"sn":"vel"}]}; }, $n);
     /*MobControlAd.MobControlGame+SmokePuff end.*/
 
+    /*AdKit.AdRes start.*/
+    $m("AdKit.AdRes", function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":1,"n":"Disc","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"soft","pt":$n[1].Boolean,"ps":1}],"sn":"Disc","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Boolean]},{"a":2,"n":"Gradient","is":true,"t":8,"pi":[{"n":"top","pt":$n[2].Color,"ps":0},{"n":"bottom","pt":$n[2].Color,"ps":1}],"sn":"Gradient","rt":$n[2].Sprite,"p":[$n[2].Color,$n[2].Color]},{"a":2,"n":"MakeLabel","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"text","pt":$n[1].String,"ps":1},{"n":"height","pt":$n[1].Single,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"order","pt":$n[1].Int32,"ps":4},{"n":"pos","pt":$n[2].Vector3,"ps":5}],"sn":"MakeLabel","rt":$n[6].Label,"p":[$n[2].Transform,$n[1].String,$n[1].Single,$n[2].Color,$n[1].Int32,$n[2].Vector3]},{"a":1,"n":"RingTex","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"inner","pt":$n[1].Single,"ps":1}],"sn":"RingTex","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Single]},{"a":2,"n":"Round","is":true,"t":8,"pi":[{"n":"ppu","pt":$n[1].Int32,"ps":0}],"sn":"Round","rt":$n[2].Sprite,"p":[$n[1].Int32]},{"a":1,"n":"RoundRect","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"radius","pt":$n[1].Single,"ps":1},{"n":"ppu","pt":$n[1].Int32,"ps":2},{"n":"border","dv":0.0,"o":true,"pt":$n[1].Single,"ps":3}],"sn":"RoundRect","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Single,$n[1].Int32,$n[1].Single]},{"a":2,"n":"Spr","is":true,"t":8,"pi":[{"n":"name","pt":$n[1].String,"ps":0},{"n":"parent","pt":$n[2].Transform,"ps":1},{"n":"s","pt":$n[2].Sprite,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"order","pt":$n[1].Int32,"ps":4},{"n":"pos","pt":$n[2].Vector3,"ps":5},{"n":"size","pt":$n[2].Vector2,"ps":6},{"n":"sliced","dv":false,"o":true,"pt":$n[1].Boolean,"ps":7}],"sn":"Spr","rt":$n[2].SpriteRenderer,"p":[$n[1].String,$n[2].Transform,$n[2].Sprite,$n[2].Color,$n[1].Int32,$n[2].Vector3,$n[2].Vector2,$n[1].Boolean]},{"a":2,"n":"Txt","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"name","pt":$n[1].String,"ps":1},{"n":"text","pt":$n[1].String,"ps":2},{"n":"height","pt":$n[1].Single,"ps":3},{"n":"c","pt":$n[2].Color,"ps":4},{"n":"order","pt":$n[1].Int32,"ps":5},{"n":"pos","pt":$n[2].Vector3,"ps":6}],"sn":"Txt","rt":$n[2].TextMesh,"p":[$n[2].Transform,$n[1].String,$n[1].String,$n[1].Single,$n[2].Color,$n[1].Int32,$n[2].Vector3]},{"a":2,"n":"Bead","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Bead","t":8,"rt":$n[2].Sprite,"fg":"Bead","is":true},"fn":"Bead"},{"a":2,"n":"Circle","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Circle","t":8,"rt":$n[2].Sprite,"fg":"Circle","is":true},"fn":"Circle"},{"a":2,"n":"Font","is":true,"t":16,"rt":$n[2].Font,"g":{"a":2,"n":"get_Font","t":8,"rt":$n[2].Font,"fg":"Font","is":true},"fn":"Font"},{"a":2,"n":"FontMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_FontMat","t":8,"rt":$n[2].Material,"fg":"FontMat","is":true},"fn":"FontMat"},{"a":2,"n":"PrimMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_PrimMat","t":8,"rt":$n[2].Material,"fg":"PrimMat","is":true},"fn":"PrimMat"},{"a":2,"n":"Ring","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Ring","t":8,"rt":$n[2].Sprite,"fg":"Ring","is":true},"fn":"Ring"},{"a":2,"n":"Soft","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Soft","t":8,"rt":$n[2].Sprite,"fg":"Soft","is":true},"fn":"Soft"},{"a":2,"n":"SpriteMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_SpriteMat","t":8,"rt":$n[2].Material,"fg":"SpriteMat","is":true},"fn":"SpriteMat"},{"a":2,"n":"Square","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Square","t":8,"rt":$n[2].Sprite,"fg":"Square","is":true},"fn":"Square"},{"a":1,"n":"_bead","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_bead"},{"a":1,"n":"_circle","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_circle"},{"a":1,"n":"_font","is":true,"t":4,"rt":$n[2].Font,"sn":"_font"},{"a":1,"n":"_fontMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_fontMat"},{"a":1,"n":"_primMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_primMat"},{"a":1,"n":"_ring","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_ring"},{"a":1,"n":"_round","is":true,"t":4,"rt":$n[4].Dictionary$2(System.Int32,UnityEngine.Sprite),"sn":"_round","ro":true},{"a":1,"n":"_soft","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_soft"},{"a":1,"n":"_spriteMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_spriteMat"},{"a":1,"n":"_square","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_square"}]}; }, $n);
+    /*AdKit.AdRes end.*/
+
     /*AdKit.AdUI start.*/
     $m("AdKit.AdUI", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Banner","t":8,"pi":[{"n":"text","pt":$n[1].String,"ps":0},{"n":"color","pt":$n[2].Color,"ps":1}],"sn":"Banner","rt":$n[1].Void,"p":[$n[1].String,$n[2].Color]},{"a":2,"n":"Create","is":true,"t":8,"pi":[{"n":"title","pt":$n[1].String,"ps":0},{"n":"ctaText","pt":$n[1].String,"ps":1},{"n":"cardColor","pt":$n[2].Color,"ps":2},{"n":"titleColor","pt":$n[2].Color,"ps":3}],"sn":"Create","rt":$n[6].AdUI,"p":[$n[1].String,$n[1].String,$n[2].Color,$n[2].Color]},{"a":1,"n":"Hand","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"pulseRing","out":true,"pt":$n[2].RectTransform,"ps":1}],"sn":"Hand","rt":$n[2].RectTransform,"p":[$n[2].Transform,$n[2].RectTransform]},{"a":2,"n":"Img","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"s","pt":$n[2].Sprite,"ps":1},{"n":"c","pt":$n[2].Color,"ps":2},{"n":"anchor","pt":$n[2].Vector2,"ps":3},{"n":"pos","pt":$n[2].Vector2,"ps":4},{"n":"size","pt":$n[2].Vector2,"ps":5},{"n":"sliced","pt":$n[1].Boolean,"ps":6}],"sn":"Img","rt":$n[7].Image,"p":[$n[2].Transform,$n[2].Sprite,$n[2].Color,$n[2].Vector2,$n[2].Vector2,$n[2].Vector2,$n[1].Boolean]},{"a":2,"n":"ShowDragTutorial","t":8,"pi":[{"n":"on","pt":$n[1].Boolean,"ps":0}],"sn":"ShowDragTutorial","rt":$n[1].Void,"p":[$n[1].Boolean]},{"a":2,"n":"ShowEndcard","t":8,"pi":[{"n":"sub","pt":$n[1].String,"ps":0}],"sn":"ShowEndcard","rt":$n[1].Void,"p":[$n[1].String]},{"a":2,"n":"Tick","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"Tick","rt":$n[1].Void,"p":[$n[1].Single]},{"a":2,"n":"Txt","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"s","pt":$n[1].String,"ps":1},{"n":"size","pt":$n[1].Int32,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"anchor","pt":$n[2].Vector2,"ps":4},{"n":"pos","pt":$n[2].Vector2,"ps":5}],"sn":"Txt","rt":$n[7].Text,"p":[$n[2].Transform,$n[1].String,$n[1].Int32,$n[2].Color,$n[2].Vector2,$n[2].Vector2]},{"a":2,"n":"Card","t":16,"rt":$n[2].RectTransform,"g":{"a":2,"n":"get_Card","t":8,"rt":$n[2].RectTransform,"fg":"Card"},"fn":"Card"},{"a":2,"n":"EndcardVisible","t":16,"rt":$n[1].Boolean,"g":{"a":2,"n":"get_EndcardVisible","t":8,"rt":$n[1].Boolean,"fg":"EndcardVisible","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},"fn":"EndcardVisible"},{"a":2,"n":"Root","t":4,"rt":$n[2].RectTransform,"sn":"Root"},{"a":1,"n":"banner","t":4,"rt":$n[7].Text,"sn":"banner"},{"a":1,"n":"bannerBg","t":4,"rt":$n[7].Image,"sn":"bannerBg"},{"a":1,"n":"bannerColor","t":4,"rt":$n[2].Color,"sn":"bannerColor"},{"a":1,"n":"bannerT","t":4,"rt":$n[1].Single,"sn":"bannerT","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"bannerWrap","t":4,"rt":$n[2].RectTransform,"sn":"bannerWrap"},{"a":1,"n":"card","t":4,"rt":$n[2].RectTransform,"sn":"card"},{"a":1,"n":"cta","t":4,"rt":$n[2].RectTransform,"sn":"cta"},{"a":1,"n":"endSub","t":4,"rt":$n[7].Text,"sn":"endSub"},{"a":1,"n":"endcard","t":4,"rt":$n[2].GameObject,"sn":"endcard"},{"a":1,"n":"tut","t":4,"rt":$n[2].RectTransform,"sn":"tut"},{"a":1,"n":"tutHand","t":4,"rt":$n[2].RectTransform,"sn":"tutHand"},{"a":1,"n":"tutRing","t":4,"rt":$n[2].RectTransform,"sn":"tutRing"}]}; }, $n);
     /*AdKit.AdUI end.*/
@@ -5298,10 +5302,6 @@ if ( TRACE ) { TRACE( "Spiski#Start", this ); }
     /*AdKit.Prims start.*/
     $m("AdKit.Prims", function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":2,"n":"Burst","is":true,"t":8,"pi":[{"n":"host","pt":$n[2].MonoBehaviour,"ps":0},{"n":"parent","pt":$n[2].Transform,"ps":1},{"n":"pos","pt":$n[2].Vector3,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"n","pt":$n[1].Int32,"ps":4},{"n":"speed","dv":4.0,"o":true,"pt":$n[1].Single,"ps":5}],"sn":"Burst","rt":$n[1].Void,"p":[$n[2].MonoBehaviour,$n[2].Transform,$n[2].Vector3,$n[2].Color,$n[1].Int32,$n[1].Single]},{"a":1,"n":"BurstRoutine","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"pos","pt":$n[2].Vector3,"ps":1},{"n":"c","pt":$n[2].Color,"ps":2},{"n":"n","pt":$n[1].Int32,"ps":3},{"n":"speed","pt":$n[1].Single,"ps":4}],"sn":"BurstRoutine","rt":$n[0].IEnumerator,"p":[$n[2].Transform,$n[2].Vector3,$n[2].Color,$n[1].Int32,$n[1].Single]},{"a":2,"n":"Figure","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"body","pt":$n[2].Color,"ps":1},{"n":"hair","pt":$n[2].Color,"ps":2},{"n":"skin","pt":$n[2].Color,"ps":3},{"n":"item","pt":$n[2].Color,"ps":4},{"n":"scale","pt":$n[1].Single,"ps":5}],"sn":"Figure","rt":$n[2].Transform,"p":[$n[2].Transform,$n[2].Color,$n[2].Color,$n[2].Color,$n[2].Color,$n[1].Single]},{"a":2,"n":"Make","is":true,"t":8,"pi":[{"n":"t","pt":$n[2].PrimitiveType,"ps":0},{"n":"parent","pt":$n[2].Transform,"ps":1},{"n":"pos","pt":$n[2].Vector3,"ps":2},{"n":"scale","pt":$n[2].Vector3,"ps":3},{"n":"c","pt":$n[2].Color,"ps":4}],"sn":"Make","rt":$n[2].GameObject,"p":[$n[2].PrimitiveType,$n[2].Transform,$n[2].Vector3,$n[2].Vector3,$n[2].Color]},{"a":2,"n":"SetColor","is":true,"t":8,"pi":[{"n":"r","pt":$n[2].Renderer,"ps":0},{"n":"c","pt":$n[2].Color,"ps":1}],"sn":"SetColor","rt":$n[1].Void,"p":[$n[2].Renderer,$n[2].Color]},{"a":1,"n":"ColorId","is":true,"t":4,"rt":$n[1].Int32,"sn":"ColorId","ro":true,"box":function ($v) { return Bridge.box($v, System.Int32);}}]}; }, $n);
     /*AdKit.Prims end.*/
-
-    /*AdKit.Res start.*/
-    $m("AdKit.Res", function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":1,"n":"Disc","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"soft","pt":$n[1].Boolean,"ps":1}],"sn":"Disc","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Boolean]},{"a":2,"n":"Gradient","is":true,"t":8,"pi":[{"n":"top","pt":$n[2].Color,"ps":0},{"n":"bottom","pt":$n[2].Color,"ps":1}],"sn":"Gradient","rt":$n[2].Sprite,"p":[$n[2].Color,$n[2].Color]},{"a":2,"n":"MakeLabel","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"text","pt":$n[1].String,"ps":1},{"n":"height","pt":$n[1].Single,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"order","pt":$n[1].Int32,"ps":4},{"n":"pos","pt":$n[2].Vector3,"ps":5}],"sn":"MakeLabel","rt":$n[6].Label,"p":[$n[2].Transform,$n[1].String,$n[1].Single,$n[2].Color,$n[1].Int32,$n[2].Vector3]},{"a":1,"n":"RingTex","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"inner","pt":$n[1].Single,"ps":1}],"sn":"RingTex","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Single]},{"a":2,"n":"Round","is":true,"t":8,"pi":[{"n":"ppu","pt":$n[1].Int32,"ps":0}],"sn":"Round","rt":$n[2].Sprite,"p":[$n[1].Int32]},{"a":1,"n":"RoundRect","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"radius","pt":$n[1].Single,"ps":1},{"n":"ppu","pt":$n[1].Int32,"ps":2},{"n":"border","dv":0.0,"o":true,"pt":$n[1].Single,"ps":3}],"sn":"RoundRect","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Single,$n[1].Int32,$n[1].Single]},{"a":2,"n":"Spr","is":true,"t":8,"pi":[{"n":"name","pt":$n[1].String,"ps":0},{"n":"parent","pt":$n[2].Transform,"ps":1},{"n":"s","pt":$n[2].Sprite,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"order","pt":$n[1].Int32,"ps":4},{"n":"pos","pt":$n[2].Vector3,"ps":5},{"n":"size","pt":$n[2].Vector2,"ps":6},{"n":"sliced","dv":false,"o":true,"pt":$n[1].Boolean,"ps":7}],"sn":"Spr","rt":$n[2].SpriteRenderer,"p":[$n[1].String,$n[2].Transform,$n[2].Sprite,$n[2].Color,$n[1].Int32,$n[2].Vector3,$n[2].Vector2,$n[1].Boolean]},{"a":2,"n":"Txt","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"name","pt":$n[1].String,"ps":1},{"n":"text","pt":$n[1].String,"ps":2},{"n":"height","pt":$n[1].Single,"ps":3},{"n":"c","pt":$n[2].Color,"ps":4},{"n":"order","pt":$n[1].Int32,"ps":5},{"n":"pos","pt":$n[2].Vector3,"ps":6}],"sn":"Txt","rt":$n[2].TextMesh,"p":[$n[2].Transform,$n[1].String,$n[1].String,$n[1].Single,$n[2].Color,$n[1].Int32,$n[2].Vector3]},{"a":2,"n":"Bead","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Bead","t":8,"rt":$n[2].Sprite,"fg":"Bead","is":true},"fn":"Bead"},{"a":2,"n":"Circle","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Circle","t":8,"rt":$n[2].Sprite,"fg":"Circle","is":true},"fn":"Circle"},{"a":2,"n":"Font","is":true,"t":16,"rt":$n[2].Font,"g":{"a":2,"n":"get_Font","t":8,"rt":$n[2].Font,"fg":"Font","is":true},"fn":"Font"},{"a":2,"n":"FontMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_FontMat","t":8,"rt":$n[2].Material,"fg":"FontMat","is":true},"fn":"FontMat"},{"a":2,"n":"PrimMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_PrimMat","t":8,"rt":$n[2].Material,"fg":"PrimMat","is":true},"fn":"PrimMat"},{"a":2,"n":"Ring","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Ring","t":8,"rt":$n[2].Sprite,"fg":"Ring","is":true},"fn":"Ring"},{"a":2,"n":"Soft","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Soft","t":8,"rt":$n[2].Sprite,"fg":"Soft","is":true},"fn":"Soft"},{"a":2,"n":"SpriteMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_SpriteMat","t":8,"rt":$n[2].Material,"fg":"SpriteMat","is":true},"fn":"SpriteMat"},{"a":2,"n":"Square","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Square","t":8,"rt":$n[2].Sprite,"fg":"Square","is":true},"fn":"Square"},{"a":1,"n":"_bead","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_bead"},{"a":1,"n":"_circle","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_circle"},{"a":1,"n":"_font","is":true,"t":4,"rt":$n[2].Font,"sn":"_font"},{"a":1,"n":"_fontMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_fontMat"},{"a":1,"n":"_primMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_primMat"},{"a":1,"n":"_ring","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_ring"},{"a":1,"n":"_round","is":true,"t":4,"rt":$n[4].Dictionary$2(System.Int32,UnityEngine.Sprite),"sn":"_round","ro":true},{"a":1,"n":"_soft","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_soft"},{"a":1,"n":"_spriteMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_spriteMat"},{"a":1,"n":"_square","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_square"}]}; }, $n);
-    /*AdKit.Res end.*/
 
     /*AdKit.Sfx start.*/
     $m("AdKit.Sfx", function () { return {"nested":[$n[6].Sfx.Id],"att":1048961,"a":2,"s":true,"m":[{"a":1,"n":"Init","is":true,"t":8,"sn":"Init","rt":$n[1].Void},{"a":2,"n":"Override","is":true,"t":8,"pi":[{"n":"id","pt":$n[6].Sfx.Id,"ps":0},{"n":"clip","pt":$n[2].AudioClip,"ps":1}],"sn":"Override","rt":$n[1].Void,"p":[$n[6].Sfx.Id,$n[2].AudioClip]},{"a":2,"n":"Play","is":true,"t":8,"pi":[{"n":"id","pt":$n[6].Sfx.Id,"ps":0},{"n":"vol","dv":1.0,"o":true,"pt":$n[1].Single,"ps":1},{"n":"pitch","dv":1.0,"o":true,"pt":$n[1].Single,"ps":2},{"n":"pitchJitter","dv":0.06,"o":true,"pt":$n[1].Single,"ps":3},{"n":"minGap","dv":0.035,"o":true,"pt":$n[1].Single,"ps":4}],"sn":"Play","rt":$n[1].Void,"p":[$n[6].Sfx.Id,$n[1].Single,$n[1].Single,$n[1].Single,$n[1].Single]},{"a":2,"n":"Muted","is":true,"t":4,"rt":$n[1].Boolean,"sn":"Muted","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"Rate","is":true,"t":4,"rt":$n[1].Int32,"sn":"Rate","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"Volume","is":true,"t":4,"rt":$n[1].Single,"sn":"Volume","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"clips","is":true,"t":4,"rt":$n[4].Dictionary$2(AdKit.Sfx.Id,UnityEngine.AudioClip),"sn":"clips","ro":true},{"a":1,"n":"lastPlay","is":true,"t":4,"rt":$n[4].Dictionary$2(AdKit.Sfx.Id,System.Single),"sn":"lastPlay","ro":true},{"a":1,"n":"next","is":true,"t":4,"rt":$n[1].Int32,"sn":"next","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":1,"n":"sources","is":true,"t":4,"rt":System.Array.type(UnityEngine.AudioSource),"sn":"sources"}]}; }, $n);

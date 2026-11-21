@@ -154,6 +154,7 @@ namespace MobControlAd
             BuildYellowEnemyBase();
             BuildUI();
             SpawnInitialReferenceState();
+            StoreLink.LogEvent("mobcontrol_start");
         }
 
         void SetupCameraAndSpaceEnvironment()
@@ -667,6 +668,7 @@ namespace MobControlAd
                 {
                     _hasInteracted = true;
                     _ui.ShowDragTutorial(false);
+                    StoreLink.LogEvent("mobcontrol_first_drag");
                 }
                 float normX = Mathf.Clamp01(Input.mousePosition.x / Mathf.Max(1f, Screen.width));
                 _targetCannonX = Mathf.Lerp(-2.45f, 2.45f, normX);
@@ -1051,6 +1053,7 @@ namespace MobControlAd
                 _defeatTitleText.color = new Color(0.26f, 0.96f, 0.42f);
             }
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
+            StoreLink.LogEvent("mobcontrol_victory");
             StoreLink.NotifyGameEnded();
             Sfx.Play(Sfx.Id.Win, 0.9f);
             TriggerCameraShake(0.45f, 0.25f);
@@ -1078,6 +1081,7 @@ namespace MobControlAd
                 _defeatTitleText.color = PurpleMain;
             }
             if (_endOverlayRoot) _endOverlayRoot.SetActive(true);
+            StoreLink.LogEvent("mobcontrol_victory");
             StoreLink.NotifyGameEnded();
             Sfx.Play(Sfx.Id.Fail, 0.85f);
             TriggerCameraShake(0.45f, 0.28f);
@@ -1123,9 +1127,9 @@ namespace MobControlAd
             if (_shakeTimer > 0f)
             {
                 _shakeTimer -= dt;
-                Vector3 off = Random.insideUnitSphere * _shakeAmp;
-                off.z = 0f;
-                _cam.transform.position = _camBasePos + off;
+                Vector3 shakeOffset = Random.insideUnitSphere * _shakeAmp;
+                shakeOffset.z = 0f;
+                _cam.transform.position = _camBasePos + shakeOffset;
             }
             else
             {
