@@ -248,10 +248,10 @@ namespace MobControlAd
         {
             if (backgroundTheme == BackgroundTheme.MidnightSlate)
             {
-                // Night theme: Electric Blue (friendly) vs Vivid Red (enemy)
-                PurpleMain = new Color(0.10f, 0.56f, 1.00f);
-                PurpleLight = new Color(0.42f, 0.82f, 1.00f);
-                PurpleGateCol = new Color(0.14f, 0.62f, 1.00f, 0.88f);
+                // Night theme: Deep Navy Blue (koyu lacivert - friendly) vs Vivid Red (enemy)
+                PurpleMain = new Color(0.08f, 0.16f, 0.46f);
+                PurpleLight = new Color(0.20f, 0.34f, 0.70f);
+                PurpleGateCol = new Color(0.10f, 0.22f, 0.56f, 0.90f);
                 YellowMain = new Color(0.96f, 0.18f, 0.22f);
                 YellowDark = new Color(0.66f, 0.08f, 0.12f);
             }
@@ -438,11 +438,12 @@ namespace MobControlAd
             _targetCannonX = 0.0f;
             _cannonRoot.localPosition = new Vector3(0f, 0f, 1.45f);
 
-            // Stylized metallic chassis platform with dark under-frame and side rails
+            // Stylized metallic chassis platform with dark under-frame and theme-matched side rails
+            Color railCol = Color.Lerp(PurpleMain, Color.black, 0.22f);
             Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(0f, 0.19f, 0f), new Vector3(1.12f, 0.10f, 1.32f), new Color(0.24f, 0.26f, 0.32f));
             Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(0f, 0.27f, 0f), new Vector3(1.04f, 0.14f, 1.24f), new Color(0.62f, 0.66f, 0.74f));
-            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(-0.46f, 0.36f, 0f), new Vector3(0.10f, 0.08f, 1.18f), new Color(0.38f, 0.16f, 0.78f));
-            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(0.46f, 0.36f, 0f), new Vector3(0.10f, 0.08f, 1.18f), new Color(0.38f, 0.16f, 0.78f));
+            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(-0.46f, 0.36f, 0f), new Vector3(0.10f, 0.08f, 1.18f), railCol);
+            Prims.Make(PrimitiveType.Cube, _cannonRoot, new Vector3(0.46f, 0.36f, 0f), new Vector3(0.10f, 0.08f, 1.18f), railCol);
 
             // 4 Chunky Rubber Wheels with Metallic Rims & Purple Center Caps
             Vector3[] wheelOffsets =
@@ -489,8 +490,8 @@ namespace MobControlAd
 
             var mainTube = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 0.42f), new Vector3(0.78f, 0.64f, 0.78f), PurpleMain);
             mainTube.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            // Metallic mid power band + light purple highlight stripe
-            var midRing = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 0.42f), new Vector3(0.84f, 0.09f, 0.84f), new Color(0.88f, 0.78f, 1f));
+            // Metallic mid power band + light theme highlight stripe
+            var midRing = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 0.42f), new Vector3(0.84f, 0.09f, 0.84f), Color.Lerp(PurpleLight, Color.white, 0.45f));
             midRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             var stripe = Prims.Make(PrimitiveType.Cube, _cannonBarrel, new Vector3(0f, 0.36f, 0.42f), new Vector3(0.22f, 0.08f, 1.08f), PurpleLight);
             var rearSphere = Prims.Make(PrimitiveType.Sphere, _cannonBarrel, new Vector3(0f, 0f, -0.18f), new Vector3(0.88f, 0.88f, 0.88f), PurpleMain);
@@ -583,8 +584,8 @@ namespace MobControlAd
             root.localPosition = new Vector3(x, 0f, z);
 
             float fullW = halfWidth * 2f;
-            Color frameDark = new Color(0.16f, 0.14f, 0.24f);
-            Color capGlow = new Color(0.84f, 0.62f, 1.00f);
+            Color frameDark = new Color(0.14f, 0.16f, 0.26f);
+            Color capGlow = Color.Lerp(PurpleLight, Color.white, 0.30f);
 
             // Stylized rounded-cap pillars + base bar + glowing neon trim
             Prims.Make(PrimitiveType.Cylinder, root, new Vector3(-halfWidth, 0.60f, 0f), new Vector3(0.22f, 0.60f, 0.22f), frameDark);
@@ -673,12 +674,12 @@ namespace MobControlAd
             trt.anchoredPosition = new Vector2(0f, -125f);
             trt.sizeDelta = new Vector2(990f, 150f);
 
-            // Theme-matched UI palette (AlpineWinter: Purple/Yellow | MidnightSlate: Electric Blue/Crimson Red)
+            // Theme-matched UI palette (AlpineWinter: Purple/Yellow | MidnightSlate: Deep Navy Blue/Crimson Red)
             bool isBlueRed = backgroundTheme == BackgroundTheme.MidnightSlate;
-            Color mobFill = isBlueRed ? new Color(0.10f, 0.50f, 0.96f, 1f) : new Color(0.36f, 0.14f, 0.90f, 1f);
-            Color mobShadow = isBlueRed ? new Color(0.03f, 0.18f, 0.46f, 1f) : new Color(0.16f, 0.04f, 0.44f, 1f);
-            Color stageFill = isBlueRed ? new Color(0.18f, 0.72f, 0.88f, 1f) : new Color(1f, 0.72f, 0.10f, 1f);
-            Color stageShadow = isBlueRed ? new Color(0.05f, 0.28f, 0.42f, 1f) : new Color(0.54f, 0.30f, 0.02f, 1f);
+            Color mobFill = isBlueRed ? new Color(0.10f, 0.20f, 0.54f, 1f) : new Color(0.36f, 0.14f, 0.90f, 1f);
+            Color mobShadow = isBlueRed ? new Color(0.03f, 0.07f, 0.24f, 1f) : new Color(0.16f, 0.04f, 0.44f, 1f);
+            Color stageFill = isBlueRed ? new Color(0.16f, 0.32f, 0.62f, 1f) : new Color(1f, 0.72f, 0.10f, 1f);
+            Color stageShadow = isBlueRed ? new Color(0.05f, 0.12f, 0.30f, 1f) : new Color(0.54f, 0.30f, 0.02f, 1f);
             Color baseFill = isBlueRed ? new Color(0.95f, 0.20f, 0.24f, 1f) : new Color(0.95f, 0.24f, 0.28f, 1f);
             Color baseShadow = isBlueRed ? new Color(0.46f, 0.04f, 0.08f, 1f) : new Color(0.48f, 0.05f, 0.08f, 1f);
 
@@ -753,9 +754,9 @@ namespace MobControlAd
             _defeatBannerRt.sizeDelta = new Vector2(960f, 340f);
             _defeatBannerRt.localRotation = Quaternion.Euler(0f, 0f, 3.0f);
 
-            Color cardShadow = isBlueRed ? new Color(0.03f, 0.14f, 0.38f, 1f) : new Color(0.16f, 0.04f, 0.42f, 1f);
+            Color cardShadow = isBlueRed ? new Color(0.02f, 0.06f, 0.22f, 1f) : new Color(0.16f, 0.04f, 0.42f, 1f);
             Color cardBorder = isBlueRed ? new Color(1f, 0.30f, 0.32f, 1f) : new Color(1f, 0.88f, 0.18f, 1f);
-            Color cardFill   = isBlueRed ? new Color(0.08f, 0.34f, 0.78f, 1f) : new Color(0.32f, 0.09f, 0.72f, 1f);
+            Color cardFill   = isBlueRed ? new Color(0.07f, 0.15f, 0.42f, 1f) : new Color(0.32f, 0.09f, 0.72f, 1f);
             Color titleStroke = isBlueRed ? new Color(0.46f, 0.04f, 0.08f, 1f) : new Color(0.24f, 0.04f, 0.48f, 1f);
 
             AdUI.Img(_defeatBannerRt, AdRes.Round(64), cardShadow, center, new Vector2(0f, -18f), new Vector2(944f, 304f), true);
