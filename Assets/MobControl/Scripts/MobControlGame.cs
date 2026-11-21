@@ -32,6 +32,11 @@ namespace MobControlAd
         [LunaPlaygroundField("CTA Button Text", 3, "Endcard Settings")]
         public string ctaText = "PLAY NOW";
 
+        public enum BackgroundTheme { MidnightSlate, AlpineWinter }
+
+        [Header("Background Theme")]
+        public BackgroundTheme backgroundTheme = BackgroundTheme.MidnightSlate;
+
         static readonly Color PurpleMain = new Color(0.50f, 0.10f, 0.96f);
         static readonly Color PurpleLight = new Color(0.68f, 0.38f, 1.00f);
         static readonly Color PurpleGateCol = new Color(0.58f, 0.22f, 0.98f, 0.88f);
@@ -177,17 +182,20 @@ namespace MobControlAd
             _cam.orthographic = false;
             _cam.fieldOfView = 50f;
             _cam.clearFlags = CameraClearFlags.SolidColor;
-            // Fallback misty alpine sky tint if backdrop texture is unavailable
-            _cam.backgroundColor = new Color(0.72f, 0.83f, 0.92f);
+            bool isMidnight = backgroundTheme == BackgroundTheme.MidnightSlate;
+            _cam.backgroundColor = isMidnight
+                ? new Color(0.11f, 0.16f, 0.22f)
+                : new Color(0.72f, 0.83f, 0.92f);
             _camBasePos = new Vector3(0f, 11.4f, -6.2f);
             _cam.transform.position = _camBasePos;
             _cam.transform.rotation = Quaternion.Euler(38f, 0f, 0f);
 
-            // Illustrated Misty Alpine Winter Valley Backdrop (loaded from Resources/AlpineBg.jpg)
-            var bgTex = Resources.Load<Texture2D>("AlpineBg");
+            // Illustrated Backdrop (MidnightBg.jpg or AlpineBg.jpg in Resources — both kept so you can switch anytime!)
+            string bgResName = isMidnight ? "MidnightBg" : "AlpineBg";
+            var bgTex = Resources.Load<Texture2D>(bgResName);
             if (bgTex != null)
             {
-                var bgGo = new GameObject("AlpineBackdrop");
+                var bgGo = new GameObject(bgResName + "Backdrop");
                 bgGo.transform.SetParent(_cam.transform, false);
                 bgGo.transform.localPosition = new Vector3(0f, 0f, 55f);
                 bgGo.transform.localRotation = Quaternion.identity;
