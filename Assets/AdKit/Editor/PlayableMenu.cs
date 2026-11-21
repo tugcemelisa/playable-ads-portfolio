@@ -123,18 +123,38 @@ namespace AdKit.EditorTools
             string name = Path.GetFileNameWithoutExtension(scene);
             string output = "Builds/Playables/" + name;
             CopyDirectory("LunaTemp/stage4/develop", output);
-            var htmlPath = output + "/iframe.html";
-            var htmlContent = File.ReadAllText(htmlPath).Replace("window.DEVELOP=!0", "window.DEVELOP=!1");
-            File.WriteAllText(htmlPath, htmlContent);
-            // Serve Playworks top-level as index.html so GitHub Pages never stalls inside a nested iframe
-            File.WriteAllText(output + "/index.html", htmlContent);
-            if (File.Exists(output + "/luna.json")) File.Delete(output + "/luna.json");
+            PatchPlayworksDevUiForSubpath(output);
             File.WriteAllText(output + "/build-info.txt", "Scene: " + scene + "\nSDK: Playworks 7.2.0\nBuilt UTC: " + DateTime.UtcNow.ToString("O") + "\n");
 
             if (!string.IsNullOrEmpty(docsSlug))
                 CopyDirectory(output, "docs/" + docsSlug);
 
             Debug.Log("[Playable Ads] Exported " + name + " -> " + Path.GetFullPath(output) + " (and docs/" + docsSlug + ")");
+        }
+
+        static void PatchPlayworksDevUiForSubpath(string rootDir)
+        {
+            var indexPath = Path.Combine(rootDir, "index.html");
+            if (File.Exists(indexPath))
+            {
+                var idx = File.ReadAllText(indexPath)
+                    .Replace("href=\"/", "href=\"./")
+                    .Replace("src=\"/", "src=\"./");
+                File.WriteAllText(indexPath, idx);
+            }
+
+            var staticJsDir = Path.Combine(rootDir, "static", "js");
+            if (Directory.Exists(staticJsDir))
+            {
+                foreach (var jsFile in Directory.GetFiles(staticJsDir, "main.*.js"))
+                {
+                    var js = File.ReadAllText(jsFile)
+                        .Replace("?\"http://localhost:8000\":window.location.origin;",
+                            "?\"http://localhost:8000\":(window.location.origin+window.location.pathname.replace(/\\/[^\\/]*$/,\"\"));")
+                        .Replace("materialFont=\"/static/media/", "materialFont=\"./static/media/");
+                    File.WriteAllText(jsFile, js);
+                }
+            }
         }
 
         static void CopyDirectory(string source, string destination)

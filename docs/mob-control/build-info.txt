@@ -1,3 +1,0 @@
-Scene: Assets/Scenes/MobControl.unity
-SDK: Playworks 7.2.0
-Built UTC: 2026-11-21T19:16:23.4317092Z
