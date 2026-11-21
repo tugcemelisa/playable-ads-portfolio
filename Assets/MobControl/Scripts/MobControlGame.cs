@@ -446,32 +446,32 @@ namespace MobControlAd
             trt.anchoredPosition = new Vector2(0f, -125f);
             trt.sizeDelta = new Vector2(990f, 150f);
 
-            // Left: Cartoon Blue/Purple Mob Count Pill
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.05f, 0.03f, 0.12f, 1f), center, new Vector2(-330f, -8f), new Vector2(314f, 122f), true);
+            // Left: Cartoon Purple Mob Count Pill (dark purple shadow instead of black)
+            AdUI.Img(trt, AdRes.Round(64), new Color(0.16f, 0.04f, 0.44f, 1f), center, new Vector2(-330f, -10f), new Vector2(314f, 122f), true);
             AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(-330f, 0f), new Vector2(300f, 108f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(0.36f, 0.14f, 0.90f, 1f), center, new Vector2(-330f, 0f), new Vector2(286f, 94f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.26f), center, new Vector2(-330f, 24f), new Vector2(246f, 28f), true);
             _topBlueMobsText = AdUI.Txt(trt, "MOBS: 0", 52, Color.white, center, new Vector2(-330f, -2f));
             var mobOut = _topBlueMobsText.GetComponent<Outline>();
-            if (mobOut) { mobOut.effectColor = new Color(0.05f, 0.02f, 0.14f, 1f); mobOut.effectDistance = new Vector2(4f, -4f); }
+            if (mobOut) { mobOut.effectColor = new Color(0.16f, 0.04f, 0.44f, 1f); mobOut.effectDistance = new Vector2(4f, -4f); }
 
-            // Center: Cartoon Gold Stage Shield
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.05f, 0.03f, 0.12f, 1f), center, new Vector2(0f, -8f), new Vector2(274f, 134f), true);
+            // Center: Cartoon Gold Stage Shield (dark amber/gold shadow instead of black)
+            AdUI.Img(trt, AdRes.Round(64), new Color(0.54f, 0.30f, 0.02f, 1f), center, new Vector2(0f, -10f), new Vector2(274f, 134f), true);
             AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(0f, 0f), new Vector2(260f, 120f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(1f, 0.72f, 0.10f, 1f), center, new Vector2(0f, 0f), new Vector2(244f, 104f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.35f), center, new Vector2(0f, 28f), new Vector2(204f, 28f), true);
             var stageLbl = AdUI.Txt(trt, "STAGE 1", 56, Color.white, center, new Vector2(0f, -2f));
             var stageOut = stageLbl.GetComponent<Outline>();
-            if (stageOut) { stageOut.effectColor = new Color(0.36f, 0.16f, 0.02f, 1f); stageOut.effectDistance = new Vector2(4f, -4f); }
+            if (stageOut) { stageOut.effectColor = new Color(0.54f, 0.30f, 0.02f, 1f); stageOut.effectDistance = new Vector2(4f, -4f); }
 
-            // Right: Cartoon Red/Orange Enemy Base HP Pill
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.05f, 0.03f, 0.12f, 1f), center, new Vector2(330f, -8f), new Vector2(314f, 122f), true);
+            // Right: Cartoon Red Enemy Base HP Pill (dark crimson shadow instead of black)
+            AdUI.Img(trt, AdRes.Round(64), new Color(0.48f, 0.05f, 0.08f, 1f), center, new Vector2(330f, -10f), new Vector2(314f, 122f), true);
             AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(330f, 0f), new Vector2(300f, 108f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(0.95f, 0.24f, 0.28f, 1f), center, new Vector2(330f, 0f), new Vector2(286f, 94f), true);
             AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.28f), center, new Vector2(330f, 24f), new Vector2(246f, 28f), true);
             _topEnemyBaseText = AdUI.Txt(trt, "BASE: " + enemyBaseStartHp, 52, Color.white, center, new Vector2(330f, -2f));
             var baseOut = _topEnemyBaseText.GetComponent<Outline>();
-            if (baseOut) { baseOut.effectColor = new Color(0.26f, 0.02f, 0.05f, 1f); baseOut.effectDistance = new Vector2(4f, -4f); }
+            if (baseOut) { baseOut.effectColor = new Color(0.48f, 0.05f, 0.08f, 1f); baseOut.effectDistance = new Vector2(4f, -4f); }
 
             // =========================================================================
             // CARTOON ART STYLE END CARD OVERLAY (Live 3D battlefield behind juicy comic UI!)

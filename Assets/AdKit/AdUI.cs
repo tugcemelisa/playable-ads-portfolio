@@ -63,14 +63,17 @@ namespace AdKit
             Img(ui.tut, AdRes.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(-350f, -48f), new Vector2(38f, 38f), false);
             Img(ui.tut, AdRes.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(350f, -48f), new Vector2(38f, 38f), false);
 
-            // Bold, large, punchy arcade tutorial text (never downscaled)
-            var tutTxt = Txt(ui.tut, "◀   HOLD & DRAG TO AIM!   ▶", 92, new Color(1f, 0.92f, 0.28f), c, new Vector2(0f, 46f));
-            tutTxt.horizontalOverflow = HorizontalWrapMode.Overflow;
+            // Bold, readable arcade tutorial text constrained cleanly inside the pill backdrop
+            var tutTxt = Txt(ui.tut, "◀  HOLD & DRAG TO AIM  ▶", 66, new Color(1f, 0.92f, 0.28f), c, new Vector2(0f, 48f));
+            tutTxt.rectTransform.sizeDelta = new Vector2(860f, 108f);
+            tutTxt.horizontalOverflow = HorizontalWrapMode.Wrap;
             tutTxt.verticalOverflow = VerticalWrapMode.Overflow;
-            tutTxt.resizeTextForBestFit = false;
+            tutTxt.resizeTextForBestFit = true;
+            tutTxt.resizeTextMinSize = 44;
+            tutTxt.resizeTextMaxSize = 66;
             var tutOut = tutTxt.gameObject.AddComponent<Outline>();
-            tutOut.effectColor = new Color(0.02f, 0.01f, 0.08f, 1f);
-            tutOut.effectDistance = new Vector2(5f, -5f);
+            tutOut.effectColor = new Color(0.14f, 0.05f, 0.36f, 1f);
+            tutOut.effectDistance = new Vector2(4f, -4f);
 
             ui.tutHand = Hand(ui.tut, out ui.tutRing);
             ui.tutHand.localScale = Vector3.one * 1.35f;
