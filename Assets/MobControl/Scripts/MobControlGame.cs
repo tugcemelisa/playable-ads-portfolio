@@ -891,12 +891,17 @@ namespace MobControlAd
                     var anim = inst.GetComponent<Animation>();
                     if (!anim) anim = inst.AddComponent<Animation>();
                     anim.playAutomatically = false;
+                    anim.wrapMode = WrapMode.Loop;
+#if !UNITY_LUNA
                     anim.cullingType = AnimationCullingType.AlwaysAnimate;
+#endif
                     anim.AddClip(runClip, "Run");
                     var st = anim["Run"];
                     if (st != null)
                     {
+#if !UNITY_LUNA
                         st.wrapMode = WrapMode.Loop;
+#endif
                         st.speed = isPurple ? 1.45f : 1.15f;
                         st.time = Random.Range(0f, Mathf.Max(0.01f, runClip.length));
                     }
@@ -912,8 +917,10 @@ namespace MobControlAd
                 for (int i = 0; i < rends.Length; i++)
                 {
                     var r = rends[i];
+#if !UNITY_LUNA
                     if (r is SkinnedMeshRenderer smr)
                         smr.updateWhenOffscreen = true;
+#endif
                     unit.renderers.Add(r);
                     var mats = r.sharedMaterials;
                     if (isPurple)
