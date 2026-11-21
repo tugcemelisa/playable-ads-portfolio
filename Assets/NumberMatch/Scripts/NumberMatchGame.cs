@@ -358,7 +358,8 @@ namespace NumberMatchAd
             bool light = col.r * 0.3f + col.g * 0.59f + col.b * 0.11f > 0.72f;
             var label = AdRes.MakeLabel(p.t, num.ToString(), PieceSize * 0.62f, light ? new Color(0.2f, 0.14f, 0.32f) : Color.white, 5,
                 new Vector3(0f, -0.02f, 0f));
-            if (light) label.shadow.color = new Color(1f, 1f, 1f, 0.45f);
+            if (light && label.shadow) label.shadow.color = new Color(1f, 1f, 1f, 0.45f);
+            if (light && label.uiOutline) label.uiOutline.effectColor = new Color(1f, 1f, 1f, 0.65f);
             return p;
         }
 

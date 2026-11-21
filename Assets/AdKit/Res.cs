@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace AdKit
 {
@@ -148,20 +149,45 @@ namespace AdKit
 
         public static Label MakeLabel(Transform parent, string text, float height, Color c, int order, Vector3 pos)
         {
-            var go = new GameObject("Label");
-            go.transform.SetParent(parent, false);
-            go.transform.localPosition = pos;
+            // Use World-Space Canvas + UnityEngine.UI.Text so labels render crisply in BOTH Unity Editor and Playworks 7.2.0!
+            var go = new GameObject("Label", typeof(RectTransform));
+            var rt = (RectTransform)go.transform;
+            rt.SetParent(parent, false);
+            rt.localPosition = pos;
+            float scale = height / 76f;
+            rt.localScale = new Vector3(scale, scale, scale);
+            rt.sizeDelta = new Vector2(420f, 140f);
+
+            var canvas = go.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = order;
+
+            var txtGo = new GameObject("Text", typeof(RectTransform));
+            var trt = (RectTransform)txtGo.transform;
+            trt.SetParent(rt, false);
+            trt.anchorMin = Vector2.zero;
+            trt.anchorMax = Vector2.one;
+            trt.offsetMin = Vector2.zero;
+            trt.offsetMax = Vector2.zero;
+
+            var ut = txtGo.AddComponent<Text>();
+            ut.font = Font;
+            ut.text = text;
+            ut.fontSize = 84;
+            ut.color = c;
+            ut.alignment = TextAnchor.MiddleCenter;
+            ut.horizontalOverflow = HorizontalWrapMode.Overflow;
+            ut.verticalOverflow = VerticalWrapMode.Overflow;
+            ut.raycastTarget = false;
+
+            var outl = txtGo.AddComponent<Outline>();
+            outl.effectColor = new Color(0.08f, 0.04f, 0.22f, 0.96f);
+            outl.effectDistance = new Vector2(4f, -4f);
+
             var l = go.AddComponent<Label>();
-            Color outlineCol = new Color(0.04f, 0.05f, 0.11f, 0.96f);
-            float d = height * 0.045f;
-            l.outlines = new TextMesh[4];
-            l.outlines[0] = Txt(go.transform, "o0", text, height, outlineCol, order - 1, new Vector3(-d, 0f, 0.018f));
-            l.outlines[1] = Txt(go.transform, "o1", text, height, outlineCol, order - 1, new Vector3(d, 0f, 0.018f));
-            l.outlines[2] = Txt(go.transform, "o2", text, height, outlineCol, order - 1, new Vector3(0f, -d, 0.018f));
-            l.outlines[3] = Txt(go.transform, "o3", text, height, outlineCol, order - 1, new Vector3(0f, d, 0.018f));
-            l.shadow = Txt(go.transform, "shadow", text, height, new Color(0f, 0f, 0f, 0.85f), order - 2,
-                new Vector3(height * 0.055f, -height * 0.085f, 0.036f));
-            l.main = Txt(go.transform, "main", text, height, c, order, Vector3.zero);
+            l.uiMain = ut;
+            l.uiOutline = outl;
             return l;
         }
     }
@@ -170,12 +196,16 @@ namespace AdKit
     {
         public TextMesh main, shadow;
         public TextMesh[] outlines;
+        public Text uiMain;
+        public Outline uiOutline;
+
         public string Text
         {
-            get => main.text;
+            get => uiMain ? uiMain.text : (main ? main.text : "");
             set
             {
-                main.text = value;
+                if (uiMain) uiMain.text = value;
+                if (main) main.text = value;
                 if (shadow) shadow.text = value;
                 if (outlines != null)
                     for (int i = 0; i < outlines.Length; i++)
