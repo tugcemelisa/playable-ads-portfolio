@@ -8,15 +8,15 @@ Games and interactive playable ads are built and exported in **Unity** using **U
 | Project | Format | Description |
 |---|---|---|
 | **Mob Control** | Playable Ad + Creative Video | Voodoo-style 3D cannon & mob multiplier playable ad: 4-wheeled purple cannon, arched 3D center tube transport, sliding `X3` / `X2` / `X7` multiplier gates, destructible `60` HP block, yellow enemy base siege (`50` HP), prominent `HOLD & DRAG TO AIM!` tutorial, live HUD, near-miss `DEFEAT...` hook, and Google Play Store CTA.<br>🎮 **Playable Ad HTML5:** [Test Playable Ad](Builds/Playables/MobControl/index.html) *(Apple Store / Google Play CTA enabled)* · 🎬 **Creative Video:** [Mob Control Creative](file:///C:/Users/DELL/Desktop/Voodoo_Creative_Ciktilar/voodoo%20playable%20ads-creative/Mob_Control/) |
-| **Number Match** | Playable Ad + Creative Video | 3D colour-by-number pixel art puzzle: drag numbered cubes onto matching board cells, wrong-move tension hook, 360° radial colour wave reveals, celebratory star-eyes praise popups, `00:00` countdown alarm explosion transition, and voiceover endcard CTA.<br>🔗 **Repo:** [github.com/tugcemelisa/number-match-case-study](https://github.com/tugcemelisa/number-match-case-study) · 🎮 **Playable Ad HTML5:** [Test Playable Ad](Builds/Playables/NumberMatch/index.html) · 🎬 **Video:** [Watch Creative Video (MP4)](https://github.com/tugcemelisa/number-match-case-study/blob/master/CreativeAd_AfterEffects/NumberMatch_Creative_Video_Final.mp4) |
-| **Runner** | Playable Ad + Creative Video | 3D castle obstacle runner: swipe steering, jumping, coin & large gem collection, shield invincibility, destructible obstacles, and finish line victory sequence.<br>🔗 **Repo:** [github.com/tugcemelisa/Runner](https://github.com/tugcemelisa/Runner) · 🎮 **Playable Ad:** Integrated in `Assets/Runner/` |
+| **Number Match** | Standalone Case Study Repo | 3D colour-by-number pixel art puzzle: complete case study with 9:16 vertical marketing creative video, After Effects & Higgsfield AI pipeline, and Playable Ad.<br>🔗 **Dedicated Repository:** [github.com/tugcemelisa/number-match-case-study](https://github.com/tugcemelisa/number-match-case-study) |
+| **Runner** | Playable Ad + Creative Video | 3D castle obstacle runner: swipe steering, jumping, coin & large gem collection, shield invincibility, destructible obstacles, and finish line multiplier gate.<br>🔗 **Original Repo:** [github.com/tugcemelisa/Runner](https://github.com/tugcemelisa/Runner) · 🎮 **Playable Ad:** Integrated in `Assets/Runner/` |
 | **Jelly Flow** | Creative Video | Pixel-art conveyor puzzle 9:16 vertical marketing video creative.<br>🎬 **Video:** [Watch on YouTube Shorts](https://www.youtube.com/shorts/1l0v7LeWNJU) |
 | **MechWars** | Creative Video | Action shooter mobile marketing video creatives.<br>🎬 **Video:** [Watch on TikTok](https://www.tiktok.com/@mechwarsofficial_) |
 
 ## Tech Stack
 
-- **Unity 6000.0 LTS & Unity Playworks (Luna 7.2.0)** — Interactive 3D/2D playable ad development and single-package HTML5/WebGL export
-- **Adobe After Effects & Higgsfield AI** — Motion design, 9:16 vertical creative video hooks, VFX transitions, voiceover & 3D endcards
+- **Unity 6000.0 LTS & Unity Playworks (Luna 7.2.0)** — Interactive 3D playable ad development and single-package HTML5 export
+- **Adobe After Effects, Adobe Illustrator & Higgsfield AI** — Motion design, 9:16 vertical creative video hooks, vector UI badges, voiceover & 3D endcards
 - **Procedural & Baked WAV SFX** — Lightweight audio pipeline for Playworks HTML5 size budgets
 - **Shared `AdKit`** — Interactive drag tutorial hand, dynamic HUD, endcard + store CTA (`Luna.Unity.Playable.InstallFullGame`)
 
@@ -32,6 +32,6 @@ Use Unity **6000.0.51f1** with **Unity Playworks Plugin 7.2.0**:
 Assets/
 ├── AdKit/         Shared Playable Ad UI, Tutorial Hand, Endcard CTA & Baked SFX
 ├── MobControl/    Mob Control 3D Playable Ad (Models, Materials, Prefabs & Scripts)
-├── NumberMatch/   Number Match Playable Ad
+├── Runner/        Runner 3D Playable Ad (Castle Models, Player Rig, Obstacles & Scripts)
 └── Scenes/        Playable Ad Unity Scenes
 ```
