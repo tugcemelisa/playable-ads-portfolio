@@ -436,7 +436,7 @@ namespace MobControlAd
                 // Stylized 3D yellow brick wall fallback (recessed dark mortar core + beveled yellow bricks)
                 Color mortarCol = new Color(0.56f, 0.42f, 0.04f);
                 Color brickHi = new Color(1f, 0.92f, 0.30f);
-                Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 0.72f, 0f), new Vector3(2.64f, 1.38f, 1.54f), mortarCol);
+                Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 0.72f, 0f), new Vector3(2.64f, 1.32f, 1.54f), mortarCol);
                 for (int row = 0; row < 3; row++)
                 {
                     float y = 0.25f + row * 0.47f;
