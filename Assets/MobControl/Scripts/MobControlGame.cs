@@ -84,6 +84,10 @@ namespace MobControlAd
         Vector3 _camBasePos;
         float _shakeTimer;
         float _shakeAmp;
+        Transform _bgTransform;
+        float _bgSpriteW;
+        float _bgSpriteH;
+        float _lastCamAspect = -1f;
 
         // Purple 4-Wheeled Cannon
         Transform _cannonRoot;
@@ -173,54 +177,49 @@ namespace MobControlAd
             _cam.orthographic = false;
             _cam.fieldOfView = 50f;
             _cam.clearFlags = CameraClearFlags.SolidColor;
-            // Bright misty alpine sky backdrop inspired by Mob Control reference video
-            _cam.backgroundColor = new Color(0.62f, 0.74f, 0.88f);
+            // Fallback misty alpine sky tint if backdrop texture is unavailable
+            _cam.backgroundColor = new Color(0.72f, 0.83f, 0.92f);
             _camBasePos = new Vector3(0f, 11.4f, -6.2f);
             _cam.transform.position = _camBasePos;
             _cam.transform.rotation = Quaternion.Euler(38f, 0f, 0f);
 
-            // Stylized Alpine / Snowy Pine Forest Backdrop (giant space spheres removed!)
-            var envRoot = new GameObject("AlpineEnvironment").transform;
-            envRoot.SetParent(transform, false);
-
-            // Soft snowy valley ground plane beneath and around the elevated bridge
-            Prims.Make(PrimitiveType.Cube, envRoot, new Vector3(0f, -2.6f, 14f), new Vector3(64f, 0.6f, 64f), new Color(0.76f, 0.84f, 0.92f));
-            // Subtle misty snow ridges on left & right
-            Prims.Make(PrimitiveType.Cube, envRoot, new Vector3(-16f, -1.6f, 18f), new Vector3(18f, 2.2f, 46f), new Color(0.68f, 0.77f, 0.87f));
-            Prims.Make(PrimitiveType.Cube, envRoot, new Vector3(16f, -1.6f, 18f), new Vector3(18f, 2.2f, 46f), new Color(0.68f, 0.77f, 0.87f));
-
-            // Stylized low-poly pine trees lining both sides of the arena (matching reference video!)
-            Color trunkCol = new Color(0.32f, 0.24f, 0.18f);
-            Color pineDark = new Color(0.26f, 0.38f, 0.44f);
-            Color pineMid  = new Color(0.34f, 0.48f, 0.54f);
-            Color pineTop  = new Color(0.78f, 0.88f, 0.95f); // frosted snow tips
-
-            float[] treeZ = { 1.5f, 5.2f, 9.0f, 12.8f, 16.5f, 20.5f, 24.5f };
-            for (int side = -1; side <= 1; side += 2)
+            // Illustrated Misty Alpine Winter Valley Backdrop (loaded from Resources/AlpineBg.jpg)
+            var bgTex = Resources.Load<Texture2D>("AlpineBg");
+            if (bgTex != null)
             {
-                for (int i = 0; i < treeZ.Length; i++)
-                {
-                    // Inner row of pine trees
-                    SpawnPineTree(envRoot, new Vector3(side * (5.6f + (i % 2) * 1.1f), -2.3f, treeZ[i]), 1.0f + (i % 3) * 0.18f, trunkCol, pineDark, pineMid, pineTop);
-                    // Outer misty row of taller pine trees
-                    SpawnPineTree(envRoot, new Vector3(side * (9.2f + ((i + 1) % 2) * 1.4f), -1.6f, treeZ[i] + 1.4f), 1.35f + (i % 2) * 0.25f, trunkCol, pineMid, new Color(0.46f, 0.58f, 0.66f), pineTop);
-                }
+                var bgGo = new GameObject("AlpineBackdrop");
+                bgGo.transform.SetParent(_cam.transform, false);
+                bgGo.transform.localPosition = new Vector3(0f, 0f, 55f);
+                bgGo.transform.localRotation = Quaternion.identity;
+
+                var sr = bgGo.AddComponent<SpriteRenderer>();
+                if (AdRes.SpriteMat) sr.sharedMaterial = AdRes.SpriteMat;
+                sr.sprite = Sprite.Create(bgTex, new Rect(0, 0, bgTex.width, bgTex.height), new Vector2(0.5f, 0.5f), 100f);
+                sr.color = Color.white;
+                sr.sortingOrder = -100;
+
+                _bgTransform = bgGo.transform;
+                _bgSpriteW = bgTex.width / 100f;
+                _bgSpriteH = bgTex.height / 100f;
+                _lastCamAspect = -1f;
+                UpdateBackdropScale();
             }
         }
 
-        void SpawnPineTree(Transform parent, Vector3 pos, float scale, Color trunkCol, Color lowCol, Color midCol, Color tipCol)
+        void UpdateBackdropScale()
         {
-            var tree = new GameObject("PineTree").transform;
-            tree.SetParent(parent, false);
-            tree.localPosition = pos;
-            tree.localScale = Vector3.one * scale;
+            if (!_bgTransform || !_cam) return;
+            float aspect = _cam.aspect;
+            if (Mathf.Abs(aspect - _lastCamAspect) < 0.001f) return;
+            _lastCamAspect = aspect;
 
-            // Trunk
-            Prims.Make(PrimitiveType.Cylinder, tree, new Vector3(0f, 0.65f, 0f), new Vector3(0.36f, 0.70f, 0.36f), trunkCol);
-            // 3 stacked tapered foliage tiers (clean low-poly pine silhouette)
-            Prims.Make(PrimitiveType.Cylinder, tree, new Vector3(0f, 1.65f, 0f), new Vector3(1.85f, 0.65f, 1.85f), lowCol);
-            Prims.Make(PrimitiveType.Cylinder, tree, new Vector3(0f, 2.55f, 0f), new Vector3(1.35f, 0.62f, 1.35f), midCol);
-            Prims.Make(PrimitiveType.Cylinder, tree, new Vector3(0f, 3.35f, 0f), new Vector3(0.82f, 0.55f, 0.82f), tipCol);
+            float dist = _bgTransform.localPosition.z;
+            float viewH = 2f * dist * Mathf.Tan(_cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+            float viewW = viewH * aspect;
+            float sx = viewW / Mathf.Max(0.01f, _bgSpriteW);
+            float sy = viewH / Mathf.Max(0.01f, _bgSpriteH);
+            float fill = Mathf.Max(sx, sy) * 1.04f;
+            _bgTransform.localScale = new Vector3(fill, fill, 1f);
         }
 
         void BuildWhiteBridge()
@@ -646,6 +645,7 @@ namespace MobControlAd
         {
             float dt = Time.deltaTime;
             _ui?.Tick(dt);
+            UpdateBackdropScale();
 
             if (_topBlueMobsText) _topBlueMobsText.text = "MOBS: " + _purpleMobs.Count;
             if (_topEnemyBaseText) _topEnemyBaseText.text = "BASE: " + _enemyBaseHp;
