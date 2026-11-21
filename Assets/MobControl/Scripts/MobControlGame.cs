@@ -65,6 +65,7 @@ namespace MobControlAd
         {
             public Transform root;
             public Label label;
+            public Renderer shieldRenderer;
             public int multiplier;
             public float z;
             public float baseX;
@@ -81,6 +82,27 @@ namespace MobControlAd
         {
             public Transform tr;
             public Vector3 vel;
+            public float life;
+            public float maxLife;
+        }
+
+        class RingFx
+        {
+            public Transform tr;
+            public SpriteRenderer sr;
+            public Color baseCol;
+            public float maxScale;
+            public float life;
+            public float maxLife;
+        }
+
+        class SparkFx
+        {
+            public Transform tr;
+            public Vector3 vel;
+            public Vector3 spin;
+            public float baseScale;
+            public float gravity;
             public float life;
             public float maxLife;
         }
@@ -131,6 +153,8 @@ namespace MobControlAd
         readonly List<StickmanUnit> _yellowMobs = new List<StickmanUnit>();
         readonly List<MultiplierGate> _gates = new List<MultiplierGate>();
         readonly List<SmokePuff> _puffs = new List<SmokePuff>();
+        readonly List<RingFx> _rings = new List<RingFx>();
+        readonly List<SparkFx> _sparks = new List<SparkFx>();
 
         // UI & State
         AdUI _ui;
@@ -384,7 +408,8 @@ namespace MobControlAd
             var muzzleBore = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 1.11f), new Vector3(0.62f, 0.04f, 0.62f), new Color(0.08f, 0.04f, 0.14f));
             muzzleBore.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
-            _muzzleFlash = Prims.Make(PrimitiveType.Sphere, _cannonBarrel, new Vector3(0f, 0f, 1.20f), Vector3.zero, PurpleLight).transform;
+            _muzzleFlash = Prims.Make(PrimitiveType.Sphere, _cannonBarrel, new Vector3(0f, 0f, 1.22f), Vector3.zero, PurpleLight).transform;
+            Prims.Make(PrimitiveType.Sphere, _muzzleFlash, new Vector3(0f, 0f, 0.14f), Vector3.one * 0.62f, Color.white);
         }
 
         void BuildGatesAndYellowBlock()
@@ -479,13 +504,14 @@ namespace MobControlAd
             Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 1.12f, -0.04f), new Vector3(fullW - 0.12f, 0.07f, 0.10f), capGlow);
 
             // Glowing purple energy gate shield
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.64f, 0f), new Vector3(fullW - 0.14f, 0.96f, 0.06f), PurpleGateCol);
+            var shieldGo = Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.64f, 0f), new Vector3(fullW - 0.14f, 0.96f, 0.06f), PurpleGateCol);
             var label = AdRes.MakeLabel(root, "X" + mult, 0.82f, Color.white, 24, new Vector3(0f, 0.64f, -0.10f));
 
             _gates.Add(new MultiplierGate
             {
                 root = root,
                 label = label,
+                shieldRenderer = shieldGo.GetComponent<Renderer>(),
                 multiplier = mult,
                 z = z,
                 baseX = x,
@@ -743,6 +769,10 @@ namespace MobControlAd
             if (_climaxTriggered)
             {
                 _climaxTimer += dt;
+                UpdateSmokePuffs(dt);
+                UpdateRings(dt);
+                UpdateSparks(dt);
+                UpdateCameraShake(dt);
                 float pop = _climaxTimer < 0.22f
                     ? Mathf.Lerp(0.35f, 1.12f, _climaxTimer / 0.22f)
                     : Mathf.Lerp(1.12f, 1.0f, Mathf.Clamp01((_climaxTimer - 0.22f) / 0.14f));
@@ -769,6 +799,8 @@ namespace MobControlAd
             UpdateStickmen(dt);
             UpdateTubeBulge(dt);
             UpdateSmokePuffs(dt);
+            UpdateRings(dt);
+            UpdateSparks(dt);
             UpdateCameraShake(dt);
 
             // Trigger DEFEAT... climax at 21s if still battling
@@ -820,9 +852,12 @@ namespace MobControlAd
                 FirePurpleStickman();
             }
 
-            _barrelRecoil = Mathf.MoveTowards(_barrelRecoil, 0f, dt * 4.2f);
-            _cannonBarrel.localPosition = new Vector3(0f, 0.56f, -0.15f - _barrelRecoil * 0.22f);
-            _muzzleFlash.localScale = Vector3.one * (_barrelRecoil * 0.52f);
+            _barrelRecoil = Mathf.MoveTowards(_barrelRecoil, 0f, dt * 4.5f);
+            _cannonBarrel.localPosition = new Vector3(0f, 0.58f, -0.15f - _barrelRecoil * 0.26f);
+            float squash = 1f + _barrelRecoil * 0.14f;
+            float stretch = 1f - _barrelRecoil * 0.12f;
+            _cannonBarrel.localScale = new Vector3(squash, squash, stretch);
+            _muzzleFlash.localScale = Vector3.one * (_barrelRecoil * 0.72f);
         }
 
         void FirePurpleStickman()
@@ -832,7 +867,10 @@ namespace MobControlAd
 
             Vector3 spawnPos = new Vector3(Mathf.Clamp(_cannonX + Random.Range(-0.10f, 0.10f), -2.85f, 2.85f), 0f, 2.35f);
             SpawnStickman(true, spawnPos, 0);
-            SpawnWhiteSmoke(spawnPos + new Vector3(0f, 0.35f, 0f), 2, PurpleLight);
+            Vector3 muzzleWorld = new Vector3(_cannonX, 0.62f, 2.32f);
+            SpawnWhiteSmoke(muzzleWorld, 2, PurpleLight);
+            SpawnRing(muzzleWorld, 1.35f, new Color(0.90f, 0.72f, 1f, 0.92f), 0.22f, 0f);
+            SpawnSparks(muzzleWorld, 3, Color.white, 3.6f, false);
         }
 
         void UpdateGates(float dt)
@@ -847,12 +885,16 @@ namespace MobControlAd
                 if (g.punchTimer > 0f)
                 {
                     g.punchTimer = Mathf.MoveTowards(g.punchTimer, 0f, dt * 5f);
-                    float s = 1f + Mathf.Sin(g.punchTimer * Mathf.PI) * 0.16f;
+                    float s = 1f + Mathf.Sin(g.punchTimer * Mathf.PI) * 0.18f;
                     g.root.localScale = new Vector3(s, s, 1f);
+                    if (g.shieldRenderer)
+                        Prims.SetColor(g.shieldRenderer, Color.Lerp(PurpleGateCol, Color.white, g.punchTimer * 0.72f));
                 }
                 else
                 {
                     g.root.localScale = Vector3.one;
+                    if (g.shieldRenderer)
+                        Prims.SetColor(g.shieldRenderer, PurpleGateCol);
                 }
             }
 
@@ -916,7 +958,10 @@ namespace MobControlAd
                         m.root.gameObject.SetActive(true);
                         // Pop out of upper-right tube exit!
                         m.root.localPosition = new Vector3(1.35f + Random.Range(-0.25f, 0.25f), 0f, 19.35f);
-                        SpawnWhiteSmoke(m.root.localPosition + Vector3.up * 0.4f, 3, Color.white);
+                        Vector3 exitFx = m.root.localPosition + Vector3.up * 0.45f;
+                        SpawnWhiteSmoke(exitFx, 3, Color.white);
+                        SpawnRing(exitFx, 1.85f, new Color(0.84f, 0.56f, 1f, 0.95f), 0.28f, 90f);
+                        SpawnSparks(exitFx, 4, PurpleLight, 4.4f, false);
                         Sfx.Play(Sfx.Id.Pop, 0.4f);
                     }
                     else
@@ -936,7 +981,9 @@ namespace MobControlAd
                     m.inTube = true;
                     m.tubeT = 0.02f;
                     m.root.gameObject.SetActive(false); // Hidden inside pipe while traveling!
-                    SpawnWhiteSmoke(new Vector3(0f, 0.52f, TubeEntranceZ), 2, PurpleLight);
+                    Vector3 entryFx = new Vector3(0f, 0.55f, TubeEntranceZ);
+                    SpawnWhiteSmoke(entryFx, 2, PurpleLight);
+                    SpawnRing(entryFx, 1.55f, new Color(0.86f, 0.62f, 1f, 0.92f), 0.24f, 0f);
                     Sfx.Play(Sfx.Id.Jump, 0.35f);
                     continue;
                 }
@@ -973,7 +1020,10 @@ namespace MobControlAd
                                     clonePos.x = Mathf.Clamp(clonePos.x, -3.05f, -0.58f);
                                 SpawnStickman(true, clonePos, m.gateMask);
                             }
-                            SpawnWhiteSmoke(new Vector3(pos.x, 0.4f, g.z), 4, Color.white);
+                            Vector3 gateFx = new Vector3(pos.x, 0.55f, g.z);
+                            SpawnWhiteSmoke(gateFx, 4, Color.white);
+                            SpawnRing(gateFx, 1.95f, new Color(0.88f, 0.70f, 1f, 0.95f), 0.28f, 0f);
+                            SpawnSparks(gateFx, 5, Color.white, 4.6f, false);
                             if (_sfxGateCooldown <= 0f)
                             {
                                 _sfxGateCooldown = 0.08f;
@@ -1066,9 +1116,12 @@ namespace MobControlAd
                         ym.dyingTimer = 0.24f;
                         SetStickmanColor(ym, GrayCorpse);
 
+                        Vector3 clashPos = (pp + yp) * 0.5f + Vector3.up * 0.55f;
+                        SpawnSparks(clashPos, 3, new Color(1f, 0.94f, 0.48f), 4.2f, false);
                         if (_sfxHitCooldown <= 0f)
                         {
                             _sfxHitCooldown = 0.08f;
+                            SpawnRing(clashPos, 1.55f, new Color(1f, 0.95f, 0.65f, 0.90f), 0.22f, 90f);
                             Sfx.Play(Sfx.Id.Hit, 0.4f);
                         }
                         break;
@@ -1124,10 +1177,12 @@ namespace MobControlAd
             _yellowBlockHitPunch = 1f;
             if (_yellowBlockLabel) _yellowBlockLabel.Text = _yellowBlockHp.ToString();
             SpawnWhiteSmoke(hitPos + Vector3.up * 0.4f, 2, YellowMain);
+            SpawnSparks(hitPos + Vector3.up * 0.55f, 4, YellowMain, 4.8f, true);
 
             if (_sfxHitCooldown <= 0f)
             {
                 _sfxHitCooldown = 0.07f;
+                SpawnRing(hitPos + Vector3.up * 0.55f, 1.65f, new Color(1f, 0.92f, 0.36f, 0.92f), 0.24f, 0f);
                 Sfx.Play(Sfx.Id.Hit, 0.45f);
             }
 
@@ -1135,7 +1190,12 @@ namespace MobControlAd
             {
                 _yellowBlockDestroyed = true;
                 Sfx.Play(Sfx.Id.Glass, 0.8f);
-                SpawnWhiteSmoke(_yellowBlockRoot.localPosition + Vector3.up * 0.7f, 10, YellowMain);
+                Vector3 burstPos = _yellowBlockRoot.localPosition + Vector3.up * 0.75f;
+                SpawnWhiteSmoke(burstPos, 10, YellowMain);
+                SpawnSparks(burstPos, 18, YellowMain, 7.2f, true);
+                SpawnSparks(burstPos, 10, Color.white, 6.0f, false);
+                SpawnRing(burstPos, 4.6f, new Color(1f, 0.92f, 0.30f, 0.98f), 0.42f, 90f);
+                TriggerCameraShake(0.28f, 0.20f);
                 Destroy(_yellowBlockRoot.gameObject);
             }
         }
@@ -1146,15 +1206,22 @@ namespace MobControlAd
             _enemyBaseHitPunch = 1f;
             if (_enemyBaseLabel) _enemyBaseLabel.Text = _enemyBaseHp.ToString();
             SpawnWhiteSmoke(hitPos + Vector3.up * 0.5f, 2, YellowMain);
+            SpawnSparks(hitPos + Vector3.up * 0.75f, 4, new Color(1f, 0.92f, 0.36f), 5.2f, true);
 
             if (_sfxHitCooldown <= 0f)
             {
                 _sfxHitCooldown = 0.07f;
+                SpawnRing(hitPos + Vector3.up * 0.75f, 2.0f, new Color(1f, 0.90f, 0.26f, 0.95f), 0.26f, 0f);
                 Sfx.Play(Sfx.Id.Stomp, 0.45f);
             }
 
             if (_enemyBaseHp <= 0 && !_climaxTriggered)
             {
+                Vector3 winPos = _enemyBaseRoot ? _enemyBaseRoot.localPosition + Vector3.up * 1.4f : hitPos + Vector3.up * 1.2f;
+                SpawnSparks(winPos, 22, YellowMain, 8.2f, true);
+                SpawnSparks(winPos, 18, PurpleLight, 7.6f, false);
+                SpawnRing(winPos, 6.2f, new Color(1f, 0.90f, 0.24f, 0.98f), 0.52f, 90f);
+                SpawnRing(winPos + Vector3.up * 0.6f, 4.8f, new Color(0.82f, 0.52f, 1f, 0.95f), 0.44f, 0f);
                 TriggerVictoryClimax();
             }
         }
@@ -1241,6 +1308,90 @@ namespace MobControlAd
                 p.tr.localPosition += p.vel * dt;
                 float s = 0.32f * (p.life / p.maxLife);
                 p.tr.localScale = Vector3.one * s;
+            }
+        }
+
+        void SpawnRing(Vector3 pos, float maxScale, Color col, float duration, float tiltX)
+        {
+            if (_rings.Count > 24) return;
+            var sr = AdRes.Spr("RingFx", transform, AdRes.Ring, col, 35, pos, Vector2.one * 0.25f);
+            sr.transform.localRotation = Quaternion.Euler(tiltX, 0f, 0f);
+            _rings.Add(new RingFx
+            {
+                tr = sr.transform,
+                sr = sr,
+                baseCol = col,
+                maxScale = maxScale,
+                life = duration,
+                maxLife = duration
+            });
+        }
+
+        void UpdateRings(float dt)
+        {
+            for (int i = _rings.Count - 1; i >= 0; i--)
+            {
+                var r = _rings[i];
+                r.life -= dt;
+                if (r.life <= 0f || !r.tr)
+                {
+                    if (r.tr) Destroy(r.tr.gameObject);
+                    _rings.RemoveAt(i);
+                    continue;
+                }
+                float t = 1f - (r.life / r.maxLife);
+                float easeOut = 1f - (1f - t) * (1f - t);
+                float sc = Mathf.Lerp(0.28f, r.maxScale, easeOut);
+                r.tr.localScale = new Vector3(sc, sc, 1f);
+                if (r.sr)
+                {
+                    Color c = r.baseCol;
+                    c.a = r.baseCol.a * (1f - t);
+                    r.sr.color = c;
+                }
+            }
+        }
+
+        void SpawnSparks(Vector3 pos, int count, Color col, float speed, bool cubeDebris)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (_sparks.Count > 85) return;
+                float sz = cubeDebris ? Random.Range(0.14f, 0.26f) : Random.Range(0.10f, 0.18f);
+                var go = Prims.Make(cubeDebris ? PrimitiveType.Cube : PrimitiveType.Sphere, transform,
+                    pos + Random.insideUnitSphere * 0.16f, Vector3.one * sz, col);
+                Vector3 dir = new Vector3(Random.Range(-1f, 1f), Random.Range(0.45f, 1.35f), Random.Range(-1f, 1f)).normalized;
+                float dur = cubeDebris ? Random.Range(0.36f, 0.56f) : Random.Range(0.22f, 0.38f);
+                _sparks.Add(new SparkFx
+                {
+                    tr = go.transform,
+                    vel = dir * Random.Range(speed * 0.65f, speed * 1.15f),
+                    spin = new Vector3(Random.Range(-420f, 420f), Random.Range(-420f, 420f), Random.Range(-420f, 420f)),
+                    baseScale = sz,
+                    gravity = cubeDebris ? 14.5f : 7.5f,
+                    life = dur,
+                    maxLife = dur
+                });
+            }
+        }
+
+        void UpdateSparks(float dt)
+        {
+            for (int i = _sparks.Count - 1; i >= 0; i--)
+            {
+                var sp = _sparks[i];
+                sp.life -= dt;
+                if (sp.life <= 0f || !sp.tr)
+                {
+                    if (sp.tr) Destroy(sp.tr.gameObject);
+                    _sparks.RemoveAt(i);
+                    continue;
+                }
+                sp.vel.y -= sp.gravity * dt;
+                sp.tr.localPosition += sp.vel * dt;
+                sp.tr.Rotate(sp.spin * dt, Space.Self);
+                float frac = sp.life / sp.maxLife;
+                sp.tr.localScale = Vector3.one * (sp.baseScale * frac);
             }
         }
 
