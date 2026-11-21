@@ -51,28 +51,27 @@ namespace AdKit
             ui.tut.anchoredPosition = new Vector2(0f, 430f);
             ui.tut.sizeDelta = new Vector2(960f, 250f);
 
-            // Layer 1: Dark outer shadow
-            Img(ui.tut, AdRes.Round(64), new Color(0.02f, 0.02f, 0.08f, 0.92f), c, Vector2.zero, new Vector2(960f, 250f), true);
+            // Layer 1: Deep navy-purple outer shadow (color-matched, not black)
+            AdRes.Round(64);
+            Img(ui.tut, AdRes.Round(64), new Color(0.06f, 0.14f, 0.32f, 0.96f), c, new Vector2(0f, -8f), new Vector2(952f, 236f), true);
             // Layer 2: Glowing cyan arcade rim
-            Img(ui.tut, AdRes.Round(64), new Color(0.25f, 0.88f, 1f, 0.95f), c, Vector2.zero, new Vector2(950f, 240f), true);
+            Img(ui.tut, AdRes.Round(64), new Color(0.25f, 0.88f, 1f, 0.95f), c, Vector2.zero, new Vector2(944f, 228f), true);
             // Layer 3: Deep purple body
-            Img(ui.tut, AdRes.Round(64), new Color(0.08f, 0.04f, 0.24f, 0.98f), c, Vector2.zero, new Vector2(934f, 224f), true);
+            Img(ui.tut, AdRes.Round(64), new Color(0.10f, 0.05f, 0.28f, 0.98f), c, Vector2.zero, new Vector2(928f, 212f), true);
 
             // Slider guide track + endpoint indicator dots
-            Img(ui.tut, AdRes.Round(64), new Color(1f, 1f, 1f, 0.20f), c, new Vector2(0f, -48f), new Vector2(760f, 32f), true);
-            Img(ui.tut, AdRes.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(-350f, -48f), new Vector2(38f, 38f), false);
-            Img(ui.tut, AdRes.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(350f, -48f), new Vector2(38f, 38f), false);
+            Img(ui.tut, AdRes.Round(64), new Color(1f, 1f, 1f, 0.20f), c, new Vector2(0f, -46f), new Vector2(740f, 30f), true);
+            Img(ui.tut, AdRes.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(-345f, -46f), new Vector2(36f, 36f), false);
+            Img(ui.tut, AdRes.Circle, new Color(0.25f, 0.88f, 1f, 0.95f), c, new Vector2(345f, -46f), new Vector2(36f, 36f), false);
 
-            // Bold, readable arcade tutorial text constrained cleanly inside the pill backdrop
-            var tutTxt = Txt(ui.tut, "◀  HOLD & DRAG TO AIM  ▶", 66, new Color(1f, 0.92f, 0.28f), c, new Vector2(0f, 48f));
-            tutTxt.rectTransform.sizeDelta = new Vector2(860f, 108f);
-            tutTxt.horizontalOverflow = HorizontalWrapMode.Wrap;
+            // Single-line symmetric arcade tutorial text (identical left/right arrows, comfortable padding)
+            var tutTxt = Txt(ui.tut, "<  HOLD & DRAG TO AIM  >", 50, new Color(1f, 0.92f, 0.28f), c, new Vector2(0f, 44f));
+            tutTxt.rectTransform.sizeDelta = new Vector2(880f, 80f);
+            tutTxt.horizontalOverflow = HorizontalWrapMode.Overflow;
             tutTxt.verticalOverflow = VerticalWrapMode.Overflow;
-            tutTxt.resizeTextForBestFit = true;
-            tutTxt.resizeTextMinSize = 44;
-            tutTxt.resizeTextMaxSize = 66;
+            tutTxt.resizeTextForBestFit = false;
             var tutOut = tutTxt.gameObject.AddComponent<Outline>();
-            tutOut.effectColor = new Color(0.14f, 0.05f, 0.36f, 1f);
+            tutOut.effectColor = new Color(0.20f, 0.08f, 0.42f, 1f);
             tutOut.effectDistance = new Vector2(4f, -4f);
 
             ui.tutHand = Hand(ui.tut, out ui.tutRing);

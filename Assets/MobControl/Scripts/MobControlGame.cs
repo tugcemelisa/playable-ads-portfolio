@@ -446,35 +446,38 @@ namespace MobControlAd
             trt.anchoredPosition = new Vector2(0f, -125f);
             trt.sizeDelta = new Vector2(990f, 150f);
 
-            // Left: Cartoon Purple Mob Count Pill (dark purple shadow instead of black)
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.16f, 0.04f, 0.44f, 1f), center, new Vector2(-330f, -10f), new Vector2(314f, 122f), true);
-            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(-330f, 0f), new Vector2(300f, 108f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.36f, 0.14f, 0.90f, 1f), center, new Vector2(-330f, 0f), new Vector2(286f, 94f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.26f), center, new Vector2(-330f, 24f), new Vector2(246f, 28f), true);
-            _topBlueMobsText = AdUI.Txt(trt, "MOBS: 0", 52, Color.white, center, new Vector2(-330f, -2f));
+            // Left: Cartoon Purple Mob Count Pill (same font size 44 + generous padding + dark purple shadow)
+            AdUI.Img(trt, AdRes.Round(64), new Color(0.16f, 0.04f, 0.44f, 1f), center, new Vector2(-330f, -10f), new Vector2(304f, 114f), true);
+            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(-330f, 0f), new Vector2(292f, 102f), true);
+            AdUI.Img(trt, AdRes.Round(64), new Color(0.36f, 0.14f, 0.90f, 1f), center, new Vector2(-330f, 0f), new Vector2(278f, 88f), true);
+            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.26f), center, new Vector2(-330f, 22f), new Vector2(236f, 24f), true);
+            _topBlueMobsText = AdUI.Txt(trt, "MOBS: 0", 44, Color.white, center, new Vector2(-330f, -1f));
+            _topBlueMobsText.resizeTextForBestFit = false;
             var mobOut = _topBlueMobsText.GetComponent<Outline>();
-            if (mobOut) { mobOut.effectColor = new Color(0.16f, 0.04f, 0.44f, 1f); mobOut.effectDistance = new Vector2(4f, -4f); }
+            if (mobOut) { mobOut.effectColor = new Color(0.16f, 0.04f, 0.44f, 1f); mobOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
-            // Center: Cartoon Gold Stage Shield (dark amber/gold shadow instead of black)
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.54f, 0.30f, 0.02f, 1f), center, new Vector2(0f, -10f), new Vector2(274f, 134f), true);
-            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(0f, 0f), new Vector2(260f, 120f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 0.72f, 0.10f, 1f), center, new Vector2(0f, 0f), new Vector2(244f, 104f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.35f), center, new Vector2(0f, 28f), new Vector2(204f, 28f), true);
-            var stageLbl = AdUI.Txt(trt, "STAGE 1", 56, Color.white, center, new Vector2(0f, -2f));
+            // Center: Cartoon Gold Stage Pill (same font size 44 + generous padding + dark amber shadow)
+            AdUI.Img(trt, AdRes.Round(64), new Color(0.54f, 0.30f, 0.02f, 1f), center, new Vector2(0f, -10f), new Vector2(304f, 114f), true);
+            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(0f, 0f), new Vector2(292f, 102f), true);
+            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 0.72f, 0.10f, 1f), center, new Vector2(0f, 0f), new Vector2(278f, 88f), true);
+            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.34f), center, new Vector2(0f, 22f), new Vector2(236f, 24f), true);
+            var stageLbl = AdUI.Txt(trt, "STAGE 1", 44, Color.white, center, new Vector2(0f, -1f));
+            stageLbl.resizeTextForBestFit = false;
             var stageOut = stageLbl.GetComponent<Outline>();
-            if (stageOut) { stageOut.effectColor = new Color(0.54f, 0.30f, 0.02f, 1f); stageOut.effectDistance = new Vector2(4f, -4f); }
+            if (stageOut) { stageOut.effectColor = new Color(0.54f, 0.30f, 0.02f, 1f); stageOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
-            // Right: Cartoon Red Enemy Base HP Pill (dark crimson shadow instead of black)
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.48f, 0.05f, 0.08f, 1f), center, new Vector2(330f, -10f), new Vector2(314f, 122f), true);
-            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(330f, 0f), new Vector2(300f, 108f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(0.95f, 0.24f, 0.28f, 1f), center, new Vector2(330f, 0f), new Vector2(286f, 94f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.28f), center, new Vector2(330f, 24f), new Vector2(246f, 28f), true);
-            _topEnemyBaseText = AdUI.Txt(trt, "BASE: " + enemyBaseStartHp, 52, Color.white, center, new Vector2(330f, -2f));
+            // Right: Cartoon Red Enemy Base HP Pill (same font size 44 + generous padding + dark crimson shadow)
+            AdUI.Img(trt, AdRes.Round(64), new Color(0.48f, 0.05f, 0.08f, 1f), center, new Vector2(330f, -10f), new Vector2(304f, 114f), true);
+            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(330f, 0f), new Vector2(292f, 102f), true);
+            AdUI.Img(trt, AdRes.Round(64), new Color(0.95f, 0.24f, 0.28f, 1f), center, new Vector2(330f, 0f), new Vector2(278f, 88f), true);
+            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.28f), center, new Vector2(330f, 22f), new Vector2(236f, 24f), true);
+            _topEnemyBaseText = AdUI.Txt(trt, "BASE: " + enemyBaseStartHp, 44, Color.white, center, new Vector2(330f, -1f));
+            _topEnemyBaseText.resizeTextForBestFit = false;
             var baseOut = _topEnemyBaseText.GetComponent<Outline>();
-            if (baseOut) { baseOut.effectColor = new Color(0.48f, 0.05f, 0.08f, 1f); baseOut.effectDistance = new Vector2(4f, -4f); }
+            if (baseOut) { baseOut.effectColor = new Color(0.48f, 0.05f, 0.08f, 1f); baseOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
             // =========================================================================
-            // CARTOON ART STYLE END CARD OVERLAY (Live 3D battlefield behind juicy comic UI!)
+            // CARTOON ART STYLE END CARD OVERLAY (Color-matched dark shadows, no black!)
             // =========================================================================
             _endOverlayRoot = new GameObject("MobControlEndOverlay", typeof(RectTransform));
             var ort = (RectTransform)_endOverlayRoot.transform;
@@ -483,18 +486,18 @@ namespace MobControlAd
             ort.anchorMax = Vector2.one;
             ort.offsetMin = Vector2.zero;
             ort.offsetMax = Vector2.zero;
-            _endOverlayRoot.AddComponent<Image>().color = new Color(0.04f, 0.02f, 0.12f, 0.56f);
+            _endOverlayRoot.AddComponent<Image>().color = new Color(0.08f, 0.04f, 0.22f, 0.54f);
 
-            // Top Cartoon Game Title Ribbon: "MOB CONTROL"
-            AdUI.Img(ort, AdRes.Round(64), new Color(0.05f, 0.02f, 0.12f, 1f), center, new Vector2(0f, 520f), new Vector2(780f, 164f), true);
+            // Top Cartoon Game Title Ribbon: "MOB CONTROL" (dark purple shadow)
+            AdUI.Img(ort, AdRes.Round(64), new Color(0.20f, 0.04f, 0.50f, 1f), center, new Vector2(0f, 518f), new Vector2(780f, 164f), true);
             AdUI.Img(ort, AdRes.Round(64), Color.white, center, new Vector2(0f, 530f), new Vector2(756f, 144f), true);
             AdUI.Img(ort, AdRes.Round(64), new Color(0.46f, 0.14f, 0.96f, 1f), center, new Vector2(0f, 530f), new Vector2(734f, 122f), true);
             AdUI.Img(ort, AdRes.Round(64), new Color(1f, 1f, 1f, 0.28f), center, new Vector2(0f, 562f), new Vector2(660f, 36f), true);
             var brandLbl = AdUI.Txt(ort, "MOB CONTROL", 84, new Color(1f, 0.90f, 0.22f), center, new Vector2(0f, 528f));
             var brandOut = brandLbl.GetComponent<Outline>();
-            if (brandOut) { brandOut.effectColor = new Color(0.08f, 0.02f, 0.18f, 1f); brandOut.effectDistance = new Vector2(6f, -6f); }
+            if (brandOut) { brandOut.effectColor = new Color(0.22f, 0.05f, 0.52f, 1f); brandOut.effectDistance = new Vector2(6f, -6f); }
 
-            // Tilted Juicy Cartoon "DEFEAT..." / "VICTORY!" Center Card
+            // Tilted Juicy Cartoon "DEFEAT..." / "VICTORY!" Center Card (deep indigo-purple shadow)
             var defWrap = new GameObject("DefeatBanner", typeof(RectTransform));
             _defeatBannerRt = (RectTransform)defWrap.transform;
             _defeatBannerRt.SetParent(ort, false);
@@ -504,25 +507,24 @@ namespace MobControlAd
             _defeatBannerRt.sizeDelta = new Vector2(960f, 340f);
             _defeatBannerRt.localRotation = Quaternion.Euler(0f, 0f, 3.0f);
 
-            // Chunky 3D comic drop shadow + bright white cartoon border + deep royal card + top gloss
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.04f, 0.02f, 0.10f, 1f), center, new Vector2(0f, -18f), new Vector2(944f, 304f), true);
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.12f, 0.04f, 0.34f, 1f), center, new Vector2(0f, -18f), new Vector2(944f, 304f), true);
             AdUI.Img(_defeatBannerRt, AdRes.Round(64), Color.white, center, Vector2.zero, new Vector2(920f, 282f), true);
-            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.14f, 0.06f, 0.34f, 1f), center, Vector2.zero, new Vector2(894f, 256f), true);
+            AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(0.24f, 0.10f, 0.54f, 1f), center, Vector2.zero, new Vector2(894f, 256f), true);
             AdUI.Img(_defeatBannerRt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.14f), center, new Vector2(0f, 76f), new Vector2(820f, 68f), true);
 
             _defeatTitleText = AdUI.Txt(_defeatBannerRt, "DEFEAT...", 136, new Color(1f, 0.86f, 0.22f), center, new Vector2(0f, 28f));
             var outline = _defeatTitleText.GetComponent<Outline>();
             if (outline)
             {
-                outline.effectColor = new Color(0.06f, 0.02f, 0.14f, 1f);
+                outline.effectColor = new Color(0.42f, 0.20f, 0.02f, 1f);
                 outline.effectDistance = new Vector2(8f, -8f);
             }
 
             var subLbl = AdUI.Txt(_defeatBannerRt, "CAN YOU BEAT THE BOSS?", 52, new Color(0.55f, 0.94f, 1f), center, new Vector2(0f, -82f));
             var subOut = subLbl.GetComponent<Outline>();
-            if (subOut) { subOut.effectColor = new Color(0.05f, 0.02f, 0.12f, 1f); subOut.effectDistance = new Vector2(4f, -4f); }
+            if (subOut) { subOut.effectColor = new Color(0.06f, 0.26f, 0.42f, 1f); subOut.effectDistance = new Vector2(4f, -4f); }
 
-            // Chunky Cartoon 3D Glossy Green "PLAY NOW!" CTA Button
+            // Chunky Cartoon 3D Glossy Green "PLAY NOW!" CTA Button (deep forest green shadow, no black!)
             var ctaGo = new GameObject("PlayNowCTA", typeof(RectTransform));
             _playNowBtnRt = (RectTransform)ctaGo.transform;
             _playNowBtnRt.SetParent(ort, false);
@@ -531,15 +533,14 @@ namespace MobControlAd
             _playNowBtnRt.anchoredPosition = new Vector2(0f, -455f);
             _playNowBtnRt.sizeDelta = new Vector2(740f, 210f);
 
-            // Black comic outline -> Deep green 3D extrusion -> Bright white rim -> Vivid lime-green body -> Top cartoon shine
-            AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(0.04f, 0.02f, 0.10f, 1f), center, new Vector2(0f, -18f), new Vector2(736f, 204f), true);
+            AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(0.04f, 0.34f, 0.11f, 1f), center, new Vector2(0f, -18f), new Vector2(736f, 204f), true);
             AdUI.Img(_playNowBtnRt, AdRes.Round(64), Color.white, center, new Vector2(0f, 0f), new Vector2(716f, 186f), true);
-            AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(0.06f, 0.52f, 0.18f, 1f), center, new Vector2(0f, -10f), new Vector2(694f, 166f), true);
+            AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(0.08f, 0.56f, 0.20f, 1f), center, new Vector2(0f, -10f), new Vector2(694f, 166f), true);
             AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(0.24f, 0.92f, 0.36f, 1f), center, new Vector2(0f, 6f), new Vector2(690f, 158f), true);
             AdUI.Img(_playNowBtnRt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.36f), center, new Vector2(0f, 48f), new Vector2(620f, 44f), true);
             var ctaLbl = AdUI.Txt(_playNowBtnRt, ctaText + "!", 92, Color.white, center, new Vector2(0f, 6f));
             var ctaOut = ctaLbl.GetComponent<Outline>();
-            if (ctaOut) { ctaOut.effectColor = new Color(0.04f, 0.30f, 0.10f, 1f); ctaOut.effectDistance = new Vector2(6f, -6f); }
+            if (ctaOut) { ctaOut.effectColor = new Color(0.05f, 0.36f, 0.12f, 1f); ctaOut.effectDistance = new Vector2(6f, -6f); }
 
             var fullBtn = _endOverlayRoot.AddComponent<Button>();
             fullBtn.onClick.AddListener(() => StoreLink.Open(MobControlStoreUrl));
