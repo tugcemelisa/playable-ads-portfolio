@@ -173,31 +173,54 @@ namespace MobControlAd
             _cam.orthographic = false;
             _cam.fieldOfView = 50f;
             _cam.clearFlags = CameraClearFlags.SolidColor;
-            _cam.backgroundColor = new Color(0.02f, 0.02f, 0.04f); // Deep pitch-black outer space
+            // Bright misty alpine sky backdrop inspired by Mob Control reference video
+            _cam.backgroundColor = new Color(0.62f, 0.74f, 0.88f);
             _camBasePos = new Vector3(0f, 11.4f, -6.2f);
             _cam.transform.position = _camBasePos;
             _cam.transform.rotation = Quaternion.Euler(38f, 0f, 0f);
 
-            var spaceRoot = new GameObject("SpaceEnvironment").transform;
-            spaceRoot.SetParent(transform, false);
+            // Stylized Alpine / Snowy Pine Forest Backdrop (giant space spheres removed!)
+            var envRoot = new GameObject("AlpineEnvironment").transform;
+            envRoot.SetParent(transform, false);
 
-            // Giant 3D Cratered Moon on the Left (matching VideoReference.mp4)
-            var leftMoon = Prims.Make(PrimitiveType.Sphere, spaceRoot, new Vector3(-11.8f, 5.2f, 15.5f), Vector3.one * 17.5f, new Color(0.68f, 0.69f, 0.67f)).transform;
-            // Subtle golden-yellow crater patches on lower-left moon surface
-            Prims.Make(PrimitiveType.Sphere, leftMoon, new Vector3(0.32f, -0.22f, -0.34f), new Vector3(0.35f, 0.25f, 0.25f), new Color(0.76f, 0.68f, 0.22f));
-            Prims.Make(PrimitiveType.Sphere, leftMoon, new Vector3(0.38f, -0.10f, -0.30f), new Vector3(0.22f, 0.18f, 0.22f), new Color(0.45f, 0.46f, 0.45f));
+            // Soft snowy valley ground plane beneath and around the elevated bridge
+            Prims.Make(PrimitiveType.Cube, envRoot, new Vector3(0f, -2.6f, 14f), new Vector3(64f, 0.6f, 64f), new Color(0.76f, 0.84f, 0.92f));
+            // Subtle misty snow ridges on left & right
+            Prims.Make(PrimitiveType.Cube, envRoot, new Vector3(-16f, -1.6f, 18f), new Vector3(18f, 2.2f, 46f), new Color(0.68f, 0.77f, 0.87f));
+            Prims.Make(PrimitiveType.Cube, envRoot, new Vector3(16f, -1.6f, 18f), new Vector3(18f, 2.2f, 46f), new Color(0.68f, 0.77f, 0.87f));
 
-            // 3D Clouded Dark/White Planet on the Right
-            var rightPlanet = Prims.Make(PrimitiveType.Sphere, spaceRoot, new Vector3(9.4f, 0.8f, 17.0f), Vector3.one * 10.2f, new Color(0.34f, 0.36f, 0.38f)).transform;
-            Prims.Make(PrimitiveType.Sphere, rightPlanet, new Vector3(-0.18f, 0.24f, -0.40f), new Vector3(0.55f, 0.42f, 0.35f), new Color(0.78f, 0.80f, 0.82f));
+            // Stylized low-poly pine trees lining both sides of the arena (matching reference video!)
+            Color trunkCol = new Color(0.32f, 0.24f, 0.18f);
+            Color pineDark = new Color(0.26f, 0.38f, 0.44f);
+            Color pineMid  = new Color(0.34f, 0.48f, 0.54f);
+            Color pineTop  = new Color(0.78f, 0.88f, 0.95f); // frosted snow tips
 
-            // Distant twinkling stars in space
-            for (int i = 0; i < 32; i++)
+            float[] treeZ = { 1.5f, 5.2f, 9.0f, 12.8f, 16.5f, 20.5f, 24.5f };
+            for (int side = -1; side <= 1; side += 2)
             {
-                Vector3 sp = new Vector3(Random.Range(-18f, 18f), Random.Range(-4f, 22f), Random.Range(24f, 42f));
-                float sz = Random.Range(0.08f, 0.18f);
-                Prims.Make(PrimitiveType.Cube, spaceRoot, sp, Vector3.one * sz, new Color(0.85f, 0.88f, 0.95f));
+                for (int i = 0; i < treeZ.Length; i++)
+                {
+                    // Inner row of pine trees
+                    SpawnPineTree(envRoot, new Vector3(side * (5.6f + (i % 2) * 1.1f), -2.3f, treeZ[i]), 1.0f + (i % 3) * 0.18f, trunkCol, pineDark, pineMid, pineTop);
+                    // Outer misty row of taller pine trees
+                    SpawnPineTree(envRoot, new Vector3(side * (9.2f + ((i + 1) % 2) * 1.4f), -1.6f, treeZ[i] + 1.4f), 1.35f + (i % 2) * 0.25f, trunkCol, pineMid, new Color(0.46f, 0.58f, 0.66f), pineTop);
+                }
             }
+        }
+
+        void SpawnPineTree(Transform parent, Vector3 pos, float scale, Color trunkCol, Color lowCol, Color midCol, Color tipCol)
+        {
+            var tree = new GameObject("PineTree").transform;
+            tree.SetParent(parent, false);
+            tree.localPosition = pos;
+            tree.localScale = Vector3.one * scale;
+
+            // Trunk
+            Prims.Make(PrimitiveType.Cylinder, tree, new Vector3(0f, 0.65f, 0f), new Vector3(0.36f, 0.70f, 0.36f), trunkCol);
+            // 3 stacked tapered foliage tiers (clean low-poly pine silhouette)
+            Prims.Make(PrimitiveType.Cylinder, tree, new Vector3(0f, 1.65f, 0f), new Vector3(1.85f, 0.65f, 1.85f), lowCol);
+            Prims.Make(PrimitiveType.Cylinder, tree, new Vector3(0f, 2.55f, 0f), new Vector3(1.35f, 0.62f, 1.35f), midCol);
+            Prims.Make(PrimitiveType.Cylinder, tree, new Vector3(0f, 3.35f, 0f), new Vector3(0.82f, 0.55f, 0.82f), tipCol);
         }
 
         void BuildWhiteBridge()
@@ -205,10 +228,13 @@ namespace MobControlAd
             var bridge = new GameObject("WhiteBridge").transform;
             bridge.SetParent(transform, false);
 
-            // Clean bright white platform matching VideoReference.mp4
-            Prims.Make(PrimitiveType.Cube, bridge, new Vector3(0f, -0.35f, 11.5f), new Vector3(6.8f, 0.70f, 24.5f), new Color(0.93f, 0.94f, 0.96f));
+            // Clean bright white platform matching reference
+            Prims.Make(PrimitiveType.Cube, bridge, new Vector3(0f, -0.35f, 11.5f), new Vector3(6.8f, 0.70f, 24.5f), new Color(0.95f, 0.96f, 0.98f));
+            // Crisp dark-slate side guardrails so the white lane pops against the snowy valley
+            Prims.Make(PrimitiveType.Cube, bridge, new Vector3(-3.48f, -0.18f, 11.5f), new Vector3(0.18f, 0.52f, 24.5f), new Color(0.28f, 0.34f, 0.44f));
+            Prims.Make(PrimitiveType.Cube, bridge, new Vector3(3.48f, -0.18f, 11.5f), new Vector3(0.18f, 0.52f, 24.5f), new Color(0.28f, 0.34f, 0.44f));
             // Subtle darker front ledge face
-            Prims.Make(PrimitiveType.Cube, bridge, new Vector3(0f, -0.36f, -0.72f), new Vector3(6.82f, 0.68f, 0.08f), new Color(0.75f, 0.77f, 0.80f));
+            Prims.Make(PrimitiveType.Cube, bridge, new Vector3(0f, -0.36f, -0.72f), new Vector3(6.98f, 0.68f, 0.08f), new Color(0.72f, 0.76f, 0.82f));
         }
 
         void BuildArchedPurpleTube()
