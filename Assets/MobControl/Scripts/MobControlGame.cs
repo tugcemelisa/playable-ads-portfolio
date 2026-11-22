@@ -1296,6 +1296,9 @@ namespace MobControlAd
             _muzzleFlash.localScale = Vector3.one * (_barrelRecoil * 0.72f);
         }
 
+        int MaxFriendlyMobs => characterStyle == CharacterStyle.StylizedModels ? 28 : 65;
+        int MaxEnemyMobs => characterStyle == CharacterStyle.StylizedModels ? 22 : 55;
+
         void FirePurpleStickman()
         {
             _barrelRecoil = 1f;
@@ -1310,9 +1313,9 @@ namespace MobControlAd
                     _giantCharge = 0f;
                     SpawnStickman(true, spawnPos, 0, true);
                     Sfx.Play(Sfx.Id.GateGood, 0.85f, 0.85f);
-                    SpawnWhiteSmoke(muzzleWorld, 5, new Color(1f, 0.88f, 0.25f));
+                    SpawnWhiteSmoke(muzzleWorld, 4, new Color(1f, 0.88f, 0.25f));
                     SpawnRing(muzzleWorld, 2.65f, new Color(1f, 0.88f, 0.22f, 0.98f), 0.34f, 0f);
-                    SpawnSparks(muzzleWorld, 8, new Color(1f, 0.90f, 0.28f), 5.6f, false);
+                    SpawnSparks(muzzleWorld, 6, new Color(1f, 0.90f, 0.28f), 5.6f, false);
                     SpawnFloatText(muzzleWorld + Vector3.up * 0.9f, "GIANT!", new Color(1f, 0.90f, 0.20f), 1.05f);
                     TriggerCameraShake(0.16f, 0.12f);
                     return;
@@ -1320,10 +1323,13 @@ namespace MobControlAd
             }
 
             Sfx.Play(Sfx.Id.Pop, 0.32f);
-            SpawnStickman(true, spawnPos, 0, false);
+            if (_purpleMobs.Count < MaxFriendlyMobs)
+                SpawnStickman(true, spawnPos, 0, false);
+            Color fxRingCol = Color.Lerp(PurpleLight, Color.white, 0.45f);
+            fxRingCol.a = 0.92f;
             SpawnWhiteSmoke(muzzleWorld, 2, PurpleLight);
-            SpawnRing(muzzleWorld, 1.35f, new Color(0.90f, 0.72f, 1f, 0.92f), 0.22f, 0f);
-            SpawnSparks(muzzleWorld, 3, Color.white, 3.6f, false);
+            SpawnRing(muzzleWorld, 1.35f, fxRingCol, 0.22f, 0f);
+            SpawnSparks(muzzleWorld, 2, Color.white, 3.6f, false);
         }
 
         void UpdateGates(float dt)
@@ -1372,12 +1378,12 @@ namespace MobControlAd
             _enemyWaveTimer -= dt;
             if (_enemyWaveTimer <= 0f)
             {
-                // Spawn wave of Yellow Stickmen marching down the left lane (matching VideoReference.mp4!)
-                _enemyWaveTimer = _elapsedTime < 10f ? 1.15f : 0.72f;
-                int waveSize = _elapsedTime < 10f ? 5 : 8;
+                // Spawn wave of Enemy Mobs marching down the left lane (capped for smooth 60 FPS mobile WebGL!)
+                _enemyWaveTimer = _elapsedTime < 10f ? 1.25f : 0.88f;
+                int waveSize = characterStyle == CharacterStyle.StylizedModels ? (_elapsedTime < 10f ? 3 : 4) : (_elapsedTime < 10f ? 5 : 7);
                 for (int i = 0; i < waveSize; i++)
                 {
-                    if (_yellowMobs.Count >= 180) break;
+                    if (_yellowMobs.Count >= MaxEnemyMobs) break;
                     float rx = -1.85f + Random.Range(-1.05f, 0.95f);
                     float rz = 20.2f + (i / 3) * 0.48f;
                     SpawnStickman(false, new Vector3(Mathf.Clamp(rx, -3.05f, -0.55f), 0f, rz), 0);
@@ -1413,9 +1419,11 @@ namespace MobControlAd
                         // Pop out of upper-right tube exit!
                         m.root.localPosition = new Vector3(1.35f + Random.Range(-0.25f, 0.25f), 0f, 19.35f);
                         Vector3 exitFx = m.root.localPosition + Vector3.up * 0.45f;
-                        SpawnWhiteSmoke(exitFx, 3, Color.white);
-                        SpawnRing(exitFx, 1.85f, new Color(0.84f, 0.56f, 1f, 0.95f), 0.28f, 90f);
-                        SpawnSparks(exitFx, 4, PurpleLight, 4.4f, false);
+                        Color portalCol = Color.Lerp(PurpleLight, Color.white, 0.35f);
+                        portalCol.a = 0.95f;
+                        SpawnWhiteSmoke(exitFx, 2, Color.white);
+                        SpawnRing(exitFx, 1.85f, portalCol, 0.28f, 90f);
+                        SpawnSparks(exitFx, 3, PurpleLight, 4.4f, false);
                         Sfx.Play(Sfx.Id.Pop, 0.4f);
                     }
                     else
@@ -1436,8 +1444,10 @@ namespace MobControlAd
                     m.tubeT = 0.02f;
                     m.root.gameObject.SetActive(false); // Hidden inside pipe while traveling!
                     Vector3 entryFx = new Vector3(0f, 0.55f, TubeEntranceZ);
+                    Color entryCol = Color.Lerp(PurpleLight, Color.white, 0.38f);
+                    entryCol.a = 0.92f;
                     SpawnWhiteSmoke(entryFx, 2, PurpleLight);
-                    SpawnRing(entryFx, 1.55f, new Color(0.86f, 0.62f, 1f, 0.92f), 0.24f, 0f);
+                    SpawnRing(entryFx, 1.55f, entryCol, 0.24f, 0f);
                     Sfx.Play(Sfx.Id.Jump, 0.35f);
                     continue;
                 }
@@ -1463,7 +1473,7 @@ namespace MobControlAd
                             m.gateMask |= bit;
                             g.punchTimer = 1f;
                             int toSpawn = g.multiplier - 1;
-                            int allowed = Mathf.Min(toSpawn, Mathf.Max(0, 150 - _purpleMobs.Count));
+                            int allowed = Mathf.Min(toSpawn, Mathf.Max(0, MaxFriendlyMobs - _purpleMobs.Count));
                             for (int c = 0; c < allowed; c++)
                             {
                                 float ox = (c - (allowed - 1) * 0.5f) * 0.28f + Random.Range(-0.12f, 0.12f);
@@ -1475,9 +1485,11 @@ namespace MobControlAd
                                 SpawnStickman(true, clonePos, m.gateMask);
                             }
                             Vector3 gateFx = new Vector3(pos.x, 0.55f, g.z);
-                            SpawnWhiteSmoke(gateFx, 4, Color.white);
-                            SpawnRing(gateFx, 1.95f, new Color(0.88f, 0.70f, 1f, 0.95f), 0.28f, 0f);
-                            SpawnSparks(gateFx, 5, Color.white, 4.6f, false);
+                            Color gateRingCol = Color.Lerp(PurpleLight, Color.white, 0.42f);
+                            gateRingCol.a = 0.95f;
+                            SpawnWhiteSmoke(gateFx, 3, Color.white);
+                            SpawnRing(gateFx, 1.95f, gateRingCol, 0.28f, 0f);
+                            SpawnSparks(gateFx, 4, Color.white, 4.6f, false);
                             if (g.popupCooldown <= 0f)
                             {
                                 g.popupCooldown = 0.30f;
@@ -1766,7 +1778,7 @@ namespace MobControlAd
 
         void SpawnWhiteSmoke(Vector3 pos, int count, Color col)
         {
-            if (_puffs.Count > 55) return;
+            if (_puffs.Count > 24) return;
             for (int i = 0; i < count; i++)
             {
                 var p = Prims.Make(PrimitiveType.Sphere, transform, pos + Random.insideUnitSphere * 0.18f, Vector3.one * 0.24f, col).transform;
@@ -1795,7 +1807,7 @@ namespace MobControlAd
 
         void SpawnRing(Vector3 pos, float maxScale, Color col, float duration, float tiltX)
         {
-            if (_rings.Count > 24) return;
+            if (_rings.Count > 12) return;
             var sr = AdRes.Spr("RingFx", transform, AdRes.Ring, col, 35, pos, Vector2.one * 0.25f);
             sr.transform.localRotation = Quaternion.Euler(tiltX, 0f, 0f);
             _rings.Add(new RingFx
@@ -1838,7 +1850,7 @@ namespace MobControlAd
         {
             for (int i = 0; i < count; i++)
             {
-                if (_sparks.Count > 85) return;
+                if (_sparks.Count > 36) return;
                 float sz = cubeDebris ? Random.Range(0.14f, 0.26f) : Random.Range(0.10f, 0.18f);
                 var go = Prims.Make(cubeDebris ? PrimitiveType.Cube : PrimitiveType.Sphere, transform,
                     pos + Random.insideUnitSphere * 0.16f, Vector3.one * sz, col);

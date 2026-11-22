@@ -7,11 +7,13 @@ namespace AdKit
     public static class Prims
     {
         static readonly int ColorId = Shader.PropertyToID("_Color");
+        static MaterialPropertyBlock _mpb;
 
         public static GameObject Make(PrimitiveType t, Transform parent, Vector3 pos, Vector3 scale, Color c)
         {
             var g = GameObject.CreatePrimitive(t);
-            Object.Destroy(g.GetComponent<Collider>());
+            var col = g.GetComponent<Collider>();
+            if (col) Object.DestroyImmediate(col);
             g.transform.SetParent(parent, false);
             g.transform.localPosition = pos;
             g.transform.localScale = scale;
@@ -23,10 +25,10 @@ namespace AdKit
 
         public static void SetColor(Renderer r, Color c)
         {
-            var mpb = new MaterialPropertyBlock();
-            r.GetPropertyBlock(mpb);
-            mpb.SetColor(ColorId, c);
-            r.SetPropertyBlock(mpb);
+            if (_mpb == null) _mpb = new MaterialPropertyBlock();
+            r.GetPropertyBlock(_mpb);
+            _mpb.SetColor(ColorId, c);
+            r.SetPropertyBlock(_mpb);
         }
 
         /// <summary>Chibi figure: body capsule (child 0), head, hair/helmet, held item. Pivot at feet.</summary>
