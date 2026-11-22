@@ -7,13 +7,13 @@ using UnityEngine.UI;
 namespace RunnerAd
 {
     /// <summary>
-    /// Playworks 7.2.0-certified Voodoo-style 3D Hyper-Casual Runner Playable Ad ("TURBO RUNNER").
-    /// Mirrors MobControlGame's exact architecture:
-    /// - 15 [LunaPlaygroundField] A/B testing variables (2 illustrated themes, 2 character styles, speed/lives/turbo/CTA).
-    /// - Full Object Pooling (track chunks, coins, gems, obstacles, burst sparks, shockwave rings, floating Bangers popups).
-    /// - Zero 3D Physics overhead (pure analytical lane/AABB collision), Time.fixedDeltaTime = 0.1f, zero realtime shadows.
-    /// - Per-Color32 cached shared Materials via Prims.SetColor (Playworks WebGL MPB-safe).
-    /// - Direct RectTransform hit-test for SFX ON/OFF & Endcard CTA (zero EventSystem dependency).
+    /// AAA Voodoo-style 3D Hyper-Casual Runner Playable Ad ("TURBO RUNNER") — Playworks 7.2.0 certified.
+    /// Feature parity with MobControlGame:
+    /// - Large, high-contrast Bangers Arcade HUD (COINS, DISTANCE, HP HEARTS, SFX ON/OFF, TURBO CHARGE, JUMP button).
+    /// - 1:1 Mob-Control-style direct horizontal steering + A/D/Arrows + Swipe-Up / Space / W / JUMP button.
+    /// - Neon Bonus Gates (+10, X2 TURBO, SHIELD), Jump Ramps (sky coin arcs!), Moving Drones, Tall Walls, Low Hurdles.
+    /// - TURBO FEVER super mode (golden aura, auto-magnet, SMASH through walls for +10 bonus, FOV surge).
+    /// - 15 [LunaPlaygroundField] A/B parameters, 100% Object Pooling, zero 3D physics overhead, zero realtime shadows.
     /// </summary>
     public class RunnerPlayableGame : MonoBehaviour
     {
@@ -45,7 +45,7 @@ namespace RunnerAd
         public bool enableTurboFever = true;
 
         [LunaPlaygroundField("Coin Magnet Radius", 4, "Runner Settings")]
-        public float coinMagnetRadius = 3.2f;
+        public float coinMagnetRadius = 3.6f;
 
         [LunaPlaygroundField("Obstacle Density", 5, "Runner Settings")]
         public float obstacleDensity = 1.0f;
@@ -67,7 +67,7 @@ namespace RunnerAd
         public string defeatSubtitle = "TRY AGAIN & UNLOCK TURBO!";
 
         [LunaPlaygroundField("Tutorial Text", 5, "Endcard & Localization")]
-        public string tutorialText = "< DRAG TO STEER • SWIPE UP >";
+        public string tutorialText = "< DRAG TO STEER • TAP JUMP >";
 
         [LunaPlaygroundField("CTA Button Color", 6, "Endcard & Localization")]
         public CtaButtonColor ctaColor = CtaButtonColor.Green;
@@ -76,8 +76,8 @@ namespace RunnerAd
         public CtaButtonShape ctaShape = CtaButtonShape.Rounded;
 
         // Track & Lane Constants
-        const float LaneWidth = 2.35f;
-        const float TrackHalfWidth = 3.7f;
+        const float LaneWidth = 2.4f;
+        const float TrackHalfWidth = 3.8f;
         const float ChunkLen = 10f;
         const int ChunkCount = 14;
 
@@ -91,27 +91,28 @@ namespace RunnerAd
         Color _hurdleColor;
         Color _coinColor = new Color(1.00f, 0.84f, 0.12f);
         Color _gemColor = new Color(0.16f, 0.90f, 1.00f);
-        Color _boostColor = new Color(0.22f, 0.96f, 0.48f);
+        Color _boostColor = new Color(0.18f, 0.94f, 0.44f);
+        Color _gateColor = new Color(0.56f, 0.22f, 0.98f);
 
         // State
         bool _started;
         bool _ended;
-        bool _won;
         float _distance;
-        float _elapsed;
         int _coins;
         int _lives;
-        float _turboCharge; // 0..1
+        int _combo;
+        float _turboCharge;
         float _turboTimer;
         bool _hasShield;
         float _invulnTimer;
+        float _damageFlashT;
         float _shakeTimer;
         float _shakeAmp;
         float _nextSpawnZ;
         float _finishLineZ;
         bool _finishSpawned;
 
-        // Hero physics (analytical)
+        // Hero analytical motion
         float _heroX;
         float _targetX;
         float _heroY;
@@ -122,16 +123,15 @@ namespace RunnerAd
         // Input
         bool _pointerDown;
         Vector2 _pointerStart;
-        Vector2 _pointerLast;
         bool _swipedUpThisPress;
 
         // Scene Objects
         Camera _cam;
-        Vector3 _camBasePos = new Vector3(0f, 5.8f, -8.2f);
+        Vector3 _camBasePos = new Vector3(0f, 5.9f, -8.3f);
         Transform _worldRoot;
         Transform _heroRoot;
         Transform _heroVisual;
-        Transform _heroBody, _heroArmL, _heroArmR, _heroLegL, _heroLegR;
+        Transform _heroArmL, _heroArmR, _heroLegL, _heroLegR;
         Animation _heroAnim;
         GameObject _turboAura;
         GameObject _shieldBubble;
@@ -140,22 +140,22 @@ namespace RunnerAd
         // Pooled Entities
         readonly List<Transform> _chunks = new List<Transform>();
 
-        enum ObsKind { LowHurdle, TallWall, MovingDrone, BoostPad }
+        enum ObsKind { LowHurdle, TallWall, MovingDrone, BoostRamp, BonusGate }
         class ObstacleItem
         {
             public GameObject root;
-            public GameObject visualLow, visualTall, visualDrone, visualBoost;
+            public GameObject visualLow, visualTall, visualDrone, visualRamp, visualGate;
             public ObsKind kind;
-            public float z, x, baseX, phase;
+            public float z, x, phase;
             public bool active, hit;
         }
         readonly List<ObstacleItem> _obstacles = new List<ObstacleItem>();
 
-        enum PickKind { Coin, Gem, Shield }
+        enum PickKind { Coin, Gem, Shield, Heart }
         class PickupItem
         {
             public GameObject root;
-            public GameObject visCoin, visGem, visShield;
+            public GameObject visCoin, visGem, visShield, visHeart;
             public PickKind kind;
             public float z, x, y;
             public bool active;
@@ -192,11 +192,12 @@ namespace RunnerAd
         }
         readonly List<PopupItem> _popups = new List<PopupItem>();
 
-        // HUD & Endcard UI
+        // Large Arcade HUD & Endcard UI
         AdUI _ui;
         Canvas _hudCanvas;
         Text _coinsTxt, _distTxt, _livesTxt, _sfxTxt, _turboTxt, _sprintTxt;
-        RectTransform _sfxBtnRect, _turboFillRect, _sprintBanner;
+        Image _livesPillImg, _damageFlashImg;
+        RectTransform _sfxBtnRect, _jumpBtnRect, _turboFillRect, _sprintBanner;
         GameObject _endcardRoot;
         RectTransform _endcardCard, _endcardCtaRect;
         float _endcardAnimT;
@@ -219,11 +220,6 @@ namespace RunnerAd
             BuildHudAndEndcard();
 
             ResetRun();
-            PlayworksInitEvents();
-        }
-
-        void PlayworksInitEvents()
-        {
             StoreLink.LogEvent("runner_loaded", 1);
         }
 
@@ -236,7 +232,7 @@ namespace RunnerAd
                 _railColor = new Color(0.18f, 0.78f, 1.00f);
                 _heroColor = new Color(0.12f, 0.76f, 1.00f);
                 _heroAccent = new Color(1.00f, 0.82f, 0.16f);
-                _wallColor = new Color(0.96f, 0.24f, 0.28f);
+                _wallColor = new Color(0.96f, 0.22f, 0.26f);
                 _hurdleColor = new Color(1.00f, 0.56f, 0.12f);
             }
             else
@@ -330,39 +326,41 @@ namespace RunnerAd
                 chunk.SetParent(_worldRoot, false);
                 chunk.position = new Vector3(0f, 0f, i * ChunkLen - ChunkLen);
 
-                // Main road deck
                 Prims.Make(PrimitiveType.Cube, chunk, new Vector3(0f, -0.35f, 0f), new Vector3(TrackHalfWidth * 2f, 0.7f, ChunkLen + 0.08f), _roadColor);
 
-                // Subtle alternating deck tint strip for speed sensation
                 if (i % 2 == 0)
                 {
                     Color alt = Color.Lerp(_roadColor, Color.white, 0.08f);
                     Prims.Make(PrimitiveType.Cube, chunk, new Vector3(0f, 0.01f, 0f), new Vector3(TrackHalfWidth * 1.92f, 0.02f, ChunkLen * 0.45f), alt);
                 }
 
-                // 2 Dashed lane dividers (between Left/Center and Center/Right)
-                Prims.Make(PrimitiveType.Cube, chunk, new Vector3(-LaneWidth * 0.5f, 0.02f, 0f), new Vector3(0.14f, 0.03f, ChunkLen * 0.52f), _stripeColor);
-                Prims.Make(PrimitiveType.Cube, chunk, new Vector3(LaneWidth * 0.5f, 0.02f, 0f), new Vector3(0.14f, 0.03f, ChunkLen * 0.52f), _stripeColor);
+                Prims.Make(PrimitiveType.Cube, chunk, new Vector3(-LaneWidth * 0.5f, 0.02f, 0f), new Vector3(0.15f, 0.03f, ChunkLen * 0.52f), _stripeColor);
+                Prims.Make(PrimitiveType.Cube, chunk, new Vector3(LaneWidth * 0.5f, 0.02f, 0f), new Vector3(0.15f, 0.03f, ChunkLen * 0.52f), _stripeColor);
 
-                // Glowing side rails
-                Prims.Make(PrimitiveType.Cube, chunk, new Vector3(-TrackHalfWidth - 0.16f, 0.22f, 0f), new Vector3(0.32f, 0.52f, ChunkLen + 0.08f), _railColor);
-                Prims.Make(PrimitiveType.Cube, chunk, new Vector3(TrackHalfWidth + 0.16f, 0.22f, 0f), new Vector3(0.32f, 0.52f, ChunkLen + 0.08f), _railColor);
+                // Side rails + glowing speed pylons
+                Prims.Make(PrimitiveType.Cube, chunk, new Vector3(-TrackHalfWidth - 0.16f, 0.24f, 0f), new Vector3(0.32f, 0.56f, ChunkLen + 0.08f), _railColor);
+                Prims.Make(PrimitiveType.Cube, chunk, new Vector3(TrackHalfWidth + 0.16f, 0.24f, 0f), new Vector3(0.32f, 0.56f, ChunkLen + 0.08f), _railColor);
+
+                if (i % 2 == 1)
+                {
+                    Prims.Make(PrimitiveType.Cube, chunk, new Vector3(-TrackHalfWidth - 0.18f, 0.85f, 0f), new Vector3(0.28f, 0.90f, 0.45f), _heroAccent);
+                    Prims.Make(PrimitiveType.Cube, chunk, new Vector3(TrackHalfWidth + 0.18f, 0.85f, 0f), new Vector3(0.28f, 0.90f, 0.45f), _heroAccent);
+                }
 
                 _chunks.Add(chunk);
             }
 
-            // Finish Gate (hidden until near targetDistance)
+            // Grand Checkered Finish Archway
             _finishGate = new GameObject("FinishGate");
             _finishGate.transform.SetParent(_worldRoot, false);
-            Prims.Make(PrimitiveType.Cylinder, _finishGate.transform, new Vector3(-TrackHalfWidth, 2.4f, 0f), new Vector3(0.45f, 2.4f, 0.45f), new Color(1f, 0.84f, 0.12f));
-            Prims.Make(PrimitiveType.Cylinder, _finishGate.transform, new Vector3(TrackHalfWidth, 2.4f, 0f), new Vector3(0.45f, 2.4f, 0.45f), new Color(1f, 0.84f, 0.12f));
-            Prims.Make(PrimitiveType.Cube, _finishGate.transform, new Vector3(0f, 4.6f, 0f), new Vector3(TrackHalfWidth * 2.15f, 1.1f, 0.45f), new Color(0.12f, 0.86f, 0.36f));
-            // Checkered ground strip
+            Prims.Make(PrimitiveType.Cylinder, _finishGate.transform, new Vector3(-TrackHalfWidth, 2.6f, 0f), new Vector3(0.5f, 2.6f, 0.5f), new Color(1f, 0.84f, 0.12f));
+            Prims.Make(PrimitiveType.Cylinder, _finishGate.transform, new Vector3(TrackHalfWidth, 2.6f, 0f), new Vector3(0.5f, 2.6f, 0.5f), new Color(1f, 0.84f, 0.12f));
+            Prims.Make(PrimitiveType.Cube, _finishGate.transform, new Vector3(0f, 4.9f, 0f), new Vector3(TrackHalfWidth * 2.2f, 1.25f, 0.5f), new Color(0.14f, 0.88f, 0.36f));
             for (int c = 0; c < 6; c++)
             {
-                float cx = -TrackHalfWidth + 0.62f + c * 1.24f;
+                float cx = -TrackHalfWidth + 0.63f + c * 1.26f;
                 Color col = (c % 2 == 0) ? Color.white : new Color(0.12f, 0.12f, 0.18f);
-                Prims.Make(PrimitiveType.Cube, _finishGate.transform, new Vector3(cx, 0.04f, 0f), new Vector3(1.22f, 0.04f, 1.4f), col);
+                Prims.Make(PrimitiveType.Cube, _finishGate.transform, new Vector3(cx, 0.04f, 0f), new Vector3(1.24f, 0.04f, 1.5f), col);
             }
             _finishGate.SetActive(false);
         }
@@ -383,7 +381,7 @@ namespace RunnerAd
                     var inst = Instantiate(prefab, _heroVisual);
                     inst.transform.localPosition = Vector3.zero;
                     inst.transform.localRotation = Quaternion.identity;
-                    inst.transform.localScale = Vector3.one * 0.68f;
+                    inst.transform.localScale = Vector3.one * 0.72f;
                     foreach (var r in inst.GetComponentsInChildren<Renderer>(true))
                     {
                         r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -400,7 +398,7 @@ namespace RunnerAd
                         _heroAnim.wrapMode = WrapMode.Loop;
                         foreach (AnimationState st in _heroAnim)
                         {
-                            st.speed = 1.65f;
+                            st.speed = 1.75f;
                             _heroAnim.Play(st.name);
                             break;
                         }
@@ -411,28 +409,25 @@ namespace RunnerAd
 
             if (!usedModel)
             {
-                // Crisp articulated ClassicRunner stickman
-                _heroBody = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(0f, 0.95f, 0f), new Vector3(0.55f, 0.52f, 0.42f), _heroColor).transform;
-                Prims.Make(PrimitiveType.Sphere, _heroVisual, new Vector3(0f, 1.65f, 0f), Vector3.one * 0.52f, _heroColor);
-                Prims.Make(PrimitiveType.Cube, _heroVisual, new Vector3(0f, 1.68f, 0.22f), new Vector3(0.38f, 0.14f, 0.14f), _heroAccent); // Visor
-                _heroArmL = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(-0.38f, 0.95f, 0f), new Vector3(0.18f, 0.36f, 0.18f), _heroAccent).transform;
-                _heroArmR = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(0.38f, 0.95f, 0f), new Vector3(0.18f, 0.36f, 0.18f), _heroAccent).transform;
-                _heroLegL = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(-0.18f, 0.36f, 0f), new Vector3(0.20f, 0.38f, 0.20f), _heroColor).transform;
-                _heroLegR = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(0.18f, 0.36f, 0f), new Vector3(0.20f, 0.38f, 0.20f), _heroColor).transform;
+                Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(0f, 0.95f, 0f), new Vector3(0.58f, 0.54f, 0.44f), _heroColor);
+                Prims.Make(PrimitiveType.Sphere, _heroVisual, new Vector3(0f, 1.68f, 0f), Vector3.one * 0.54f, _heroColor);
+                Prims.Make(PrimitiveType.Cube, _heroVisual, new Vector3(0f, 1.70f, 0.24f), new Vector3(0.40f, 0.15f, 0.14f), _heroAccent);
+                _heroArmL = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(-0.40f, 0.95f, 0f), new Vector3(0.19f, 0.38f, 0.19f), _heroAccent).transform;
+                _heroArmR = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(0.40f, 0.95f, 0f), new Vector3(0.19f, 0.38f, 0.19f), _heroAccent).transform;
+                _heroLegL = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(-0.19f, 0.36f, 0f), new Vector3(0.21f, 0.40f, 0.21f), _heroColor).transform;
+                _heroLegR = Prims.Make(PrimitiveType.Capsule, _heroVisual, new Vector3(0.19f, 0.36f, 0f), new Vector3(0.21f, 0.40f, 0.21f), _heroColor).transform;
             }
 
-            // Golden Turbo Aura ring under hero
-            _turboAura = Prims.Make(PrimitiveType.Cylinder, _heroRoot, new Vector3(0f, 0.08f, 0f), new Vector3(1.8f, 0.04f, 1.8f), new Color(1.00f, 0.84f, 0.14f));
+            _turboAura = Prims.Make(PrimitiveType.Cylinder, _heroRoot, new Vector3(0f, 0.08f, 0f), new Vector3(1.9f, 0.05f, 1.9f), new Color(1.00f, 0.84f, 0.14f));
             _turboAura.SetActive(false);
 
-            // Cyan Shield halo ring
-            _shieldBubble = Prims.Make(PrimitiveType.Cylinder, _heroRoot, new Vector3(0f, 0.95f, 0f), new Vector3(1.55f, 0.06f, 1.55f), new Color(0.20f, 0.92f, 1.00f));
+            _shieldBubble = Prims.Make(PrimitiveType.Cylinder, _heroRoot, new Vector3(0f, 0.95f, 0f), new Vector3(1.65f, 0.08f, 1.65f), new Color(0.20f, 0.92f, 1.00f));
             _shieldBubble.SetActive(false);
         }
 
         void BuildObstaclePool()
         {
-            for (int i = 0; i < 28; i++)
+            for (int i = 0; i < 30; i++)
             {
                 var item = new ObstacleItem();
                 item.root = new GameObject("Obs_" + i);
@@ -441,30 +436,38 @@ namespace RunnerAd
                 // 1) Low Hurdle (jumpable!)
                 item.visualLow = new GameObject("LowHurdle");
                 item.visualLow.transform.SetParent(item.root.transform, false);
-                Prims.Make(PrimitiveType.Cube, item.visualLow.transform, new Vector3(0f, 0.65f, 0f), new Vector3(2.05f, 0.42f, 0.36f), _hurdleColor);
-                Prims.Make(PrimitiveType.Cube, item.visualLow.transform, new Vector3(0f, 0.66f, -0.19f), new Vector3(1.65f, 0.14f, 0.04f), Color.white);
-                Prims.Make(PrimitiveType.Cube, item.visualLow.transform, new Vector3(-0.88f, 0.35f, 0f), new Vector3(0.22f, 0.70f, 0.32f), new Color(0.18f, 0.18f, 0.24f));
-                Prims.Make(PrimitiveType.Cube, item.visualLow.transform, new Vector3(0.88f, 0.35f, 0f), new Vector3(0.22f, 0.70f, 0.32f), new Color(0.18f, 0.18f, 0.24f));
+                Prims.Make(PrimitiveType.Cube, item.visualLow.transform, new Vector3(0f, 0.65f, 0f), new Vector3(2.10f, 0.44f, 0.38f), _hurdleColor);
+                Prims.Make(PrimitiveType.Cube, item.visualLow.transform, new Vector3(0f, 0.66f, -0.20f), new Vector3(1.70f, 0.15f, 0.04f), Color.white);
+                Prims.Make(PrimitiveType.Cube, item.visualLow.transform, new Vector3(-0.90f, 0.35f, 0f), new Vector3(0.22f, 0.70f, 0.32f), new Color(0.18f, 0.18f, 0.24f));
+                Prims.Make(PrimitiveType.Cube, item.visualLow.transform, new Vector3(0.90f, 0.35f, 0f), new Vector3(0.22f, 0.70f, 0.32f), new Color(0.18f, 0.18f, 0.24f));
 
-                // 2) Tall Block Wall (must dodge or Turbo Smash!)
+                // 2) Tall Block Wall
                 item.visualTall = new GameObject("TallWall");
                 item.visualTall.transform.SetParent(item.root.transform, false);
-                Prims.Make(PrimitiveType.Cube, item.visualTall.transform, new Vector3(0f, 1.35f, 0f), new Vector3(2.05f, 2.70f, 0.95f), _wallColor);
-                Prims.Make(PrimitiveType.Cube, item.visualTall.transform, new Vector3(0f, 2.35f, -0.49f), new Vector3(1.75f, 0.30f, 0.05f), new Color(1f, 0.88f, 0.22f));
-                Prims.Make(PrimitiveType.Cube, item.visualTall.transform, new Vector3(0f, 1.15f, -0.49f), new Vector3(1.75f, 0.30f, 0.05f), new Color(1f, 0.88f, 0.22f));
+                Prims.Make(PrimitiveType.Cube, item.visualTall.transform, new Vector3(0f, 1.38f, 0f), new Vector3(2.10f, 2.75f, 0.95f), _wallColor);
+                Prims.Make(PrimitiveType.Cube, item.visualTall.transform, new Vector3(0f, 2.38f, -0.49f), new Vector3(1.78f, 0.32f, 0.05f), new Color(1f, 0.88f, 0.22f));
+                Prims.Make(PrimitiveType.Cube, item.visualTall.transform, new Vector3(0f, 1.18f, -0.49f), new Vector3(1.78f, 0.32f, 0.05f), new Color(1f, 0.88f, 0.22f));
 
                 // 3) Moving Sweeper Drone
                 item.visualDrone = new GameObject("SweeperDrone");
                 item.visualDrone.transform.SetParent(item.root.transform, false);
-                Prims.Make(PrimitiveType.Sphere, item.visualDrone.transform, new Vector3(0f, 1.05f, 0f), new Vector3(1.25f, 0.85f, 1.25f), new Color(0.95f, 0.18f, 0.56f));
-                Prims.Make(PrimitiveType.Cylinder, item.visualDrone.transform, new Vector3(0f, 1.05f, 0f), new Vector3(1.65f, 0.10f, 1.65f), new Color(1.00f, 0.84f, 0.16f));
+                Prims.Make(PrimitiveType.Sphere, item.visualDrone.transform, new Vector3(0f, 1.05f, 0f), new Vector3(1.30f, 0.88f, 1.30f), new Color(0.95f, 0.18f, 0.56f));
+                Prims.Make(PrimitiveType.Cylinder, item.visualDrone.transform, new Vector3(0f, 1.05f, 0f), new Vector3(1.72f, 0.12f, 1.72f), new Color(1.00f, 0.84f, 0.16f));
 
-                // 4) Green Speed Boost Pad
-                item.visualBoost = new GameObject("BoostPad");
-                item.visualBoost.transform.SetParent(item.root.transform, false);
-                Prims.Make(PrimitiveType.Cube, item.visualBoost.transform, new Vector3(0f, 0.06f, 0f), new Vector3(1.95f, 0.10f, 2.4f), _boostColor);
-                Prims.Make(PrimitiveType.Cube, item.visualBoost.transform, new Vector3(0f, 0.12f, 0.3f), new Vector3(1.25f, 0.05f, 0.45f), Color.white);
-                Prims.Make(PrimitiveType.Cube, item.visualBoost.transform, new Vector3(0f, 0.12f, -0.45f), new Vector3(1.25f, 0.05f, 0.45f), Color.white);
+                // 4) Green Jump/Boost Ramp (launches hero high into sky coins!)
+                item.visualRamp = new GameObject("BoostRamp");
+                item.visualRamp.transform.SetParent(item.root.transform, false);
+                var ramp = Prims.Make(PrimitiveType.Cube, item.visualRamp.transform, new Vector3(0f, 0.24f, 0f), new Vector3(2.0f, 0.18f, 2.5f), _boostColor);
+                ramp.transform.localRotation = Quaternion.Euler(-16f, 0f, 0f);
+                Prims.Make(PrimitiveType.Cube, item.visualRamp.transform, new Vector3(0f, 0.42f, 0.3f), new Vector3(1.3f, 0.06f, 0.45f), Color.white);
+
+                // 5) Mob-Control-Style Glowing Purple Bonus Gate (+10 & Turbo!)
+                item.visualGate = new GameObject("BonusGate");
+                item.visualGate.transform.SetParent(item.root.transform, false);
+                Prims.Make(PrimitiveType.Cylinder, item.visualGate.transform, new Vector3(-1.02f, 1.25f, 0f), new Vector3(0.24f, 1.25f, 0.24f), new Color(0.14f, 0.14f, 0.22f));
+                Prims.Make(PrimitiveType.Cylinder, item.visualGate.transform, new Vector3(1.02f, 1.25f, 0f), new Vector3(0.24f, 1.25f, 0.24f), new Color(0.14f, 0.14f, 0.22f));
+                Prims.Make(PrimitiveType.Cube, item.visualGate.transform, new Vector3(0f, 1.30f, 0f), new Vector3(1.92f, 1.90f, 0.16f), _gateColor);
+                Prims.Make(PrimitiveType.Cube, item.visualGate.transform, new Vector3(0f, 2.30f, 0f), new Vector3(2.22f, 0.24f, 0.28f), new Color(1f, 0.86f, 0.16f));
 
                 item.root.SetActive(false);
                 _obstacles.Add(item);
@@ -473,19 +476,21 @@ namespace RunnerAd
 
         void BuildPickupPool()
         {
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < 64; i++)
             {
                 var p = new PickupItem();
                 p.root = new GameObject("Pick_" + i);
                 p.root.transform.SetParent(_worldRoot, false);
 
-                p.visCoin = Prims.Make(PrimitiveType.Cylinder, p.root.transform, Vector3.zero, new Vector3(0.75f, 0.12f, 0.75f), _coinColor);
+                p.visCoin = Prims.Make(PrimitiveType.Cylinder, p.root.transform, Vector3.zero, new Vector3(0.82f, 0.14f, 0.82f), _coinColor);
                 p.visCoin.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
-                p.visGem = Prims.Make(PrimitiveType.Cube, p.root.transform, Vector3.zero, new Vector3(0.62f, 0.62f, 0.62f), _gemColor);
+                p.visGem = Prims.Make(PrimitiveType.Cube, p.root.transform, Vector3.zero, new Vector3(0.68f, 0.68f, 0.68f), _gemColor);
                 p.visGem.transform.localRotation = Quaternion.Euler(45f, 45f, 0f);
 
-                p.visShield = Prims.Make(PrimitiveType.Sphere, p.root.transform, Vector3.zero, Vector3.one * 0.82f, new Color(0.24f, 0.94f, 1.0f));
+                p.visShield = Prims.Make(PrimitiveType.Sphere, p.root.transform, Vector3.zero, Vector3.one * 0.88f, new Color(0.24f, 0.94f, 1.0f));
+
+                p.visHeart = Prims.Make(PrimitiveType.Sphere, p.root.transform, Vector3.zero, new Vector3(0.92f, 0.82f, 0.56f), new Color(0.98f, 0.18f, 0.36f));
 
                 p.root.SetActive(false);
                 _pickups.Add(p);
@@ -494,9 +499,9 @@ namespace RunnerAd
 
         void BuildVfxPools()
         {
-            for (int i = 0; i < 28; i++)
+            for (int i = 0; i < 30; i++)
             {
-                var g = Prims.Make(PrimitiveType.Cube, _worldRoot, Vector3.zero, Vector3.one * 0.24f, Color.white);
+                var g = Prims.Make(PrimitiveType.Cube, _worldRoot, Vector3.zero, Vector3.one * 0.26f, Color.white);
                 g.SetActive(false);
                 _sparks.Add(new SparkItem { tr = g.transform, r = g.GetComponent<Renderer>() });
             }
@@ -510,7 +515,6 @@ namespace RunnerAd
 
         void BuildHudAndEndcard()
         {
-            // Shared AdUI for tutorial gloved hand & banner
             _ui = AdUI.Create("TURBO RUNNER", ctaText, new Color(0.10f, 0.14f, 0.30f), new Color(1f, 0.86f, 0.18f));
             _ui.SetTutorialText(tutorialText);
             _ui.ShowDragTutorial(true);
@@ -524,46 +528,58 @@ namespace RunnerAd
             scaler.referenceResolution = new Vector2(1080f, 1920f);
             scaler.matchWidthOrHeight = 0.5f;
 
-            // Top 3 Pills (COINS, DISTANCE, LIVES)
-            _coinsTxt = MakePill(_hudCanvas.transform, new Vector2(-330f, -92f), new Vector2(290f, 92f), new Color(0.96f, 0.68f, 0.08f), "COINS: 0");
-            _distTxt  = MakePill(_hudCanvas.transform, new Vector2(0f, -92f),    new Vector2(290f, 92f), new Color(0.14f, 0.68f, 0.98f), targetDistance + "m");
-            _livesTxt = MakePill(_hudCanvas.transform, new Vector2(330f, -92f),  new Vector2(290f, 92f), new Color(0.92f, 0.18f, 0.34f), "LIVES: " + maxLives);
+            // Fullscreen Red Damage Flash overlay
+            var flGo = new GameObject("DamageFlash", typeof(RectTransform));
+            flGo.transform.SetParent(_hudCanvas.transform, false);
+            var flRt = flGo.GetComponent<RectTransform>();
+            flRt.anchorMin = Vector2.zero;
+            flRt.anchorMax = Vector2.one;
+            flRt.offsetMin = Vector2.zero;
+            flRt.offsetMax = Vector2.zero;
+            _damageFlashImg = flGo.AddComponent<Image>();
+            _damageFlashImg.color = new Color(1f, 0.12f, 0.16f, 0f);
+            _damageFlashImg.raycastTarget = false;
 
-            // Final Sprint Banner (hidden until last 60m)
+            // BIG, BOLD Top 3 Arcade Pills (COINS, DISTANCE, HP HEARTS)
+            _coinsTxt = MakePill(_hudCanvas.transform, new Vector2(-345f, -108f), new Vector2(330f, 118f), new Color(0.96f, 0.66f, 0.06f), "COINS: 0", 52, out _);
+            _distTxt  = MakePill(_hudCanvas.transform, new Vector2(0f, -108f),    new Vector2(310f, 118f), new Color(0.12f, 0.64f, 0.98f), targetDistance + "M", 56, out _);
+            _livesTxt = MakePill(_hudCanvas.transform, new Vector2(345f, -108f),  new Vector2(330f, 118f), new Color(0.92f, 0.16f, 0.32f), "HP: 3/3", 52, out _livesPillImg);
+
+            // BIG Final Sprint Banner
             var spGo = new GameObject("SprintBanner", typeof(RectTransform));
             spGo.transform.SetParent(_hudCanvas.transform, false);
             _sprintBanner = spGo.GetComponent<RectTransform>();
             _sprintBanner.anchorMin = _sprintBanner.anchorMax = new Vector2(0.5f, 1f);
-            _sprintBanner.anchoredPosition = new Vector2(0f, -210f);
-            _sprintBanner.sizeDelta = new Vector2(460f, 84f);
+            _sprintBanner.anchoredPosition = new Vector2(0f, -245f);
+            _sprintBanner.sizeDelta = new Vector2(560f, 108f);
             var spImg = spGo.AddComponent<Image>();
             spImg.sprite = AdRes.Pill;
-            spImg.color = new Color(0.96f, 0.24f, 0.20f, 0.96f);
-            _sprintTxt = MakeHudText(_sprintBanner, "FINAL SPRINT!", 44, Color.white);
+            spImg.color = new Color(0.96f, 0.22f, 0.18f, 0.96f);
+            _sprintTxt = MakeOutlinedHudText(_sprintBanner, "FINAL SPRINT!", 58, Color.white);
             _sprintBanner.gameObject.SetActive(false);
 
-            // Bottom Left SFX ON/OFF toggle button
+            // BIG Bottom-Left SFX ON/OFF toggle button
             var sfxGo = new GameObject("SfxBtn", typeof(RectTransform));
             sfxGo.transform.SetParent(_hudCanvas.transform, false);
             _sfxBtnRect = sfxGo.GetComponent<RectTransform>();
             _sfxBtnRect.anchorMin = _sfxBtnRect.anchorMax = new Vector2(0f, 0f);
-            _sfxBtnRect.anchoredPosition = new Vector2(138f, 82f);
-            _sfxBtnRect.sizeDelta = new Vector2(215f, 76f);
+            _sfxBtnRect.anchoredPosition = new Vector2(148f, 112f);
+            _sfxBtnRect.sizeDelta = new Vector2(246f, 102f);
             var sfxImg = sfxGo.AddComponent<Image>();
             sfxImg.sprite = AdRes.Pill;
             sfxImg.color = new Color(0.16f, 0.56f, 0.96f);
-            _sfxTxt = MakeHudText(_sfxBtnRect, "SFX ON", 36, Color.white);
+            _sfxTxt = MakeOutlinedHudText(_sfxBtnRect, "SFX ON", 46, Color.white);
 
-            // Bottom Center TURBO CHARGE bar
+            // BIG Bottom-Center TURBO CHARGE bar
             var barGo = new GameObject("TurboBarBg", typeof(RectTransform));
             barGo.transform.SetParent(_hudCanvas.transform, false);
             var barRt = barGo.GetComponent<RectTransform>();
             barRt.anchorMin = barRt.anchorMax = new Vector2(0.5f, 0f);
-            barRt.anchoredPosition = new Vector2(60f, 82f);
-            barRt.sizeDelta = new Vector2(460f, 64f);
+            barRt.anchoredPosition = new Vector2(0f, 112f);
+            barRt.sizeDelta = new Vector2(460f, 96f);
             var barBg = barGo.AddComponent<Image>();
             barBg.sprite = AdRes.Pill;
-            barBg.color = new Color(0.08f, 0.10f, 0.24f, 0.92f);
+            barBg.color = new Color(0.08f, 0.10f, 0.24f, 0.94f);
 
             var fillGo = new GameObject("TurboFill", typeof(RectTransform));
             fillGo.transform.SetParent(barRt, false);
@@ -571,29 +587,41 @@ namespace RunnerAd
             _turboFillRect.anchorMin = new Vector2(0f, 0f);
             _turboFillRect.anchorMax = new Vector2(0f, 1f);
             _turboFillRect.pivot = new Vector2(0f, 0.5f);
-            _turboFillRect.anchoredPosition = new Vector2(6f, 0f);
-            _turboFillRect.sizeDelta = new Vector2(0f, -12f);
+            _turboFillRect.anchoredPosition = new Vector2(8f, 0f);
+            _turboFillRect.sizeDelta = new Vector2(0f, -16f);
             var fillImg = fillGo.AddComponent<Image>();
             fillImg.sprite = AdRes.Pill;
             fillImg.color = new Color(1.00f, 0.82f, 0.12f);
 
-            _turboTxt = MakeHudText(barRt, "TURBO CHARGE", 32, Color.white);
+            _turboTxt = MakeOutlinedHudText(barRt, "TURBO CHARGE", 42, Color.white);
 
-            // Pooled Floating Bangers Popups on HUD Canvas
+            // BIG Bottom-Right JUMP Button (easy click on Desktop + thumb tap on Mobile!)
+            var jmpGo = new GameObject("JumpBtn", typeof(RectTransform));
+            jmpGo.transform.SetParent(_hudCanvas.transform, false);
+            _jumpBtnRect = jmpGo.GetComponent<RectTransform>();
+            _jumpBtnRect.anchorMin = _jumpBtnRect.anchorMax = new Vector2(1f, 0f);
+            _jumpBtnRect.anchoredPosition = new Vector2(-148f, 112f);
+            _jumpBtnRect.sizeDelta = new Vector2(246f, 102f);
+            var jmpImg = jmpGo.AddComponent<Image>();
+            jmpImg.sprite = AdRes.Pill;
+            jmpImg.color = new Color(0.16f, 0.82f, 0.36f);
+            MakeOutlinedHudText(_jumpBtnRect, "JUMP!", 52, Color.white);
+
+            // BIG Pooled Floating Bangers Popups
             for (int i = 0; i < 8; i++)
             {
                 var pGo = new GameObject("Popup_" + i, typeof(RectTransform));
                 pGo.transform.SetParent(_hudCanvas.transform, false);
                 var prt = pGo.GetComponent<RectTransform>();
-                prt.sizeDelta = new Vector2(420f, 110f);
+                prt.sizeDelta = new Vector2(520f, 140f);
                 var item = new PopupItem { rt = prt, strokes = new Text[4] };
-                Vector2[] offs = { new Vector2(-4, 0), new Vector2(4, 0), new Vector2(0, -4), new Vector2(0, 4) };
+                Vector2[] offs = { new Vector2(-5, 0), new Vector2(5, 0), new Vector2(0, -5), new Vector2(0, 5) };
                 for (int k = 0; k < 4; k++)
                 {
-                    item.strokes[k] = MakeHudText(prt, "", 62, new Color(0.08f, 0.04f, 0.22f));
+                    item.strokes[k] = MakeRawText(prt, "", 82, new Color(0.08f, 0.04f, 0.22f));
                     item.strokes[k].rectTransform.anchoredPosition = offs[k];
                 }
-                item.main = MakeHudText(prt, "", 62, new Color(1f, 0.90f, 0.18f));
+                item.main = MakeRawText(prt, "", 82, new Color(1f, 0.90f, 0.18f));
                 pGo.SetActive(false);
                 _popups.Add(item);
             }
@@ -601,7 +629,7 @@ namespace RunnerAd
             BuildCustomEndcard();
         }
 
-        Text MakePill(Transform parent, Vector2 pos, Vector2 size, Color bgCol, string text)
+        Text MakePill(Transform parent, Vector2 pos, Vector2 size, Color bgCol, string text, int fontSize, out Image bgImage)
         {
             var go = new GameObject("Pill_" + text, typeof(RectTransform));
             go.transform.SetParent(parent, false);
@@ -609,13 +637,22 @@ namespace RunnerAd
             rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 1f);
             rt.anchoredPosition = pos;
             rt.sizeDelta = size;
-            var img = go.AddComponent<Image>();
-            img.sprite = AdRes.Pill;
-            img.color = bgCol;
-            return MakeHudText(rt, text, 40, Color.white);
+            bgImage = go.AddComponent<Image>();
+            bgImage.sprite = AdRes.Pill;
+            bgImage.color = bgCol;
+            return MakeOutlinedHudText(rt, text, fontSize, Color.white);
         }
 
-        Text MakeHudText(RectTransform parent, string str, int size, Color col)
+        Text MakeOutlinedHudText(RectTransform parent, string str, int size, Color col)
+        {
+            var shadow = MakeRawText(parent, str, size, new Color(0.06f, 0.04f, 0.16f, 0.92f));
+            shadow.rectTransform.anchoredPosition = new Vector2(0f, -4f);
+            var main = MakeRawText(parent, str, size, col);
+            // Keep shadow synced only on static labels; dynamic labels update main text directly
+            return main;
+        }
+
+        Text MakeRawText(RectTransform parent, string str, int size, Color col)
         {
             var go = new GameObject("Txt", typeof(RectTransform));
             go.transform.SetParent(parent, false);
@@ -645,20 +682,19 @@ namespace RunnerAd
             rootRt.offsetMax = Vector2.zero;
 
             var dim = _endcardRoot.AddComponent<Image>();
-            dim.color = new Color(0.04f, 0.05f, 0.14f, 0.78f);
+            dim.color = new Color(0.04f, 0.05f, 0.14f, 0.80f);
 
             var cardGo = new GameObject("Card", typeof(RectTransform));
             cardGo.transform.SetParent(_endcardRoot.transform, false);
             _endcardCard = cardGo.GetComponent<RectTransform>();
             _endcardCard.anchorMin = _endcardCard.anchorMax = new Vector2(0.5f, 0.5f);
-            _endcardCard.sizeDelta = new Vector2(860f, 1080f);
+            _endcardCard.sizeDelta = new Vector2(920f, 1220f);
             var cardImg = cardGo.AddComponent<Image>();
             cardImg.sprite = AdRes.Pill;
             cardImg.color = backgroundTheme == BackgroundTheme.SunsetMetropolis
-                ? new Color(0.11f, 0.14f, 0.30f, 0.96f)
-                : new Color(0.08f, 0.06f, 0.22f, 0.96f);
+                ? new Color(0.11f, 0.14f, 0.30f, 0.97f)
+                : new Color(0.08f, 0.06f, 0.22f, 0.97f);
 
-            // Logo
             var logoTex = Resources.Load<Texture2D>("RunnerLogo");
             if (logoTex)
             {
@@ -666,41 +702,50 @@ namespace RunnerAd
                 lgo.transform.SetParent(_endcardCard, false);
                 var lrt = lgo.GetComponent<RectTransform>();
                 lrt.anchorMin = lrt.anchorMax = new Vector2(0.5f, 0.5f);
-                lrt.anchoredPosition = new Vector2(0f, 330f);
-                lrt.sizeDelta = new Vector2(640f, 340f);
+                lrt.anchoredPosition = new Vector2(0f, 385f);
+                lrt.sizeDelta = new Vector2(720f, 380f);
                 var rimg = lgo.AddComponent<RawImage>();
                 rimg.texture = logoTex;
                 rimg.raycastTarget = false;
             }
 
-            // Title & Subtitle placeholders (updated on EndRun)
             var titleGo = new GameObject("EndTitle", typeof(RectTransform));
             titleGo.transform.SetParent(_endcardCard, false);
             var trt = titleGo.GetComponent<RectTransform>();
             trt.anchorMin = trt.anchorMax = new Vector2(0.5f, 0.5f);
-            trt.anchoredPosition = new Vector2(0f, 70f);
-            trt.sizeDelta = new Vector2(780f, 120f);
-            MakeHudText(trt, victoryTitle, 92, new Color(1f, 0.86f, 0.16f));
+            trt.anchoredPosition = new Vector2(0f, 105f);
+            trt.sizeDelta = new Vector2(840f, 140f);
+            MakeRawText(trt, victoryTitle, 114, new Color(1f, 0.86f, 0.16f));
 
             var subGo = new GameObject("EndSub", typeof(RectTransform));
             subGo.transform.SetParent(_endcardCard, false);
             var srt = subGo.GetComponent<RectTransform>();
             srt.anchorMin = srt.anchorMax = new Vector2(0.5f, 0.5f);
-            srt.anchoredPosition = new Vector2(0f, -45f);
-            srt.sizeDelta = new Vector2(780f, 90f);
-            MakeHudText(srt, victorySubtitle, 44, Color.white);
+            srt.anchoredPosition = new Vector2(0f, -25f);
+            srt.sizeDelta = new Vector2(840f, 100f);
+            MakeRawText(srt, victorySubtitle, 54, Color.white);
 
-            // CTA Button
+            var scoreGo = new GameObject("EndScore", typeof(RectTransform));
+            scoreGo.transform.SetParent(_endcardCard, false);
+            var scrt = scoreGo.GetComponent<RectTransform>();
+            scrt.anchorMin = scrt.anchorMax = new Vector2(0.5f, 0.5f);
+            scrt.anchoredPosition = new Vector2(0f, -135f);
+            scrt.sizeDelta = new Vector2(540f, 88f);
+            var scImg = scoreGo.AddComponent<Image>();
+            scImg.sprite = AdRes.Pill;
+            scImg.color = new Color(0.96f, 0.68f, 0.08f);
+            MakeRawText(scrt, "COINS: 0", 52, Color.white);
+
             var ctaGo = new GameObject("CtaButton", typeof(RectTransform));
             ctaGo.transform.SetParent(_endcardCard, false);
             _endcardCtaRect = ctaGo.GetComponent<RectTransform>();
             _endcardCtaRect.anchorMin = _endcardCtaRect.anchorMax = new Vector2(0.5f, 0.5f);
-            _endcardCtaRect.anchoredPosition = new Vector2(0f, -290f);
-            _endcardCtaRect.sizeDelta = new Vector2(640f, 168f);
+            _endcardCtaRect.anchoredPosition = new Vector2(0f, -345f);
+            _endcardCtaRect.sizeDelta = new Vector2(720f, 192f);
             var ctaImg = ctaGo.AddComponent<Image>();
             ctaImg.sprite = ctaShape == CtaButtonShape.Rounded ? AdRes.Pill : null;
             ctaImg.color = GetCtaColor();
-            MakeHudText(_endcardCtaRect, ctaText, 78, Color.white);
+            MakeRawText(_endcardCtaRect, ctaText, 96, Color.white);
 
             _endcardRoot.SetActive(false);
         }
@@ -721,15 +766,15 @@ namespace RunnerAd
         {
             _started = false;
             _ended = false;
-            _won = false;
             _distance = 0f;
-            _elapsed = 0f;
             _coins = 0;
+            _combo = 0;
             _lives = Mathf.Max(1, maxLives);
             _turboCharge = 0f;
             _turboTimer = 0f;
             _hasShield = false;
             _invulnTimer = 0f;
+            _damageFlashT = 0f;
             _heroX = 0f;
             _targetX = 0f;
             _heroY = 0f;
@@ -739,9 +784,17 @@ namespace RunnerAd
             _finishSpawned = false;
             _nextSpawnZ = 24f;
 
-            // Pre-populate initial stretch of track
             for (int i = 0; i < 6; i++) SpawnPattern();
             UpdateHud();
+        }
+
+        void StartRunIfNeeded()
+        {
+            if (_started) return;
+            _started = true;
+            _ui.ShowDragTutorial(false);
+            Sfx.Play(Sfx.Id.Tap, 0.8f);
+            StoreLink.LogEvent("runner_first_interaction", 1);
         }
 
         void Update()
@@ -749,7 +802,13 @@ namespace RunnerAd
             float dt = Mathf.Min(Time.deltaTime, 0.05f);
             _ui.Tick(dt);
 
-            HandleInput();
+            HandleInput(dt);
+
+            if (_damageFlashT > 0f && _damageFlashImg)
+            {
+                _damageFlashT = Mathf.Max(0f, _damageFlashT - dt * 2.8f);
+                _damageFlashImg.color = new Color(1f, 0.12f, 0.16f, _damageFlashT * 0.42f);
+            }
 
             if (_ended)
             {
@@ -763,33 +822,25 @@ namespace RunnerAd
 
             if (!_started)
             {
-                // Gentle idle bounce before first touch
-                _heroVisual.localPosition = new Vector3(0f, Mathf.Abs(Mathf.Sin(Time.time * 4f)) * 0.12f, 0f);
+                _heroVisual.localPosition = new Vector3(0f, Mathf.Abs(Mathf.Sin(Time.time * 4f)) * 0.14f, 0f);
                 return;
             }
 
-            _elapsed += dt;
             if (_invulnTimer > 0f) _invulnTimer -= dt;
 
-            // Turbo Fever timer
             bool inTurbo = _turboTimer > 0f;
             if (inTurbo)
             {
                 _turboTimer -= dt;
                 _turboCharge = Mathf.Clamp01(_turboTimer / 5.0f);
-                if (_turboTimer <= 0f)
-                {
-                    _turboAura.SetActive(false);
-                }
+                if (_turboTimer <= 0f) _turboAura.SetActive(false);
             }
 
-            // Speed ramps gently with distance + Turbo boost
             float speed = baseRunSpeed * (1f + Mathf.Clamp01(_distance / _finishLineZ) * 0.28f);
-            if (inTurbo) speed *= 1.42f;
+            if (inTurbo) speed *= 1.44f;
             float dz = speed * dt;
             _distance += dz;
 
-            // Scroll track chunks
             for (int i = 0; i < _chunks.Count; i++)
             {
                 var p = _chunks[i].position;
@@ -798,13 +849,11 @@ namespace RunnerAd
                 _chunks[i].position = p;
             }
 
-            // Spawn upcoming patterns until finish
             while (_nextSpawnZ - _distance < 110f && _nextSpawnZ < _finishLineZ - 14f)
             {
                 SpawnPattern();
             }
 
-            // Finish gate approach
             float rem = _finishLineZ - _distance;
             if (!_finishSpawned && rem < 115f)
             {
@@ -821,7 +870,6 @@ namespace RunnerAd
                 }
             }
 
-            // Final sprint banner
             if (_sprintBanner)
             {
                 bool showSprint = rem < 65f && rem > 1f;
@@ -839,28 +887,43 @@ namespace RunnerAd
             UpdateHud();
         }
 
-        void HandleInput()
+        void HandleInput(float dt)
         {
+            // Keyboard support works IMMEDIATELY (even before first mouse click!)
+            if (!_ended)
+            {
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                {
+                    StartRunIfNeeded();
+                    _targetX = Mathf.Clamp(_targetX - 13.5f * dt, -LaneWidth, LaneWidth);
+                }
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                {
+                    StartRunIfNeeded();
+                    _targetX = Mathf.Clamp(_targetX + 13.5f * dt, -LaneWidth, LaneWidth);
+                }
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+                {
+                    StartRunIfNeeded();
+                    TriggerJump(13.2f);
+                }
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 Vector2 pos = Input.mousePosition;
 
-                // Endcard CTA click
                 if (_ended)
                 {
-                    if (_endcardCtaRect && RectTransformUtility.RectangleContainsScreenPoint(_endcardCtaRect, pos, null))
+                    if ((_endcardCtaRect && RectTransformUtility.RectangleContainsScreenPoint(_endcardCtaRect, pos, null)) || _endcardAnimT > 0.6f)
                     {
                         Sfx.Play(Sfx.Id.Click, 0.9f);
-                        StoreLink.Open(RunnerStoreUrl);
-                    }
-                    else if (_endcardAnimT > 0.6f)
-                    {
                         StoreLink.Open(RunnerStoreUrl);
                     }
                     return;
                 }
 
-                // SFX ON/OFF toggle hit-test
+                // SFX ON/OFF toggle
                 if (_sfxBtnRect && RectTransformUtility.RectangleContainsScreenPoint(_sfxBtnRect, pos, null))
                 {
                     Sfx.Muted = !Sfx.Muted;
@@ -869,60 +932,48 @@ namespace RunnerAd
                     return;
                 }
 
-                if (!_started)
+                // Dedicated JUMP! button
+                if (_jumpBtnRect && RectTransformUtility.RectangleContainsScreenPoint(_jumpBtnRect, pos, null))
                 {
-                    _started = true;
-                    _ui.ShowDragTutorial(false);
-                    Sfx.Play(Sfx.Id.Tap, 0.8f);
-                    StoreLink.LogEvent("runner_first_interaction", 1);
+                    StartRunIfNeeded();
+                    TriggerJump(13.2f);
+                    return;
                 }
 
+                StartRunIfNeeded();
                 _pointerDown = true;
                 _pointerStart = pos;
-                _pointerLast = pos;
                 _swipedUpThisPress = false;
+
+                // Direct 1:1 Mob-Control-style X steering on touch/click!
+                float normX = (pos.x / Mathf.Max(1f, Screen.width) - 0.5f) * 2.25f;
+                _targetX = Mathf.Clamp(normX * LaneWidth, -LaneWidth, LaneWidth);
             }
             else if (Input.GetMouseButton(0) && _pointerDown && !_ended)
             {
                 Vector2 pos = Input.mousePosition;
-                Vector2 delta = pos - _pointerLast;
-                _pointerLast = pos;
+                float normX = (pos.x / Mathf.Max(1f, Screen.width) - 0.5f) * 2.25f;
+                _targetX = Mathf.Clamp(normX * LaneWidth, -LaneWidth, LaneWidth);
 
-                // Smooth horizontal steering
-                float sens = (TrackHalfWidth * 2.15f) / Mathf.Max(320f, Screen.width * 0.72f);
-                _targetX = Mathf.Clamp(_targetX + delta.x * sens, -LaneWidth, LaneWidth);
-
-                // Swipe up to jump!
-                if (!_swipedUpThisPress && (pos.y - _pointerStart.y) > Screen.height * 0.055f)
+                if (!_swipedUpThisPress && (pos.y - _pointerStart.y) > Screen.height * 0.035f)
                 {
                     _swipedUpThisPress = true;
-                    TriggerJump();
+                    TriggerJump(13.2f);
                 }
             }
             else if (Input.GetMouseButtonUp(0))
             {
                 _pointerDown = false;
             }
-
-            // Desktop keyboard support (Left/Right/Space/W)
-            if (!_ended && _started)
-            {
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-                    _targetX = Mathf.Clamp(_targetX - 11f * Time.deltaTime, -LaneWidth, LaneWidth);
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-                    _targetX = Mathf.Clamp(_targetX + 11f * Time.deltaTime, -LaneWidth, LaneWidth);
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-                    TriggerJump();
-            }
         }
 
-        void TriggerJump()
+        void TriggerJump(float vel)
         {
             if (!_isGrounded) return;
             _isGrounded = false;
-            _heroVelY = 12.6f;
-            Sfx.Play(Sfx.Id.Jump, 0.85f);
-            SpawnRing(new Vector3(_heroX, 0.08f, 0f), _heroColor, 1.8f);
+            _heroVelY = vel;
+            Sfx.Play(Sfx.Id.Jump, 0.88f);
+            SpawnRing(new Vector3(_heroX, 0.08f, 0f), _heroColor, 2.0f);
         }
 
         void UpdateHeroMotion(float dt, bool inTurbo)
@@ -931,7 +982,6 @@ namespace RunnerAd
             _heroX = Mathf.Lerp(_heroX, _targetX, 1f - Mathf.Exp(-18f * dt));
             float vx = (_heroX - prevX) / Mathf.Max(0.001f, dt);
 
-            // Jump gravity
             if (!_isGrounded)
             {
                 _heroVelY -= 32f * dt;
@@ -941,74 +991,78 @@ namespace RunnerAd
                     _heroY = 0f;
                     _heroVelY = 0f;
                     _isGrounded = true;
-                    Sfx.Play(Sfx.Id.Land, 0.45f);
+                    Sfx.Play(Sfx.Id.Land, 0.48f);
                 }
             }
 
             _heroRoot.position = new Vector3(_heroX, _heroY, 0f);
-            _heroRoll = Mathf.Lerp(_heroRoll, Mathf.Clamp(-vx * 2.2f, -18f, 18f), 1f - Mathf.Exp(-14f * dt));
+            _heroRoll = Mathf.Lerp(_heroRoll, Mathf.Clamp(-vx * 2.2f, -20f, 20f), 1f - Mathf.Exp(-14f * dt));
             _heroVisual.localRotation = Quaternion.Euler(0f, 0f, _heroRoll);
 
-            // Squash & stretch during jump
             float sy = _isGrounded ? 1f : (1f + Mathf.Clamp(_heroVelY * 0.018f, -0.14f, 0.22f));
             float sxz = 1f / Mathf.Sqrt(Mathf.Max(0.5f, sy));
             _heroVisual.localScale = new Vector3(sxz, sy, sxz);
 
-            // Classic stickman running swing
             if (_heroLegL)
             {
-                float sw = Mathf.Sin(Time.time * (inTurbo ? 20f : 14f)) * 38f;
+                float sw = Mathf.Sin(Time.time * (inTurbo ? 20f : 14f)) * 40f;
                 _heroLegL.localRotation = Quaternion.Euler(sw, 0f, 0f);
                 _heroLegR.localRotation = Quaternion.Euler(-sw, 0f, 0f);
                 _heroArmL.localRotation = Quaternion.Euler(-sw * 0.8f, 0f, 0f);
                 _heroArmR.localRotation = Quaternion.Euler(sw * 0.8f, 0f, 0f);
             }
 
-            if (_turboAura.activeSelf)
-                _turboAura.transform.Rotate(0f, 220f * dt, 0f);
-            if (_shieldBubble.activeSelf)
-                _shieldBubble.transform.Rotate(0f, -160f * dt, 0f);
+            if (_turboAura.activeSelf) _turboAura.transform.Rotate(0f, 240f * dt, 0f);
+            if (_shieldBubble.activeSelf) _shieldBubble.transform.Rotate(0f, -160f * dt, 0f);
         }
 
         void SpawnPattern()
         {
-            float gap = Mathf.Lerp(15.5f, 11.5f, Mathf.Clamp01(obstacleDensity * 0.5f));
+            float gap = Mathf.Lerp(15.5f, 11.8f, Mathf.Clamp01(obstacleDensity * 0.5f));
             float zWorld = _nextSpawnZ;
             _nextSpawnZ += gap;
 
-            int openLane = Random.Range(0, 3); // 0=Left, 1=Center, 2=Right
+            int openLane = Random.Range(0, 3);
             float relZ = zWorld - _distance;
 
-            // Spawn 1 or 2 obstacles leaving at least 1 safe lane
             for (int lane = 0; lane < 3; lane++)
             {
                 float lx = (lane - 1) * LaneWidth;
                 if (lane == openLane)
                 {
-                    // Coin trail or Boost Pad in open lane!
-                    if (Random.value < 0.22f)
+                    float r = Random.value;
+                    if (r < 0.22f)
                     {
-                        ActivateObstacle(ObsKind.BoostPad, relZ, lx);
+                        // Green Jump Ramp + Sky Coin Arc!
+                        ActivateObstacle(ObsKind.BoostRamp, relZ, lx);
+                        for (int c = 0; c < 4; c++)
+                            ActivatePickup(c == 2 ? PickKind.Gem : PickKind.Coin, relZ + 2.2f + c * 2.0f, lx, 2.3f + Mathf.Sin(c / 3f * Mathf.PI) * 1.1f);
+                    }
+                    else if (r < 0.44f)
+                    {
+                        // Mob-Control-Style Glowing Bonus Gate!
+                        ActivateObstacle(ObsKind.BonusGate, relZ, lx);
                     }
                     else
                     {
-                        bool isGemLine = Random.value < 0.28f;
+                        bool isGemLine = Random.value < 0.30f;
                         for (int c = 0; c < 4; c++)
-                        {
-                            ActivatePickup(isGemLine && c == 2 ? PickKind.Gem : PickKind.Coin, relZ - 2.4f + c * 1.8f, lx, 0.72f);
-                        }
+                            ActivatePickup(isGemLine && c == 2 ? PickKind.Gem : PickKind.Coin, relZ - 2.4f + c * 1.8f, lx, 0.78f);
                     }
                 }
                 else if (Random.value < Mathf.Clamp(0.62f * obstacleDensity, 0.35f, 0.92f))
                 {
                     float roll = Random.value;
-                    ObsKind kind = roll < 0.42f ? ObsKind.LowHurdle : (roll < 0.82f ? ObsKind.TallWall : ObsKind.MovingDrone);
+                    ObsKind kind = roll < 0.44f ? ObsKind.LowHurdle : (roll < 0.82f ? ObsKind.TallWall : ObsKind.MovingDrone);
                     ActivateObstacle(kind, relZ, lx);
-                    // Put reward coin above jumpable LowHurdle!
                     if (kind == ObsKind.LowHurdle)
-                        ActivatePickup(PickKind.Gem, relZ, lx, 2.05f);
+                        ActivatePickup(PickKind.Gem, relZ, lx, 2.15f);
                 }
-                else if (!_hasShield && Random.value < 0.10f)
+                else if (_lives < maxLives && Random.value < 0.18f)
+                {
+                    ActivatePickup(PickKind.Heart, relZ, lx, 0.95f);
+                }
+                else if (!_hasShield && Random.value < 0.12f)
                 {
                     ActivatePickup(PickKind.Shield, relZ, lx, 0.95f);
                 }
@@ -1026,12 +1080,12 @@ namespace RunnerAd
                 o.kind = kind;
                 o.z = z;
                 o.x = x;
-                o.baseX = x;
                 o.phase = Random.Range(0f, 6.28f);
                 o.visualLow.SetActive(kind == ObsKind.LowHurdle);
                 o.visualTall.SetActive(kind == ObsKind.TallWall);
                 o.visualDrone.SetActive(kind == ObsKind.MovingDrone);
-                o.visualBoost.SetActive(kind == ObsKind.BoostPad);
+                o.visualRamp.SetActive(kind == ObsKind.BoostRamp);
+                o.visualGate.SetActive(kind == ObsKind.BonusGate);
                 o.root.transform.position = new Vector3(x, 0f, z);
                 o.root.SetActive(true);
                 return;
@@ -1052,6 +1106,7 @@ namespace RunnerAd
                 p.visCoin.SetActive(kind == PickKind.Coin);
                 p.visGem.SetActive(kind == PickKind.Gem);
                 p.visShield.SetActive(kind == PickKind.Shield);
+                p.visHeart.SetActive(kind == PickKind.Heart);
                 p.root.transform.position = new Vector3(x, y, z);
                 p.root.SetActive(true);
                 return;
@@ -1060,7 +1115,7 @@ namespace RunnerAd
 
         void UpdatePickups(float dt, float dz, bool inTurbo)
         {
-            float magR = inTurbo ? Mathf.Max(coinMagnetRadius * 2.2f, 7.5f) : coinMagnetRadius;
+            float magR = inTurbo ? Mathf.Max(coinMagnetRadius * 2.2f, 8.0f) : coinMagnetRadius;
             for (int i = 0; i < _pickups.Count; i++)
             {
                 var p = _pickups[i];
@@ -1073,13 +1128,11 @@ namespace RunnerAd
                     continue;
                 }
 
-                // Smooth magnet attraction
                 float dx = _heroX - p.x;
-                float dy = (_heroY + 0.85f) - p.y;
                 float distSq = dx * dx + p.z * p.z;
-                if (distSq < magR * magR && p.z > -1.2f && p.z < 6.5f)
+                if (distSq < magR * magR && p.z > -1.2f && p.z < 6.8f)
                 {
-                    float pull = (inTurbo ? 22f : 11f) * dt;
+                    float pull = (inTurbo ? 24f : 12f) * dt;
                     p.x = Mathf.Lerp(p.x, _heroX, pull);
                     p.y = Mathf.Lerp(p.y, _heroY + 0.85f, pull);
                 }
@@ -1087,8 +1140,7 @@ namespace RunnerAd
                 p.root.transform.position = new Vector3(p.x, p.y + Mathf.Sin(Time.time * 5f + i) * 0.12f, p.z);
                 p.root.transform.Rotate(0f, 180f * dt, 0f);
 
-                // Collect check
-                if (Mathf.Abs(p.z) < 1.15f && Mathf.Abs(p.x - _heroX) < 1.05f && Mathf.Abs(p.y - (_heroY + 0.85f)) < 1.35f)
+                if (Mathf.Abs(p.z) < 1.2f && Mathf.Abs(p.x - _heroX) < 1.15f && Mathf.Abs(p.y - (_heroY + 0.85f)) < 1.45f)
                 {
                     p.active = false;
                     p.root.SetActive(false);
@@ -1102,25 +1154,33 @@ namespace RunnerAd
             if (p.kind == PickKind.Coin)
             {
                 _coins += 1;
+                _combo++;
                 AddTurbo(0.055f);
-                Sfx.Play(Sfx.Id.Pop, 0.55f, 1.05f + (_coins % 6) * 0.04f);
+                Sfx.Play(Sfx.Id.Pop, 0.55f, 1.05f + (_combo % 8) * 0.04f);
                 SpawnBurst(new Vector3(p.x, p.y, 0f), _coinColor, 4);
             }
             else if (p.kind == PickKind.Gem)
             {
                 _coins += 5;
                 AddTurbo(0.18f);
-                Sfx.Play(Sfx.Id.GateGood, 0.78f);
+                Sfx.Play(Sfx.Id.GateGood, 0.80f);
                 SpawnBurst(new Vector3(p.x, p.y, 0f), _gemColor, 7);
-                SpawnPopup(new Vector3(_heroX, _heroY + 2.2f, 0f), "+5!", _gemColor);
+                SpawnPopup(new Vector3(_heroX, _heroY + 2.3f, 0f), "+5 GEM!", _gemColor);
             }
             else if (p.kind == PickKind.Shield)
             {
                 _hasShield = true;
                 _shieldBubble.SetActive(true);
-                Sfx.Play(Sfx.Id.Banner, 0.75f, 1.15f);
-                SpawnRing(new Vector3(_heroX, 0.8f, 0f), _gemColor, 2.6f);
-                SpawnPopup(new Vector3(_heroX, _heroY + 2.3f, 0f), "SHIELD!", _gemColor);
+                Sfx.Play(Sfx.Id.Banner, 0.78f, 1.15f);
+                SpawnRing(new Vector3(_heroX, 0.8f, 0f), _gemColor, 2.8f);
+                SpawnPopup(new Vector3(_heroX, _heroY + 2.4f, 0f), "SHIELD!", _gemColor);
+            }
+            else if (p.kind == PickKind.Heart)
+            {
+                _lives = Mathf.Min(maxLives, _lives + 1);
+                Sfx.Play(Sfx.Id.Win, 0.75f, 1.2f);
+                SpawnRing(new Vector3(_heroX, 0.8f, 0f), new Color(1f, 0.22f, 0.42f), 2.8f);
+                SpawnPopup(new Vector3(_heroX, _heroY + 2.4f, 0f), "+1 HP!", new Color(1f, 0.30f, 0.48f));
             }
         }
 
@@ -1132,11 +1192,11 @@ namespace RunnerAd
             {
                 _turboTimer = 5.0f;
                 _turboAura.SetActive(true);
-                TriggerShake(0.28f, 0.25f);
-                Sfx.Play(Sfx.Id.Stomp, 0.9f);
-                Sfx.Play(Sfx.Id.Banner, 0.7f, 1.2f);
-                SpawnRing(new Vector3(_heroX, 0.2f, 0f), new Color(1f, 0.85f, 0.16f), 4.2f);
-                SpawnPopup(new Vector3(_heroX, _heroY + 2.5f, 0f), "TURBO!", new Color(1f, 0.86f, 0.14f));
+                TriggerShake(0.28f, 0.26f);
+                Sfx.Play(Sfx.Id.Stomp, 0.92f);
+                Sfx.Play(Sfx.Id.Banner, 0.72f, 1.2f);
+                SpawnRing(new Vector3(_heroX, 0.2f, 0f), new Color(1f, 0.85f, 0.16f), 4.4f);
+                SpawnPopup(new Vector3(_heroX, _heroY + 2.6f, 0f), "TURBO!", new Color(1f, 0.86f, 0.14f));
                 StoreLink.LogEvent("runner_turbo_activated", 1);
             }
         }
@@ -1157,32 +1217,46 @@ namespace RunnerAd
 
                 if (o.kind == ObsKind.MovingDrone)
                 {
-                    o.x = Mathf.Sin(Time.time * 2.6f + o.phase) * LaneWidth;
+                    o.x = Mathf.Sin(Time.time * 2.5f + o.phase) * LaneWidth;
                     o.visualDrone.transform.Rotate(0f, 180f * dt, 0f);
                 }
 
                 o.root.transform.position = new Vector3(o.x, 0f, o.z);
 
-                // Collision check near z = 0
-                if (!o.hit && Mathf.Abs(o.z) < 0.95f && Mathf.Abs(o.x - _heroX) < 1.05f)
+                if (!o.hit && Mathf.Abs(o.z) < 0.98f && Mathf.Abs(o.x - _heroX) < 1.08f)
                 {
-                    if (o.kind == ObsKind.BoostPad)
+                    if (o.kind == ObsKind.BoostRamp)
                     {
                         o.hit = true;
-                        AddTurbo(0.32f);
-                        Sfx.Play(Sfx.Id.GateGood, 0.85f, 1.15f);
-                        SpawnRing(new Vector3(o.x, 0.12f, 0f), _boostColor, 2.8f);
-                        SpawnPopup(new Vector3(_heroX, _heroY + 2.3f, 0f), "BOOST!", _boostColor);
+                        _isGrounded = true;
+                        TriggerJump(16.2f);
+                        AddTurbo(0.26f);
+                        Sfx.Play(Sfx.Id.GateGood, 0.88f, 1.18f);
+                        SpawnRing(new Vector3(o.x, 0.15f, 0f), _boostColor, 3.0f);
+                        SpawnPopup(new Vector3(_heroX, _heroY + 2.4f, 0f), "MEGA JUMP!", _boostColor);
                         continue;
                     }
 
-                    // Can jump cleanly over LowHurdle!
-                    if (o.kind == ObsKind.LowHurdle && _heroY > 0.85f)
+                    if (o.kind == ObsKind.BonusGate)
+                    {
+                        o.hit = true;
+                        o.active = false;
+                        o.root.SetActive(false);
+                        _coins += 10;
+                        AddTurbo(0.35f);
+                        Sfx.Play(Sfx.Id.GateGood, 0.92f, 1.12f);
+                        SpawnBurst(new Vector3(o.x, 1.3f, 0f), _gateColor, 10);
+                        SpawnRing(new Vector3(o.x, 0.2f, 0f), new Color(1f, 0.86f, 0.18f), 3.4f);
+                        SpawnPopup(new Vector3(_heroX, _heroY + 2.5f, 0f), "X2 BONUS!", new Color(1f, 0.88f, 0.18f));
+                        continue;
+                    }
+
+                    if (o.kind == ObsKind.LowHurdle && _heroY > 0.82f)
                     {
                         o.hit = true;
                         _coins += 2;
                         Sfx.Play(Sfx.Id.Pop, 0.65f, 1.25f);
-                        SpawnPopup(new Vector3(_heroX, _heroY + 2.1f, 0f), "NICE!", new Color(0.32f, 0.96f, 0.56f));
+                        SpawnPopup(new Vector3(_heroX, _heroY + 2.2f, 0f), "NICE!", _boostColor);
                         continue;
                     }
 
@@ -1192,13 +1266,12 @@ namespace RunnerAd
 
                     if (inTurbo)
                     {
-                        // TURBO SMASH!
                         _coins += 10;
-                        TriggerShake(0.18f, 0.22f);
-                        Sfx.Play(Sfx.Id.Hit, 0.9f, 0.85f);
-                        SpawnBurst(new Vector3(o.x, 1.0f, 0f), _wallColor, 10);
-                        SpawnRing(new Vector3(o.x, 0.25f, 0f), new Color(1f, 0.84f, 0.16f), 3.4f);
-                        SpawnPopup(new Vector3(_heroX, _heroY + 2.4f, 0f), "SMASH!", new Color(1f, 0.82f, 0.14f));
+                        TriggerShake(0.20f, 0.24f);
+                        Sfx.Play(Sfx.Id.Hit, 0.92f, 0.85f);
+                        SpawnBurst(new Vector3(o.x, 1.0f, 0f), _wallColor, 12);
+                        SpawnRing(new Vector3(o.x, 0.25f, 0f), new Color(1f, 0.84f, 0.16f), 3.6f);
+                        SpawnPopup(new Vector3(_heroX, _heroY + 2.5f, 0f), "SMASH!", new Color(1f, 0.82f, 0.14f));
                     }
                     else if (_hasShield)
                     {
@@ -1206,19 +1279,21 @@ namespace RunnerAd
                         _shieldBubble.SetActive(false);
                         _invulnTimer = 1.0f;
                         TriggerShake(0.22f, 0.20f);
-                        Sfx.Play(Sfx.Id.Glass, 0.9f);
-                        SpawnBurst(new Vector3(_heroX, 1.0f, 0f), _gemColor, 9);
-                        SpawnPopup(new Vector3(_heroX, _heroY + 2.3f, 0f), "SAVED!", _gemColor);
+                        Sfx.Play(Sfx.Id.Glass, 0.92f);
+                        SpawnBurst(new Vector3(_heroX, 1.0f, 0f), _gemColor, 10);
+                        SpawnPopup(new Vector3(_heroX, _heroY + 2.4f, 0f), "SAVED!", _gemColor);
                     }
                     else if (_invulnTimer <= 0f)
                     {
                         _lives--;
+                        _combo = 0;
                         _invulnTimer = 1.2f;
-                        TriggerShake(0.32f, 0.34f);
-                        Sfx.Play(Sfx.Id.Error, 0.9f);
-                        SpawnBurst(new Vector3(o.x, 1.0f, 0f), new Color(1f, 0.24f, 0.26f), 10);
-                        SpawnRing(new Vector3(_heroX, 0.2f, 0f), new Color(1f, 0.22f, 0.26f), 2.8f);
-                        SpawnPopup(new Vector3(_heroX, _heroY + 2.3f, 0f), "OUCH!", new Color(1f, 0.30f, 0.30f));
+                        _damageFlashT = 1.0f;
+                        TriggerShake(0.32f, 0.36f);
+                        Sfx.Play(Sfx.Id.Error, 0.92f);
+                        SpawnBurst(new Vector3(o.x, 1.0f, 0f), new Color(1f, 0.24f, 0.26f), 12);
+                        SpawnRing(new Vector3(_heroX, 0.2f, 0f), new Color(1f, 0.22f, 0.26f), 3.0f);
+                        SpawnPopup(new Vector3(_heroX, _heroY + 2.4f, 0f), "-1 HP!", new Color(1f, 0.26f, 0.28f));
 
                         if (_lives <= 0)
                         {
@@ -1234,7 +1309,6 @@ namespace RunnerAd
         {
             if (_ended) return;
             _ended = true;
-            _won = won;
             _endcardAnimT = 0f;
 
             _ui.ShowDragTutorial(false);
@@ -1246,23 +1320,16 @@ namespace RunnerAd
 
             if (won)
             {
-                SpawnBurst(new Vector3(_heroX, 1.6f, 0f), new Color(1f, 0.86f, 0.16f), 14);
+                SpawnBurst(new Vector3(_heroX, 1.6f, 0f), new Color(1f, 0.86f, 0.16f), 15);
                 SpawnBurst(new Vector3(_heroX, 1.6f, 0f), _heroColor, 12);
             }
 
-            // Update Endcard Title & Subtitle
             var titleTr = _endcardCard.Find("EndTitle");
-            if (titleTr)
-            {
-                var t = titleTr.GetComponentInChildren<Text>();
-                if (t) t.text = won ? victoryTitle : defeatTitle;
-            }
+            if (titleTr) { var t = titleTr.GetComponentInChildren<Text>(); if (t) t.text = won ? victoryTitle : defeatTitle; }
             var subTr = _endcardCard.Find("EndSub");
-            if (subTr)
-            {
-                var t = subTr.GetComponentInChildren<Text>();
-                if (t) t.text = won ? victorySubtitle : defeatSubtitle;
-            }
+            if (subTr) { var t = subTr.GetComponentInChildren<Text>(); if (t) t.text = won ? victorySubtitle : defeatSubtitle; }
+            var scTr = _endcardCard.Find("EndScore");
+            if (scTr) { var t = scTr.GetComponentInChildren<Text>(); if (t) t.text = "COINS: " + _coins; }
 
             _endcardRoot.SetActive(true);
         }
@@ -1275,10 +1342,10 @@ namespace RunnerAd
 
         void UpdateCamera(float dt, bool inTurbo)
         {
-            float targetFov = inTurbo ? 61f : 54f;
+            float targetFov = inTurbo ? 62f : 54f;
             _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, targetFov, 1f - Mathf.Exp(-6f * dt));
 
-            Vector3 targetPos = new Vector3(_heroX * 0.38f, _camBasePos.y + _heroY * 0.35f, _camBasePos.z);
+            Vector3 targetPos = new Vector3(_heroX * 0.36f, _camBasePos.y + _heroY * 0.35f, _camBasePos.z);
             if (_shakeTimer > 0f)
             {
                 _shakeTimer -= dt;
@@ -1291,13 +1358,14 @@ namespace RunnerAd
         void UpdateHud()
         {
             if (_coinsTxt) _coinsTxt.text = "COINS: " + _coins;
-            if (_distTxt) _distTxt.text = Mathf.Max(0, Mathf.CeilToInt(_finishLineZ - _distance)) + "m";
-            if (_livesTxt) _livesTxt.text = "LIVES: " + Mathf.Max(0, _lives);
+            if (_distTxt) _distTxt.text = Mathf.Max(0, Mathf.CeilToInt(_finishLineZ - _distance)) + "M";
+            if (_livesTxt) _livesTxt.text = "HP: " + Mathf.Max(0, _lives) + "/" + maxLives;
+            if (_livesPillImg)
+                _livesPillImg.color = _lives <= 1
+                    ? Color.Lerp(new Color(0.96f, 0.12f, 0.22f), new Color(1f, 0.45f, 0.16f), 0.5f + 0.5f * Mathf.Sin(Time.time * 10f))
+                    : new Color(0.92f, 0.16f, 0.32f);
             if (_turboFillRect)
-            {
-                float w = Mathf.Clamp01(_turboCharge) * 448f;
-                _turboFillRect.sizeDelta = new Vector2(w, -12f);
-            }
+                _turboFillRect.sizeDelta = new Vector2(Mathf.Clamp01(_turboCharge) * 444f, -16f);
             if (_turboTxt)
                 _turboTxt.text = _turboTimer > 0f ? "TURBO ACTIVE!" : "TURBO CHARGE";
         }
@@ -1313,7 +1381,7 @@ namespace RunnerAd
                 s.t = 0f;
                 s.dur = Random.Range(0.35f, 0.62f);
                 s.tr.position = pos;
-                s.tr.localScale = Vector3.one * Random.Range(0.18f, 0.36f);
+                s.tr.localScale = Vector3.one * Random.Range(0.20f, 0.38f);
                 Prims.SetColor(s.r, col);
                 s.vel = new Vector3(Random.Range(-5.5f, 5.5f), Random.Range(3.5f, 8.5f), Random.Range(-3.5f, 5.5f));
                 s.tr.gameObject.SetActive(true);
@@ -1347,7 +1415,7 @@ namespace RunnerAd
                 if (p.active) continue;
                 p.active = true;
                 p.t = 0f;
-                p.dur = 0.72f;
+                p.dur = 0.76f;
                 p.worldPos = worldPos;
                 p.main.text = text;
                 p.main.color = col;
@@ -1368,8 +1436,7 @@ namespace RunnerAd
                 s.vel.y -= 18f * dt;
                 s.tr.position += s.vel * dt;
                 s.tr.Rotate(380f * dt, 260f * dt, 0f);
-                float sc = 1f - (s.t / s.dur);
-                s.tr.localScale = Vector3.one * (0.28f * sc);
+                s.tr.localScale = Vector3.one * (0.30f * (1f - s.t / s.dur));
             }
 
             for (int i = 0; i < _rings.Count; i++)
@@ -1390,12 +1457,12 @@ namespace RunnerAd
                 p.t += dt;
                 if (p.t >= p.dur) { p.active = false; p.rt.gameObject.SetActive(false); continue; }
                 float u = p.t / p.dur;
-                Vector3 wp = p.worldPos + Vector3.up * (u * 1.8f);
+                Vector3 wp = p.worldPos + Vector3.up * (u * 2.0f);
                 Vector3 sp = _cam.WorldToScreenPoint(wp);
                 float sx = (sp.x / Mathf.Max(1f, Screen.width) - 0.5f) * 1080f;
                 float sy = (sp.y / Mathf.Max(1f, Screen.height) - 0.5f) * 1920f;
                 p.rt.anchoredPosition = new Vector2(sx, sy);
-                float sc = u < 0.25f ? Mathf.Lerp(0.3f, 1.18f, u / 0.25f) : Mathf.Lerp(1.18f, 0.92f, (u - 0.25f) / 0.75f);
+                float sc = u < 0.25f ? Mathf.Lerp(0.35f, 1.24f, u / 0.25f) : Mathf.Lerp(1.24f, 0.94f, (u - 0.25f) / 0.75f);
                 p.rt.localScale = Vector3.one * sc;
             }
         }
