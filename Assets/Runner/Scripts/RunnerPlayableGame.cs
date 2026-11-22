@@ -509,7 +509,7 @@ namespace RunnerAd
         void BuildHudAndEndcard()
         {
             // Shared AdUI for tutorial gloved hand & banner
-            _ui = AdUI.Create("TURBO RUNNER", ctaText, () => StoreLink.Open(RunnerStoreUrl));
+            _ui = AdUI.Create("TURBO RUNNER", ctaText, new Color(0.10f, 0.14f, 0.30f), new Color(1f, 0.86f, 0.18f));
             _ui.SetTutorialText(tutorialText);
             _ui.ShowDragTutorial(true);
 
