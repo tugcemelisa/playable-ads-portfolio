@@ -56,7 +56,7 @@ namespace AdKit.EditorTools
             if (!iframe.Contains(needle)) return;
             iframe = iframe.Replace(
                 needle,
-                "Luna.Unity.Playable.InstallFullGame=function(t,e){var u=t||e||\"https://apps.apple.com/us/app/mob-control/id1562817072\";try{window.open(u,\"_blank\")}catch(_){}");
+                "Luna.Unity.Playable.InstallFullGame=function(t,e){var isA=/Android/i.test(navigator.userAgent);var u=isA?\"https://play.google.com/store/apps/details?id=com.vincentb.MobControl\":(t||e||\"https://apps.apple.com/us/app/mob-control/id1562817072\");try{var w=window.open(u,\"_blank\");if(!w)(window.top||window).location.href=u;}catch(_){try{(window.top||window).location.href=u;}catch(__){}}");
             File.WriteAllText(iframePath, iframe);
             _lastDevWriteUtc = File.GetLastWriteTimeUtc(iframePath);
         }
