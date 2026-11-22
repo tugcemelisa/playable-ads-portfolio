@@ -971,7 +971,7 @@ namespace MobControlAd
                         reused.renderers[i].sharedMaterials = reused.origMats[i];
                 }
                 reused.root.gameObject.SetActive(true);
-                if (reused.anim) { reused.anim.Play("Run"); reused.anim.Sample(); reused.anim.enabled = false; }
+                if (reused.anim) { reused.anim.enabled = true; reused.anim.Play("Run"); }
                 if (isPurple) _purpleMobs.Add(reused);
                 else _yellowMobs.Add(reused);
                 return reused;
@@ -1046,14 +1046,12 @@ namespace MobControlAd
                         st.speed = spd;
                         st.time = Random.Range(0f, Mathf.Max(0.01f, runClip.length));
                     }
+                    anim.enabled = true;
                     anim.Play("Run");
                     anim.Sample();
-                    // Staggered 30Hz manual sampling cuts Playworks Animator CPU in half (49% -> ~24%)!
-                    anim.enabled = false;
                     unit.anim = anim;
                     unit.animState = st;
                     unit.animSpeed = spd;
-                    unit.animSlot = (_purpleMobs.Count + _yellowMobs.Count) & 1;
                     unit.hasSkeletalRun = true;
                 }
 
@@ -1689,16 +1687,11 @@ namespace MobControlAd
             float popScale = 1f + Mathf.Sin(u.spawnPop * Mathf.PI) * 0.28f;
             u.body.localScale = Vector3.one * popScale;
 
-            // Real skeletal Run clip is driving the FBX limbs — staggered 30Hz sampling halves Animator CPU!
+            // Real skeletal Run clip is driving the FBX limbs natively in both Unity & Playworks!
             if (u.hasSkeletalRun)
             {
                 u.body.localPosition = Vector3.zero;
                 u.body.localRotation = Quaternion.identity;
-                if (u.anim && u.animState != null && ((Time.frameCount & 1) == u.animSlot))
-                {
-                    u.animState.time += dt * 2f * u.animSpeed;
-                    u.anim.Sample();
-                }
                 return;
             }
 
