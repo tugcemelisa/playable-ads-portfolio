@@ -10,6 +10,12 @@ namespace AdKit
         static readonly System.Collections.Generic.Dictionary<Color32, Material> _matCache =
             new System.Collections.Generic.Dictionary<Color32, Material>();
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics()
+        {
+            _matCache.Clear();
+        }
+
         public static GameObject Make(PrimitiveType t, Transform parent, Vector3 pos, Vector3 scale, Color c)
         {
             var g = GameObject.CreatePrimitive(t);

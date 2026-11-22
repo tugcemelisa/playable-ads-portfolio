@@ -26,7 +26,15 @@ namespace AdKit.EditorTools
 
         static PlayableMenu()
         {
+            EditorApplication.update -= WatchPlayworksDevIframe;
             EditorApplication.update += WatchPlayworksDevIframe;
+            AssemblyReloadEvents.beforeAssemblyReload -= OnBeforeReload;
+            AssemblyReloadEvents.beforeAssemblyReload += OnBeforeReload;
+        }
+
+        static void OnBeforeReload()
+        {
+            EditorApplication.update -= WatchPlayworksDevIframe;
         }
 
         static void WatchPlayworksDevIframe()

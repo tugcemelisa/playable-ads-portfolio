@@ -8,23 +8,8 @@ namespace AdKit.EditorTools
     /// Strips unused animation clips (keeps ONLY Run), compresses meshes, disables blendshapes/tangents,
     /// and optimizes 2D textures to keep Unity Playworks RAM < 200 MB and performance Good/Excellent.
     /// </summary>
-    [InitializeOnLoad]
     public static class MobAssetOptimizer
     {
-        const string PrefKey = "MobControl_AssetsOptimized_v1";
-
-        static MobAssetOptimizer()
-        {
-            EditorApplication.delayCall += () =>
-            {
-                if (!SessionState.GetBool(PrefKey, false))
-                {
-                    SessionState.SetBool(PrefKey, true);
-                    OptimizeAll();
-                }
-            };
-        }
-
         [MenuItem("Playable Ads/Optimize Mob Control Assets (RAM & FPS)")]
         public static void OptimizeAll()
         {
