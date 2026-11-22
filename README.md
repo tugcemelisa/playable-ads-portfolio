@@ -18,6 +18,15 @@ Interactive 3D HTML5 playable ads are engineered in **Unity 6** and exported wit
 
 ---
 
+## Mob Control — Live Playworks Preview & Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/mob-control-playworks-gameplay.png" width="49%" alt="Mob Control in Unity Playworks Dev Environment — Active Gameplay & Playground A/B Sections" />
+  <img src="docs/screenshots/mob-control-playworks-performance.png" width="49%" alt="Mob Control Victory Endcard & Live Playworks Performance Profiler (126 MB RAM, 4 ms Frame Time)" />
+</p>
+
+---
+
 ## Mob Control — Unity Playworks Playground A/B Testing Matrix
 
 Open the [Mob Control Live Playable](https://tugcemelisa.github.io/playable-ads-portfolio/mob-control/) on desktop to test **all 15 `[LunaPlaygroundField]` A/B parameters live** in the Unity Playworks Playground without rebuilding Unity:
