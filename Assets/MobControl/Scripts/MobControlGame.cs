@@ -717,31 +717,31 @@ namespace MobControlAd
             Color baseFill = isBlueRed ? new Color(0.95f, 0.20f, 0.24f, 1f) : new Color(0.95f, 0.24f, 0.28f, 1f);
             Color baseShadow = isBlueRed ? new Color(0.46f, 0.04f, 0.08f, 1f) : new Color(0.48f, 0.05f, 0.08f, 1f);
 
-            // Left: Cartoon Mob Count Pill (same font size 44 + generous padding + theme-matched dark shadow)
-            AdUI.Img(trt, AdRes.Round(64), mobShadow, center, new Vector2(-330f, -10f), new Vector2(304f, 114f), true);
-            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(-330f, 0f), new Vector2(292f, 102f), true);
-            AdUI.Img(trt, AdRes.Round(64), mobFill, center, new Vector2(-330f, 0f), new Vector2(278f, 88f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.26f), center, new Vector2(-330f, 22f), new Vector2(236f, 24f), true);
+            // Left: Cartoon Mob Count Pill (uses AdRes.Pill so Playworks WebGL renders smooth rounded pill corners!)
+            AdUI.Img(trt, AdRes.Pill, mobShadow, center, new Vector2(-330f, -10f), new Vector2(304f, 114f), false);
+            AdUI.Img(trt, AdRes.Pill, Color.white, center, new Vector2(-330f, 0f), new Vector2(292f, 102f), false);
+            AdUI.Img(trt, AdRes.Pill, mobFill, center, new Vector2(-330f, 0f), new Vector2(278f, 88f), false);
+            AdUI.Img(trt, AdRes.Pill, new Color(1f, 1f, 1f, 0.26f), center, new Vector2(-330f, 22f), new Vector2(216f, 22f), false);
             _topBlueMobsText = AdUI.Txt(trt, "MOBS: 0", 44, Color.white, center, new Vector2(-330f, -1f));
             _topBlueMobsText.resizeTextForBestFit = false;
             var mobOut = _topBlueMobsText.GetComponent<Outline>();
             if (mobOut) { mobOut.effectColor = mobShadow; mobOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
-            // Center: Cartoon Stage Pill (same font size 44 + generous padding + theme-matched dark shadow)
-            AdUI.Img(trt, AdRes.Round(64), stageShadow, center, new Vector2(0f, -10f), new Vector2(304f, 114f), true);
-            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(0f, 0f), new Vector2(292f, 102f), true);
-            AdUI.Img(trt, AdRes.Round(64), stageFill, center, new Vector2(0f, 0f), new Vector2(278f, 88f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.34f), center, new Vector2(0f, 22f), new Vector2(236f, 24f), true);
+            // Center: Cartoon Stage Pill (smooth AdRes.Pill in both Unity & Playworks)
+            AdUI.Img(trt, AdRes.Pill, stageShadow, center, new Vector2(0f, -10f), new Vector2(304f, 114f), false);
+            AdUI.Img(trt, AdRes.Pill, Color.white, center, new Vector2(0f, 0f), new Vector2(292f, 102f), false);
+            AdUI.Img(trt, AdRes.Pill, stageFill, center, new Vector2(0f, 0f), new Vector2(278f, 88f), false);
+            AdUI.Img(trt, AdRes.Pill, new Color(1f, 1f, 1f, 0.34f), center, new Vector2(0f, 22f), new Vector2(216f, 22f), false);
             var stageLbl = AdUI.Txt(trt, "STAGE 1", 44, Color.white, center, new Vector2(0f, -1f));
             stageLbl.resizeTextForBestFit = false;
             var stageOut = stageLbl.GetComponent<Outline>();
             if (stageOut) { stageOut.effectColor = stageShadow; stageOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
-            // Right: Cartoon Enemy Base HP Pill (same font size 44 + generous padding + theme-matched dark shadow)
-            AdUI.Img(trt, AdRes.Round(64), baseShadow, center, new Vector2(330f, -10f), new Vector2(304f, 114f), true);
-            AdUI.Img(trt, AdRes.Round(64), Color.white, center, new Vector2(330f, 0f), new Vector2(292f, 102f), true);
-            AdUI.Img(trt, AdRes.Round(64), baseFill, center, new Vector2(330f, 0f), new Vector2(278f, 88f), true);
-            AdUI.Img(trt, AdRes.Round(64), new Color(1f, 1f, 1f, 0.28f), center, new Vector2(330f, 22f), new Vector2(236f, 24f), true);
+            // Right: Cartoon Enemy Base HP Pill (smooth AdRes.Pill in both Unity & Playworks)
+            AdUI.Img(trt, AdRes.Pill, baseShadow, center, new Vector2(330f, -10f), new Vector2(304f, 114f), false);
+            AdUI.Img(trt, AdRes.Pill, Color.white, center, new Vector2(330f, 0f), new Vector2(292f, 102f), false);
+            AdUI.Img(trt, AdRes.Pill, baseFill, center, new Vector2(330f, 0f), new Vector2(278f, 88f), false);
+            AdUI.Img(trt, AdRes.Pill, new Color(1f, 1f, 1f, 0.28f), center, new Vector2(330f, 22f), new Vector2(216f, 22f), false);
             _topEnemyBaseText = AdUI.Txt(trt, "BASE: " + enemyBaseStartHp, 44, Color.white, center, new Vector2(330f, -1f));
             _topEnemyBaseText.resizeTextForBestFit = false;
             var baseOut = _topEnemyBaseText.GetComponent<Outline>();
