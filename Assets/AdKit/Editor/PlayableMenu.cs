@@ -192,6 +192,7 @@ namespace AdKit.EditorTools
                     var js = File.ReadAllText(jsFile)
                         .Replace("?\"http://localhost:8000\":window.location.origin;",
                             "?\"http://localhost:8000\":(window.location.origin+window.location.pathname.replace(/\\/[^\\/]*$/,\"\"));")
+                        .Replace("async function getLocalNetworkUrl(){", "async function getLocalNetworkUrl(){return playableURL;")
                         .Replace("materialFont=\"/static/media/", "materialFont=\"./static/media/");
                     File.WriteAllText(jsFile, js);
                 }
