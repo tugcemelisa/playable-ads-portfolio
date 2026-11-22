@@ -18,12 +18,30 @@ Interactive 3D HTML5 playable ads are engineered in **Unity 6** and exported wit
 
 ---
 
-## Mob Control — Live Playworks Preview & Screenshots
+## Mob Control — Live Playworks Preview & A/B Variant Screenshots
 
-<p align="center">
-  <img src="docs/screenshots/mob-control-playworks-gameplay.png" width="49%" alt="Mob Control in Unity Playworks Dev Environment — Active Gameplay & Playground A/B Sections" />
-  <img src="docs/screenshots/mob-control-playworks-performance.png" width="49%" alt="Mob Control Victory Endcard & Live Playworks Performance Profiler (126 MB RAM, 4 ms Frame Time)" />
-</p>
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/screenshots/mob-control-playworks-gameplay.png" width="100%" alt="AlpineWinter Theme — Stylized 3D Models & Live Events" /><br/>
+      <sub><b>Default Variant (`AlpineWinter` + `StylizedModels`):</b> Active gameplay, sliding `X3`/`X2`/`X7` gates & live `Events` tracker.</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="docs/screenshots/mob-control-ab-midnight-slate.png" width="100%" alt="MidnightSlate A/B Variant — Visual Settings Playground Panel" /><br/>
+      <sub><b>A/B Variant (`MidnightSlate` + `Visual Settings`):</b> Live theme switch to Deep Navy vs. Crimson Red without rebuilding Unity.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/screenshots/mob-control-ab-stickmen-endcard.png" width="100%" alt="ClassicStickmen A/B Variant + Endcard & Localization Fields" /><br/>
+      <sub><b>A/B Variant (`ClassicStickmen` + `Endcard & Localization`):</b> Giant Champion stickman & live CTA text/color/shape fields.</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="docs/screenshots/mob-control-playworks-performance.png" width="100%" alt="Victory Endcard & Live Playworks Performance Profiler" /><br/>
+      <sub><b>Victory Endcard & Live Performance Profiler:</b> `126 MB RAM`, `4 ms` frame time, `24% CPU`, `140 Draw Calls`, `0` shadow casters.</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
