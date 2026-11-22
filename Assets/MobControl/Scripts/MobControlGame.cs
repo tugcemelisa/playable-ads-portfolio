@@ -97,6 +97,9 @@ namespace MobControlAd
             public Transform body;
             public Transform leftArm, rightArm, leftLeg, rightLeg;
             public List<Renderer> renderers = new List<Renderer>();
+            public List<Material[]> origMats = new List<Material[]>();
+            public GameObject giantAura;
+            public Animation anim;
             public bool isPurple;
             public bool isDyingGray;
             public float dyingTimer;
@@ -132,6 +135,7 @@ namespace MobControlAd
         class SmokePuff
         {
             public Transform tr;
+            public Renderer rend;
             public Vector3 vel;
             public float life;
             public float maxLife;
@@ -150,6 +154,7 @@ namespace MobControlAd
         class SparkFx
         {
             public Transform tr;
+            public Renderer rend;
             public Vector3 vel;
             public Vector3 spin;
             public float baseScale;
@@ -161,6 +166,7 @@ namespace MobControlAd
         class FloatTextFx
         {
             public Transform tr;
+            public Label lbl;
             public Vector3 vel;
             public float baseScale;
             public float life;
@@ -216,6 +222,13 @@ namespace MobControlAd
         readonly List<RingFx> _rings = new List<RingFx>();
         readonly List<SparkFx> _sparks = new List<SparkFx>();
         readonly List<FloatTextFx> _floatTexts = new List<FloatTextFx>();
+        // Object pools to prevent WebGL/Playworks RAM growth from per-frame Instantiate/Destroy!
+        readonly Stack<StickmanUnit> _purplePool = new Stack<StickmanUnit>();
+        readonly Stack<StickmanUnit> _yellowPool = new Stack<StickmanUnit>();
+        readonly Stack<SmokePuff> _puffPool = new Stack<SmokePuff>();
+        readonly Stack<RingFx> _ringPool = new Stack<RingFx>();
+        readonly Stack<SparkFx> _sparkPool = new Stack<SparkFx>();
+        readonly Stack<FloatTextFx> _floatTextPool = new Stack<FloatTextFx>();
         GameObject _purpleMobPrefab;
         GameObject _yellowMobPrefab;
         AnimationClip _purpleRunClip;
@@ -954,6 +967,42 @@ namespace MobControlAd
 
         StickmanUnit SpawnStickman(bool isPurple, Vector3 pos, int gateMask, bool isGiant = false)
         {
+            var pool = isPurple ? _purplePool : _yellowPool;
+            if (pool.Count > 0)
+            {
+                var reused = pool.Pop();
+                reused.isGiant = isGiant;
+                reused.hp = isGiant ? 8 : 1;
+                reused.speed = isGiant ? 3.85f : (isPurple ? 4.8f : 2.95f);
+                reused.gateMask = gateMask;
+                reused.phase = Random.Range(0f, 6.28f);
+                reused.spawnPop = 1.0f;
+                reused.isDyingGray = false;
+                reused.dyingTimer = 0f;
+                reused.inTube = false;
+                reused.tubeT = 0f;
+                reused.root.localPosition = pos;
+                reused.root.localRotation = isPurple ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f);
+                reused.root.localScale = Vector3.one * (isGiant ? 2.25f : 1f);
+                if (reused.giantAura) reused.giantAura.SetActive(isGiant);
+                else if (isGiant)
+                {
+                    var aura = AdRes.Spr("GiantAura", reused.root, AdRes.Ring, new Color(1f, 0.88f, 0.20f, 0.92f), 20, new Vector3(0f, 0.05f, 0f), Vector2.one * 0.88f);
+                    aura.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                    reused.giantAura = aura.gameObject;
+                }
+                for (int i = 0; i < reused.renderers.Count && i < reused.origMats.Count; i++)
+                {
+                    if (reused.renderers[i])
+                        reused.renderers[i].sharedMaterials = reused.origMats[i];
+                }
+                reused.root.gameObject.SetActive(true);
+                if (reused.anim) reused.anim.Play("Run");
+                if (isPurple) _purpleMobs.Add(reused);
+                else _yellowMobs.Add(reused);
+                return reused;
+            }
+
             var root = new GameObject(isGiant ? "GiantChampion" : (isPurple ? "PurpleStickman" : "YellowStickman")).transform;
             root.SetParent(transform, false);
             root.localPosition = pos;
@@ -983,6 +1032,7 @@ namespace MobControlAd
                 // Glowing golden champion aura ring under Giant's feet!
                 var aura = AdRes.Spr("GiantAura", root, AdRes.Ring, new Color(1f, 0.88f, 0.20f, 0.92f), 20, new Vector3(0f, 0.05f, 0f), Vector2.one * 0.88f);
                 aura.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                unit.giantAura = aura.gameObject;
             }
 
             Color col = isPurple ? PurpleMain : YellowMain;
@@ -1023,6 +1073,7 @@ namespace MobControlAd
                     }
                     anim.Play("Run");
                     anim.Sample();
+                    unit.anim = anim;
                     unit.hasSkeletalRun = true;
                 }
 
@@ -1089,9 +1140,20 @@ namespace MobControlAd
                 unit.renderers.Add(rLeg.GetComponent<Renderer>());
             }
 
+            // Snapshot original materials so pooled mobs restore cleanly after gray death!
+            for (int i = 0; i < unit.renderers.Count; i++)
+                unit.origMats.Add(unit.renderers[i] ? unit.renderers[i].sharedMaterials : null);
+
             if (isPurple) _purpleMobs.Add(unit);
             else _yellowMobs.Add(unit);
             return unit;
+        }
+
+        void RecycleStickman(StickmanUnit u)
+        {
+            if (u == null || !u.root) return;
+            u.root.gameObject.SetActive(false);
+            (u.isPurple ? _purplePool : _yellowPool).Push(u);
         }
 
         static AnimationClip FindRunClip(string resourcePath)
@@ -1399,7 +1461,7 @@ namespace MobControlAd
                     m.dyingTimer -= dt;
                     if (m.dyingTimer <= 0f)
                     {
-                        Destroy(m.root.gameObject);
+                        RecycleStickman(m);
                         _purpleMobs.RemoveAt(i);
                     }
                     continue;
@@ -1453,7 +1515,7 @@ namespace MobControlAd
                 if (!_yellowBlockDestroyed && prevZ < 5.05f && pos.z >= 5.05f && pos.x >= 0.45f)
                 {
                     DamageYellowBlock(m.isGiant ? 8 : 1, pos);
-                    Destroy(m.root.gameObject);
+                    RecycleStickman(m);
                     _purpleMobs.RemoveAt(i);
                     continue;
                 }
@@ -1521,7 +1583,7 @@ namespace MobControlAd
                 if (pos.z >= 20.6f)
                 {
                     DamageEnemyBase(m.isGiant ? 8 : 1, pos);
-                    Destroy(m.root.gameObject);
+                    RecycleStickman(m);
                     _purpleMobs.RemoveAt(i);
                 }
             }
@@ -1535,7 +1597,7 @@ namespace MobControlAd
                     y.dyingTimer -= dt;
                     if (y.dyingTimer <= 0f)
                     {
-                        Destroy(y.root.gameObject);
+                        RecycleStickman(y);
                         _yellowMobs.RemoveAt(i);
                     }
                     continue;
@@ -1552,7 +1614,7 @@ namespace MobControlAd
                 {
                     if (_elapsedTime < Mathf.Max(3f, minLoseTime))
                     {
-                        Destroy(y.root.gameObject);
+                        RecycleStickman(y);
                         _yellowMobs.RemoveAt(i);
                         continue;
                     }
@@ -1775,12 +1837,27 @@ namespace MobControlAd
 
         void SpawnWhiteSmoke(Vector3 pos, int count, Color col)
         {
-            if (_puffs.Count > 24) return;
             for (int i = 0; i < count; i++)
             {
-                var p = Prims.Make(PrimitiveType.Sphere, transform, pos + Random.insideUnitSphere * 0.18f, Vector3.one * 0.24f, col).transform;
-                Vector3 vel = new Vector3(Random.Range(-1.4f, 1.4f), Random.Range(0.8f, 2.2f), Random.Range(-1.2f, 1.2f));
-                _puffs.Add(new SmokePuff { tr = p, vel = vel, life = 0.36f, maxLife = 0.36f });
+                if (_puffs.Count > 24) return;
+                SmokePuff puff;
+                if (_puffPool.Count > 0)
+                {
+                    puff = _puffPool.Pop();
+                    puff.tr.localPosition = pos + Random.insideUnitSphere * 0.18f;
+                    puff.tr.localScale = Vector3.one * 0.24f;
+                    if (puff.rend) Prims.SetColor(puff.rend, col);
+                    puff.tr.gameObject.SetActive(true);
+                }
+                else
+                {
+                    var go = Prims.Make(PrimitiveType.Sphere, transform, pos + Random.insideUnitSphere * 0.18f, Vector3.one * 0.24f, col);
+                    puff = new SmokePuff { tr = go.transform, rend = go.GetComponent<Renderer>() };
+                }
+                puff.vel = new Vector3(Random.Range(-1.4f, 1.4f), Random.Range(0.8f, 2.2f), Random.Range(-1.2f, 1.2f));
+                puff.life = 0.36f;
+                puff.maxLife = 0.36f;
+                _puffs.Add(puff);
             }
         }
 
@@ -1792,7 +1869,7 @@ namespace MobControlAd
                 p.life -= dt;
                 if (p.life <= 0f || !p.tr)
                 {
-                    if (p.tr) Destroy(p.tr.gameObject);
+                    if (p.tr) { p.tr.gameObject.SetActive(false); _puffPool.Push(p); }
                     _puffs.RemoveAt(i);
                     continue;
                 }
@@ -1805,17 +1882,27 @@ namespace MobControlAd
         void SpawnRing(Vector3 pos, float maxScale, Color col, float duration, float tiltX)
         {
             if (_rings.Count > 12) return;
-            var sr = AdRes.Spr("RingFx", transform, AdRes.Ring, col, 35, pos, Vector2.one * 0.25f);
-            sr.transform.localRotation = Quaternion.Euler(tiltX, 0f, 0f);
-            _rings.Add(new RingFx
+            RingFx ring;
+            if (_ringPool.Count > 0)
             {
-                tr = sr.transform,
-                sr = sr,
-                baseCol = col,
-                maxScale = maxScale,
-                life = duration,
-                maxLife = duration
-            });
+                ring = _ringPool.Pop();
+                ring.tr.localPosition = pos;
+                ring.tr.localRotation = Quaternion.Euler(tiltX, 0f, 0f);
+                ring.tr.localScale = Vector3.one * 0.25f;
+                if (ring.sr) ring.sr.color = col;
+                ring.tr.gameObject.SetActive(true);
+            }
+            else
+            {
+                var sr = AdRes.Spr("RingFx", transform, AdRes.Ring, col, 35, pos, Vector2.one * 0.25f);
+                sr.transform.localRotation = Quaternion.Euler(tiltX, 0f, 0f);
+                ring = new RingFx { tr = sr.transform, sr = sr };
+            }
+            ring.baseCol = col;
+            ring.maxScale = maxScale;
+            ring.life = duration;
+            ring.maxLife = duration;
+            _rings.Add(ring);
         }
 
         void UpdateRings(float dt)
@@ -1826,7 +1913,7 @@ namespace MobControlAd
                 r.life -= dt;
                 if (r.life <= 0f || !r.tr)
                 {
-                    if (r.tr) Destroy(r.tr.gameObject);
+                    if (r.tr) { r.tr.gameObject.SetActive(false); _ringPool.Push(r); }
                     _rings.RemoveAt(i);
                     continue;
                 }
@@ -1849,20 +1936,29 @@ namespace MobControlAd
             {
                 if (_sparks.Count > 36) return;
                 float sz = cubeDebris ? Random.Range(0.14f, 0.26f) : Random.Range(0.10f, 0.18f);
-                var go = Prims.Make(cubeDebris ? PrimitiveType.Cube : PrimitiveType.Sphere, transform,
-                    pos + Random.insideUnitSphere * 0.16f, Vector3.one * sz, col);
+                SparkFx sp;
+                if (_sparkPool.Count > 0)
+                {
+                    sp = _sparkPool.Pop();
+                    sp.tr.localPosition = pos + Random.insideUnitSphere * 0.16f;
+                    sp.tr.localScale = Vector3.one * sz;
+                    if (sp.rend) Prims.SetColor(sp.rend, col);
+                    sp.tr.gameObject.SetActive(true);
+                }
+                else
+                {
+                    var go = Prims.Make(PrimitiveType.Cube, transform, pos + Random.insideUnitSphere * 0.16f, Vector3.one * sz, col);
+                    sp = new SparkFx { tr = go.transform, rend = go.GetComponent<Renderer>() };
+                }
                 Vector3 dir = new Vector3(Random.Range(-1f, 1f), Random.Range(0.45f, 1.35f), Random.Range(-1f, 1f)).normalized;
                 float dur = cubeDebris ? Random.Range(0.36f, 0.56f) : Random.Range(0.22f, 0.38f);
-                _sparks.Add(new SparkFx
-                {
-                    tr = go.transform,
-                    vel = dir * Random.Range(speed * 0.65f, speed * 1.15f),
-                    spin = new Vector3(Random.Range(-420f, 420f), Random.Range(-420f, 420f), Random.Range(-420f, 420f)),
-                    baseScale = sz,
-                    gravity = cubeDebris ? 14.5f : 7.5f,
-                    life = dur,
-                    maxLife = dur
-                });
+                sp.vel = dir * Random.Range(speed * 0.65f, speed * 1.15f);
+                sp.spin = new Vector3(Random.Range(-420f, 420f), Random.Range(-420f, 420f), Random.Range(-420f, 420f));
+                sp.baseScale = sz;
+                sp.gravity = cubeDebris ? 14.5f : 7.5f;
+                sp.life = dur;
+                sp.maxLife = dur;
+                _sparks.Add(sp);
             }
         }
 
@@ -1874,7 +1970,7 @@ namespace MobControlAd
                 sp.life -= dt;
                 if (sp.life <= 0f || !sp.tr)
                 {
-                    if (sp.tr) Destroy(sp.tr.gameObject);
+                    if (sp.tr) { sp.tr.gameObject.SetActive(false); _sparkPool.Push(sp); }
                     _sparks.RemoveAt(i);
                     continue;
                 }
@@ -1888,18 +1984,34 @@ namespace MobControlAd
 
         void SpawnFloatText(Vector3 pos, string text, Color col, float height)
         {
-            if (_floatTexts.Count > 12) return;
-            var lbl = AdRes.MakeLabel(transform, text, height, col, 45, pos);
-            var tr = lbl.transform;
-            if (_cam) tr.rotation = _cam.transform.rotation;
-            _floatTexts.Add(new FloatTextFx
+            if (_floatTexts.Count > 8) return;
+            FloatTextFx ft;
+            if (_floatTextPool.Count > 0)
             {
-                tr = tr,
-                vel = new Vector3(Random.Range(-0.35f, 0.35f), 2.8f, 0f),
-                baseScale = tr.localScale.x,
-                life = 0.72f,
-                maxLife = 0.72f
-            });
+                ft = _floatTextPool.Pop();
+                ft.tr.localPosition = pos;
+                if (_cam) ft.tr.rotation = _cam.transform.rotation;
+                float sc = height / 76f;
+                ft.baseScale = sc;
+                ft.tr.localScale = Vector3.one * sc;
+                if (ft.lbl)
+                {
+                    ft.lbl.Text = text;
+                    if (ft.lbl.uiMain) ft.lbl.uiMain.color = col;
+                }
+                ft.tr.gameObject.SetActive(true);
+            }
+            else
+            {
+                var lbl = AdRes.MakeLabel(transform, text, height, col, 45, pos);
+                var tr = lbl.transform;
+                if (_cam) tr.rotation = _cam.transform.rotation;
+                ft = new FloatTextFx { tr = tr, lbl = lbl, baseScale = tr.localScale.x };
+            }
+            ft.vel = new Vector3(Random.Range(-0.35f, 0.35f), 2.8f, 0f);
+            ft.life = 0.72f;
+            ft.maxLife = 0.72f;
+            _floatTexts.Add(ft);
         }
 
         void UpdateFloatTexts(float dt)
@@ -1910,7 +2022,7 @@ namespace MobControlAd
                 ft.life -= dt;
                 if (ft.life <= 0f || !ft.tr)
                 {
-                    if (ft.tr) Destroy(ft.tr.gameObject);
+                    if (ft.tr) { ft.tr.gameObject.SetActive(false); _floatTextPool.Push(ft); }
                     _floatTexts.RemoveAt(i);
                     continue;
                 }
