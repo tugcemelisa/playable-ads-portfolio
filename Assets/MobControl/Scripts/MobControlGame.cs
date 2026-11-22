@@ -36,7 +36,7 @@ namespace MobControlAd
         public bool enableGiantChampion = true;
 
         [LunaPlaygroundField("Min Lose Time (s)", 5, "Mob Control Settings")]
-        public float minLoseTime = 14.0f;
+        public float minLoseTime = 22.0f;
 
         [LunaPlaygroundField("Front Sliding Gate (X)", 0, "Gate Multipliers")]
         public int frontGateMultiplier = 3;
@@ -1204,10 +1204,10 @@ namespace MobControlAd
                         : new Color(1f, 0.78f, 0.12f, 1f);
             }
 
-            // Last-5-Seconds Tension Countdown ("HURRY UP! 5s")
-            float dur = Mathf.Max(8f, roundDuration);
+            // Last-8-Seconds Tension Countdown ("HURRY UP! 8s -> 1s")
+            float dur = Mathf.Max(10f, roundDuration);
             float rem = dur - _elapsedTime;
-            if (rem <= 5.0f && rem > 0f && _hurryRoot)
+            if (rem <= 8.0f && rem > 0f && _hurryRoot)
             {
                 if (!_hurryRoot.activeSelf) _hurryRoot.SetActive(true);
                 int sec = Mathf.CeilToInt(rem);
@@ -1215,7 +1215,7 @@ namespace MobControlAd
                 {
                     _lastHurrySec = sec;
                     if (_hurryText) _hurryText.text = "HURRY UP! " + sec + "s";
-                    Sfx.Play(Sfx.Id.Tap, 0.55f, 1.15f + (5 - sec) * 0.08f);
+                    Sfx.Play(Sfx.Id.Tap, 0.55f, 1.10f + (8 - sec) * 0.06f);
                 }
                 float pulse = 1.0f + 0.08f * Mathf.Abs(Mathf.Sin(Time.time * 8.5f));
                 _hurryRoot.transform.localScale = Vector3.one * pulse;
