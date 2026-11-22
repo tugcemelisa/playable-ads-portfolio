@@ -186,6 +186,31 @@ namespace AdKit
             canvas.overrideSorting = true;
             canvas.sortingOrder = order;
 
+            var strokeCol = new Color(0.08f, 0.04f, 0.22f, 0.98f);
+            // Playworks 7.2.0 ignores UI.Outline on World-Space Canvas -> draw 4 crisp offset Text copies on the SAME Canvas!
+            Vector2[] offsets = { new Vector2(-4.5f, 4.5f), new Vector2(4.5f, 4.5f), new Vector2(-4.5f, -4.5f), new Vector2(4.5f, -4.5f) };
+            var uiStrokes = new Text[offsets.Length];
+            for (int i = 0; i < offsets.Length; i++)
+            {
+                var sGo = new GameObject("Stroke" + i, typeof(RectTransform));
+                var srt = (RectTransform)sGo.transform;
+                srt.SetParent(rt, false);
+                srt.anchorMin = Vector2.zero;
+                srt.anchorMax = Vector2.one;
+                srt.offsetMin = offsets[i];
+                srt.offsetMax = offsets[i];
+                var st = sGo.AddComponent<Text>();
+                st.font = Font;
+                st.text = text;
+                st.fontSize = 84;
+                st.color = strokeCol;
+                st.alignment = TextAnchor.MiddleCenter;
+                st.horizontalOverflow = HorizontalWrapMode.Overflow;
+                st.verticalOverflow = VerticalWrapMode.Overflow;
+                st.raycastTarget = false;
+                uiStrokes[i] = st;
+            }
+
             var txtGo = new GameObject("Text", typeof(RectTransform));
             var trt = (RectTransform)txtGo.transform;
             trt.SetParent(rt, false);
@@ -204,13 +229,9 @@ namespace AdKit
             ut.verticalOverflow = VerticalWrapMode.Overflow;
             ut.raycastTarget = false;
 
-            var outl = txtGo.AddComponent<Outline>();
-            outl.effectColor = new Color(0.08f, 0.04f, 0.22f, 0.96f);
-            outl.effectDistance = new Vector2(4f, -4f);
-
             var l = go.AddComponent<Label>();
             l.uiMain = ut;
-            l.uiOutline = outl;
+            l.uiStrokes = uiStrokes;
             return l;
         }
     }
@@ -220,6 +241,7 @@ namespace AdKit
         public TextMesh main, shadow;
         public TextMesh[] outlines;
         public Text uiMain;
+        public Text[] uiStrokes;
         public Outline uiOutline;
 
         public string Text
@@ -228,6 +250,9 @@ namespace AdKit
             set
             {
                 if (uiMain) uiMain.text = value;
+                if (uiStrokes != null)
+                    for (int i = 0; i < uiStrokes.Length; i++)
+                        if (uiStrokes[i]) uiStrokes[i].text = value;
                 if (main) main.text = value;
                 if (shadow) shadow.text = value;
                 if (outlines != null)
