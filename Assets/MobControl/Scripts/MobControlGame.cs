@@ -460,10 +460,10 @@ namespace MobControlAd
             mr.receiveShadows = false;
             Prims.SetColor(mr, PurpleMain);
 
-            // 4 pooled bulge beads slide smoothly along the tube when mobs travel inside!
-            for (int b = 0; b < 4; b++)
+            // 8 pooled bulge beads slide smoothly from entrance to exit when mobs travel inside!
+            for (int b = 0; b < 8; b++)
             {
-                var bead = Prims.Make(PrimitiveType.Sphere, tubeRoot, Vector3.zero, Vector3.one * 1.24f, PurpleMain).transform;
+                var bead = Prims.Make(PrimitiveType.Sphere, tubeRoot, Vector3.zero, Vector3.one * 1.28f, PurpleMain).transform;
                 bead.gameObject.SetActive(false);
                 _tubeBulgeBeads.Add(bead);
             }
@@ -1736,15 +1736,20 @@ namespace MobControlAd
         {
             if (_tubeBulgeBeads.Count > 0)
             {
+                // Distribute bulge beads from entrance (newest, t~0) to exit (oldest, t~1) with clean spacing!
                 int used = 0;
-                for (int i = 0; i < _purpleMobs.Count && used < _tubeBulgeBeads.Count; i++)
+                float lastT = -1f;
+                for (int i = _purpleMobs.Count - 1; i >= 0 && used < _tubeBulgeBeads.Count; i--)
                 {
                     var m = _purpleMobs[i];
                     if (!m.inTube) continue;
+                    if (lastT >= 0f && Mathf.Abs(m.tubeT - lastT) < 0.09f) continue;
+                    lastT = m.tubeT;
                     var bead = _tubeBulgeBeads[used++];
                     if (!bead.gameObject.activeSelf) bead.gameObject.SetActive(true);
                     bead.localPosition = SampleTubeSpline(m.tubeT);
-                    float pulse = 1.20f + 0.10f * Mathf.Sin(m.tubeT * 24f);
+                    float env = Mathf.Sin(Mathf.Clamp01(m.tubeT) * Mathf.PI); // Smoothly swells after entrance & tapers at exit
+                    float pulse = 1.06f + 0.28f * Mathf.Clamp01(env * 2.2f);
                     bead.localScale = Vector3.one * pulse;
                 }
                 for (int b = used; b < _tubeBulgeBeads.Count; b++)
