@@ -32,6 +32,9 @@ namespace MobControlAd
         [LunaPlaygroundField("Enemy Base HP", 3, "Mob Control Settings")]
         public int enemyBaseStartHp = 50;
 
+        [LunaPlaygroundField("Enable Giant Champion", 4, "Mob Control Settings")]
+        public bool enableGiantChampion = true;
+
         [LunaPlaygroundField("Front Sliding Gate (X)", 0, "Gate Multipliers")]
         public int frontGateMultiplier = 3;
 
@@ -101,6 +104,8 @@ namespace MobControlAd
             public bool inTube;
             public float tubeT;
             public bool hasSkeletalRun;
+            public bool isGiant;
+            public int hp = 1;
         }
 
         class MultiplierGate
@@ -117,6 +122,7 @@ namespace MobControlAd
             public float moveSpeed;
             public float phaseOffset;
             public float punchTimer;
+            public float popupCooldown;
             public int bitIndex;
         }
 
@@ -145,6 +151,15 @@ namespace MobControlAd
             public Vector3 spin;
             public float baseScale;
             public float gravity;
+            public float life;
+            public float maxLife;
+        }
+
+        class FloatTextFx
+        {
+            public Transform tr;
+            public Vector3 vel;
+            public float baseScale;
             public float life;
             public float maxLife;
         }
@@ -197,6 +212,7 @@ namespace MobControlAd
         readonly List<SmokePuff> _puffs = new List<SmokePuff>();
         readonly List<RingFx> _rings = new List<RingFx>();
         readonly List<SparkFx> _sparks = new List<SparkFx>();
+        readonly List<FloatTextFx> _floatTexts = new List<FloatTextFx>();
         GameObject _purpleMobPrefab;
         GameObject _yellowMobPrefab;
         AnimationClip _purpleRunClip;
@@ -208,6 +224,16 @@ namespace MobControlAd
         AdUI _ui;
         GameObject _endOverlayRoot;
         GameObject _topHudRoot;
+        GameObject _gameplayControlsRoot;
+        GameObject _hurryRoot;
+        Text _hurryText;
+        RectTransform _giantBarFillRt;
+        Image _giantBarFillImg;
+        Text _giantBarLabel;
+        RectTransform _miniCtaRt;
+        Text _muteText;
+        float _giantCharge;
+        int _lastHurrySec = -1;
         Text _topBlueMobsText;
         Text _topEnemyBaseText;
         RectTransform _defeatBannerRt;
@@ -713,6 +739,106 @@ namespace MobControlAd
             var baseOut = _topEnemyBaseText.GetComponent<Outline>();
             if (baseOut) { baseOut.effectColor = baseShadow; baseOut.effectDistance = new Vector2(3.5f, -3.5f); }
 
+            // Last-5-Seconds Tension Pill ("HURRY UP! 5s") right below Top HUD
+            _hurryRoot = new GameObject("HurryUpBanner", typeof(RectTransform));
+            var hrt = (RectTransform)_hurryRoot.transform;
+            hrt.SetParent(_ui.Root, false);
+            hrt.anchorMin = new Vector2(0.5f, 1f);
+            hrt.anchorMax = new Vector2(0.5f, 1f);
+            hrt.anchoredPosition = new Vector2(0f, -248f);
+            hrt.sizeDelta = new Vector2(460f, 88f);
+            AdUI.Img(hrt, AdRes.Pill, new Color(0.45f, 0.03f, 0.06f, 1f), center, new Vector2(0f, -8f), new Vector2(456f, 84f), false);
+            AdUI.Img(hrt, AdRes.Pill, Color.white, center, Vector2.zero, new Vector2(444f, 74f), false);
+            AdUI.Img(hrt, AdRes.Pill, new Color(0.96f, 0.14f, 0.18f, 1f), center, Vector2.zero, new Vector2(430f, 62f), false);
+            _hurryText = AdUI.Txt(hrt, "HURRY UP! 5s", 44, new Color(1f, 0.94f, 0.30f), center, new Vector2(0f, -1f));
+            _hurryText.resizeTextForBestFit = false;
+            var hurryOut = _hurryText.GetComponent<Outline>();
+            if (hurryOut) { hurryOut.effectColor = new Color(0.42f, 0.03f, 0.06f, 1f); hurryOut.effectDistance = new Vector2(3.5f, -3.5f); }
+            _hurryRoot.SetActive(false);
+
+            // =========================================================================
+            // GAMEPLAY BOTTOM BAR: MUTE TOGGLE + GIANT CHAMPION CHARGE BAR + MINI CTA
+            // =========================================================================
+            _gameplayControlsRoot = new GameObject("GameplayControls", typeof(RectTransform));
+            var gcrt = (RectTransform)_gameplayControlsRoot.transform;
+            gcrt.SetParent(_ui.Root, false);
+            gcrt.anchorMin = Vector2.zero;
+            gcrt.anchorMax = Vector2.one;
+            gcrt.offsetMin = Vector2.zero;
+            gcrt.offsetMax = Vector2.zero;
+
+            // Bottom-Center Giant Champion Charge Bar (fills every ~12 shots -> fires 2.35x Giant!)
+            if (enableGiantChampion)
+            {
+                var gBarWrap = new GameObject("GiantChargeBar", typeof(RectTransform));
+                var gbrt = (RectTransform)gBarWrap.transform;
+                gbrt.SetParent(gcrt, false);
+                gbrt.anchorMin = new Vector2(0.5f, 0f);
+                gbrt.anchorMax = new Vector2(0.5f, 0f);
+                gbrt.anchoredPosition = new Vector2(0f, 92f);
+                gbrt.sizeDelta = new Vector2(370f, 64f);
+
+                AdUI.Img(gbrt, AdRes.Pill, mobShadow, center, new Vector2(0f, -6f), new Vector2(368f, 62f), false);
+                AdUI.Img(gbrt, AdRes.Pill, Color.white, center, Vector2.zero, new Vector2(358f, 54f), false);
+                AdUI.Img(gbrt, AdRes.Pill, new Color(0.12f, 0.08f, 0.24f, 1f), center, Vector2.zero, new Vector2(346f, 44f), false);
+
+                _giantBarFillImg = AdUI.Img(gbrt, AdRes.Pill, new Color(1f, 0.78f, 0.12f, 1f), new Vector2(0f, 0.5f), new Vector2(14f, 0f), new Vector2(0f, 36f), false);
+                _giantBarFillRt = _giantBarFillImg.rectTransform;
+                _giantBarFillRt.pivot = new Vector2(0f, 0.5f);
+
+                _giantBarLabel = AdUI.Txt(gbrt, "GIANT CHARGE", 28, Color.white, center, new Vector2(0f, -1f));
+                _giantBarLabel.resizeTextForBestFit = false;
+                var gbOut = _giantBarLabel.GetComponent<Outline>();
+                if (gbOut) { gbOut.effectColor = new Color(0.24f, 0.12f, 0.02f, 1f); gbOut.effectDistance = new Vector2(2.5f, -2.5f); }
+            }
+
+            // Bottom-Left Sound Mute Toggle Button
+            var muteGo = new GameObject("MuteToggle", typeof(RectTransform));
+            var mrt = (RectTransform)muteGo.transform;
+            mrt.SetParent(gcrt, false);
+            mrt.anchorMin = new Vector2(0f, 0f);
+            mrt.anchorMax = new Vector2(0f, 0f);
+            mrt.anchoredPosition = new Vector2(138f, 92f);
+            mrt.sizeDelta = new Vector2(204f, 76f);
+            AdUI.Img(mrt, AdRes.Pill, mobShadow, center, new Vector2(0f, -7f), new Vector2(204f, 74f), false);
+            AdUI.Img(mrt, AdRes.Pill, Color.white, center, Vector2.zero, new Vector2(194f, 66f), false);
+            var muteBg = AdUI.Img(mrt, AdRes.Pill, mobFill, center, Vector2.zero, new Vector2(182f, 56f), false);
+            muteBg.raycastTarget = true;
+            _muteText = AdUI.Txt(mrt, Sfx.Muted ? "SFX OFF" : "SFX ON", 32, Color.white, center, new Vector2(0f, -1f));
+            _muteText.resizeTextForBestFit = false;
+            var muteOut = _muteText.GetComponent<Outline>();
+            if (muteOut) { muteOut.effectColor = mobShadow; muteOut.effectDistance = new Vector2(2.5f, -2.5f); }
+            var muteBtn = muteGo.AddComponent<Button>();
+            muteBtn.targetGraphic = muteBg;
+            muteBtn.onClick.AddListener(() =>
+            {
+                Sfx.Muted = !Sfx.Muted;
+                if (_muteText) _muteText.text = Sfx.Muted ? "SFX OFF" : "SFX ON";
+                if (!Sfx.Muted) Sfx.Play(Sfx.Id.Click, 0.6f);
+            });
+
+            // Bottom-Right Persistent Mini CTA Pill ("PLAY NOW")
+            var miniGo = new GameObject("MiniPlayNowCTA", typeof(RectTransform));
+            _miniCtaRt = (RectTransform)miniGo.transform;
+            _miniCtaRt.SetParent(gcrt, false);
+            _miniCtaRt.anchorMin = new Vector2(1f, 0f);
+            _miniCtaRt.anchorMax = new Vector2(1f, 0f);
+            _miniCtaRt.anchoredPosition = new Vector2(-152f, 92f);
+            _miniCtaRt.sizeDelta = new Vector2(246f, 80f);
+            GetCtaPalette(ctaColor, out Color mMain, out Color mBevel, out Color mShadow, out Color mTxt);
+            AdUI.Img(_miniCtaRt, AdRes.Pill, mShadow, center, new Vector2(0f, -8f), new Vector2(246f, 78f), false);
+            AdUI.Img(_miniCtaRt, AdRes.Pill, Color.white, center, Vector2.zero, new Vector2(236f, 70f), false);
+            var miniBg = AdUI.Img(_miniCtaRt, AdRes.Pill, mMain, center, Vector2.zero, new Vector2(224f, 60f), false);
+            miniBg.raycastTarget = true;
+            AdUI.Img(_miniCtaRt, AdRes.Pill, new Color(1f, 1f, 1f, 0.30f), center, new Vector2(0f, 14f), new Vector2(176f, 18f), false);
+            var miniLbl = AdUI.Txt(_miniCtaRt, string.IsNullOrEmpty(ctaText) ? "PLAY NOW" : ctaText, 34, mTxt, center, new Vector2(0f, -1f));
+            miniLbl.resizeTextForBestFit = false;
+            var miniOut = miniLbl.GetComponent<Outline>();
+            if (miniOut) { miniOut.effectColor = mShadow; miniOut.effectDistance = new Vector2(3f, -3f); }
+            var miniBtn = miniGo.AddComponent<Button>();
+            miniBtn.targetGraphic = miniBg;
+            miniBtn.onClick.AddListener(() => StoreLink.Open(MobControlStoreUrl));
+
             // =========================================================================
             // CARTOON ART STYLE END CARD OVERLAY (Theme-matched dark shadows, no black!)
             // =========================================================================
@@ -848,13 +974,15 @@ namespace MobControlAd
             }
         }
 
-        StickmanUnit SpawnStickman(bool isPurple, Vector3 pos, int gateMask)
+        StickmanUnit SpawnStickman(bool isPurple, Vector3 pos, int gateMask, bool isGiant = false)
         {
-            var root = new GameObject(isPurple ? "PurpleStickman" : "YellowStickman").transform;
+            var root = new GameObject(isGiant ? "GiantChampion" : (isPurple ? "PurpleStickman" : "YellowStickman")).transform;
             root.SetParent(transform, false);
             root.localPosition = pos;
             if (!isPurple)
                 root.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            if (isGiant)
+                root.localScale = Vector3.one * 2.25f;
 
             var body = new GameObject("Body").transform;
             body.SetParent(root, false);
@@ -864,11 +992,20 @@ namespace MobControlAd
                 root = root,
                 body = body,
                 isPurple = isPurple,
-                speed = isPurple ? 4.8f : 2.95f,
+                isGiant = isGiant,
+                hp = isGiant ? 8 : 1,
+                speed = isGiant ? 3.85f : (isPurple ? 4.8f : 2.95f),
                 gateMask = gateMask,
                 phase = Random.Range(0f, 6.28f),
                 spawnPop = 1.0f
             };
+
+            if (isGiant)
+            {
+                // Glowing golden champion aura ring under Giant's feet!
+                var aura = AdRes.Spr("GiantAura", root, AdRes.Ring, new Color(1f, 0.88f, 0.20f, 0.92f), 20, new Vector3(0f, 0.05f, 0f), Vector2.one * 0.88f);
+                aura.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            }
 
             Color col = isPurple ? PurpleMain : YellowMain;
             GameObject customPrefab = (characterStyle == CharacterStyle.StylizedModels)
@@ -1052,6 +1189,7 @@ namespace MobControlAd
                 UpdateSmokePuffs(dt);
                 UpdateRings(dt);
                 UpdateSparks(dt);
+                UpdateFloatTexts(dt);
                 UpdateCameraShake(dt);
                 float pop = _climaxTimer < 0.22f
                     ? Mathf.Lerp(0.35f, 1.12f, _climaxTimer / 0.22f)
@@ -1081,10 +1219,46 @@ namespace MobControlAd
             UpdateSmokePuffs(dt);
             UpdateRings(dt);
             UpdateSparks(dt);
+            UpdateFloatTexts(dt);
             UpdateCameraShake(dt);
 
+            // Pulse persistent mini CTA pill
+            if (_miniCtaRt)
+            {
+                float mp = 1.0f + 0.045f * Mathf.Sin(Time.time * 5.5f);
+                _miniCtaRt.localScale = Vector3.one * mp;
+            }
+
+            // Update Giant Champion Charge Bar
+            if (_giantBarFillRt)
+            {
+                float fillFrac = Mathf.Clamp01(_giantCharge);
+                _giantBarFillRt.sizeDelta = new Vector2(342f * fillFrac, 36f);
+                if (_giantBarFillImg)
+                    _giantBarFillImg.color = fillFrac > 0.82f
+                        ? Color.Lerp(new Color(1f, 0.78f, 0.12f, 1f), Color.white, 0.35f + 0.35f * Mathf.Sin(Time.time * 14f))
+                        : new Color(1f, 0.78f, 0.12f, 1f);
+            }
+
+            // Last-5-Seconds Tension Countdown ("HURRY UP! 5s")
+            float dur = Mathf.Max(8f, roundDuration);
+            float rem = dur - _elapsedTime;
+            if (rem <= 5.0f && rem > 0f && _hurryRoot)
+            {
+                if (!_hurryRoot.activeSelf) _hurryRoot.SetActive(true);
+                int sec = Mathf.CeilToInt(rem);
+                if (sec != _lastHurrySec)
+                {
+                    _lastHurrySec = sec;
+                    if (_hurryText) _hurryText.text = "HURRY UP! " + sec + "s";
+                    Sfx.Play(Sfx.Id.Tap, 0.55f, 1.15f + (5 - sec) * 0.08f);
+                }
+                float pulse = 1.0f + 0.08f * Mathf.Abs(Mathf.Sin(Time.time * 8.5f));
+                _hurryRoot.transform.localScale = Vector3.one * pulse;
+            }
+
             // Trigger DEFEAT... climax when roundDuration expires if still battling
-            if (_elapsedTime >= Mathf.Max(8f, roundDuration) && !_climaxTriggered)
+            if (_elapsedTime >= dur && !_climaxTriggered)
             {
                 TriggerDefeatClimax();
             }
@@ -1143,11 +1317,28 @@ namespace MobControlAd
         void FirePurpleStickman()
         {
             _barrelRecoil = 1f;
-            Sfx.Play(Sfx.Id.Pop, 0.32f);
-
             Vector3 spawnPos = new Vector3(Mathf.Clamp(_cannonX + Random.Range(-0.10f, 0.10f), -2.85f, 2.85f), 0f, 2.35f);
-            SpawnStickman(true, spawnPos, 0);
             Vector3 muzzleWorld = new Vector3(_cannonX, 0.62f, 2.32f);
+
+            if (enableGiantChampion)
+            {
+                _giantCharge += 0.085f;
+                if (_giantCharge >= 1.0f)
+                {
+                    _giantCharge = 0f;
+                    SpawnStickman(true, spawnPos, 0, true);
+                    Sfx.Play(Sfx.Id.GateGood, 0.85f, 0.85f);
+                    SpawnWhiteSmoke(muzzleWorld, 5, new Color(1f, 0.88f, 0.25f));
+                    SpawnRing(muzzleWorld, 2.65f, new Color(1f, 0.88f, 0.22f, 0.98f), 0.34f, 0f);
+                    SpawnSparks(muzzleWorld, 8, new Color(1f, 0.90f, 0.28f), 5.6f, false);
+                    SpawnFloatText(muzzleWorld + Vector3.up * 0.9f, "GIANT!", new Color(1f, 0.90f, 0.20f), 1.05f);
+                    TriggerCameraShake(0.16f, 0.12f);
+                    return;
+                }
+            }
+
+            Sfx.Play(Sfx.Id.Pop, 0.32f);
+            SpawnStickman(true, spawnPos, 0, false);
             SpawnWhiteSmoke(muzzleWorld, 2, PurpleLight);
             SpawnRing(muzzleWorld, 1.35f, new Color(0.90f, 0.72f, 1f, 0.92f), 0.22f, 0f);
             SpawnSparks(muzzleWorld, 3, Color.white, 3.6f, false);
@@ -1157,6 +1348,7 @@ namespace MobControlAd
         {
             foreach (var g in _gates)
             {
+                if (g.popupCooldown > 0f) g.popupCooldown -= dt;
                 if (g.moveAmp > 0.01f)
                 {
                     g.currentX = g.baseX + Mathf.Sin(_elapsedTime * g.moveSpeed + g.phaseOffset) * g.moveAmp;
@@ -1271,7 +1463,7 @@ namespace MobControlAd
                 // Check if stickman hits the Right Lane Yellow "60" Block (x > 0.45f, z ~ 5.0f)
                 if (!_yellowBlockDestroyed && prevZ < 5.05f && pos.z >= 5.05f && pos.x >= 0.45f)
                 {
-                    DamageYellowBlock(1, pos);
+                    DamageYellowBlock(m.isGiant ? 8 : 1, pos);
                     Destroy(m.root.gameObject);
                     _purpleMobs.RemoveAt(i);
                     continue;
@@ -1304,6 +1496,11 @@ namespace MobControlAd
                             SpawnWhiteSmoke(gateFx, 4, Color.white);
                             SpawnRing(gateFx, 1.95f, new Color(0.88f, 0.70f, 1f, 0.95f), 0.28f, 0f);
                             SpawnSparks(gateFx, 5, Color.white, 4.6f, false);
+                            if (g.popupCooldown <= 0f)
+                            {
+                                g.popupCooldown = 0.30f;
+                                SpawnFloatText(gateFx + Vector3.up * 0.95f, "X" + g.multiplier + "!", new Color(1f, 0.92f, 0.28f), 0.88f);
+                            }
                             if (_sfxGateCooldown <= 0f)
                             {
                                 _sfxGateCooldown = 0.08f;
@@ -1332,7 +1529,7 @@ namespace MobControlAd
                 // Check if Purple Stickman reached Top-Left Yellow Enemy Base ("50")
                 if (pos.z >= 20.6f)
                 {
-                    DamageEnemyBase(1, pos);
+                    DamageEnemyBase(m.isGiant ? 8 : 1, pos);
                     Destroy(m.root.gameObject);
                     _purpleMobs.RemoveAt(i);
                 }
@@ -1386,25 +1583,30 @@ namespace MobControlAd
                     if (ym.isDyingGray) continue;
                     Vector3 yp = ym.root.localPosition;
 
-                    if (Mathf.Abs(pp.z - yp.z) < 0.55f && Mathf.Abs(pp.x - yp.x) < 0.55f)
+                    float clashDist = pm.isGiant ? 0.95f : 0.55f;
+                    if (Mathf.Abs(pp.z - yp.z) < clashDist && Mathf.Abs(pp.x - yp.x) < clashDist)
                     {
-                        pm.isDyingGray = true;
-                        pm.dyingTimer = 0.24f;
-                        SetStickmanColor(pm, GrayCorpse);
+                        pm.hp--;
+                        if (pm.hp <= 0)
+                        {
+                            pm.isDyingGray = true;
+                            pm.dyingTimer = 0.24f;
+                            SetStickmanColor(pm, GrayCorpse);
+                        }
 
                         ym.isDyingGray = true;
                         ym.dyingTimer = 0.24f;
                         SetStickmanColor(ym, GrayCorpse);
 
                         Vector3 clashPos = (pp + yp) * 0.5f + Vector3.up * 0.55f;
-                        SpawnSparks(clashPos, 3, new Color(1f, 0.94f, 0.48f), 4.2f, false);
+                        SpawnSparks(clashPos, pm.isGiant ? 6 : 3, new Color(1f, 0.94f, 0.48f), 4.2f, false);
                         if (_sfxHitCooldown <= 0f)
                         {
                             _sfxHitCooldown = 0.08f;
-                            SpawnRing(clashPos, 1.55f, new Color(1f, 0.95f, 0.65f, 0.90f), 0.22f, 90f);
+                            SpawnRing(clashPos, pm.isGiant ? 2.4f : 1.55f, new Color(1f, 0.95f, 0.65f, 0.90f), 0.22f, 90f);
                             Sfx.Play(Sfx.Id.Hit, 0.4f);
                         }
-                        break;
+                        if (pm.isDyingGray) break;
                     }
                 }
             }
@@ -1484,6 +1686,7 @@ namespace MobControlAd
                 SpawnSparks(burstPos, 18, YellowMain, 7.2f, true);
                 SpawnSparks(burstPos, 10, Color.white, 6.0f, false);
                 SpawnRing(burstPos, 4.6f, new Color(1f, 0.92f, 0.30f, 0.98f), 0.42f, 90f);
+                SpawnFloatText(burstPos + Vector3.up * 1.1f, "SMASH!", new Color(1f, 0.92f, 0.20f), 1.35f);
                 TriggerCameraShake(0.28f, 0.20f);
                 Destroy(_yellowBlockRoot.gameObject);
             }
@@ -1511,6 +1714,7 @@ namespace MobControlAd
                 SpawnSparks(winPos, 18, PurpleLight, 7.6f, false);
                 SpawnRing(winPos, 6.2f, new Color(1f, 0.90f, 0.24f, 0.98f), 0.52f, 90f);
                 SpawnRing(winPos + Vector3.up * 0.6f, 4.8f, new Color(0.82f, 0.52f, 1f, 0.95f), 0.44f, 0f);
+                SpawnFloatText(winPos + Vector3.up * 1.4f, "BOOM!", new Color(1f, 0.90f, 0.18f), 1.45f);
                 TriggerVictoryClimax();
             }
         }
@@ -1522,6 +1726,8 @@ namespace MobControlAd
             _climaxTimer = 0f;
             _ui.ShowDragTutorial(false);
             if (_topHudRoot) _topHudRoot.SetActive(false);
+            if (_gameplayControlsRoot) _gameplayControlsRoot.SetActive(false);
+            if (_hurryRoot) _hurryRoot.SetActive(false);
             if (_defeatTitleText)
             {
                 _defeatTitleText.text = string.IsNullOrEmpty(victoryTitle) ? "VICTORY!" : victoryTitle;
@@ -1545,6 +1751,8 @@ namespace MobControlAd
             _climaxTimer = 0f;
             _ui.ShowDragTutorial(false);
             if (_topHudRoot) _topHudRoot.SetActive(false);
+            if (_gameplayControlsRoot) _gameplayControlsRoot.SetActive(false);
+            if (_hurryRoot) _hurryRoot.SetActive(false);
 
             // Turn yellow stickmen closest to the Purple Cannon charcoal gray (matching ref_end_10.jpg!)
             for (int i = 0; i < _yellowMobs.Count; i++)
@@ -1681,6 +1889,44 @@ namespace MobControlAd
                 sp.tr.Rotate(sp.spin * dt, Space.Self);
                 float frac = sp.life / sp.maxLife;
                 sp.tr.localScale = Vector3.one * (sp.baseScale * frac);
+            }
+        }
+
+        void SpawnFloatText(Vector3 pos, string text, Color col, float height)
+        {
+            if (_floatTexts.Count > 12) return;
+            var lbl = AdRes.MakeLabel(transform, text, height, col, 45, pos);
+            var tr = lbl.transform;
+            if (_cam) tr.rotation = _cam.transform.rotation;
+            _floatTexts.Add(new FloatTextFx
+            {
+                tr = tr,
+                vel = new Vector3(Random.Range(-0.35f, 0.35f), 2.8f, 0f),
+                baseScale = tr.localScale.x,
+                life = 0.72f,
+                maxLife = 0.72f
+            });
+        }
+
+        void UpdateFloatTexts(float dt)
+        {
+            for (int i = _floatTexts.Count - 1; i >= 0; i--)
+            {
+                var ft = _floatTexts[i];
+                ft.life -= dt;
+                if (ft.life <= 0f || !ft.tr)
+                {
+                    if (ft.tr) Destroy(ft.tr.gameObject);
+                    _floatTexts.RemoveAt(i);
+                    continue;
+                }
+                ft.tr.localPosition += ft.vel * dt;
+                ft.vel.y = Mathf.Lerp(ft.vel.y, 0.5f, dt * 3f);
+                float t = 1f - (ft.life / ft.maxLife);
+                float sc = t < 0.18f
+                    ? Mathf.Lerp(0.25f, 1.25f, t / 0.18f)
+                    : Mathf.Lerp(1.12f, 0f, Mathf.Clamp01((t - 0.55f) / 0.45f));
+                ft.tr.localScale = Vector3.one * (ft.baseScale * Mathf.Max(0.01f, sc));
             }
         }
 
