@@ -444,8 +444,10 @@ namespace MobControlAd
                 new Vector3(1.35f, 0.55f, 19.35f)
             };
 
-            // Entrance dark hollow opening at (0, 0.52, 4.80)
-            var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.80f), new Vector3(0.88f, 0.06f, 0.88f), new Color(0.03f, 0.01f, 0.05f));
+            // Chunky purple entrance cuff + deep dark hollow opening at front of tube
+            var mouthRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.84f), new Vector3(1.24f, 0.14f, 1.24f), PurpleMain);
+            mouthRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.70f), new Vector3(0.86f, 0.05f, 0.86f), new Color(0.03f, 0.01f, 0.05f));
             mouthHole.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
             // Single silky-smooth procedural Mesh along _tubeSpline (1 Draw Call instead of 88 Draw Calls!)
