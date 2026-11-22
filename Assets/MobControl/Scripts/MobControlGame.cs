@@ -230,8 +230,11 @@ namespace MobControlAd
         RectTransform _giantBarFillRt;
         Image _giantBarFillImg;
         Text _giantBarLabel;
-        RectTransform _miniCtaRt;
+        RectTransform _muteBtnRt;
+        Image _muteBgImg;
+        Color _muteOnColor;
         Text _muteText;
+        bool _muteTapConsumed;
         float _giantCharge;
         int _lastHurrySec = -1;
         Text _topBlueMobsText;
@@ -792,52 +795,22 @@ namespace MobControlAd
                 if (gbOut) { gbOut.effectColor = new Color(0.24f, 0.12f, 0.02f, 1f); gbOut.effectDistance = new Vector2(2.5f, -2.5f); }
             }
 
-            // Bottom-Left Sound Mute Toggle Button
+            // Bottom-Left Sound Mute Toggle Button (direct hit-test — works without EventSystem in Editor & Playworks!)
             var muteGo = new GameObject("MuteToggle", typeof(RectTransform));
-            var mrt = (RectTransform)muteGo.transform;
-            mrt.SetParent(gcrt, false);
-            mrt.anchorMin = new Vector2(0f, 0f);
-            mrt.anchorMax = new Vector2(0f, 0f);
-            mrt.anchoredPosition = new Vector2(138f, 92f);
-            mrt.sizeDelta = new Vector2(204f, 76f);
-            AdUI.Img(mrt, AdRes.Pill, mobShadow, center, new Vector2(0f, -7f), new Vector2(204f, 74f), false);
-            AdUI.Img(mrt, AdRes.Pill, Color.white, center, Vector2.zero, new Vector2(194f, 66f), false);
-            var muteBg = AdUI.Img(mrt, AdRes.Pill, mobFill, center, Vector2.zero, new Vector2(182f, 56f), false);
-            muteBg.raycastTarget = true;
-            _muteText = AdUI.Txt(mrt, Sfx.Muted ? "SFX OFF" : "SFX ON", 32, Color.white, center, new Vector2(0f, -1f));
+            _muteBtnRt = (RectTransform)muteGo.transform;
+            _muteBtnRt.SetParent(gcrt, false);
+            _muteBtnRt.anchorMin = new Vector2(0f, 0f);
+            _muteBtnRt.anchorMax = new Vector2(0f, 0f);
+            _muteBtnRt.anchoredPosition = new Vector2(138f, 92f);
+            _muteBtnRt.sizeDelta = new Vector2(204f, 76f);
+            _muteOnColor = mobFill;
+            AdUI.Img(_muteBtnRt, AdRes.Pill, mobShadow, center, new Vector2(0f, -7f), new Vector2(204f, 74f), false);
+            AdUI.Img(_muteBtnRt, AdRes.Pill, Color.white, center, Vector2.zero, new Vector2(194f, 66f), false);
+            _muteBgImg = AdUI.Img(_muteBtnRt, AdRes.Pill, Sfx.Muted ? new Color(0.42f, 0.44f, 0.50f, 1f) : _muteOnColor, center, Vector2.zero, new Vector2(182f, 56f), false);
+            _muteText = AdUI.Txt(_muteBtnRt, Sfx.Muted ? "SFX OFF" : "SFX ON", 32, Color.white, center, new Vector2(0f, -1f));
             _muteText.resizeTextForBestFit = false;
             var muteOut = _muteText.GetComponent<Outline>();
             if (muteOut) { muteOut.effectColor = mobShadow; muteOut.effectDistance = new Vector2(2.5f, -2.5f); }
-            var muteBtn = muteGo.AddComponent<Button>();
-            muteBtn.targetGraphic = muteBg;
-            muteBtn.onClick.AddListener(() =>
-            {
-                Sfx.Muted = !Sfx.Muted;
-                if (_muteText) _muteText.text = Sfx.Muted ? "SFX OFF" : "SFX ON";
-                if (!Sfx.Muted) Sfx.Play(Sfx.Id.Click, 0.6f);
-            });
-
-            // Bottom-Right Persistent Mini CTA Pill ("PLAY NOW")
-            var miniGo = new GameObject("MiniPlayNowCTA", typeof(RectTransform));
-            _miniCtaRt = (RectTransform)miniGo.transform;
-            _miniCtaRt.SetParent(gcrt, false);
-            _miniCtaRt.anchorMin = new Vector2(1f, 0f);
-            _miniCtaRt.anchorMax = new Vector2(1f, 0f);
-            _miniCtaRt.anchoredPosition = new Vector2(-152f, 92f);
-            _miniCtaRt.sizeDelta = new Vector2(246f, 80f);
-            GetCtaPalette(ctaColor, out Color mMain, out Color mBevel, out Color mShadow, out Color mTxt);
-            AdUI.Img(_miniCtaRt, AdRes.Pill, mShadow, center, new Vector2(0f, -8f), new Vector2(246f, 78f), false);
-            AdUI.Img(_miniCtaRt, AdRes.Pill, Color.white, center, Vector2.zero, new Vector2(236f, 70f), false);
-            var miniBg = AdUI.Img(_miniCtaRt, AdRes.Pill, mMain, center, Vector2.zero, new Vector2(224f, 60f), false);
-            miniBg.raycastTarget = true;
-            AdUI.Img(_miniCtaRt, AdRes.Pill, new Color(1f, 1f, 1f, 0.30f), center, new Vector2(0f, 14f), new Vector2(176f, 18f), false);
-            var miniLbl = AdUI.Txt(_miniCtaRt, string.IsNullOrEmpty(ctaText) ? "PLAY NOW" : ctaText, 34, mTxt, center, new Vector2(0f, -1f));
-            miniLbl.resizeTextForBestFit = false;
-            var miniOut = miniLbl.GetComponent<Outline>();
-            if (miniOut) { miniOut.effectColor = mShadow; miniOut.effectDistance = new Vector2(3f, -3f); }
-            var miniBtn = miniGo.AddComponent<Button>();
-            miniBtn.targetGraphic = miniBg;
-            miniBtn.onClick.AddListener(() => StoreLink.Open(MobControlStoreUrl));
 
             // =========================================================================
             // CARTOON ART STYLE END CARD OVERLAY (Theme-matched dark shadows, no black!)
@@ -1222,13 +1195,6 @@ namespace MobControlAd
             UpdateFloatTexts(dt);
             UpdateCameraShake(dt);
 
-            // Pulse persistent mini CTA pill
-            if (_miniCtaRt)
-            {
-                float mp = 1.0f + 0.045f * Mathf.Sin(Time.time * 5.5f);
-                _miniCtaRt.localScale = Vector3.one * mp;
-            }
-
             // Update Giant Champion Charge Bar
             if (_giantBarFillRt)
             {
@@ -1266,7 +1232,20 @@ namespace MobControlAd
 
         void HandleCannonAndInput(float dt)
         {
-            bool pressing = Input.GetMouseButton(0);
+            if (Input.GetMouseButtonDown(0) && _muteBtnRt && _gameplayControlsRoot && _gameplayControlsRoot.activeSelf)
+            {
+                if (RectTransformUtility.RectangleContainsScreenPoint(_muteBtnRt, Input.mousePosition, null))
+                {
+                    _muteTapConsumed = true;
+                    Sfx.Muted = !Sfx.Muted;
+                    if (_muteText) _muteText.text = Sfx.Muted ? "SFX OFF" : "SFX ON";
+                    if (_muteBgImg) _muteBgImg.color = Sfx.Muted ? new Color(0.42f, 0.44f, 0.50f, 1f) : _muteOnColor;
+                    if (!Sfx.Muted) Sfx.Play(Sfx.Id.Click, 0.65f);
+                }
+            }
+            if (Input.GetMouseButtonUp(0)) _muteTapConsumed = false;
+
+            bool pressing = Input.GetMouseButton(0) && !_muteTapConsumed;
             if (pressing)
             {
                 if (!_hasInteracted)
