@@ -460,10 +460,10 @@ namespace MobControlAd
             mr.receiveShadows = false;
             Prims.SetColor(mr, PurpleMain);
 
-            // 8 pooled bulge beads slide smoothly from entrance to exit when mobs travel inside!
-            for (int b = 0; b < 8; b++)
+            // 10 pooled bulge beads slide smoothly at steady visual speed from entrance to exit!
+            for (int b = 0; b < 10; b++)
             {
-                var bead = Prims.Make(PrimitiveType.Sphere, tubeRoot, Vector3.zero, Vector3.one * 1.28f, PurpleMain).transform;
+                var bead = Prims.Make(PrimitiveType.Sphere, tubeRoot, Vector3.zero, Vector3.one * 1.42f, PurpleMain).transform;
                 bead.gameObject.SetActive(false);
                 _tubeBulgeBeads.Add(bead);
             }
@@ -1534,9 +1534,11 @@ namespace MobControlAd
                 }
 
                 // If traveling through the Center Arched Purple Tube!
+                // Straight front section (t < 0.28) spans 7.15m in 20% of t -> pace it evenly so the gulp glides smoothly from entrance to exit!
                 if (m.inTube)
                 {
-                    m.tubeT += dt * 0.42f;
+                    float tubeSpeed = m.tubeT < 0.28f ? 0.24f : 0.56f;
+                    m.tubeT += dt * tubeSpeed;
                     if (m.tubeT >= 1f)
                     {
                         m.inTube = false;
@@ -1736,20 +1738,21 @@ namespace MobControlAd
         {
             if (_tubeBulgeBeads.Count > 0)
             {
-                // Distribute bulge beads from entrance (newest, t~0) to exit (oldest, t~1) with clean spacing!
+                // Distribute bulge beads evenly from entrance (t~0.03) all the way to exit (t~0.98)
                 int used = 0;
                 float lastT = -1f;
                 for (int i = _purpleMobs.Count - 1; i >= 0 && used < _tubeBulgeBeads.Count; i--)
                 {
                     var m = _purpleMobs[i];
                     if (!m.inTube) continue;
-                    if (lastT >= 0f && Mathf.Abs(m.tubeT - lastT) < 0.09f) continue;
+                    float minGap = m.tubeT < 0.30f ? 0.045f : 0.085f;
+                    if (lastT >= 0f && Mathf.Abs(m.tubeT - lastT) < minGap) continue;
                     lastT = m.tubeT;
                     var bead = _tubeBulgeBeads[used++];
                     if (!bead.gameObject.activeSelf) bead.gameObject.SetActive(true);
                     bead.localPosition = SampleTubeSpline(m.tubeT);
-                    float env = Mathf.Sin(Mathf.Clamp01(m.tubeT) * Mathf.PI); // Smoothly swells after entrance & tapers at exit
-                    float pulse = 1.06f + 0.28f * Mathf.Clamp01(env * 2.2f);
+                    float env = Mathf.Sin(Mathf.Clamp01(m.tubeT) * Mathf.PI);
+                    float pulse = 1.18f + 0.28f * Mathf.Clamp01(env * 3.0f);
                     bead.localScale = Vector3.one * pulse;
                 }
                 for (int b = used; b < _tubeBulgeBeads.Count; b++)
