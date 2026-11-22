@@ -443,32 +443,29 @@ namespace MobControlAd
                 new Vector3(1.35f, 0.55f, 19.35f)
             };
 
-            // Entrance mouth cuff + deep dark hollow opening at front of tube (never covered by first segment!)
-            var mouthRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.74f), new Vector3(1.24f, 0.16f, 1.24f), PurpleMain);
+            // Entrance mouth ring + clear dark hollow opening at (0, 0.52, 4.76)
+            var mouthRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.78f), new Vector3(1.22f, 0.14f, 1.22f), PurpleMain);
             mouthRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            var mouthRim = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.62f), new Vector3(1.16f, 0.06f, 1.16f), PurpleLight);
-            mouthRim.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.55f), new Vector3(0.86f, 0.04f, 0.86f), new Color(0.03f, 0.01f, 0.05f));
+            var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.66f), new Vector3(0.86f, 0.06f, 0.86f), new Color(0.03f, 0.01f, 0.05f));
             mouthHole.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
-            // Build smooth overlapping 3D cylindrical segments along the spline (start cleanly behind mouth opening)
-            int denseSteps = 14;
-            Vector3 prevPt = SampleTubeSpline(0.03f);
+            // Original silky-smooth overlapping 3D cylindrical segments + seamless joint spheres along the spline
+            int denseSteps = 44;
+            Vector3 prevPt = SampleTubeSpline(0.01f);
             for (int i = 1; i <= denseSteps; i++)
             {
-                float t = Mathf.Lerp(0.03f, 1f, i / (float)denseSteps);
+                float t = Mathf.Lerp(0.01f, 1f, i / (float)denseSteps);
                 Vector3 pt = SampleTubeSpline(t);
                 Vector3 mid = (prevPt + pt) * 0.5f;
                 Vector3 dir = pt - prevPt;
                 float len = dir.magnitude;
                 if (len > 0.001f)
                 {
-                    var seg = Prims.Make(PrimitiveType.Cylinder, tubeRoot, mid, new Vector3(0.96f, len * 0.58f, 0.96f), PurpleMain).transform;
+                    var seg = Prims.Make(PrimitiveType.Cylinder, tubeRoot, mid, new Vector3(0.96f, len * 0.62f, 0.96f), PurpleMain).transform;
                     seg.localRotation = Quaternion.FromToRotation(Vector3.up, dir.normalized);
                     _tubeSegments.Add(seg);
-                    // Joint sphere only on upper arch curve (i = 4..12)
-                    if (i >= 4 && i <= 12)
-                        Prims.Make(PrimitiveType.Sphere, tubeRoot, pt, Vector3.one * 0.95f, PurpleMain);
+                    // Joint sphere to keep curves completely seamless
+                    Prims.Make(PrimitiveType.Sphere, tubeRoot, pt, Vector3.one * 0.95f, PurpleMain);
                 }
                 prevPt = pt;
             }
