@@ -19,6 +19,8 @@ namespace AdKit
             g.transform.localScale = scale;
             var r = g.GetComponent<Renderer>();
             if (AdRes.PrimMat) r.sharedMaterial = AdRes.PrimMat;
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            r.receiveShadows = false;
             SetColor(r, c);
             return g;
         }

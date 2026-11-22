@@ -1031,6 +1031,8 @@ namespace MobControlAd
                 for (int i = 0; i < rends.Length; i++)
                 {
                     var r = rends[i];
+                    r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    r.receiveShadows = false;
 #if !UNITY_LUNA
                     if (r is SkinnedMeshRenderer smr)
                         smr.updateWhenOffscreen = true;
@@ -1039,17 +1041,13 @@ namespace MobControlAd
                     var mats = r.sharedMaterials;
                     if (isPurple)
                     {
+                        // Use 2 clean shared materials (main + dark accent) to minimize Playworks material switches!
                         for (int m = 0; m < mats.Length; m++)
                         {
                             string mn = mats[m] != null ? mats[m].name.ToLowerInvariant() : "";
-                            if (mn.Contains("eye") || mn.Contains("pupil"))
-                                mats[m] = _matFriendlyDeep;
-                            else if (mn.Contains("pants") || mn.Contains("boots") || mn.Contains("hair"))
-                                mats[m] = _matFriendlyDark;
-                            else if (mn.Contains("skin") || mn.Contains("detail") || mn.Contains("white"))
-                                mats[m] = _matFriendlyLight;
-                            else
-                                mats[m] = _matFriendlyMain;
+                            mats[m] = (mn.Contains("pants") || mn.Contains("boots") || mn.Contains("hair") || mn.Contains("eye") || mn.Contains("pupil"))
+                                ? _matFriendlyDark
+                                : _matFriendlyMain;
                         }
                         r.sharedMaterials = mats;
                     }
@@ -1060,10 +1058,7 @@ namespace MobControlAd
                         {
                             string mn = mats[m] != null ? mats[m].name : "";
                             if (IsEyeName(mn)) continue; // Keep Eye_Black & Eye_White untouched!
-                            string low = mn.ToLowerInvariant();
-                            mats[m] = (low.Contains("secondary") || low.Contains("tongue"))
-                                ? _matEnemyAccent
-                                : _matEnemyMain;
+                            mats[m] = _matEnemyMain;
                         }
                         r.sharedMaterials = mats;
                     }
@@ -1296,8 +1291,8 @@ namespace MobControlAd
             _muzzleFlash.localScale = Vector3.one * (_barrelRecoil * 0.72f);
         }
 
-        int MaxFriendlyMobs => characterStyle == CharacterStyle.StylizedModels ? 28 : 65;
-        int MaxEnemyMobs => characterStyle == CharacterStyle.StylizedModels ? 22 : 55;
+        int MaxFriendlyMobs => characterStyle == CharacterStyle.StylizedModels ? 18 : 60;
+        int MaxEnemyMobs => characterStyle == CharacterStyle.StylizedModels ? 14 : 50;
 
         void FirePurpleStickman()
         {
