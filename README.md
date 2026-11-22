@@ -13,7 +13,7 @@ Interactive 3D HTML5 playable ads are engineered in **Unity 6** and exported wit
 |---|---|---|
 | **Mob Control** | Playable Ad *(Unity Playworks)* | Voodoo-style 3D cannon & mob multiplier playable ad featuring two full visual themes (`AlpineWinter` Purple/Yellow & `MidnightSlate` Deep Navy/Red), two character styles (522-tri hairless 3D mob + eye-preserving alien with skeletal `Run` animation vs. classic stickmen), single-mesh arched center tube with traveling gulp waves, sliding `X3` / `X2` / `X7` gates, `GIANT CHARGE` 2.25× Giant Champion, destructible brick block (`100` HP), castle siege (`160` HP), `HURRY UP!` 8s finale countdown, `SFX ON/OFF`, and auto iOS App Store / Android Google Play CTA.<br>🎮 **Playable Ad (Playworks Studio on Desktop / Fullscreen on Mobile):** [Play Live Demo](https://tugcemelisa.github.io/playable-ads-portfolio/mob-control/) · 🔗 **Source:** [`Assets/MobControl/`](Assets/MobControl/) |
 | **Number Match** | Game Dev + Creative Video Ad | Full Unity 3D colour-by-number pixel art puzzle game (`16×16` rainbow artwork) + 18s 9:16 Creative Video Ad with wrong-move tension hook, 360° radial colour wave reveals, centered `HURRY UP!` countdown alarm, `00:00` explosion transition, and 3D endcard CTA.<br>🎬 **Creative Video Ad:** [Watch on YouTube Shorts](https://youtube.com/shorts/G4jU1Z6JKeI) · 🔗 **Unity Game & Case Study Repo:** [github.com/tugcemelisa/number-match-case-study](https://github.com/tugcemelisa/number-match-case-study) |
-| **Runner** | Playable Ad *(WIP)* | 3D castle obstacle runner with swipe steering, jumping, gem collection, shield invincibility, and destructible obstacles.<br>🎮 **Playable Ad:** *(In progress — `Assets/Runner/`)* · 🔗 **Repo:** [github.com/tugcemelisa/Runner](https://github.com/tugcemelisa/Runner) |
+| **Turbo Runner** | Playable Ad *(Unity Playworks)* | Voodoo-style 3D endless runner playable ad (`RunnerPlayableGame.cs`) with 2 full visual themes (`SunsetMetropolis` & `CyberNeonNight`), 2 character styles (`StylizedHero` & `ClassicRunner`), 3-lane drag steering + swipe-up jump, `TURBO FEVER` super mode (auto-magnet + obstacle `SMASH!`), shield orbs, speed boost pads, 100% Object Pooling, zero 3D physics overhead, and **15 `[LunaPlaygroundField]` A/B test parameters**.<br>🎮 **Playable Ad Source:** [`Assets/Runner/`](Assets/Runner/) · 🔗 **Original Runner Repo:** [github.com/tugcemelisa/Runner](https://github.com/tugcemelisa/Runner) |
 | **Jelly Flow** | Creative Video | Pixel-art conveyor puzzle 9:16 vertical marketing video creative.<br>🎬 **Creative Video Ad:** [Watch on YouTube Shorts](https://www.youtube.com/shorts/1l0v7LeWNJU) |
 | **MechWars** | Creative Video | Action shooter mobile marketing video creatives.<br>🎬 **Creative Video Ads:** [Watch on TikTok](https://www.tiktok.com/@mechwarsofficial_) |
 
@@ -75,6 +75,6 @@ Use Unity **6000.0.51f1** with **Unity Playworks Plugin 7.2.0**:
 Assets/
 ├── AdKit/         Shared Playable Ad UI, Pills, World-Space Labels, Object Pooling Helpers, SFX & Export Menu
 ├── MobControl/    Mob Control 3D Playable Ad (Optimized FBX Models, Alpine/Midnight Backdrops, Logo & Scripts)
-├── Runner/        Runner 3D Playable Ad (Castle Models, Player Rig, Obstacles & Scripts)
+├── Runner/        Turbo Runner 3D Playable Ad (Sunset/Cyber Themes, Logo, 15 A/B Fields & Scripts)
 └── Scenes/        MobControl.unity, Runner.unity
 ```
