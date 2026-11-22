@@ -11,14 +11,47 @@ using UnityEngine;
 namespace AdKit.EditorTools
 {
     /// <summary>Top menu bar shortcuts for opening and exporting Mob Control, Number Match, and Runner playable ads.</summary>
+    [InitializeOnLoad]
     public static class PlayableMenu
     {
         const string MobControlScene = "Assets/Scenes/MobControl.unity";
         const string NumberMatchScene = "Assets/Scenes/NumberMatch.unity";
         const string RunnerScene = "Assets/Scenes/Runner.unity";
+        const string DevIframePath = "LunaTemp/stage4/develop/iframe.html";
 
         const BindingFlags PublicInstance = BindingFlags.Public | BindingFlags.Instance;
         static bool _busy;
+        static double _nextDevCheck;
+        static DateTime _lastDevWriteUtc;
+
+        static PlayableMenu()
+        {
+            EditorApplication.update += WatchPlayworksDevIframe;
+        }
+
+        static void WatchPlayworksDevIframe()
+        {
+            if (EditorApplication.timeSinceStartup < _nextDevCheck) return;
+            _nextDevCheck = EditorApplication.timeSinceStartup + 2.0;
+            if (!File.Exists(DevIframePath)) return;
+            var wt = File.GetLastWriteTimeUtc(DevIframePath);
+            if (wt == _lastDevWriteUtc) return;
+            _lastDevWriteUtc = wt;
+            PatchIframeCta(DevIframePath);
+        }
+
+        static void PatchIframeCta(string iframePath)
+        {
+            if (!File.Exists(iframePath)) return;
+            var iframe = File.ReadAllText(iframePath);
+            const string needle = "Luna.Unity.Playable.InstallFullGame=function(){";
+            if (!iframe.Contains(needle)) return;
+            iframe = iframe.Replace(
+                needle,
+                "Luna.Unity.Playable.InstallFullGame=function(t,e){var u=t||e||\"https://apps.apple.com/us/app/mob-control/id1562817072\";try{window.open(u,\"_blank\")}catch(_){}");
+            File.WriteAllText(iframePath, iframe);
+            _lastDevWriteUtc = File.GetLastWriteTimeUtc(iframePath);
+        }
 
         [MenuItem("Playable Ads/Open Scene/Mob Control", priority = 1)]
         public static void OpenMobControl() => OpenScene(MobControlScene);
@@ -156,14 +189,7 @@ namespace AdKit.EditorTools
                 }
             }
 
-            var iframePath = Path.Combine(rootDir, "iframe.html");
-            if (File.Exists(iframePath))
-            {
-                var iframe = File.ReadAllText(iframePath).Replace(
-                    "Luna.Unity.Playable.InstallFullGame=function(){",
-                    "Luna.Unity.Playable.InstallFullGame=function(t,e){var u=t||e||\"https://apps.apple.com/us/app/mob-control/id1562817072\";try{window.open(u,\"_blank\")}catch(_){}");
-                File.WriteAllText(iframePath, iframe);
-            }
+            PatchIframeCta(Path.Combine(rootDir, "iframe.html"));
         }
 
         static void CopyDirectory(string source, string destination)

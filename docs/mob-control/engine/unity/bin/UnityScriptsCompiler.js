@@ -1,4 +1,4 @@
-if ( TRACE ) { TRACE( JSON.parse( '["AdKit.AdRes#Font#get","AdKit.AdRes#FontMat#get","AdKit.AdRes#SpriteMat#get","AdKit.AdRes#PrimMat#get","AdKit.AdRes#Square#get","AdKit.AdRes#Bead#get","AdKit.AdRes#Circle#get","AdKit.AdRes#Soft#get","AdKit.AdRes#Ring#get","AdKit.AdRes#init","AdKit.AdRes#Round","AdKit.AdRes#RoundRect","AdKit.AdRes#Disc","AdKit.AdRes#RingTex","AdKit.AdRes#Gradient","AdKit.AdRes#Spr","AdKit.AdRes#Txt","AdKit.AdRes#MakeLabel","AdKit.AdUI#Create","AdKit.AdUI#Hand","AdKit.AdUI#Txt","AdKit.AdUI#Img","AdKit.AdUI#EndcardVisible#get","AdKit.AdUI#Card#get","AdKit.AdUI#init","AdKit.AdUI#Banner","AdKit.AdUI#ShowDragTutorial","AdKit.AdUI#ShowEndcard","AdKit.AdUI#Tick","AdKit.Label#Text#get","AdKit.Label#Text#set","AdKit.Prims#init","AdKit.Prims#Make","AdKit.Prims#SetColor","AdKit.Prims#Figure","AdKit.Prims#Burst","AdKit.Prims#BurstRoutine","AdKit.Sfx#init","AdKit.Sfx#Override","AdKit.Sfx#Play","AdKit.Sfx#Init","AdKit.StoreLink#Open","AdKit.StoreLink#NotifyGameEnded","AdKit.StoreLink#GameEnded","AdKit.StoreLink#LogEvent","CFX_AutoDestructShuriken#OnEnable","CFX_AutoDestructShuriken#CheckIfAlive","CFX_AutoRotate#init","CFX_AutoRotate#Update","CFX_LightFlicker#init","CFX_LightFlicker#Awake","CFX_LightFlicker#OnEnable","CFX_LightFlicker#Update","CFX_LightIntensityFade#init","CFX_LightIntensityFade#Start","CFX_LightIntensityFade#OnEnable","CFX_LightIntensityFade#Update","CharacterCs#Start","CharacterScript#Start","CharacterScript#Update","CharacterScript#FixedUpdate","CharacterScript#DeactivateShield","CharacterScript#OnCollisionEnter","CharacterScript#OnTriggerEnter","For#Start","For#Update","GameManager#init","GameManager#Start","GameManager#CreateLocation","GameManager#RestartGame","GameManager#GenerateObject","GameManager#Update","HomeWork3#Start","HomeWork3#Update","List#init","List#Start","MobControlAd.MobControlGame#init","MobControlAd.MobControlGame#init","MobControlAd.MobControlGame#Awake","MobControlAd.MobControlGame#Start","MobControlAd.MobControlGame#SetupCameraAndSpaceEnvironment","MobControlAd.MobControlGame#UpdateBackdropScale","MobControlAd.MobControlGame#BuildWhiteBridge","MobControlAd.MobControlGame#BuildArchedPurpleTube","MobControlAd.MobControlGame#SampleTubeSpline","MobControlAd.MobControlGame#BuildPurpleCannon","MobControlAd.MobControlGame#BuildGatesAndYellowBlock","MobControlAd.MobControlGame#CreateGate","MobControlAd.MobControlGame#BuildYellowEnemyBase","MobControlAd.MobControlGame#BuildUI","MobControlAd.MobControlGame#SpawnInitialReferenceState","MobControlAd.MobControlGame#SpawnStickman","MobControlAd.MobControlGame#SetStickmanColor","MobControlAd.MobControlGame#Update","MobControlAd.MobControlGame#HandleCannonAndInput","MobControlAd.MobControlGame#FirePurpleStickman","MobControlAd.MobControlGame#UpdateGates","MobControlAd.MobControlGame#UpdateYellowWaves","MobControlAd.MobControlGame#UpdateStickmen","MobControlAd.MobControlGame#UpdateTubeBulge","MobControlAd.MobControlGame#AnimateStickmanRun","MobControlAd.MobControlGame#DamageYellowBlock","MobControlAd.MobControlGame#DamageEnemyBase","MobControlAd.MobControlGame#TriggerVictoryClimax","MobControlAd.MobControlGame#TriggerDefeatClimax","MobControlAd.MobControlGame#SpawnWhiteSmoke","MobControlAd.MobControlGame#UpdateSmokePuffs","MobControlAd.MobControlGame#SpawnRing","MobControlAd.MobControlGame#UpdateRings","MobControlAd.MobControlGame#SpawnSparks","MobControlAd.MobControlGame#UpdateSparks","MobControlAd.MobControlGame#TriggerCameraShake","MobControlAd.MobControlGame#UpdateCameraShake","MobControlAd.MobControlGame.RingFx#init","MobControlAd.MobControlGame.SmokePuff#init","MobControlAd.MobControlGame.SparkFx#init","MobControlAd.MobControlGame.StickmanUnit#init","NumberMatchAd.NumberMatchGame#init","NumberMatchAd.NumberMatchGame#PaletteColor","NumberMatchAd.NumberMatchGame#HandShape","NumberMatchAd.NumberMatchGame#GetPointer","NumberMatchAd.NumberMatchGame#Smooth","NumberMatchAd.NumberMatchGame#BackOut","NumberMatchAd.NumberMatchGame#init","NumberMatchAd.NumberMatchGame#Awake","NumberMatchAd.NumberMatchGame#CaptureShots","NumberMatchAd.NumberMatchGame#Start","NumberMatchAd.NumberMatchGame#FitCamera","NumberMatchAd.NumberMatchGame#BuildPicture","NumberMatchAd.NumberMatchGame#Similar","NumberMatchAd.NumberMatchGame#Idx","NumberMatchAd.NumberMatchGame#CellPos","NumberMatchAd.NumberMatchGame#BuildBoard","NumberMatchAd.NumberMatchGame#BuildTray","NumberMatchAd.NumberMatchGame#MakePiece","NumberMatchAd.NumberMatchGame#BuildHand","NumberMatchAd.NumberMatchGame#BuildUI","NumberMatchAd.NumberMatchGame#UpdateProgress","NumberMatchAd.NumberMatchGame#Intro","NumberMatchAd.NumberMatchGame#MaskCell","NumberMatchAd.NumberMatchGame#PopIn","NumberMatchAd.NumberMatchGame#Update","NumberMatchAd.NumberMatchGame#OnDown","NumberMatchAd.NumberMatchGame#BeginDrag","NumberMatchAd.NumberMatchGame#DragTo","NumberMatchAd.NumberMatchGame#Release","NumberMatchAd.NumberMatchGame#ResolveDrop","NumberMatchAd.NumberMatchGame#CellAt","NumberMatchAd.NumberMatchGame#Place","NumberMatchAd.NumberMatchGame#PlaceRoutine","NumberMatchAd.NumberMatchGame#RejectAndReturn","NumberMatchAd.NumberMatchGame#ReturnHome","NumberMatchAd.NumberMatchGame#WrongFlash","NumberMatchAd.NumberMatchGame#RevealGroup","NumberMatchAd.NumberMatchGame#RevealCell","NumberMatchAd.NumberMatchGame#NearMissFail","NumberMatchAd.NumberMatchGame#Complete","NumberMatchAd.NumberMatchGame#ShowEndcard","NumberMatchAd.NumberMatchGame#UpdateHighlights","NumberMatchAd.NumberMatchGame#Shake","NumberMatchAd.NumberMatchGame#UpdateShake","NumberMatchAd.NumberMatchGame#Punch","NumberMatchAd.NumberMatchGame#PunchDelayed","NumberMatchAd.NumberMatchGame#Fragments","NumberMatchAd.NumberMatchGame#Burst","NumberMatchAd.NumberMatchGame#Fly","NumberMatchAd.NumberMatchGame#FloatText","NumberMatchAd.NumberMatchGame#FloatRoutine","NumberMatchAd.NumberMatchGame#BestPiece","NumberMatchAd.NumberMatchGame#ShowTutorial","NumberMatchAd.NumberMatchGame#HideTutorial","NumberMatchAd.NumberMatchGame#TutorialLoop","NumberMatchAd.NumberMatchGame#HandPress","NumberMatchAd.NumberMatchGame#AutoPlay","NumberMatchAd.NumberMatchGame#MoveHand","NumberMatchAd.NumberMatchGame#FarWrongCell","NumberMatchAd.NumberMatchGame.CellV#init","NumberMatchAd.NumberMatchGame.Piece#init","ObstacleDestroy#OnTriggerEnter","Spiski#init","Spiski#Start"]' ) ); }
+if ( TRACE ) { TRACE( JSON.parse( '["AdKit.AdRes#Font#get","AdKit.AdRes#FontMat#get","AdKit.AdRes#SpriteMat#get","AdKit.AdRes#PrimMat#get","AdKit.AdRes#Square#get","AdKit.AdRes#Bead#get","AdKit.AdRes#Circle#get","AdKit.AdRes#Soft#get","AdKit.AdRes#Ring#get","AdKit.AdRes#Pill#get","AdKit.AdRes#init","AdKit.AdRes#Round","AdKit.AdRes#RoundRect","AdKit.AdRes#PillRect","AdKit.AdRes#Disc","AdKit.AdRes#RingTex","AdKit.AdRes#Gradient","AdKit.AdRes#Spr","AdKit.AdRes#Txt","AdKit.AdRes#MakeLabel","AdKit.AdUI#Create","AdKit.AdUI#Hand","AdKit.AdUI#Txt","AdKit.AdUI#Img","AdKit.AdUI#EndcardVisible#get","AdKit.AdUI#Card#get","AdKit.AdUI#init","AdKit.AdUI#SetTutorialText","AdKit.AdUI#Banner","AdKit.AdUI#ShowDragTutorial","AdKit.AdUI#ShowEndcard","AdKit.AdUI#Tick","AdKit.Label#Text#get","AdKit.Label#Text#set","AdKit.Prims#init","AdKit.Prims#Make","AdKit.Prims#SetColor","AdKit.Prims#Figure","AdKit.Prims#Burst","AdKit.Prims#BurstRoutine","AdKit.Sfx#init","AdKit.Sfx#Override","AdKit.Sfx#Play","AdKit.Sfx#Init","AdKit.StoreLink#Open","AdKit.StoreLink#NotifyGameEnded","AdKit.StoreLink#GameEnded","AdKit.StoreLink#LogEvent","CFX_AutoDestructShuriken#OnEnable","CFX_AutoDestructShuriken#CheckIfAlive","CFX_AutoRotate#init","CFX_AutoRotate#Update","CFX_LightFlicker#init","CFX_LightFlicker#Awake","CFX_LightFlicker#OnEnable","CFX_LightFlicker#Update","CFX_LightIntensityFade#init","CFX_LightIntensityFade#Start","CFX_LightIntensityFade#OnEnable","CFX_LightIntensityFade#Update","CharacterCs#Start","CharacterScript#Start","CharacterScript#Update","CharacterScript#FixedUpdate","CharacterScript#DeactivateShield","CharacterScript#OnCollisionEnter","CharacterScript#OnTriggerEnter","For#Start","For#Update","GameManager#init","GameManager#Start","GameManager#CreateLocation","GameManager#RestartGame","GameManager#GenerateObject","GameManager#Update","HomeWork3#Start","HomeWork3#Update","List#init","List#Start","MobControlAd.MobControlGame#init","MobControlAd.MobControlGame#MakeThemeMat","MobControlAd.MobControlGame#GetCtaPalette","MobControlAd.MobControlGame#FindRunClip","MobControlAd.MobControlGame#IsEyeName","MobControlAd.MobControlGame#IsEyeMesh","MobControlAd.MobControlGame#init","MobControlAd.MobControlGame#Awake","MobControlAd.MobControlGame#Start","MobControlAd.MobControlGame#ApplyThemePalette","MobControlAd.MobControlGame#SetupCameraAndSpaceEnvironment","MobControlAd.MobControlGame#UpdateBackdropScale","MobControlAd.MobControlGame#BuildWhiteBridge","MobControlAd.MobControlGame#BuildArchedPurpleTube","MobControlAd.MobControlGame#SampleTubeSpline","MobControlAd.MobControlGame#BuildPurpleCannon","MobControlAd.MobControlGame#BuildGatesAndYellowBlock","MobControlAd.MobControlGame#CreateGate","MobControlAd.MobControlGame#BuildYellowEnemyBase","MobControlAd.MobControlGame#BuildUI","MobControlAd.MobControlGame#SpawnInitialReferenceState","MobControlAd.MobControlGame#SpawnStickman","MobControlAd.MobControlGame#SetStickmanColor","MobControlAd.MobControlGame#Update","MobControlAd.MobControlGame#HandleCannonAndInput","MobControlAd.MobControlGame#FirePurpleStickman","MobControlAd.MobControlGame#UpdateGates","MobControlAd.MobControlGame#UpdateYellowWaves","MobControlAd.MobControlGame#UpdateStickmen","MobControlAd.MobControlGame#UpdateTubeBulge","MobControlAd.MobControlGame#AnimateStickmanRun","MobControlAd.MobControlGame#DamageYellowBlock","MobControlAd.MobControlGame#DamageEnemyBase","MobControlAd.MobControlGame#TriggerVictoryClimax","MobControlAd.MobControlGame#TriggerDefeatClimax","MobControlAd.MobControlGame#SpawnWhiteSmoke","MobControlAd.MobControlGame#UpdateSmokePuffs","MobControlAd.MobControlGame#SpawnRing","MobControlAd.MobControlGame#UpdateRings","MobControlAd.MobControlGame#SpawnSparks","MobControlAd.MobControlGame#UpdateSparks","MobControlAd.MobControlGame#SpawnFloatText","MobControlAd.MobControlGame#UpdateFloatTexts","MobControlAd.MobControlGame#TriggerCameraShake","MobControlAd.MobControlGame#UpdateCameraShake","MobControlAd.MobControlGame.FloatTextFx#init","MobControlAd.MobControlGame.RingFx#init","MobControlAd.MobControlGame.SmokePuff#init","MobControlAd.MobControlGame.SparkFx#init","MobControlAd.MobControlGame.StickmanUnit#init","NumberMatchAd.NumberMatchGame#init","NumberMatchAd.NumberMatchGame#PaletteColor","NumberMatchAd.NumberMatchGame#HandShape","NumberMatchAd.NumberMatchGame#GetPointer","NumberMatchAd.NumberMatchGame#Smooth","NumberMatchAd.NumberMatchGame#BackOut","NumberMatchAd.NumberMatchGame#init","NumberMatchAd.NumberMatchGame#Awake","NumberMatchAd.NumberMatchGame#CaptureShots","NumberMatchAd.NumberMatchGame#Start","NumberMatchAd.NumberMatchGame#FitCamera","NumberMatchAd.NumberMatchGame#BuildPicture","NumberMatchAd.NumberMatchGame#Similar","NumberMatchAd.NumberMatchGame#Idx","NumberMatchAd.NumberMatchGame#CellPos","NumberMatchAd.NumberMatchGame#BuildBoard","NumberMatchAd.NumberMatchGame#BuildTray","NumberMatchAd.NumberMatchGame#MakePiece","NumberMatchAd.NumberMatchGame#BuildHand","NumberMatchAd.NumberMatchGame#BuildUI","NumberMatchAd.NumberMatchGame#UpdateProgress","NumberMatchAd.NumberMatchGame#Intro","NumberMatchAd.NumberMatchGame#MaskCell","NumberMatchAd.NumberMatchGame#PopIn","NumberMatchAd.NumberMatchGame#Update","NumberMatchAd.NumberMatchGame#OnDown","NumberMatchAd.NumberMatchGame#BeginDrag","NumberMatchAd.NumberMatchGame#DragTo","NumberMatchAd.NumberMatchGame#Release","NumberMatchAd.NumberMatchGame#ResolveDrop","NumberMatchAd.NumberMatchGame#CellAt","NumberMatchAd.NumberMatchGame#Place","NumberMatchAd.NumberMatchGame#PlaceRoutine","NumberMatchAd.NumberMatchGame#RejectAndReturn","NumberMatchAd.NumberMatchGame#ReturnHome","NumberMatchAd.NumberMatchGame#WrongFlash","NumberMatchAd.NumberMatchGame#RevealGroup","NumberMatchAd.NumberMatchGame#RevealCell","NumberMatchAd.NumberMatchGame#NearMissFail","NumberMatchAd.NumberMatchGame#Complete","NumberMatchAd.NumberMatchGame#ShowEndcard","NumberMatchAd.NumberMatchGame#UpdateHighlights","NumberMatchAd.NumberMatchGame#Shake","NumberMatchAd.NumberMatchGame#UpdateShake","NumberMatchAd.NumberMatchGame#Punch","NumberMatchAd.NumberMatchGame#PunchDelayed","NumberMatchAd.NumberMatchGame#Fragments","NumberMatchAd.NumberMatchGame#Burst","NumberMatchAd.NumberMatchGame#Fly","NumberMatchAd.NumberMatchGame#FloatText","NumberMatchAd.NumberMatchGame#FloatRoutine","NumberMatchAd.NumberMatchGame#BestPiece","NumberMatchAd.NumberMatchGame#ShowTutorial","NumberMatchAd.NumberMatchGame#HideTutorial","NumberMatchAd.NumberMatchGame#TutorialLoop","NumberMatchAd.NumberMatchGame#HandPress","NumberMatchAd.NumberMatchGame#AutoPlay","NumberMatchAd.NumberMatchGame#MoveHand","NumberMatchAd.NumberMatchGame#FarWrongCell","NumberMatchAd.NumberMatchGame.CellV#init","NumberMatchAd.NumberMatchGame.Piece#init","ObstacleDestroy#OnTriggerEnter","Spiski#init","Spiski#Start"]' ) ); }
 /**
  * @compiler Bridge.NET 17.9.42-luna
  */
@@ -18,6 +18,7 @@ Bridge.assembly("UnityScriptsCompiler", function ($asm, globals) {
                 _circle: null,
                 _soft: null,
                 _ring: null,
+                _pill: null,
                 _round: null
             },
             props: {
@@ -98,6 +99,14 @@ if ( TRACE ) { TRACE( "AdKit.AdRes#Ring#get", this ); }
                         var $t;
                         return UnityEngine.Object.op_Implicit(AdKit.AdRes._ring) ? AdKit.AdRes._ring : (($t = AdKit.AdRes.RingTex(128, 0.72), AdKit.AdRes._ring = $t, $t));
                     }
+                },
+                Pill: {
+                    get: function () {
+if ( TRACE ) { TRACE( "AdKit.AdRes#Pill#get", this ); }
+
+                        var $t;
+                        return UnityEngine.Object.op_Implicit(AdKit.AdRes._pill) ? AdKit.AdRes._pill : (($t = AdKit.AdRes.PillRect(256, 72), AdKit.AdRes._pill = $t, $t));
+                    }
                 }
             },
             ctors: {
@@ -148,6 +157,33 @@ if ( TRACE ) { TRACE( "AdKit.AdRes#RoundRect", this ); }
                     return UnityEngine.Sprite.Create$4(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, size, size), new pc.Vec2( 0.5, 0.5 ), ppu, 0, UnityEngine.SpriteMeshType.FullRect, new pc.Vec4( border, border, border, border ));
                 },
                 /*AdKit.AdRes.RoundRect:static end.*/
+
+                /*AdKit.AdRes.PillRect:static start.*/
+                PillRect: function (w, h) {
+if ( TRACE ) { TRACE( "AdKit.AdRes#PillRect", this ); }
+
+                    var $t;
+                    var t = ($t = new UnityEngine.Texture2D.$ctor11(w, h, UnityEngine.TextureFormat.RGBA32, false), $t.wrapMode = UnityEngine.TextureWrapMode.Clamp, $t.filterMode = UnityEngine.FilterMode.Bilinear, $t);
+                    var px = System.Array.init(Bridge.Int.mul(w, h), function (){
+                        return new UnityEngine.Color32();
+                    }, UnityEngine.Color32);
+                    var r = h * 0.5;
+                    for (var y = 0; y < h; y = (y + 1) | 0) {
+                        for (var x = 0; x < w; x = (x + 1) | 0) {
+                            var cx = x + 0.5;
+                            var cy = y + 0.5;
+                            var dx = UnityEngine.Mathf.Max(0.0, UnityEngine.Mathf.Max(r - cx, cx - (w - r)));
+                            var dy = cy - r;
+                            var dist = Math.sqrt(dx * dx + dy * dy);
+                            var a = Math.max(0, Math.min(1, r - dist + 0.5));
+                            px[((Bridge.Int.mul(y, w) + x) | 0)] = new UnityEngine.Color32.$ctor1(255, 255, 255, Bridge.Int.clipu8(a * 255.0));
+                        }
+                    }
+                    t.SetPixels32$1(px);
+                    t.Apply$1(false, true);
+                    return UnityEngine.Sprite.Create$1(t, new UnityEngine.Rect.$ctor1(0.0, 0.0, w, h), new pc.Vec2( 0.5, 0.5 ), 100.0);
+                },
+                /*AdKit.AdRes.PillRect:static end.*/
 
                 /*AdKit.AdRes.Disc:static start.*/
                 Disc: function (size, soft) {
@@ -349,7 +385,7 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Create", this ); }
                     AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.2 ), c.$clone(), new pc.Vec2( 0.0, -46.0 ), new pc.Vec2( 740.0, 30.0 ), true);
                     AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Circle, new pc.Color( 0.25, 0.88, 1.0, 0.95 ), c.$clone(), new pc.Vec2( -345.0, -46.0 ), new pc.Vec2( 36.0, 36.0 ), false);
                     AdKit.AdUI.Img(ui.tut, AdKit.AdRes.Circle, new pc.Color( 0.25, 0.88, 1.0, 0.95 ), c.$clone(), new pc.Vec2( 345.0, -46.0 ), new pc.Vec2( 36.0, 36.0 ), false);
-                    var tutTxt = AdKit.AdUI.Txt(ui.tut, "<  HOLD & DRAG TO AIM  >", 50, new pc.Color( 1.0, 0.92, 0.28, 1 ), c.$clone(), new pc.Vec2( 0.0, 44.0 ));
+                    var tutTxt = ((ui.tutLabel = AdKit.AdUI.Txt(ui.tut, "<  HOLD & DRAG TO AIM  >", 50, new pc.Color( 1.0, 0.92, 0.28, 1 ), c.$clone(), new pc.Vec2( 0.0, 44.0 ))));
                     tutTxt.rectTransform.sizeDelta = new pc.Vec2( 880.0, 80.0 );
                     tutTxt.horizontalOverflow = UnityEngine.HorizontalWrapMode.Overflow;
                     tutTxt.verticalOverflow = UnityEngine.VerticalWrapMode.Overflow;
@@ -499,7 +535,8 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#Img", this ); }
             tut: null,
             tutHand: null,
             tutRing: null,
-            endSub: null
+            endSub: null,
+            tutLabel: null
         },
         props: {
             EndcardVisible: {
@@ -526,6 +563,16 @@ if ( TRACE ) { TRACE( "AdKit.AdUI#init", this ); }
             }
         },
         methods: {
+            /*AdKit.AdUI.SetTutorialText start.*/
+            SetTutorialText: function (text) {
+if ( TRACE ) { TRACE( "AdKit.AdUI#SetTutorialText", this ); }
+
+                if (UnityEngine.Object.op_Implicit(this.tutLabel) && !System.String.isNullOrEmpty(text)) {
+                    this.tutLabel.text = text;
+                }
+            },
+            /*AdKit.AdUI.SetTutorialText end.*/
+
             /*AdKit.AdUI.Banner start.*/
             Banner: function (text, color) {
 if ( TRACE ) { TRACE( "AdKit.AdUI#Banner", this ); }
@@ -926,9 +973,13 @@ if ( TRACE ) { TRACE( "AdKit.Sfx#Init", this ); }
                 Open: function (url) {
 if ( TRACE ) { TRACE( "AdKit.StoreLink#Open", this ); }
 
-                    if (url === void 0) { url = "https://play.google.com/store/apps/details?id=com.vincentb.MobControl&gl=IN"; }
+                    if (url === void 0) { url = "https://apps.apple.com/us/app/mob-control/id1562817072"; }
                     Luna.Unity.Analytics.LogEvent(Luna.Unity.Analytics.EventType.EndCardShown);
-                    Luna.Unity.Playable.InstallFullGame();
+                    if (!System.String.isNullOrEmpty(url)) {
+                        Luna.Unity.Playable.InstallFullGame(url, url);
+                    } else {
+                        Luna.Unity.Playable.InstallFullGame();
+                    }
                     UnityEngine.Debug.Log$1("[Voodoo Playworks CTA] InstallFullGame() -> " + (url || ""));
                 },
                 /*AdKit.StoreLink.Open:static end.*/
@@ -1516,42 +1567,149 @@ if ( TRACE ) { TRACE( "List#Start", this ); }
                 TubeEntranceX: 0,
                 TubeEntranceZ: 0,
                 TubeEntranceRadius: 0,
-                PurpleMain: null,
-                PurpleLight: null,
-                PurpleGateCol: null,
-                YellowMain: null,
-                YellowDark: null,
                 GrayCorpse: null
             },
             ctors: {
                 init: function () {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#init", this ); }
 
-                    this.PurpleMain = new UnityEngine.Color();
-                    this.PurpleLight = new UnityEngine.Color();
-                    this.PurpleGateCol = new UnityEngine.Color();
-                    this.YellowMain = new UnityEngine.Color();
-                    this.YellowDark = new UnityEngine.Color();
                     this.GrayCorpse = new UnityEngine.Color();
-                    this.MobControlStoreUrl = "https://play.google.com/store/apps/details?id=com.vincentb.MobControl&gl=IN";
+                    this.MobControlStoreUrl = "https://apps.apple.com/us/app/mob-control/id1562817072";
                     this.TubeEntranceX = 0.0;
                     this.TubeEntranceZ = 4.85;
                     this.TubeEntranceRadius = 0.72;
-                    this.PurpleMain = new pc.Color( 0.5, 0.1, 0.96, 1 );
-                    this.PurpleLight = new pc.Color( 0.68, 0.38, 1.0, 1 );
-                    this.PurpleGateCol = new pc.Color( 0.58, 0.22, 0.98, 0.88 );
-                    this.YellowMain = new pc.Color( 0.98, 0.84, 0.08, 1 );
-                    this.YellowDark = new pc.Color( 0.82, 0.66, 0.04, 1 );
                     this.GrayCorpse = new pc.Color( 0.36, 0.38, 0.42, 1 );
                 }
+            },
+            methods: {
+                /*MobControlAd.MobControlGame.MakeThemeMat:static start.*/
+                MakeThemeMat: function (col) {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#MakeThemeMat", this ); }
+
+                    var baseMat = AdKit.AdRes.PrimMat;
+                    var mat = (UnityEngine.Object.op_Implicit(baseMat) ? new UnityEngine.Material.$ctor1(baseMat) : new UnityEngine.Material.$ctor2(UnityEngine.Shader.Find("Standard")));
+                    mat.color = col.$clone();
+                    return mat;
+                },
+                /*MobControlAd.MobControlGame.MakeThemeMat:static end.*/
+
+                /*MobControlAd.MobControlGame.GetCtaPalette:static start.*/
+                GetCtaPalette: function (col, main, bevel, shadow, txt) {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#GetCtaPalette", this ); }
+
+                    txt.v = new pc.Color( 1, 1, 1, 1 );
+                    switch (col) {
+                        case MobControlAd.MobControlGame.CtaButtonColor.Blue: 
+                            main.v = new pc.Color( 0.14, 0.62, 1.0, 1.0 );
+                            bevel.v = new pc.Color( 0.06, 0.36, 0.74, 1.0 );
+                            shadow.v = new pc.Color( 0.03, 0.18, 0.44, 1.0 );
+                            break;
+                        case MobControlAd.MobControlGame.CtaButtonColor.Yellow: 
+                            main.v = new pc.Color( 1.0, 0.8, 0.12, 1.0 );
+                            bevel.v = new pc.Color( 0.78, 0.5, 0.04, 1.0 );
+                            shadow.v = new pc.Color( 0.46, 0.24, 0.02, 1.0 );
+                            break;
+                        case MobControlAd.MobControlGame.CtaButtonColor.Red: 
+                            main.v = new pc.Color( 0.96, 0.22, 0.26, 1.0 );
+                            bevel.v = new pc.Color( 0.68, 0.08, 0.12, 1.0 );
+                            shadow.v = new pc.Color( 0.42, 0.04, 0.08, 1.0 );
+                            break;
+                        case MobControlAd.MobControlGame.CtaButtonColor.Purple: 
+                            main.v = new pc.Color( 0.56, 0.2, 0.98, 1.0 );
+                            bevel.v = new pc.Color( 0.34, 0.08, 0.68, 1.0 );
+                            shadow.v = new pc.Color( 0.18, 0.04, 0.42, 1.0 );
+                            break;
+                        default: 
+                            main.v = new pc.Color( 0.24, 0.92, 0.36, 1.0 );
+                            bevel.v = new pc.Color( 0.08, 0.56, 0.2, 1.0 );
+                            shadow.v = new pc.Color( 0.04, 0.34, 0.11, 1.0 );
+                            break;
+                    }
+                },
+                /*MobControlAd.MobControlGame.GetCtaPalette:static end.*/
+
+                /*MobControlAd.MobControlGame.FindRunClip:static start.*/
+                FindRunClip: function (resourcePath) {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#FindRunClip", this ); }
+
+                    var clips = UnityEngine.Resources.LoadAll(UnityEngine.AnimationClip, resourcePath);
+                    if (clips == null || clips.length === 0) {
+                        return null;
+                    }
+                    var walkFallback = null;
+                    for (var i = 0; i < clips.length; i = (i + 1) | 0) {
+                        if (UnityEngine.Object.op_Implicit(clips[i])) {
+                            var low = clips[i].name.toLowerCase();
+                            if (System.String.contains(low,"run")) {
+                                return clips[i];
+                            }
+                            if (System.String.contains(low,"walk") && walkFallback == null) {
+                                walkFallback = clips[i];
+                            }
+                        }
+                    }
+                    return (walkFallback != null) ? walkFallback : clips[0];
+                },
+                /*MobControlAd.MobControlGame.FindRunClip:static end.*/
+
+                /*MobControlAd.MobControlGame.IsEyeName:static start.*/
+                IsEyeName: function (n) {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#IsEyeName", this ); }
+
+                    if (System.String.isNullOrEmpty(n)) {
+                        return false;
+                    }
+                    var low = n.toLowerCase();
+                    return System.String.contains(low,"eye") || System.String.contains(low,"pupil") || System.String.contains(low,"iris") || System.String.contains(low,"cornea");
+                },
+                /*MobControlAd.MobControlGame.IsEyeName:static end.*/
+
+                /*MobControlAd.MobControlGame.IsEyeMesh:static start.*/
+                IsEyeMesh: function (r) {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#IsEyeMesh", this ); }
+
+                    if (!UnityEngine.Object.op_Implicit(r)) {
+                        return false;
+                    }
+                    if (MobControlAd.MobControlGame.IsEyeName(r.name)) {
+                        return true;
+                    }
+                    var mats = r.sharedMaterials;
+                    if (mats != null && mats.length === 1 && mats[0] != null && MobControlAd.MobControlGame.IsEyeName(mats[0].name)) {
+                        return true;
+                    }
+                    return false;
+                },
+                /*MobControlAd.MobControlGame.IsEyeMesh:static end.*/
+
+
             }
         },
         fields: {
             fireRate: 0,
+            roundDuration: 0,
             yellowBlockStartHp: 0,
             enemyBaseStartHp: 0,
+            enableGiantChampion: false,
+            minLoseTime: 0,
+            frontGateMultiplier: 0,
+            leftGateMultiplier: 0,
+            rightGateMultiplier: 0,
             ctaText: null,
+            defeatTitle: null,
+            victoryTitle: null,
+            defeatSubtitle: null,
+            victorySubtitle: null,
+            tutorialText: null,
             backgroundTheme: 0,
+            characterStyle: 0,
+            ctaColor: 0,
+            ctaShape: 0,
+            PurpleMain: null,
+            PurpleLight: null,
+            PurpleGateCol: null,
+            YellowMain: null,
+            YellowDark: null,
             _cam: null,
             _camBasePos: null,
             _shakeTimer: 0,
@@ -1587,9 +1745,34 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#init", this ); }
             _puffs: null,
             _rings: null,
             _sparks: null,
+            _floatTexts: null,
+            _purpleMobPrefab: null,
+            _yellowMobPrefab: null,
+            _purpleRunClip: null,
+            _yellowRunClip: null,
+            _matFriendlyMain: null,
+            _matFriendlyLight: null,
+            _matFriendlyDark: null,
+            _matFriendlyDeep: null,
+            _matEnemyMain: null,
+            _matEnemyAccent: null,
+            _matGrayCorpse: null,
             _ui: null,
             _endOverlayRoot: null,
             _topHudRoot: null,
+            _gameplayControlsRoot: null,
+            _hurryRoot: null,
+            _hurryText: null,
+            _giantBarFillRt: null,
+            _giantBarFillImg: null,
+            _giantBarLabel: null,
+            _muteBtnRt: null,
+            _muteBgImg: null,
+            _muteOnColor: null,
+            _muteText: null,
+            _muteTapConsumed: false,
+            _giantCharge: 0,
+            _lastHurrySec: 0,
             _topBlueMobsText: null,
             _topEnemyBaseText: null,
             _defeatBannerRt: null,
@@ -1607,12 +1790,37 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#init", this ); }
             init: function () {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#init", this ); }
 
+                this.PurpleMain = new UnityEngine.Color();
+                this.PurpleLight = new UnityEngine.Color();
+                this.PurpleGateCol = new UnityEngine.Color();
+                this.YellowMain = new UnityEngine.Color();
+                this.YellowDark = new UnityEngine.Color();
                 this._camBasePos = new UnityEngine.Vector3();
+                this._muteOnColor = new UnityEngine.Color();
                 this.fireRate = 8.0;
-                this.yellowBlockStartHp = 60;
-                this.enemyBaseStartHp = 50;
+                this.roundDuration = 30.0;
+                this.yellowBlockStartHp = 110;
+                this.enemyBaseStartHp = 180;
+                this.enableGiantChampion = true;
+                this.minLoseTime = 14.0;
+                this.frontGateMultiplier = 3;
+                this.leftGateMultiplier = 2;
+                this.rightGateMultiplier = 7;
                 this.ctaText = "PLAY NOW";
+                this.defeatTitle = "DEFEAT...";
+                this.victoryTitle = "VICTORY!";
+                this.defeatSubtitle = "CAN YOU BEAT THE BOSS?";
+                this.victorySubtitle = "READY FOR LEVEL 2?";
+                this.tutorialText = "<  HOLD & DRAG TO AIM  >";
                 this.backgroundTheme = MobControlAd.MobControlGame.BackgroundTheme.AlpineWinter;
+                this.characterStyle = MobControlAd.MobControlGame.CharacterStyle.StylizedModels;
+                this.ctaColor = MobControlAd.MobControlGame.CtaButtonColor.Green;
+                this.ctaShape = MobControlAd.MobControlGame.CtaButtonShape.Rounded;
+                this.PurpleMain = new pc.Color( 0.5, 0.1, 0.96, 1 );
+                this.PurpleLight = new pc.Color( 0.68, 0.38, 1.0, 1 );
+                this.PurpleGateCol = new pc.Color( 0.58, 0.22, 0.98, 0.88 );
+                this.YellowMain = new pc.Color( 0.98, 0.84, 0.08, 1 );
+                this.YellowDark = new pc.Color( 0.82, 0.66, 0.04, 1 );
                 this._lastCamAspect = -1.0;
                 this._cannonWheels = new (System.Collections.Generic.List$1(UnityEngine.Transform)).ctor();
                 this._tubeSegments = new (System.Collections.Generic.List$1(UnityEngine.Transform)).ctor();
@@ -1622,6 +1830,8 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#init", this ); }
                 this._puffs = new (System.Collections.Generic.List$1(MobControlAd.MobControlGame.SmokePuff)).ctor();
                 this._rings = new (System.Collections.Generic.List$1(MobControlAd.MobControlGame.RingFx)).ctor();
                 this._sparks = new (System.Collections.Generic.List$1(MobControlAd.MobControlGame.SparkFx)).ctor();
+                this._floatTexts = new (System.Collections.Generic.List$1(MobControlAd.MobControlGame.FloatTextFx)).ctor();
+                this._lastHurrySec = -1;
             }
         },
         methods: {
@@ -1637,6 +1847,11 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#Awake", this ); }
             Start: function () {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#Start", this ); }
 
+                this.ApplyThemePalette();
+                this._purpleMobPrefab = UnityEngine.Resources.Load(UnityEngine.GameObject, "Models/PurpleMob");
+                this._yellowMobPrefab = UnityEngine.Resources.Load(UnityEngine.GameObject, "Models/YellowMob");
+                this._purpleRunClip = MobControlAd.MobControlGame.FindRunClip("Models/PurpleMob");
+                this._yellowRunClip = MobControlAd.MobControlGame.FindRunClip("Models/YellowMob");
                 this.SetupCameraAndSpaceEnvironment();
                 this.BuildWhiteBridge();
                 this.BuildArchedPurpleTube();
@@ -1648,6 +1863,33 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#Start", this ); }
                 Luna.Unity.Analytics.LogEvent$1("mobcontrol_start", 1);
             },
             /*MobControlAd.MobControlGame.Start end.*/
+
+            /*MobControlAd.MobControlGame.ApplyThemePalette start.*/
+            ApplyThemePalette: function () {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#ApplyThemePalette", this ); }
+
+                if (this.backgroundTheme === MobControlAd.MobControlGame.BackgroundTheme.MidnightSlate) {
+                    this.PurpleMain = new pc.Color( 0.08, 0.16, 0.46, 1 );
+                    this.PurpleLight = new pc.Color( 0.2, 0.34, 0.7, 1 );
+                    this.PurpleGateCol = new pc.Color( 0.1, 0.22, 0.56, 0.9 );
+                    this.YellowMain = new pc.Color( 0.96, 0.18, 0.22, 1 );
+                    this.YellowDark = new pc.Color( 0.66, 0.08, 0.12, 1 );
+                } else {
+                    this.PurpleMain = new pc.Color( 0.5, 0.1, 0.96, 1 );
+                    this.PurpleLight = new pc.Color( 0.68, 0.38, 1.0, 1 );
+                    this.PurpleGateCol = new pc.Color( 0.58, 0.22, 0.98, 0.88 );
+                    this.YellowMain = new pc.Color( 0.98, 0.84, 0.08, 1 );
+                    this.YellowDark = new pc.Color( 0.82, 0.66, 0.04, 1 );
+                }
+                this._matFriendlyMain = MobControlAd.MobControlGame.MakeThemeMat(this.PurpleMain.$clone());
+                this._matFriendlyLight = MobControlAd.MobControlGame.MakeThemeMat(this.PurpleLight.$clone());
+                this._matFriendlyDark = MobControlAd.MobControlGame.MakeThemeMat(pc.Color.lerp( this.PurpleMain, new pc.Color( 0, 0, 0, 1 ), 0.34 ));
+                this._matFriendlyDeep = MobControlAd.MobControlGame.MakeThemeMat(pc.Color.lerp( this.PurpleMain, new pc.Color( 0, 0, 0, 1 ), 0.6 ));
+                this._matEnemyMain = MobControlAd.MobControlGame.MakeThemeMat(this.YellowMain.$clone());
+                this._matEnemyAccent = MobControlAd.MobControlGame.MakeThemeMat(this.YellowDark.$clone());
+                this._matGrayCorpse = MobControlAd.MobControlGame.MakeThemeMat(MobControlAd.MobControlGame.GrayCorpse.$clone());
+            },
+            /*MobControlAd.MobControlGame.ApplyThemePalette end.*/
 
             /*MobControlAd.MobControlGame.SetupCameraAndSpaceEnvironment start.*/
             SetupCameraAndSpaceEnvironment: function () {
@@ -1730,7 +1972,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildArchedPurpleTube", this 
                 var tubeRoot = new UnityEngine.GameObject.$ctor2("ArchedPurpleLongTube").transform;
                 tubeRoot.SetParent(this.transform, false);
                 this._tubeSpline = System.Array.init([new pc.Vec3( 0.0, 0.52, 4.85 ), new pc.Vec3( 0.0, 0.52, 7.2 ), new pc.Vec3( 0.0, 0.54, 9.6 ), new pc.Vec3( 0.0, 0.58, 12.0 ), new pc.Vec3( 0.02, 1.15, 13.8 ), new pc.Vec3( 0.1, 2.85, 15.1 ), new pc.Vec3( 0.28, 4.95, 16.0 ), new pc.Vec3( 0.65, 6.45, 16.75 ), new pc.Vec3( 1.15, 6.85, 17.35 ), new pc.Vec3( 1.75, 5.85, 17.9 ), new pc.Vec3( 2.45, 3.85, 18.35 ), new pc.Vec3( 3.05, 1.85, 18.7 ), new pc.Vec3( 3.25, 0.78, 19.0 ), new pc.Vec3( 2.75, 0.55, 19.25 ), new pc.Vec3( 1.95, 0.55, 19.35 ), new pc.Vec3( 1.35, 0.55, 19.35 )], UnityEngine.Vector3);
-                var mouthRing = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, tubeRoot, new pc.Vec3( 0.0, 0.52, 4.8 ), new pc.Vec3( 1.22, 0.14, 1.22 ), MobControlAd.MobControlGame.PurpleMain.$clone());
+                var mouthRing = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, tubeRoot, new pc.Vec3( 0.0, 0.52, 4.8 ), new pc.Vec3( 1.22, 0.14, 1.22 ), this.PurpleMain.$clone());
                 mouthRing.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 90.0, 0.0, 0.0 );
                 var mouthHole = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, tubeRoot, new pc.Vec3( 0.0, 0.52, 4.76 ), new pc.Vec3( 0.88, 0.15, 0.88 ), new pc.Color( 0.04, 0.02, 0.06, 1 ));
                 mouthHole.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 90.0, 0.0, 0.0 );
@@ -1743,14 +1985,14 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildArchedPurpleTube", this 
                     var dir = pt.$clone().sub( prevPt );
                     var len = dir.length();
                     if (len > 0.001) {
-                        var seg = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, tubeRoot, mid.$clone(), new pc.Vec3( 0.96, len * 0.62, 0.96 ), MobControlAd.MobControlGame.PurpleMain.$clone()).transform;
+                        var seg = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, tubeRoot, mid.$clone(), new pc.Vec3( 0.96, len * 0.62, 0.96 ), this.PurpleMain.$clone()).transform;
                         seg.localRotation = new pc.Quat().fromToQuaternion( pc.Vec3.UP.clone(), dir.clone().normalize() );
                         this._tubeSegments.add(seg);
-                        AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, tubeRoot, pt.$clone(), new pc.Vec3( 1, 1, 1 ).clone().scale( 0.95 ), MobControlAd.MobControlGame.PurpleMain.$clone());
+                        AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, tubeRoot, pt.$clone(), new pc.Vec3( 1, 1, 1 ).clone().scale( 0.95 ), this.PurpleMain.$clone());
                     }
                     prevPt = pt.$clone();
                 }
-                var exitRing = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, tubeRoot, new pc.Vec3( 1.35, 0.55, 19.35 ), new pc.Vec3( 1.08, 0.14, 1.08 ), MobControlAd.MobControlGame.PurpleMain.$clone());
+                var exitRing = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, tubeRoot, new pc.Vec3( 1.35, 0.55, 19.35 ), new pc.Vec3( 1.08, 0.14, 1.08 ), this.PurpleMain.$clone());
                 exitRing.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 90.0 );
             },
             /*MobControlAd.MobControlGame.BuildArchedPurpleTube end.*/
@@ -1776,10 +2018,11 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildPurpleCannon", this ); }
                 this._cannonX = 0.0;
                 this._targetCannonX = 0.0;
                 this._cannonRoot.localPosition = new pc.Vec3( 0.0, 0.0, 1.45 );
+                var railCol = pc.Color.lerp( this.PurpleMain, new pc.Color( 0, 0, 0, 1 ), 0.22 );
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._cannonRoot, new pc.Vec3( 0.0, 0.19, 0.0 ), new pc.Vec3( 1.12, 0.1, 1.32 ), new pc.Color( 0.24, 0.26, 0.32, 1 ));
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._cannonRoot, new pc.Vec3( 0.0, 0.27, 0.0 ), new pc.Vec3( 1.04, 0.14, 1.24 ), new pc.Color( 0.62, 0.66, 0.74, 1 ));
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._cannonRoot, new pc.Vec3( -0.46, 0.36, 0.0 ), new pc.Vec3( 0.1, 0.08, 1.18 ), new pc.Color( 0.38, 0.16, 0.78, 1 ));
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._cannonRoot, new pc.Vec3( 0.46, 0.36, 0.0 ), new pc.Vec3( 0.1, 0.08, 1.18 ), new pc.Color( 0.38, 0.16, 0.78, 1 ));
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._cannonRoot, new pc.Vec3( -0.46, 0.36, 0.0 ), new pc.Vec3( 0.1, 0.08, 1.18 ), railCol.$clone());
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._cannonRoot, new pc.Vec3( 0.46, 0.36, 0.0 ), new pc.Vec3( 0.1, 0.08, 1.18 ), railCol.$clone());
                 var wheelOffsets = System.Array.init([new pc.Vec3( -0.6, 0.25, -0.45 ), new pc.Vec3( 0.6, 0.25, -0.45 ), new pc.Vec3( -0.6, 0.25, 0.45 ), new pc.Vec3( 0.6, 0.25, 0.45 )], UnityEngine.Vector3);
                 var array = wheelOffsets;
                 $t = Bridge.getEnumerator(array);
@@ -1793,7 +2036,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildPurpleCannon", this ); }
                         tire.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 90.0 );
                         var rim = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, wRoot, pc.Vec3.ZERO.clone(), new pc.Vec3( 0.3, 0.135, 0.3 ), new pc.Color( 0.76, 0.8, 0.86, 1 ));
                         rim.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 90.0 );
-                        var cap = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, wRoot, pc.Vec3.ZERO.clone(), new pc.Vec3( 0.14, 0.15, 0.14 ), MobControlAd.MobControlGame.PurpleMain.$clone());
+                        var cap = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, wRoot, pc.Vec3.ZERO.clone(), new pc.Vec3( 0.14, 0.15, 0.14 ), this.PurpleMain.$clone());
                         cap.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 90.0 );
                         this._cannonWheels.add(wRoot);
                     }
@@ -1819,7 +2062,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildPurpleCannon", this ); }
                             if (UnityEngine.Object.op_Implicit(AdKit.AdRes.PrimMat)) {
                                 r.sharedMaterial = AdKit.AdRes.PrimMat;
                             }
-                            AdKit.Prims.SetColor(r, MobControlAd.MobControlGame.PurpleMain.$clone());
+                            AdKit.Prims.SetColor(r, this.PurpleMain.$clone());
                         }
                     } finally {
                         if (Bridge.is($t1, System.IDisposable)) {
@@ -1827,18 +2070,18 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildPurpleCannon", this ); }
                         }
                     }
                 }
-                var mainTube = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 0.42 ), new pc.Vec3( 0.78, 0.64, 0.78 ), MobControlAd.MobControlGame.PurpleMain.$clone());
+                var mainTube = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 0.42 ), new pc.Vec3( 0.78, 0.64, 0.78 ), this.PurpleMain.$clone());
                 mainTube.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 90.0, 0.0, 0.0 );
-                var midRing = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 0.42 ), new pc.Vec3( 0.84, 0.09, 0.84 ), new pc.Color( 0.88, 0.78, 1.0, 1 ));
+                var midRing = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 0.42 ), new pc.Vec3( 0.84, 0.09, 0.84 ), pc.Color.lerp( this.PurpleLight, new pc.Color( 1, 1, 1, 1 ), 0.45 ));
                 midRing.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 90.0, 0.0, 0.0 );
-                var stripe = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._cannonBarrel, new pc.Vec3( 0.0, 0.36, 0.42 ), new pc.Vec3( 0.22, 0.08, 1.08 ), MobControlAd.MobControlGame.PurpleLight.$clone());
-                var rearSphere = AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, -0.18 ), new pc.Vec3( 0.88, 0.88, 0.88 ), MobControlAd.MobControlGame.PurpleMain.$clone());
+                var stripe = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._cannonBarrel, new pc.Vec3( 0.0, 0.36, 0.42 ), new pc.Vec3( 0.22, 0.08, 1.08 ), this.PurpleLight.$clone());
+                var rearSphere = AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, -0.18 ), new pc.Vec3( 0.88, 0.88, 0.88 ), this.PurpleMain.$clone());
                 var rearCap = AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, -0.52 ), new pc.Vec3( 0.32, 0.32, 0.32 ), new pc.Color( 0.95, 0.82, 0.22, 1 ));
-                var muzzleRing = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 1.04 ), new pc.Vec3( 0.92, 0.1, 0.92 ), MobControlAd.MobControlGame.PurpleLight.$clone());
+                var muzzleRing = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 1.04 ), new pc.Vec3( 0.92, 0.1, 0.92 ), this.PurpleLight.$clone());
                 muzzleRing.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 90.0, 0.0, 0.0 );
                 var muzzleBore = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 1.11 ), new pc.Vec3( 0.62, 0.04, 0.62 ), new pc.Color( 0.08, 0.04, 0.14, 1 ));
                 muzzleBore.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 90.0, 0.0, 0.0 );
-                this._muzzleFlash = AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 1.22 ), pc.Vec3.ZERO.clone(), MobControlAd.MobControlGame.PurpleLight.$clone()).transform;
+                this._muzzleFlash = AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, this._cannonBarrel, new pc.Vec3( 0.0, 0.0, 1.22 ), pc.Vec3.ZERO.clone(), this.PurpleLight.$clone()).transform;
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, this._muzzleFlash, new pc.Vec3( 0.0, 0.0, 0.14 ), new pc.Vec3( 1, 1, 1 ).clone().scale( 0.62 ), new pc.Color( 1, 1, 1, 1 ));
             },
             /*MobControlAd.MobControlGame.BuildPurpleCannon end.*/
@@ -1847,8 +2090,8 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildPurpleCannon", this ); }
             BuildGatesAndYellowBlock: function () {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildGatesAndYellowBlock", this ); }
 
-                this.CreateGate(0, 3, -0.4, 3.65, 1.15, 1.85, 1.35, 0.2);
-                this.CreateGate(1, 2, -1.95, 5.45, 1.25, 0.0, 0.0, 0.0);
+                this.CreateGate(0, UnityEngine.Mathf.Max(2, this.frontGateMultiplier), -0.4, 3.65, 1.15, 1.85, 1.35, 0.2);
+                this.CreateGate(1, UnityEngine.Mathf.Max(2, this.leftGateMultiplier), -1.95, 5.45, 1.25, 0.0, 0.0, 0.0);
                 this._yellowBlockHp = this.yellowBlockStartHp;
                 this._yellowBlockRoot = new UnityEngine.GameObject.$ctor2("YellowBlock_60").transform;
                 this._yellowBlockRoot.SetParent(this.transform, false);
@@ -1867,7 +2110,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildGatesAndYellowBlock", th
                         if (UnityEngine.Object.op_Implicit(AdKit.AdRes.PrimMat)) {
                             rends[i].sharedMaterial = AdKit.AdRes.PrimMat;
                         }
-                        AdKit.Prims.SetColor(rends[i], MobControlAd.MobControlGame.YellowMain.$clone());
+                        AdKit.Prims.SetColor(rends[i], this.YellowMain.$clone());
                         if (!hasBounds) {
                             b = rends[i].bounds;
                             hasBounds = true;
@@ -1883,8 +2126,9 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildGatesAndYellowBlock", th
                         inst.transform.localPosition = new pc.Vec3( (0.0 - localCenter.x) * scale.x, targetSize.y * 0.5 - localCenter.y * scale.y, (0.0 - localCenter.z) * scale.z );
                     }
                 } else {
-                    var mortarCol = new pc.Color( 0.56, 0.42, 0.04, 1 );
-                    var brickHi = new pc.Color( 1.0, 0.92, 0.3, 1 );
+                    var isBlueRed = this.backgroundTheme === MobControlAd.MobControlGame.BackgroundTheme.MidnightSlate;
+                    var mortarCol = (isBlueRed ? new pc.Color( 0.42, 0.05, 0.08, 1 ) : new pc.Color( 0.56, 0.42, 0.04, 1 ));
+                    var brickHi = (isBlueRed ? new pc.Color( 1.0, 0.38, 0.38, 1 ) : new pc.Color( 1.0, 0.92, 0.3, 1 ));
                     AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._yellowBlockRoot, new pc.Vec3( 0.0, 0.72, 0.0 ), new pc.Vec3( 2.64, 1.32, 1.54 ), mortarCol.$clone());
                     for (var row = 0; row < 3; row = (row + 1) | 0) {
                         var y = 0.25 + row * 0.47;
@@ -1894,13 +2138,13 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildGatesAndYellowBlock", th
                         var span = (((cols - 1) | 0)) * (brickW + 0.06);
                         for (var col = 0; col < cols; col = (col + 1) | 0) {
                             var bx = (0.0 - span) * 0.5 + col * (brickW + 0.06);
-                            var bc = (((((row + col) | 0)) % 2 === 0) ? MobControlAd.MobControlGame.YellowMain.$clone() : brickHi.$clone());
+                            var bc = (((((row + col) | 0)) % 2 === 0) ? this.YellowMain.$clone() : brickHi.$clone());
                             AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._yellowBlockRoot, new pc.Vec3( bx, y, 0.0 ), new pc.Vec3( brickW, 0.41, 1.66 ), bc.$clone());
                         }
                     }
                 }
                 this._yellowBlockLabel = AdKit.AdRes.MakeLabel(this._yellowBlockRoot, Bridge.toString(this._yellowBlockHp), 0.95, new pc.Color( 1, 1, 1, 1 ), 25, new pc.Vec3( 0.0, 0.72, -0.9 ));
-                this.CreateGate(2, 7, 1.65, 8.15, 1.25, 0.0, 0.0, 0.0);
+                this.CreateGate(2, UnityEngine.Mathf.Max(2, this.rightGateMultiplier), 1.65, 8.15, 1.25, 0.0, 0.0, 0.0);
             },
             /*MobControlAd.MobControlGame.BuildGatesAndYellowBlock end.*/
 
@@ -1913,8 +2157,8 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#CreateGate", this ); }
                 root.SetParent(this.transform, false);
                 root.localPosition = new pc.Vec3( x, 0.0, z );
                 var fullW = halfWidth * 2.0;
-                var frameDark = new pc.Color( 0.16, 0.14, 0.24, 1 );
-                var capGlow = new pc.Color( 0.84, 0.62, 1.0, 1 );
+                var frameDark = new pc.Color( 0.14, 0.16, 0.26, 1 );
+                var capGlow = pc.Color.lerp( this.PurpleLight, new pc.Color( 1, 1, 1, 1 ), 0.3 );
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, root, new pc.Vec3( 0.0 - halfWidth, 0.6, 0.0 ), new pc.Vec3( 0.22, 0.6, 0.22 ), frameDark.$clone());
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, root, new pc.Vec3( halfWidth, 0.6, 0.0 ), new pc.Vec3( 0.22, 0.6, 0.22 ), frameDark.$clone());
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, root, new pc.Vec3( 0.0 - halfWidth, 1.22, 0.0 ), new pc.Vec3( 1, 1, 1 ).clone().scale( 0.26 ), capGlow.$clone());
@@ -1922,7 +2166,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#CreateGate", this ); }
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, root, new pc.Vec3( 0.0, 0.08, 0.0 ), new pc.Vec3( fullW + 0.22, 0.16, 0.24 ), frameDark.$clone());
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, root, new pc.Vec3( 0.0, 0.16, -0.06 ), new pc.Vec3( fullW - 0.12, 0.08, 0.12 ), new pc.Color( 1, 1, 1, 1 ));
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, root, new pc.Vec3( 0.0, 1.12, -0.04 ), new pc.Vec3( fullW - 0.12, 0.07, 0.1 ), capGlow.$clone());
-                var shieldGo = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, root, new pc.Vec3( 0.0, 0.64, 0.0 ), new pc.Vec3( fullW - 0.14, 0.96, 0.06 ), MobControlAd.MobControlGame.PurpleGateCol.$clone());
+                var shieldGo = AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, root, new pc.Vec3( 0.0, 0.64, 0.0 ), new pc.Vec3( fullW - 0.14, 0.96, 0.06 ), this.PurpleGateCol.$clone());
                 var label = AdKit.AdRes.MakeLabel(root, "X" + mult, 0.82, new pc.Color( 1, 1, 1, 1 ), 24, new pc.Vec3( 0.0, 0.64, -0.1 ));
                 this._gates.add(($t = new MobControlAd.MobControlGame.MultiplierGate(), $t.root = root, $t.label = label, $t.shieldRenderer = shieldGo.GetComponent(UnityEngine.Renderer), $t.multiplier = mult, $t.z = z, $t.baseX = x, $t.currentX = x, $t.halfWidth = halfWidth, $t.moveAmp = moveAmp, $t.moveSpeed = moveSpeed, $t.phaseOffset = phaseOffset, $t.bitIndex = bitIndex, $t));
             },
@@ -1938,22 +2182,22 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildYellowEnemyBase", this )
                 this._enemyBaseRoot.localPosition = new pc.Vec3( -1.85, 0.0, 21.8 );
                 this._enemyBaseBody = new UnityEngine.GameObject.$ctor2("BaseBody").transform;
                 this._enemyBaseBody.SetParent(this._enemyBaseRoot, false);
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 0.1, 0.0 ), new pc.Vec3( 2.72, 0.2, 2.12 ), MobControlAd.MobControlGame.YellowDark.$clone());
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 0.92, 0.0 ), new pc.Vec3( 2.48, 1.66, 1.88 ), MobControlAd.MobControlGame.YellowMain.$clone());
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 2.28, 0.0 ), new pc.Vec3( 2.72, 1.24, 2.1 ), MobControlAd.MobControlGame.YellowMain.$clone());
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 0.1, 0.0 ), new pc.Vec3( 2.72, 0.2, 2.12 ), this.YellowDark.$clone());
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 0.92, 0.0 ), new pc.Vec3( 2.48, 1.66, 1.88 ), this.YellowMain.$clone());
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 2.28, 0.0 ), new pc.Vec3( 2.72, 1.24, 2.1 ), this.YellowMain.$clone());
                 for (var bx = -1; bx <= 1; bx = (bx + 1) | 0) {
-                    AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( bx * 0.96, 3.04, -0.84 ), new pc.Vec3( 0.56, 0.34, 0.38 ), MobControlAd.MobControlGame.YellowMain.$clone());
-                    AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( bx * 0.96, 3.04, 0.84 ), new pc.Vec3( 0.56, 0.34, 0.38 ), MobControlAd.MobControlGame.YellowDark.$clone());
+                    AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( bx * 0.96, 3.04, -0.84 ), new pc.Vec3( 0.56, 0.34, 0.38 ), this.YellowMain.$clone());
+                    AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( bx * 0.96, 3.04, 0.84 ), new pc.Vec3( 0.56, 0.34, 0.38 ), this.YellowDark.$clone());
                 }
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 1.68, -0.96 ), new pc.Vec3( 2.54, 0.16, 0.14 ), new pc.Color( 0.28, 0.22, 0.06, 1 ));
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 0.6, -0.95 ), new pc.Vec3( 0.96, 1.2, 0.1 ), MobControlAd.MobControlGame.YellowDark.$clone());
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 0.6, -0.95 ), new pc.Vec3( 0.96, 1.2, 0.1 ), this.YellowDark.$clone());
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 0.56, -0.98 ), new pc.Vec3( 0.74, 1.08, 0.1 ), new pc.Color( 0.14, 0.1, 0.06, 1 ));
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 2.28, -1.04 ), new pc.Vec3( 2.02, 0.96, 0.08 ), MobControlAd.MobControlGame.YellowDark.$clone());
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 2.28, -1.04 ), new pc.Vec3( 2.02, 0.96, 0.08 ), this.YellowDark.$clone());
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.0, 2.28, -1.08 ), new pc.Vec3( 1.86, 0.82, 0.08 ), new pc.Color( 0.16, 0.14, 0.22, 1 ));
                 this._enemyBaseLabel = AdKit.AdRes.MakeLabel(this._enemyBaseRoot, Bridge.toString(this._enemyBaseHp), 0.82, new pc.Color( 1, 1, 1, 1 ), 26, new pc.Vec3( 0.0, 2.28, -1.16 ));
                 AdKit.Prims.Make(UnityEngine.PrimitiveType.Cylinder, this._enemyBaseBody, new pc.Vec3( 0.0, 3.72, 0.0 ), new pc.Vec3( 0.11, 0.88, 0.11 ), new pc.Color( 0.22, 0.22, 0.28, 1 ));
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, this._enemyBaseBody, new pc.Vec3( 0.0, 4.6, 0.0 ), new pc.Vec3( 1, 1, 1 ).clone().scale( 0.2 ), MobControlAd.MobControlGame.YellowMain.$clone());
-                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.48, 4.22, 0.0 ), new pc.Vec3( 0.92, 0.5, 0.08 ), MobControlAd.MobControlGame.YellowMain.$clone());
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, this._enemyBaseBody, new pc.Vec3( 0.0, 4.6, 0.0 ), new pc.Vec3( 1, 1, 1 ).clone().scale( 0.2 ), this.YellowMain.$clone());
+                AdKit.Prims.Make(UnityEngine.PrimitiveType.Cube, this._enemyBaseBody, new pc.Vec3( 0.48, 4.22, 0.0 ), new pc.Vec3( 0.92, 0.5, 0.08 ), this.YellowMain.$clone());
             },
             /*MobControlAd.MobControlGame.BuildYellowEnemyBase end.*/
 
@@ -1962,6 +2206,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildYellowEnemyBase", this )
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
 
                 this._ui = AdKit.AdUI.Create("MOB CONTROL", this.ctaText, new pc.Color( 0.14, 0.08, 0.28, 1 ), new pc.Color( 1.0, 0.86, 0.22, 1 ));
+                this._ui.SetTutorialText(this.tutorialText);
                 this._ui.ShowDragTutorial(true);
                 var center = new pc.Vec2( 0.5, 0.5 );
                 this._topHudRoot = new UnityEngine.GameObject.$ctor3("TopHUD", UnityEngine.RectTransform);
@@ -1971,38 +2216,110 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
                 trt.anchorMax = new pc.Vec2( 0.5, 1.0 );
                 trt.anchoredPosition = new pc.Vec2( 0.0, -125.0 );
                 trt.sizeDelta = new pc.Vec2( 990.0, 150.0 );
-                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.16, 0.04, 0.44, 1.0 ), center.$clone(), new pc.Vec2( -330.0, -10.0 ), new pc.Vec2( 304.0, 114.0 ), true);
+                var isBlueRed = this.backgroundTheme === MobControlAd.MobControlGame.BackgroundTheme.MidnightSlate;
+                var mobFill = (isBlueRed ? new pc.Color( 0.1, 0.2, 0.54, 1.0 ) : new pc.Color( 0.36, 0.14, 0.9, 1.0 ));
+                var mobShadow = (isBlueRed ? new pc.Color( 0.03, 0.07, 0.24, 1.0 ) : new pc.Color( 0.16, 0.04, 0.44, 1.0 ));
+                var stageFill = (isBlueRed ? new pc.Color( 0.16, 0.32, 0.62, 1.0 ) : new pc.Color( 1.0, 0.72, 0.1, 1.0 ));
+                var stageShadow = (isBlueRed ? new pc.Color( 0.05, 0.12, 0.3, 1.0 ) : new pc.Color( 0.54, 0.3, 0.02, 1.0 ));
+                var baseFill = (isBlueRed ? new pc.Color( 0.95, 0.2, 0.24, 1.0 ) : new pc.Color( 0.95, 0.24, 0.28, 1.0 ));
+                var baseShadow = (isBlueRed ? new pc.Color( 0.46, 0.04, 0.08, 1.0 ) : new pc.Color( 0.48, 0.05, 0.08, 1.0 ));
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), mobShadow.$clone(), center.$clone(), new pc.Vec2( -330.0, -10.0 ), new pc.Vec2( 304.0, 114.0 ), true);
                 AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( -330.0, 0.0 ), new pc.Vec2( 292.0, 102.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.36, 0.14, 0.9, 1.0 ), center.$clone(), new pc.Vec2( -330.0, 0.0 ), new pc.Vec2( 278.0, 88.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), mobFill.$clone(), center.$clone(), new pc.Vec2( -330.0, 0.0 ), new pc.Vec2( 278.0, 88.0 ), true);
                 AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.26 ), center.$clone(), new pc.Vec2( -330.0, 22.0 ), new pc.Vec2( 236.0, 24.0 ), true);
                 this._topBlueMobsText = AdKit.AdUI.Txt(trt, "MOBS: 0", 44, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( -330.0, -1.0 ));
                 this._topBlueMobsText.resizeTextForBestFit = false;
                 var mobOut = this._topBlueMobsText.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(mobOut)) {
-                    mobOut.effectColor = new pc.Color( 0.16, 0.04, 0.44, 1.0 );
+                    mobOut.effectColor = mobShadow.$clone();
                     mobOut.effectDistance = new pc.Vec2( 3.5, -3.5 );
                 }
-                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.54, 0.3, 0.02, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -10.0 ), new pc.Vec2( 304.0, 114.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), stageShadow.$clone(), center.$clone(), new pc.Vec2( 0.0, -10.0 ), new pc.Vec2( 304.0, 114.0 ), true);
                 AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 292.0, 102.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 0.72, 0.1, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 278.0, 88.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), stageFill.$clone(), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 278.0, 88.0 ), true);
                 AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.34 ), center.$clone(), new pc.Vec2( 0.0, 22.0 ), new pc.Vec2( 236.0, 24.0 ), true);
                 var stageLbl = AdKit.AdUI.Txt(trt, "STAGE 1", 44, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, -1.0 ));
                 stageLbl.resizeTextForBestFit = false;
                 var stageOut = stageLbl.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(stageOut)) {
-                    stageOut.effectColor = new pc.Color( 0.54, 0.3, 0.02, 1.0 );
+                    stageOut.effectColor = stageShadow.$clone();
                     stageOut.effectDistance = new pc.Vec2( 3.5, -3.5 );
                 }
-                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.48, 0.05, 0.08, 1.0 ), center.$clone(), new pc.Vec2( 330.0, -10.0 ), new pc.Vec2( 304.0, 114.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), baseShadow.$clone(), center.$clone(), new pc.Vec2( 330.0, -10.0 ), new pc.Vec2( 304.0, 114.0 ), true);
                 AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 330.0, 0.0 ), new pc.Vec2( 292.0, 102.0 ), true);
-                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 0.95, 0.24, 0.28, 1.0 ), center.$clone(), new pc.Vec2( 330.0, 0.0 ), new pc.Vec2( 278.0, 88.0 ), true);
+                AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), baseFill.$clone(), center.$clone(), new pc.Vec2( 330.0, 0.0 ), new pc.Vec2( 278.0, 88.0 ), true);
                 AdKit.AdUI.Img(trt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.28 ), center.$clone(), new pc.Vec2( 330.0, 22.0 ), new pc.Vec2( 236.0, 24.0 ), true);
                 this._topEnemyBaseText = AdKit.AdUI.Txt(trt, "BASE: " + this.enemyBaseStartHp, 44, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 330.0, -1.0 ));
                 this._topEnemyBaseText.resizeTextForBestFit = false;
                 var baseOut = this._topEnemyBaseText.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(baseOut)) {
-                    baseOut.effectColor = new pc.Color( 0.48, 0.05, 0.08, 1.0 );
+                    baseOut.effectColor = baseShadow.$clone();
                     baseOut.effectDistance = new pc.Vec2( 3.5, -3.5 );
+                }
+                this._hurryRoot = new UnityEngine.GameObject.$ctor3("HurryUpBanner", UnityEngine.RectTransform);
+                var hrt = Bridge.cast(this._hurryRoot.transform, UnityEngine.RectTransform);
+                hrt.SetParent(this._ui.Root, false);
+                hrt.anchorMin = new pc.Vec2( 0.5, 1.0 );
+                hrt.anchorMax = new pc.Vec2( 0.5, 1.0 );
+                hrt.anchoredPosition = new pc.Vec2( 0.0, -248.0 );
+                hrt.sizeDelta = new pc.Vec2( 460.0, 88.0 );
+                AdKit.AdUI.Img(hrt, AdKit.AdRes.Pill, new pc.Color( 0.45, 0.03, 0.06, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -8.0 ), new pc.Vec2( 456.0, 84.0 ), false);
+                AdKit.AdUI.Img(hrt, AdKit.AdRes.Pill, new pc.Color( 1, 1, 1, 1 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 444.0, 74.0 ), false);
+                AdKit.AdUI.Img(hrt, AdKit.AdRes.Pill, new pc.Color( 0.96, 0.14, 0.18, 1.0 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 430.0, 62.0 ), false);
+                this._hurryText = AdKit.AdUI.Txt(hrt, "HURRY UP! 5s", 44, new pc.Color( 1.0, 0.94, 0.3, 1 ), center.$clone(), new pc.Vec2( 0.0, -1.0 ));
+                this._hurryText.resizeTextForBestFit = false;
+                var hurryOut = this._hurryText.GetComponent(UnityEngine.UI.Outline);
+                if (UnityEngine.Object.op_Implicit(hurryOut)) {
+                    hurryOut.effectColor = new pc.Color( 0.42, 0.03, 0.06, 1.0 );
+                    hurryOut.effectDistance = new pc.Vec2( 3.5, -3.5 );
+                }
+                this._hurryRoot.SetActive(false);
+                this._gameplayControlsRoot = new UnityEngine.GameObject.$ctor3("GameplayControls", UnityEngine.RectTransform);
+                var gcrt = Bridge.cast(this._gameplayControlsRoot.transform, UnityEngine.RectTransform);
+                gcrt.SetParent(this._ui.Root, false);
+                gcrt.anchorMin = pc.Vec2.ZERO.clone();
+                gcrt.anchorMax = pc.Vec2.ONE.clone();
+                gcrt.offsetMin = pc.Vec2.ZERO.clone();
+                gcrt.offsetMax = pc.Vec2.ZERO.clone();
+                if (this.enableGiantChampion) {
+                    var gBarWrap = new UnityEngine.GameObject.$ctor3("GiantChargeBar", UnityEngine.RectTransform);
+                    var gbrt = Bridge.cast(gBarWrap.transform, UnityEngine.RectTransform);
+                    gbrt.SetParent(gcrt, false);
+                    gbrt.anchorMin = new pc.Vec2( 0.5, 0.0 );
+                    gbrt.anchorMax = new pc.Vec2( 0.5, 0.0 );
+                    gbrt.anchoredPosition = new pc.Vec2( 0.0, 92.0 );
+                    gbrt.sizeDelta = new pc.Vec2( 370.0, 64.0 );
+                    AdKit.AdUI.Img(gbrt, AdKit.AdRes.Pill, mobShadow.$clone(), center.$clone(), new pc.Vec2( 0.0, -6.0 ), new pc.Vec2( 368.0, 62.0 ), false);
+                    AdKit.AdUI.Img(gbrt, AdKit.AdRes.Pill, new pc.Color( 1, 1, 1, 1 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 358.0, 54.0 ), false);
+                    AdKit.AdUI.Img(gbrt, AdKit.AdRes.Pill, new pc.Color( 0.12, 0.08, 0.24, 1.0 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 346.0, 44.0 ), false);
+                    this._giantBarFillImg = AdKit.AdUI.Img(gbrt, AdKit.AdRes.Pill, new pc.Color( 1.0, 0.78, 0.12, 1.0 ), new pc.Vec2( 0.0, 0.5 ), new pc.Vec2( 14.0, 0.0 ), new pc.Vec2( 0.0, 36.0 ), false);
+                    this._giantBarFillRt = this._giantBarFillImg.rectTransform;
+                    this._giantBarFillRt.pivot = new pc.Vec2( 0.0, 0.5 );
+                    this._giantBarLabel = AdKit.AdUI.Txt(gbrt, "GIANT CHARGE", 28, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, -1.0 ));
+                    this._giantBarLabel.resizeTextForBestFit = false;
+                    var gbOut = this._giantBarLabel.GetComponent(UnityEngine.UI.Outline);
+                    if (UnityEngine.Object.op_Implicit(gbOut)) {
+                        gbOut.effectColor = new pc.Color( 0.24, 0.12, 0.02, 1.0 );
+                        gbOut.effectDistance = new pc.Vec2( 2.5, -2.5 );
+                    }
+                }
+                var muteGo = new UnityEngine.GameObject.$ctor3("MuteToggle", UnityEngine.RectTransform);
+                this._muteBtnRt = Bridge.cast(muteGo.transform, UnityEngine.RectTransform);
+                this._muteBtnRt.SetParent(gcrt, false);
+                this._muteBtnRt.anchorMin = new pc.Vec2( 0.0, 0.0 );
+                this._muteBtnRt.anchorMax = new pc.Vec2( 0.0, 0.0 );
+                this._muteBtnRt.anchoredPosition = new pc.Vec2( 138.0, 92.0 );
+                this._muteBtnRt.sizeDelta = new pc.Vec2( 204.0, 76.0 );
+                this._muteOnColor = mobFill.$clone();
+                AdKit.AdUI.Img(this._muteBtnRt, AdKit.AdRes.Pill, mobShadow.$clone(), center.$clone(), new pc.Vec2( 0.0, -7.0 ), new pc.Vec2( 204.0, 74.0 ), false);
+                AdKit.AdUI.Img(this._muteBtnRt, AdKit.AdRes.Pill, new pc.Color( 1, 1, 1, 1 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 194.0, 66.0 ), false);
+                this._muteBgImg = AdKit.AdUI.Img(this._muteBtnRt, AdKit.AdRes.Pill, AdKit.Sfx.Muted ? new pc.Color( 0.42, 0.44, 0.5, 1.0 ) : this._muteOnColor.$clone(), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 182.0, 56.0 ), false);
+                this._muteText = AdKit.AdUI.Txt(this._muteBtnRt, AdKit.Sfx.Muted ? "SFX OFF" : "SFX ON", 32, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, -1.0 ));
+                this._muteText.resizeTextForBestFit = false;
+                var muteOut = this._muteText.GetComponent(UnityEngine.UI.Outline);
+                if (UnityEngine.Object.op_Implicit(muteOut)) {
+                    muteOut.effectColor = mobShadow.$clone();
+                    muteOut.effectDistance = new pc.Vec2( 2.5, -2.5 );
                 }
                 this._endOverlayRoot = new UnityEngine.GameObject.$ctor3("MobControlEndOverlay", UnityEngine.RectTransform);
                 var ort = Bridge.cast(this._endOverlayRoot.transform, UnityEngine.RectTransform);
@@ -2011,7 +2328,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
                 ort.anchorMax = pc.Vec2.ONE.clone();
                 ort.offsetMin = pc.Vec2.ZERO.clone();
                 ort.offsetMax = pc.Vec2.ZERO.clone();
-                this._endOverlayRoot.AddComponent(UnityEngine.UI.Image).color = new pc.Color( 0.08, 0.04, 0.22, 0.54 );
+                this._endOverlayRoot.AddComponent(UnityEngine.UI.Image).color = (isBlueRed ? new pc.Color( 0.03, 0.08, 0.2, 0.56 ) : new pc.Color( 0.08, 0.04, 0.22, 0.54 ));
                 var logoTex = UnityEngine.Resources.Load(UnityEngine.Texture2D, "MobControlLogo");
                 if (logoTex != null) {
                     var logoGo = new UnityEngine.GameObject.$ctor4("MobControlLogoImg", [UnityEngine.RectTransform, UnityEngine.UI.Image]);
@@ -2034,20 +2351,24 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
                 this._defeatBannerRt.anchoredPosition = new pc.Vec2( 0.0, 80.0 );
                 this._defeatBannerRt.sizeDelta = new pc.Vec2( 960.0, 340.0 );
                 this._defeatBannerRt.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 0.0, 3.0 );
-                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), new pc.Color( 0.16, 0.04, 0.42, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -18.0 ), new pc.Vec2( 944.0, 304.0 ), true);
-                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 0.88, 0.18, 1.0 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 920.0, 282.0 ), true);
-                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), new pc.Color( 0.32, 0.09, 0.72, 1.0 ), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 894.0, 256.0 ), true);
+                var cardShadow = (isBlueRed ? new pc.Color( 0.02, 0.06, 0.22, 1.0 ) : new pc.Color( 0.16, 0.04, 0.42, 1.0 ));
+                var cardBorder = (isBlueRed ? new pc.Color( 1.0, 0.3, 0.32, 1.0 ) : new pc.Color( 1.0, 0.88, 0.18, 1.0 ));
+                var cardFill = (isBlueRed ? new pc.Color( 0.07, 0.15, 0.42, 1.0 ) : new pc.Color( 0.32, 0.09, 0.72, 1.0 ));
+                var titleStroke = (isBlueRed ? new pc.Color( 0.46, 0.04, 0.08, 1.0 ) : new pc.Color( 0.24, 0.04, 0.48, 1.0 ));
+                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), cardShadow.$clone(), center.$clone(), new pc.Vec2( 0.0, -18.0 ), new pc.Vec2( 944.0, 304.0 ), true);
+                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), cardBorder.$clone(), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 920.0, 282.0 ), true);
+                AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), cardFill.$clone(), center.$clone(), pc.Vec2.ZERO.clone(), new pc.Vec2( 894.0, 256.0 ), true);
                 AdKit.AdUI.Img(this._defeatBannerRt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.16 ), center.$clone(), new pc.Vec2( 0.0, 76.0 ), new pc.Vec2( 820.0, 68.0 ), true);
-                this._defeatTitleText = AdKit.AdUI.Txt(this._defeatBannerRt, "DEFEAT...", 136, new pc.Color( 1.0, 0.88, 0.14, 1 ), center.$clone(), new pc.Vec2( 0.0, 30.0 ));
+                this._defeatTitleText = AdKit.AdUI.Txt(this._defeatBannerRt, this.defeatTitle, 136, new pc.Color( 1.0, 0.88, 0.14, 1 ), center.$clone(), new pc.Vec2( 0.0, 30.0 ));
                 var outline = this._defeatTitleText.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(outline)) {
-                    outline.effectColor = new pc.Color( 0.24, 0.04, 0.48, 1.0 );
+                    outline.effectColor = titleStroke.$clone();
                     outline.effectDistance = new pc.Vec2( 8.0, -8.0 );
                 }
-                this._endSubText = AdKit.AdUI.Txt(this._defeatBannerRt, "CAN YOU BEAT THE BOSS?", 52, new pc.Color( 1.0, 0.96, 0.62, 1 ), center.$clone(), new pc.Vec2( 0.0, -82.0 ));
+                this._endSubText = AdKit.AdUI.Txt(this._defeatBannerRt, this.defeatSubtitle, 52, isBlueRed ? new pc.Color( 1, 1, 1, 1 ) : new pc.Color( 1.0, 0.96, 0.62, 1 ), center.$clone(), new pc.Vec2( 0.0, -82.0 ));
                 var subOut = this._endSubText.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(subOut)) {
-                    subOut.effectColor = new pc.Color( 0.18, 0.04, 0.44, 1.0 );
+                    subOut.effectColor = cardShadow.$clone();
                     subOut.effectDistance = new pc.Vec2( 4.5, -4.5 );
                 }
                 var ctaGo = new UnityEngine.GameObject.$ctor3("PlayNowCTA", UnityEngine.RectTransform);
@@ -2057,15 +2378,22 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#BuildUI", this ); }
                 this._playNowBtnRt.anchorMax = center.$clone();
                 this._playNowBtnRt.anchoredPosition = new pc.Vec2( 0.0, -455.0 );
                 this._playNowBtnRt.sizeDelta = new pc.Vec2( 740.0, 210.0 );
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 0.04, 0.34, 0.11, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -18.0 ), new pc.Vec2( 736.0, 204.0 ), true);
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 716.0, 186.0 ), true);
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 0.08, 0.56, 0.2, 1.0 ), center.$clone(), new pc.Vec2( 0.0, -10.0 ), new pc.Vec2( 694.0, 166.0 ), true);
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 0.24, 0.92, 0.36, 1.0 ), center.$clone(), new pc.Vec2( 0.0, 6.0 ), new pc.Vec2( 690.0, 158.0 ), true);
-                AdKit.AdUI.Img(this._playNowBtnRt, AdKit.AdRes.Round(64), new pc.Color( 1.0, 1.0, 1.0, 0.36 ), center.$clone(), new pc.Vec2( 0.0, 48.0 ), new pc.Vec2( 620.0, 44.0 ), true);
-                var ctaLbl = AdKit.AdUI.Txt(this._playNowBtnRt, (this.ctaText || "") + "!", 92, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 6.0 ));
+                var ctaMain = { v : new UnityEngine.Color() };
+                var ctaBevel = { v : new UnityEngine.Color() };
+                var ctaShadow = { v : new UnityEngine.Color() };
+                var ctaTextCol = { v : new UnityEngine.Color() };
+                MobControlAd.MobControlGame.GetCtaPalette(this.ctaColor, ctaMain, ctaBevel, ctaShadow, ctaTextCol);
+                var ctaSprite = ((this.ctaShape === MobControlAd.MobControlGame.CtaButtonShape.Rounded) ? AdKit.AdRes.Pill : AdKit.AdRes.Square);
+                AdKit.AdUI.Img(this._playNowBtnRt, ctaSprite, ctaShadow.v.$clone(), center.$clone(), new pc.Vec2( 0.0, -18.0 ), new pc.Vec2( 736.0, 204.0 ), false);
+                AdKit.AdUI.Img(this._playNowBtnRt, ctaSprite, new pc.Color( 1, 1, 1, 1 ), center.$clone(), new pc.Vec2( 0.0, 0.0 ), new pc.Vec2( 716.0, 186.0 ), false);
+                AdKit.AdUI.Img(this._playNowBtnRt, ctaSprite, ctaBevel.v.$clone(), center.$clone(), new pc.Vec2( 0.0, -10.0 ), new pc.Vec2( 694.0, 166.0 ), false);
+                AdKit.AdUI.Img(this._playNowBtnRt, ctaSprite, ctaMain.v.$clone(), center.$clone(), new pc.Vec2( 0.0, 6.0 ), new pc.Vec2( 690.0, 158.0 ), false);
+                AdKit.AdUI.Img(this._playNowBtnRt, ctaSprite, new pc.Color( 1.0, 1.0, 1.0, 0.34 ), center.$clone(), new pc.Vec2( 0.0, 48.0 ), new pc.Vec2( 580.0, 42.0 ), false);
+                var ctaDisplay = (System.String.isNullOrEmpty(this.ctaText) ? "PLAY NOW!" : (System.String.endsWith(this.ctaText, "!") ? this.ctaText : ((this.ctaText || "") + "!")));
+                var ctaLbl = AdKit.AdUI.Txt(this._playNowBtnRt, ctaDisplay, 92, ctaTextCol.v.$clone(), center.$clone(), new pc.Vec2( 0.0, 6.0 ));
                 var ctaOut = ctaLbl.GetComponent(UnityEngine.UI.Outline);
                 if (UnityEngine.Object.op_Implicit(ctaOut)) {
-                    ctaOut.effectColor = new pc.Color( 0.05, 0.36, 0.12, 1.0 );
+                    ctaOut.effectColor = ctaShadow.v.$clone();
                     ctaOut.effectDistance = new pc.Vec2( 6.0, -6.0 );
                 }
                 var fullBtn = this._endOverlayRoot.AddComponent(UnityEngine.UI.Button);
@@ -2089,36 +2417,111 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#SpawnInitialReferenceState", 
             /*MobControlAd.MobControlGame.SpawnInitialReferenceState end.*/
 
             /*MobControlAd.MobControlGame.SpawnStickman start.*/
-            SpawnStickman: function (isPurple, pos, gateMask) {
+            SpawnStickman: function (isPurple, pos, gateMask, isGiant) {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#SpawnStickman", this ); }
 
                 var $t;
-                var root = new UnityEngine.GameObject.$ctor2(isPurple ? "PurpleStickman" : "YellowStickman").transform;
+                if (isGiant === void 0) { isGiant = false; }
+                var root = new UnityEngine.GameObject.$ctor2(isGiant ? "GiantChampion" : (isPurple ? "PurpleStickman" : "YellowStickman")).transform;
                 root.SetParent(this.transform, false);
                 root.localPosition = pos.$clone();
                 if (!isPurple) {
                     root.localRotation = new pc.Quat().setFromEulerAngles_Unity( 0.0, 180.0, 0.0 );
                 }
+                if (isGiant) {
+                    root.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( 2.25 );
+                }
                 var body = new UnityEngine.GameObject.$ctor2("Body").transform;
                 body.SetParent(root, false);
-                var unit = ($t = new MobControlAd.MobControlGame.StickmanUnit(), $t.root = root, $t.body = body, $t.isPurple = isPurple, $t.speed = (isPurple ? 4.8 : 2.95), $t.gateMask = gateMask, $t.phase = UnityEngine.Random.Range$1(0.0, 6.28), $t.spawnPop = 1.0, $t);
-                var col = (isPurple ? MobControlAd.MobControlGame.PurpleMain.$clone() : MobControlAd.MobControlGame.YellowMain.$clone());
-                var head = AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, body, new pc.Vec3( 0.0, 0.88, 0.0 ), new pc.Vec3( 0.36, 0.36, 0.36 ), col.$clone());
-                var torso = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( 0.0, 0.52, 0.0 ), new pc.Vec3( 0.26, 0.24, 0.22 ), col.$clone());
-                var lArm = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( -0.19, 0.54, 0.0 ), new pc.Vec3( 0.11, 0.18, 0.11 ), col.$clone());
-                var rArm = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( 0.19, 0.54, 0.0 ), new pc.Vec3( 0.11, 0.18, 0.11 ), col.$clone());
-                var lLeg = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( -0.09, 0.2, 0.0 ), new pc.Vec3( 0.12, 0.2, 0.12 ), col.$clone());
-                var rLeg = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( 0.09, 0.2, 0.0 ), new pc.Vec3( 0.12, 0.2, 0.12 ), col.$clone());
-                unit.leftArm = lArm.transform;
-                unit.rightArm = rArm.transform;
-                unit.leftLeg = lLeg.transform;
-                unit.rightLeg = rLeg.transform;
-                unit.renderers.add(head.GetComponent(UnityEngine.Renderer));
-                unit.renderers.add(torso.GetComponent(UnityEngine.Renderer));
-                unit.renderers.add(lArm.GetComponent(UnityEngine.Renderer));
-                unit.renderers.add(rArm.GetComponent(UnityEngine.Renderer));
-                unit.renderers.add(lLeg.GetComponent(UnityEngine.Renderer));
-                unit.renderers.add(rLeg.GetComponent(UnityEngine.Renderer));
+                var unit = ($t = new MobControlAd.MobControlGame.StickmanUnit(), $t.root = root, $t.body = body, $t.isPurple = isPurple, $t.isGiant = isGiant, $t.hp = ((!isGiant) ? 1 : 8), $t.speed = (isGiant ? 3.85 : (isPurple ? 4.8 : 2.95)), $t.gateMask = gateMask, $t.phase = UnityEngine.Random.Range$1(0.0, 6.28), $t.spawnPop = 1.0, $t);
+                if (isGiant) {
+                    var aura = AdKit.AdRes.Spr("GiantAura", root, AdKit.AdRes.Ring, new pc.Color( 1.0, 0.88, 0.2, 0.92 ), 20, new pc.Vec3( 0.0, 0.05, 0.0 ), pc.Vec2.ONE.clone().scale( 0.88 ));
+                    aura.transform.localRotation = new pc.Quat().setFromEulerAngles_Unity( 90.0, 0.0, 0.0 );
+                }
+                var col = (isPurple ? this.PurpleMain.$clone() : this.YellowMain.$clone());
+                var customPrefab = ((this.characterStyle !== 0) ? null : (isPurple ? this._purpleMobPrefab : this._yellowMobPrefab));
+                if (UnityEngine.GameObject.op_Inequality(customPrefab, null)) {
+                    var inst = UnityEngine.Object.Instantiate(UnityEngine.GameObject, customPrefab, body);
+                    inst.transform.localPosition = pc.Vec3.ZERO.clone();
+                    inst.transform.localRotation = pc.Quat.IDENTITY.clone();
+                    var modelScale = (isPurple ? 0.44 : 0.42);
+                    inst.transform.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( modelScale );
+                    var runClip = (isPurple ? this._purpleRunClip : this._yellowRunClip);
+                    if (runClip != null) {
+                        var anim = inst.GetComponent(UnityEngine.Animation);
+                        if (!UnityEngine.Object.op_Implicit(anim)) {
+                            anim = inst.AddComponent(UnityEngine.Animation);
+                        }
+                        anim.playAutomatically = false;
+                        anim.wrapMode = UnityEngine.WrapMode.Loop;
+                        anim.AddClip(runClip, "Run");
+                        var st = anim.getItem("Run");
+                        if (st != null) {
+                            st.speed = (isPurple ? 1.45 : 1.15);
+                            st.time = UnityEngine.Random.Range$1(0.0, UnityEngine.Mathf.Max(0.01, runClip.length));
+                        }
+                        anim.Play$1("Run");
+                        anim.Sample();
+                        unit.hasSkeletalRun = true;
+                    }
+                    var rends = inst.GetComponentsInChildren(UnityEngine.Renderer, true);
+                    $t = Bridge.getEnumerator(rends);
+                    try {
+                        while ($t.moveNext()) {
+                            var r = $t.Current;
+                            unit.renderers.add(r);
+                            var mats = r.sharedMaterials;
+                            if (isPurple) {
+                                for (var k = 0; k < mats.length; k = (k + 1) | 0) {
+                                    var mn2 = ((mats[k] != null) ? mats[k].name.toLowerCase() : "");
+                                    if (System.String.contains(mn2,"eye") || System.String.contains(mn2,"pupil")) {
+                                        mats[k] = this._matFriendlyDeep;
+                                    } else if (System.String.contains(mn2,"pants") || System.String.contains(mn2,"boots") || System.String.contains(mn2,"hair")) {
+                                        mats[k] = this._matFriendlyDark;
+                                    } else if (System.String.contains(mn2,"skin") || System.String.contains(mn2,"detail") || System.String.contains(mn2,"white")) {
+                                        mats[k] = this._matFriendlyLight;
+                                    } else {
+                                        mats[k] = this._matFriendlyMain;
+                                    }
+                                }
+                                r.sharedMaterials = mats;
+                            } else {
+                                if (MobControlAd.MobControlGame.IsEyeMesh(r)) {
+                                    continue;
+                                }
+                                for (var j = 0; j < mats.length; j = (j + 1) | 0) {
+                                    var mn = ((mats[j] != null) ? mats[j].name : "");
+                                    if (!MobControlAd.MobControlGame.IsEyeName(mn)) {
+                                        var low = mn.toLowerCase();
+                                        mats[j] = ((System.String.contains(low,"secondary") || System.String.contains(low,"tongue")) ? this._matEnemyAccent : this._matEnemyMain);
+                                    }
+                                }
+                                r.sharedMaterials = mats;
+                            }
+                        }
+                    } finally {
+                        if (Bridge.is($t, System.IDisposable)) {
+                            $t.System$IDisposable$Dispose();
+                        }
+                    }
+                } else {
+                    var head = AdKit.Prims.Make(UnityEngine.PrimitiveType.Sphere, body, new pc.Vec3( 0.0, 0.88, 0.0 ), new pc.Vec3( 0.36, 0.36, 0.36 ), col.$clone());
+                    var torso = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( 0.0, 0.52, 0.0 ), new pc.Vec3( 0.26, 0.24, 0.22 ), col.$clone());
+                    var lArm = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( -0.19, 0.54, 0.0 ), new pc.Vec3( 0.11, 0.18, 0.11 ), col.$clone());
+                    var rArm = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( 0.19, 0.54, 0.0 ), new pc.Vec3( 0.11, 0.18, 0.11 ), col.$clone());
+                    var lLeg = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( -0.09, 0.2, 0.0 ), new pc.Vec3( 0.12, 0.2, 0.12 ), col.$clone());
+                    var rLeg = AdKit.Prims.Make(UnityEngine.PrimitiveType.Capsule, body, new pc.Vec3( 0.09, 0.2, 0.0 ), new pc.Vec3( 0.12, 0.2, 0.12 ), col.$clone());
+                    unit.leftArm = lArm.transform;
+                    unit.rightArm = rArm.transform;
+                    unit.leftLeg = lLeg.transform;
+                    unit.rightLeg = rLeg.transform;
+                    unit.renderers.add(head.GetComponent(UnityEngine.Renderer));
+                    unit.renderers.add(torso.GetComponent(UnityEngine.Renderer));
+                    unit.renderers.add(lArm.GetComponent(UnityEngine.Renderer));
+                    unit.renderers.add(rArm.GetComponent(UnityEngine.Renderer));
+                    unit.renderers.add(lLeg.GetComponent(UnityEngine.Renderer));
+                    unit.renderers.add(rLeg.GetComponent(UnityEngine.Renderer));
+                }
                 if (isPurple) {
                     this._purpleMobs.add(unit);
                 } else {
@@ -2132,9 +2535,20 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#SpawnStickman", this ); }
             SetStickmanColor: function (u, c) {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#SetStickmanColor", this ); }
 
+                var isGray = Math.abs(c.r - MobControlAd.MobControlGame.GrayCorpse.$clone().r) < 0.02 && Math.abs(c.g - MobControlAd.MobControlGame.GrayCorpse.$clone().g) < 0.02;
                 for (var i = 0; i < u.renderers.Count; i = (i + 1) | 0) {
-                    if (UnityEngine.Object.op_Implicit(u.renderers.getItem(i))) {
-                        AdKit.Prims.SetColor(u.renderers.getItem(i), c.$clone());
+                    var r = u.renderers.getItem(i);
+                    if (!UnityEngine.Object.op_Implicit(r)) {
+                        continue;
+                    }
+                    if (isGray && this._matGrayCorpse != null) {
+                        var mats = r.sharedMaterials;
+                        for (var j = 0; j < mats.length; j = (j + 1) | 0) {
+                            mats[j] = this._matGrayCorpse;
+                        }
+                        r.sharedMaterials = mats;
+                    } else {
+                        AdKit.Prims.SetColor(r, c.$clone());
                     }
                 }
             },
@@ -2158,14 +2572,15 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#Update", this ); }
                     this.UpdateSmokePuffs(dt);
                     this.UpdateRings(dt);
                     this.UpdateSparks(dt);
+                    this.UpdateFloatTexts(dt);
                     this.UpdateCameraShake(dt);
                     var pop = ((this._climaxTimer < 0.22) ? pc.math.lerp(0.35, 1.12, this._climaxTimer / 0.22) : pc.math.lerp(1.12, 1.0, Math.max(0, Math.min(1, (this._climaxTimer - 0.22) / 0.14))));
                     if (UnityEngine.Object.op_Implicit(this._defeatBannerRt)) {
                         this._defeatBannerRt.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( pop );
                     }
                     if (UnityEngine.Object.op_Implicit(this._playNowBtnRt)) {
-                        var pulse = 1.0 + 0.06 * Math.sin(UnityEngine.Time.time * 6.5);
-                        this._playNowBtnRt.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( pulse );
+                        var pulse2 = 1.0 + 0.06 * Math.sin(UnityEngine.Time.time * 6.5);
+                        this._playNowBtnRt.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( pulse2 );
                     }
                     if (this._climaxTimer >= 0.35 && UnityEngine.Input.GetMouseButtonDown(0)) {
                         AdKit.StoreLink.Open();
@@ -2187,8 +2602,33 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#Update", this ); }
                 this.UpdateSmokePuffs(dt);
                 this.UpdateRings(dt);
                 this.UpdateSparks(dt);
+                this.UpdateFloatTexts(dt);
                 this.UpdateCameraShake(dt);
-                if (this._elapsedTime >= 21.0 && !this._climaxTriggered) {
+                if (UnityEngine.Object.op_Implicit(this._giantBarFillRt)) {
+                    var fillFrac = Math.max(0, Math.min(1, this._giantCharge));
+                    this._giantBarFillRt.sizeDelta = new pc.Vec2( 342.0 * fillFrac, 36.0 );
+                    if (UnityEngine.Object.op_Implicit(this._giantBarFillImg)) {
+                        this._giantBarFillImg.color = ((fillFrac > 0.82) ? pc.Color.lerp( new pc.Color( 1.0, 0.78, 0.12, 1.0 ), new pc.Color( 1, 1, 1, 1 ), 0.35 + 0.35 * Math.sin(UnityEngine.Time.time * 14.0) ) : new pc.Color( 1.0, 0.78, 0.12, 1.0 ));
+                    }
+                }
+                var dur = UnityEngine.Mathf.Max(8.0, this.roundDuration);
+                var rem = dur - this._elapsedTime;
+                if (rem <= 5.0 && rem > 0.0 && UnityEngine.Object.op_Implicit(this._hurryRoot)) {
+                    if (!this._hurryRoot.activeSelf) {
+                        this._hurryRoot.SetActive(true);
+                    }
+                    var sec = Math.ceil(rem);
+                    if (sec !== this._lastHurrySec) {
+                        this._lastHurrySec = sec;
+                        if (UnityEngine.Object.op_Implicit(this._hurryText)) {
+                            this._hurryText.text = "HURRY UP! " + sec + "s";
+                        }
+                        AdKit.Sfx.Play(AdKit.Sfx.Id.Tap, 0.55, 1.15 + (((5 - sec) | 0)) * 0.08);
+                    }
+                    var pulse = 1.0 + 0.08 * Math.abs(Math.sin(UnityEngine.Time.time * 8.5));
+                    this._hurryRoot.transform.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( pulse );
+                }
+                if (this._elapsedTime >= dur && !this._climaxTriggered) {
                     this.TriggerDefeatClimax();
                 }
             },
@@ -2198,7 +2638,23 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#Update", this ); }
             HandleCannonAndInput: function (dt) {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#HandleCannonAndInput", this ); }
 
-                var pressing = UnityEngine.Input.GetMouseButton(0);
+                if (UnityEngine.Input.GetMouseButtonDown(0) && UnityEngine.Object.op_Implicit(this._muteBtnRt) && UnityEngine.Object.op_Implicit(this._gameplayControlsRoot) && this._gameplayControlsRoot.activeSelf && UnityEngine.RectTransformUtility.RectangleContainsScreenPoint$1(this._muteBtnRt, UnityEngine.Vector2.FromVector3(UnityEngine.Input.mousePosition), null)) {
+                    this._muteTapConsumed = true;
+                    AdKit.Sfx.Muted = !AdKit.Sfx.Muted;
+                    if (UnityEngine.Object.op_Implicit(this._muteText)) {
+                        this._muteText.text = (AdKit.Sfx.Muted ? "SFX OFF" : "SFX ON");
+                    }
+                    if (UnityEngine.Object.op_Implicit(this._muteBgImg)) {
+                        this._muteBgImg.color = (AdKit.Sfx.Muted ? new pc.Color( 0.42, 0.44, 0.5, 1.0 ) : this._muteOnColor.$clone());
+                    }
+                    if (!AdKit.Sfx.Muted) {
+                        AdKit.Sfx.Play(AdKit.Sfx.Id.Click, 0.65);
+                    }
+                }
+                if (UnityEngine.Input.GetMouseButtonUp(0)) {
+                    this._muteTapConsumed = false;
+                }
+                var pressing = UnityEngine.Input.GetMouseButton(0) && !this._muteTapConsumed;
                 if (pressing) {
                     if (!this._hasInteracted) {
                         this._hasInteracted = true;
@@ -2243,11 +2699,25 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#HandleCannonAndInput", this )
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#FirePurpleStickman", this ); }
 
                 this._barrelRecoil = 1.0;
-                AdKit.Sfx.Play(AdKit.Sfx.Id.Pop, 0.32);
                 var spawnPos = new pc.Vec3( Math.max(-2.85, Math.min(this._cannonX + UnityEngine.Random.Range$1(-0.1, 0.1), 2.85)), 0.0, 2.35 );
-                this.SpawnStickman(true, spawnPos.$clone(), 0);
                 var muzzleWorld = new pc.Vec3( this._cannonX, 0.62, 2.32 );
-                this.SpawnWhiteSmoke(muzzleWorld.$clone(), 2, MobControlAd.MobControlGame.PurpleLight.$clone());
+                if (this.enableGiantChampion) {
+                    this._giantCharge += 0.085;
+                    if (this._giantCharge >= 1.0) {
+                        this._giantCharge = 0.0;
+                        this.SpawnStickman(true, spawnPos.$clone(), 0, true);
+                        AdKit.Sfx.Play(AdKit.Sfx.Id.GateGood, 0.85, 0.85);
+                        this.SpawnWhiteSmoke(muzzleWorld.$clone(), 5, new pc.Color( 1.0, 0.88, 0.25, 1 ));
+                        this.SpawnRing(muzzleWorld.$clone(), 2.65, new pc.Color( 1.0, 0.88, 0.22, 0.98 ), 0.34, 0.0);
+                        this.SpawnSparks(muzzleWorld.$clone(), 8, new pc.Color( 1.0, 0.9, 0.28, 1 ), 5.6, false);
+                        this.SpawnFloatText(muzzleWorld.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.9 ) ), "GIANT!", new pc.Color( 1.0, 0.9, 0.2, 1 ), 1.05);
+                        this.TriggerCameraShake(0.16, 0.12);
+                        return;
+                    }
+                }
+                AdKit.Sfx.Play(AdKit.Sfx.Id.Pop, 0.32);
+                this.SpawnStickman(true, spawnPos.$clone(), 0);
+                this.SpawnWhiteSmoke(muzzleWorld.$clone(), 2, this.PurpleLight.$clone());
                 this.SpawnRing(muzzleWorld.$clone(), 1.35, new pc.Color( 0.9, 0.72, 1.0, 0.92 ), 0.22, 0.0);
                 this.SpawnSparks(muzzleWorld.$clone(), 3, new pc.Color( 1, 1, 1, 1 ), 3.6, false);
             },
@@ -2262,6 +2732,9 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateGates", this ); }
                 try {
                     while ($t.moveNext()) {
                         var g = $t.Current;
+                        if (g.popupCooldown > 0.0) {
+                            g.popupCooldown -= dt;
+                        }
                         if (g.moveAmp > 0.01) {
                             g.currentX = g.baseX + Math.sin(this._elapsedTime * g.moveSpeed + g.phaseOffset) * g.moveAmp;
                             g.root.localPosition = new pc.Vec3( g.currentX, 0.0, g.z );
@@ -2271,12 +2744,12 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateGates", this ); }
                             var s3 = 1.0 + Math.sin(g.punchTimer * 3.14159274) * 0.18;
                             g.root.localScale = new pc.Vec3( s3, s3, 1.0 );
                             if (UnityEngine.Object.op_Implicit(g.shieldRenderer)) {
-                                AdKit.Prims.SetColor(g.shieldRenderer, pc.Color.lerp( MobControlAd.MobControlGame.PurpleGateCol, new pc.Color( 1, 1, 1, 1 ), g.punchTimer * 0.72 ));
+                                AdKit.Prims.SetColor(g.shieldRenderer, pc.Color.lerp( this.PurpleGateCol, new pc.Color( 1, 1, 1, 1 ), g.punchTimer * 0.72 ));
                             }
                         } else {
                             g.root.localScale = new pc.Vec3( 1, 1, 1 );
                             if (UnityEngine.Object.op_Implicit(g.shieldRenderer)) {
-                                AdKit.Prims.SetColor(g.shieldRenderer, MobControlAd.MobControlGame.PurpleGateCol.$clone());
+                                AdKit.Prims.SetColor(g.shieldRenderer, this.PurpleGateCol.$clone());
                             }
                         }
                     }
@@ -2340,32 +2813,32 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateStickmen", this ); }
                             var exitFx = k.root.localPosition.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.45 ) );
                             this.SpawnWhiteSmoke(exitFx.$clone(), 3, new pc.Color( 1, 1, 1, 1 ));
                             this.SpawnRing(exitFx.$clone(), 1.85, new pc.Color( 0.84, 0.56, 1.0, 0.95 ), 0.28, 90.0);
-                            this.SpawnSparks(exitFx.$clone(), 4, MobControlAd.MobControlGame.PurpleLight.$clone(), 4.4, false);
+                            this.SpawnSparks(exitFx.$clone(), 4, this.PurpleLight.$clone(), 4.4, false);
                             AdKit.Sfx.Play(AdKit.Sfx.Id.Pop, 0.4);
                         } else {
                             k.root.localPosition = this.SampleTubeSpline(k.tubeT);
                         }
                     } else {
-                        var pos = k.root.localPosition.$clone();
-                        var prevZ = pos.z;
-                        pos.z += k.speed * dt;
-                        if (prevZ < 4.85 && pos.z >= 4.85 && Math.abs(pos.x - 0.0) <= 0.72) {
+                        var pos2 = k.root.localPosition.$clone();
+                        var prevZ = pos2.z;
+                        pos2.z += k.speed * dt;
+                        if (prevZ < 4.85 && pos2.z >= 4.85 && Math.abs(pos2.x - 0.0) <= 0.72) {
                             k.inTube = true;
                             k.tubeT = 0.02;
                             k.root.gameObject.SetActive(false);
                             var entryFx = new pc.Vec3( 0.0, 0.55, 4.85 );
-                            this.SpawnWhiteSmoke(entryFx.$clone(), 2, MobControlAd.MobControlGame.PurpleLight.$clone());
+                            this.SpawnWhiteSmoke(entryFx.$clone(), 2, this.PurpleLight.$clone());
                             this.SpawnRing(entryFx.$clone(), 1.55, new pc.Color( 0.86, 0.62, 1.0, 0.92 ), 0.24, 0.0);
                             AdKit.Sfx.Play(AdKit.Sfx.Id.Jump, 0.35);
-                        } else if (!this._yellowBlockDestroyed && prevZ < 5.05 && pos.z >= 5.05 && pos.x >= 0.45) {
-                            this.DamageYellowBlock(1, pos.$clone());
+                        } else if (!this._yellowBlockDestroyed && prevZ < 5.05 && pos2.z >= 5.05 && pos2.x >= 0.45) {
+                            this.DamageYellowBlock((!k.isGiant) ? 1 : 8, pos2.$clone());
                             UnityEngine.Object.Destroy(k.root.gameObject);
                             this._purpleMobs.removeAt(i);
                         } else {
                             for (var gi = 0; gi < this._gates.Count; gi = (gi + 1) | 0) {
                                 var g = this._gates.getItem(gi);
                                 var bit = 1 << g.bitIndex;
-                                if ((k.gateMask & bit) !== 0 || !(prevZ < g.z) || !(pos.z >= g.z) || !(Math.abs(pos.x - g.currentX) <= g.halfWidth + 0.12)) {
+                                if ((k.gateMask & bit) !== 0 || !(prevZ < g.z) || !(pos2.z >= g.z) || !(Math.abs(pos2.x - g.currentX) <= g.halfWidth + 0.12)) {
                                     continue;
                                 }
                                 k.gateMask = k.gateMask | bit;
@@ -2375,36 +2848,40 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateStickmen", this ); }
                                 for (var c = 0; c < allowed; c = (c + 1) | 0) {
                                     var ox = (c - (((allowed - 1) | 0)) * 0.5) * 0.28 + UnityEngine.Random.Range$1(-0.12, 0.12);
                                     var oz = UnityEngine.Random.Range$1(0.05, 0.42);
-                                    var clonePos = new pc.Vec3( Math.max(-3.05, Math.min(pos.x + ox, 3.05)), 0.0, pos.z + oz );
-                                    if (pos.x < -0.45) {
+                                    var clonePos = new pc.Vec3( Math.max(-3.05, Math.min(pos2.x + ox, 3.05)), 0.0, pos2.z + oz );
+                                    if (pos2.x < -0.45) {
                                         clonePos.x = Math.max(-3.05, Math.min(clonePos.x, -0.58));
                                     }
                                     this.SpawnStickman(true, clonePos.$clone(), k.gateMask);
                                 }
-                                var gateFx = new pc.Vec3( pos.x, 0.55, g.z );
+                                var gateFx = new pc.Vec3( pos2.x, 0.55, g.z );
                                 this.SpawnWhiteSmoke(gateFx.$clone(), 4, new pc.Color( 1, 1, 1, 1 ));
                                 this.SpawnRing(gateFx.$clone(), 1.95, new pc.Color( 0.88, 0.7, 1.0, 0.95 ), 0.28, 0.0);
                                 this.SpawnSparks(gateFx.$clone(), 5, new pc.Color( 1, 1, 1, 1 ), 4.6, false);
+                                if (g.popupCooldown <= 0.0) {
+                                    g.popupCooldown = 0.3;
+                                    this.SpawnFloatText(gateFx.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.95 ) ), "X" + g.multiplier + "!", new pc.Color( 1.0, 0.92, 0.28, 1 ), 0.88);
+                                }
                                 if (this._sfxGateCooldown <= 0.0) {
                                     this._sfxGateCooldown = 0.08;
                                     AdKit.Sfx.Play(AdKit.Sfx.Id.GateGood, 0.5);
                                 }
                             }
-                            if (pos.z > 4.85 && pos.z < 16.5) {
-                                if (pos.x < 0.0 && pos.x > -0.56) {
-                                    pos.x = -0.56;
-                                } else if (pos.x >= 0.0 && pos.x < 0.56) {
-                                    pos.x = 0.56;
+                            if (pos2.z > 4.85 && pos2.z < 16.5) {
+                                if (pos2.x < 0.0 && pos2.x > -0.56) {
+                                    pos2.x = -0.56;
+                                } else if (pos2.x >= 0.0 && pos2.x < 0.56) {
+                                    pos2.x = 0.56;
                                 }
                             }
-                            if (pos.z > 18.2) {
-                                pos.x = UnityEngine.Mathf.MoveTowards(pos.x, -1.85, dt * 3.2);
+                            if (pos2.z > 18.2) {
+                                pos2.x = UnityEngine.Mathf.MoveTowards(pos2.x, -1.85, dt * 3.2);
                             }
-                            pos.x = Math.max(-3.1, Math.min(pos.x, 3.1));
-                            k.root.localPosition = pos.$clone();
+                            pos2.x = Math.max(-3.1, Math.min(pos2.x, 3.1));
+                            k.root.localPosition = pos2.$clone();
                             this.AnimateStickmanRun(k, dt);
-                            if (pos.z >= 20.6) {
-                                this.DamageEnemyBase(1, pos.$clone());
+                            if (pos2.z >= 20.6) {
+                                this.DamageEnemyBase((!k.isGiant) ? 1 : 8, pos2.$clone());
                                 UnityEngine.Object.Destroy(k.root.gameObject);
                                 this._purpleMobs.removeAt(i);
                             }
@@ -2420,13 +2897,13 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateStickmen", this ); }
                             this._yellowMobs.removeAt(j);
                         }
                     } else {
-                        var pos2 = y2.root.localPosition.$clone();
-                        pos2.z -= y2.speed * dt;
-                        pos2.x = Math.max(-3.05, Math.min(pos2.x, -0.58));
-                        y2.root.localPosition = pos2.$clone();
+                        var pos = y2.root.localPosition.$clone();
+                        pos.z -= y2.speed * dt;
+                        pos.x = Math.max(-3.05, Math.min(pos.x, -0.58));
+                        y2.root.localPosition = pos.$clone();
                         this.AnimateStickmanRun(y2, dt);
-                        if (pos2.z <= 1.85) {
-                            if (!(this._elapsedTime < 7.5)) {
+                        if (pos.z <= 1.85) {
+                            if (!(this._elapsedTime < UnityEngine.Mathf.Max(3.0, this.minLoseTime))) {
                                 this.TriggerDefeatClimax();
                                 return;
                             }
@@ -2443,21 +2920,29 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateStickmen", this ); }
                             var ym = this._yellowMobs.getItem(y);
                             if (!ym.isDyingGray) {
                                 var yp = ym.root.localPosition.$clone();
-                                if (Math.abs(pp.z - yp.z) < 0.55 && Math.abs(pp.x - yp.x) < 0.55) {
-                                    pm.isDyingGray = true;
-                                    pm.dyingTimer = 0.24;
-                                    this.SetStickmanColor(pm, MobControlAd.MobControlGame.GrayCorpse.$clone());
+                                var clashDist = (pm.isGiant ? 0.95 : 0.55);
+                                if (Math.abs(pp.z - yp.z) < clashDist && Math.abs(pp.x - yp.x) < clashDist) {
+                                    pm.hp = (pm.hp - 1) | 0;
+                                    if (pm.hp <= 0) {
+                                        pm.isDyingGray = true;
+                                        pm.dyingTimer = 0.24;
+                                        this.SetStickmanColor(pm, MobControlAd.MobControlGame.GrayCorpse.$clone());
+                                    }
                                     ym.isDyingGray = true;
                                     ym.dyingTimer = 0.24;
                                     this.SetStickmanColor(ym, MobControlAd.MobControlGame.GrayCorpse.$clone());
                                     var clashPos = (pp.$clone().add( yp )).clone().scale( 0.5 ).add( pc.Vec3.UP.clone().clone().scale( 0.55 ) );
-                                    this.SpawnSparks(clashPos.$clone(), 3, new pc.Color( 1.0, 0.94, 0.48, 1 ), 4.2, false);
+                                    var clashRed = new pc.Color( 1.0, 0.16, 0.2, 1 );
+                                    this.SpawnSparks(clashPos.$clone(), pm.isGiant ? 7 : 4, clashRed.$clone(), 4.6, false);
+                                    this.SpawnWhiteSmoke(clashPos.$clone(), 2, new pc.Color( 1.0, 0.24, 0.26, 1 ));
                                     if (this._sfxHitCooldown <= 0.0) {
                                         this._sfxHitCooldown = 0.08;
-                                        this.SpawnRing(clashPos.$clone(), 1.55, new pc.Color( 1.0, 0.95, 0.65, 0.9 ), 0.22, 90.0);
+                                        this.SpawnRing(clashPos.$clone(), pm.isGiant ? 2.5 : 1.75, new pc.Color( 1.0, 0.18, 0.22, 0.95 ), 0.24, 90.0);
                                         AdKit.Sfx.Play(AdKit.Sfx.Id.Hit, 0.4);
                                     }
-                                    break;
+                                    if (pm.isDyingGray) {
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -2498,11 +2983,16 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#AnimateStickmanRun", this ); 
                     u.spawnPop = UnityEngine.Mathf.MoveTowards(u.spawnPop, 0.0, dt * 5.0);
                 }
                 var popScale = 1.0 + Math.sin(u.spawnPop * 3.14159274) * 0.28;
+                u.body.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( popScale );
+                if (u.hasSkeletalRun) {
+                    u.body.localPosition = pc.Vec3.ZERO.clone();
+                    u.body.localRotation = pc.Quat.IDENTITY.clone();
+                    return;
+                }
                 var cyc = this._elapsedTime * 16.0 + u.phase;
                 var bob = Math.abs(Math.sin(cyc)) * 0.1;
                 var swing = Math.sin(cyc) * 38.0;
                 u.body.localPosition = new pc.Vec3( 0.0, bob, 0.0 );
-                u.body.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( popScale );
                 if (UnityEngine.Object.op_Implicit(u.leftArm)) {
                     u.leftArm.localRotation = new pc.Quat().setFromEulerAngles_Unity( swing, 0.0, 0.0 );
                 }
@@ -2528,8 +3018,8 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#DamageYellowBlock", this ); }
                     if (UnityEngine.Object.op_Implicit(this._yellowBlockLabel)) {
                         this._yellowBlockLabel.Text = Bridge.toString(this._yellowBlockHp);
                     }
-                    this.SpawnWhiteSmoke(hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.4 ) ), 2, MobControlAd.MobControlGame.YellowMain.$clone());
-                    this.SpawnSparks(hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.55 ) ), 4, MobControlAd.MobControlGame.YellowMain.$clone(), 4.8, true);
+                    this.SpawnWhiteSmoke(hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.4 ) ), 2, this.YellowMain.$clone());
+                    this.SpawnSparks(hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.55 ) ), 4, this.YellowMain.$clone(), 4.8, true);
                     if (this._sfxHitCooldown <= 0.0) {
                         this._sfxHitCooldown = 0.07;
                         this.SpawnRing(hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.55 ) ), 1.65, new pc.Color( 1.0, 0.92, 0.36, 0.92 ), 0.24, 0.0);
@@ -2539,10 +3029,11 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#DamageYellowBlock", this ); }
                         this._yellowBlockDestroyed = true;
                         AdKit.Sfx.Play(AdKit.Sfx.Id.Glass, 0.8);
                         var burstPos = this._yellowBlockRoot.localPosition.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.75 ) );
-                        this.SpawnWhiteSmoke(burstPos.$clone(), 10, MobControlAd.MobControlGame.YellowMain.$clone());
-                        this.SpawnSparks(burstPos.$clone(), 18, MobControlAd.MobControlGame.YellowMain.$clone(), 7.2, true);
+                        this.SpawnWhiteSmoke(burstPos.$clone(), 10, this.YellowMain.$clone());
+                        this.SpawnSparks(burstPos.$clone(), 18, this.YellowMain.$clone(), 7.2, true);
                         this.SpawnSparks(burstPos.$clone(), 10, new pc.Color( 1, 1, 1, 1 ), 6.0, false);
                         this.SpawnRing(burstPos.$clone(), 4.6, new pc.Color( 1.0, 0.92, 0.3, 0.98 ), 0.42, 90.0);
+                        this.SpawnFloatText(burstPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 1.1 ) ), "SMASH!", new pc.Color( 1.0, 0.92, 0.2, 1 ), 1.35);
                         this.TriggerCameraShake(0.28, 0.2);
                         UnityEngine.Object.Destroy(this._yellowBlockRoot.gameObject);
                     }
@@ -2559,7 +3050,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#DamageEnemyBase", this ); }
                 if (UnityEngine.Object.op_Implicit(this._enemyBaseLabel)) {
                     this._enemyBaseLabel.Text = Bridge.toString(this._enemyBaseHp);
                 }
-                this.SpawnWhiteSmoke(hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.5 ) ), 2, MobControlAd.MobControlGame.YellowMain.$clone());
+                this.SpawnWhiteSmoke(hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.5 ) ), 2, this.YellowMain.$clone());
                 this.SpawnSparks(hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.75 ) ), 4, new pc.Color( 1.0, 0.92, 0.36, 1 ), 5.2, true);
                 if (this._sfxHitCooldown <= 0.0) {
                     this._sfxHitCooldown = 0.07;
@@ -2568,10 +3059,11 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#DamageEnemyBase", this ); }
                 }
                 if (this._enemyBaseHp <= 0 && !this._climaxTriggered) {
                     var winPos = (UnityEngine.Object.op_Implicit(this._enemyBaseRoot) ? (this._enemyBaseRoot.localPosition.$clone().add( pc.Vec3.UP.clone().clone().scale( 1.4 ) )) : (hitPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 1.2 ) )));
-                    this.SpawnSparks(winPos.$clone(), 22, MobControlAd.MobControlGame.YellowMain.$clone(), 8.2, true);
-                    this.SpawnSparks(winPos.$clone(), 18, MobControlAd.MobControlGame.PurpleLight.$clone(), 7.6, false);
+                    this.SpawnSparks(winPos.$clone(), 22, this.YellowMain.$clone(), 8.2, true);
+                    this.SpawnSparks(winPos.$clone(), 18, this.PurpleLight.$clone(), 7.6, false);
                     this.SpawnRing(winPos.$clone(), 6.2, new pc.Color( 1.0, 0.9, 0.24, 0.98 ), 0.52, 90.0);
                     this.SpawnRing(winPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 0.6 ) ), 4.8, new pc.Color( 0.82, 0.52, 1.0, 0.95 ), 0.44, 0.0);
+                    this.SpawnFloatText(winPos.$clone().add( pc.Vec3.UP.clone().clone().scale( 1.4 ) ), "BOOM!", new pc.Color( 1.0, 0.9, 0.18, 1 ), 1.45);
                     this.TriggerVictoryClimax();
                 }
             },
@@ -2590,8 +3082,14 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#TriggerVictoryClimax", this )
                 if (UnityEngine.Object.op_Implicit(this._topHudRoot)) {
                     this._topHudRoot.SetActive(false);
                 }
+                if (UnityEngine.Object.op_Implicit(this._gameplayControlsRoot)) {
+                    this._gameplayControlsRoot.SetActive(false);
+                }
+                if (UnityEngine.Object.op_Implicit(this._hurryRoot)) {
+                    this._hurryRoot.SetActive(false);
+                }
                 if (UnityEngine.Object.op_Implicit(this._defeatTitleText)) {
-                    this._defeatTitleText.text = "VICTORY!";
+                    this._defeatTitleText.text = (System.String.isNullOrEmpty(this.victoryTitle) ? "VICTORY!" : this.victoryTitle);
                     this._defeatTitleText.color = new pc.Color( 1.0, 0.88, 0.14, 1 );
                     var vOut = this._defeatTitleText.GetComponent(UnityEngine.UI.Outline);
                     if (UnityEngine.Object.op_Implicit(vOut)) {
@@ -2600,7 +3098,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#TriggerVictoryClimax", this )
                     }
                 }
                 if (UnityEngine.Object.op_Implicit(this._endSubText)) {
-                    this._endSubText.text = "READY FOR LEVEL 2?";
+                    this._endSubText.text = (System.String.isNullOrEmpty(this.victorySubtitle) ? "READY FOR LEVEL 2?" : this.victorySubtitle);
                 }
                 if (UnityEngine.Object.op_Implicit(this._endOverlayRoot)) {
                     this._endOverlayRoot.SetActive(true);
@@ -2625,6 +3123,12 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#TriggerDefeatClimax", this );
                 if (UnityEngine.Object.op_Implicit(this._topHudRoot)) {
                     this._topHudRoot.SetActive(false);
                 }
+                if (UnityEngine.Object.op_Implicit(this._gameplayControlsRoot)) {
+                    this._gameplayControlsRoot.SetActive(false);
+                }
+                if (UnityEngine.Object.op_Implicit(this._hurryRoot)) {
+                    this._hurryRoot.SetActive(false);
+                }
                 for (var i = 0; i < this._yellowMobs.Count; i = (i + 1) | 0) {
                     var ym = this._yellowMobs.getItem(i);
                     if (UnityEngine.Object.op_Implicit(ym.root) && ym.root.localPosition.z < 3.6) {
@@ -2632,16 +3136,17 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#TriggerDefeatClimax", this );
                     }
                 }
                 if (UnityEngine.Object.op_Implicit(this._defeatTitleText)) {
-                    this._defeatTitleText.text = "DEFEAT...";
-                    this._defeatTitleText.color = new pc.Color( 1.0, 0.88, 0.14, 1 );
+                    this._defeatTitleText.text = (System.String.isNullOrEmpty(this.defeatTitle) ? "DEFEAT..." : this.defeatTitle);
+                    var isBlueRed = this.backgroundTheme === MobControlAd.MobControlGame.BackgroundTheme.MidnightSlate;
+                    this._defeatTitleText.color = (isBlueRed ? new pc.Color( 1.0, 0.34, 0.34, 1 ) : new pc.Color( 1.0, 0.88, 0.14, 1 ));
                     var dOut = this._defeatTitleText.GetComponent(UnityEngine.UI.Outline);
                     if (UnityEngine.Object.op_Implicit(dOut)) {
-                        dOut.effectColor = new pc.Color( 0.24, 0.04, 0.48, 1.0 );
+                        dOut.effectColor = (isBlueRed ? new pc.Color( 0.46, 0.04, 0.08, 1.0 ) : new pc.Color( 0.24, 0.04, 0.48, 1.0 ));
                         dOut.effectDistance = new pc.Vec2( 8.0, -8.0 );
                     }
                 }
                 if (UnityEngine.Object.op_Implicit(this._endSubText)) {
-                    this._endSubText.text = "CAN YOU BEAT THE BOSS?";
+                    this._endSubText.text = (System.String.isNullOrEmpty(this.defeatSubtitle) ? "CAN YOU BEAT THE BOSS?" : this.defeatSubtitle);
                 }
                 if (UnityEngine.Object.op_Implicit(this._endOverlayRoot)) {
                     this._endOverlayRoot.SetActive(true);
@@ -2770,6 +3275,45 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateSparks", this ); }
             },
             /*MobControlAd.MobControlGame.UpdateSparks end.*/
 
+            /*MobControlAd.MobControlGame.SpawnFloatText start.*/
+            SpawnFloatText: function (pos, text, col, height) {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#SpawnFloatText", this ); }
+
+                var $t;
+                if (this._floatTexts.Count <= 12) {
+                    var lbl = AdKit.AdRes.MakeLabel(this.transform, text, height, col.$clone(), 45, pos.$clone());
+                    var tr = lbl.transform;
+                    if (UnityEngine.Object.op_Implicit(this._cam)) {
+                        tr.rotation = this._cam.transform.rotation.$clone();
+                    }
+                    this._floatTexts.add(($t = new MobControlAd.MobControlGame.FloatTextFx(), $t.tr = tr, $t.vel = new pc.Vec3( UnityEngine.Random.Range$1(-0.35, 0.35), 2.8, 0.0 ), $t.baseScale = tr.localScale.x, $t.life = 0.72, $t.maxLife = 0.72, $t));
+                }
+            },
+            /*MobControlAd.MobControlGame.SpawnFloatText end.*/
+
+            /*MobControlAd.MobControlGame.UpdateFloatTexts start.*/
+            UpdateFloatTexts: function (dt) {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateFloatTexts", this ); }
+
+                for (var i = (this._floatTexts.Count - 1) | 0; i >= 0; i = (i - 1) | 0) {
+                    var ft = this._floatTexts.getItem(i);
+                    ft.life -= dt;
+                    if (ft.life <= 0.0 || !UnityEngine.Object.op_Implicit(ft.tr)) {
+                        if (UnityEngine.Object.op_Implicit(ft.tr)) {
+                            UnityEngine.Object.Destroy(ft.tr.gameObject);
+                        }
+                        this._floatTexts.removeAt(i);
+                    } else {
+                        ft.tr.localPosition = ft.tr.localPosition.$clone().add( ft.vel.$clone().clone().scale( dt ) );
+                        ft.vel.y = pc.math.lerp(ft.vel.y, 0.5, dt * 3.0);
+                        var t = 1.0 - ft.life / ft.maxLife;
+                        var sc = ((t < 0.18) ? pc.math.lerp(0.25, 1.25, t / 0.18) : pc.math.lerp(1.12, 0.0, Math.max(0, Math.min(1, (t - 0.55) / 0.45))));
+                        ft.tr.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( (ft.baseScale * UnityEngine.Mathf.Max(0.01, sc)) );
+                    }
+                }
+            },
+            /*MobControlAd.MobControlGame.UpdateFloatTexts end.*/
+
             /*MobControlAd.MobControlGame.TriggerCameraShake start.*/
             TriggerCameraShake: function (duration, amp) {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#TriggerCameraShake", this ); }
@@ -2811,6 +3355,65 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateCameraShake", this ); }
     });
     /*MobControlAd.MobControlGame+BackgroundTheme end.*/
 
+    /*MobControlAd.MobControlGame+CharacterStyle start.*/
+    Bridge.define("MobControlAd.MobControlGame.CharacterStyle", {
+        $kind: 1006,
+        statics: {
+            fields: {
+                StylizedModels: 0,
+                ClassicStickmen: 1
+            }
+        }
+    });
+    /*MobControlAd.MobControlGame+CharacterStyle end.*/
+
+    /*MobControlAd.MobControlGame+CtaButtonColor start.*/
+    Bridge.define("MobControlAd.MobControlGame.CtaButtonColor", {
+        $kind: 1006,
+        statics: {
+            fields: {
+                Green: 0,
+                Blue: 1,
+                Yellow: 2,
+                Red: 3,
+                Purple: 4
+            }
+        }
+    });
+    /*MobControlAd.MobControlGame+CtaButtonColor end.*/
+
+    /*MobControlAd.MobControlGame+CtaButtonShape start.*/
+    Bridge.define("MobControlAd.MobControlGame.CtaButtonShape", {
+        $kind: 1006,
+        statics: {
+            fields: {
+                Rounded: 0,
+                Sharp: 1
+            }
+        }
+    });
+    /*MobControlAd.MobControlGame+CtaButtonShape end.*/
+
+    /*MobControlAd.MobControlGame+FloatTextFx start.*/
+    Bridge.define("MobControlAd.MobControlGame.FloatTextFx", {
+        $kind: 1002,
+        fields: {
+            tr: null,
+            vel: null,
+            baseScale: 0,
+            life: 0,
+            maxLife: 0
+        },
+        ctors: {
+            init: function () {
+if ( TRACE ) { TRACE( "MobControlAd.MobControlGame.FloatTextFx#init", this ); }
+
+                this.vel = new UnityEngine.Vector3();
+            }
+        }
+    });
+    /*MobControlAd.MobControlGame+FloatTextFx end.*/
+
     /*MobControlAd.MobControlGame+MultiplierGate start.*/
     Bridge.define("MobControlAd.MobControlGame.MultiplierGate", {
         $kind: 1002,
@@ -2827,6 +3430,7 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame#UpdateCameraShake", this ); }
             moveSpeed: 0,
             phaseOffset: 0,
             punchTimer: 0,
+            popupCooldown: 0,
             bitIndex: 0
         }
     });
@@ -2914,13 +3518,17 @@ if ( TRACE ) { TRACE( "MobControlAd.MobControlGame.SparkFx#init", this ); }
             phase: 0,
             spawnPop: 0,
             inTube: false,
-            tubeT: 0
+            tubeT: 0,
+            hasSkeletalRun: false,
+            isGiant: false,
+            hp: 0
         },
         ctors: {
             init: function () {
 if ( TRACE ) { TRACE( "MobControlAd.MobControlGame.StickmanUnit#init", this ); }
 
                 this.renderers = new (System.Collections.Generic.List$1(UnityEngine.Renderer)).ctor();
+                this.hp = 1;
             }
         }
     });
@@ -5650,19 +6258,31 @@ if ( TRACE ) { TRACE( "Spiski#Start", this ); }
     /*NumberMatchAd.NumberMatchGame+Piece end.*/
 
     /*MobControlAd.MobControlGame start.*/
-    $m("MobControlAd.MobControlGame", function () { return {"nested":[$n[9].MobControlGame.BackgroundTheme,$n[9].MobControlGame.StickmanUnit,$n[9].MobControlGame.MultiplierGate,$n[9].MobControlGame.SmokePuff,$n[9].MobControlGame.RingFx,$n[9].MobControlGame.SparkFx],"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"AnimateStickmanRun","t":8,"pi":[{"n":"u","pt":$n[9].MobControlGame.StickmanUnit,"ps":0},{"n":"dt","pt":$n[1].Single,"ps":1}],"sn":"AnimateStickmanRun","rt":$n[1].Void,"p":[$n[9].MobControlGame.StickmanUnit,$n[1].Single]},{"a":1,"n":"Awake","t":8,"sn":"Awake","rt":$n[1].Void},{"a":1,"n":"BuildArchedPurpleTube","t":8,"sn":"BuildArchedPurpleTube","rt":$n[1].Void},{"a":1,"n":"BuildGatesAndYellowBlock","t":8,"sn":"BuildGatesAndYellowBlock","rt":$n[1].Void},{"a":1,"n":"BuildPurpleCannon","t":8,"sn":"BuildPurpleCannon","rt":$n[1].Void},{"a":1,"n":"BuildUI","t":8,"sn":"BuildUI","rt":$n[1].Void},{"a":1,"n":"BuildWhiteBridge","t":8,"sn":"BuildWhiteBridge","rt":$n[1].Void},{"a":1,"n":"BuildYellowEnemyBase","t":8,"sn":"BuildYellowEnemyBase","rt":$n[1].Void},{"a":1,"n":"CreateGate","t":8,"pi":[{"n":"bitIndex","pt":$n[1].Int32,"ps":0},{"n":"mult","pt":$n[1].Int32,"ps":1},{"n":"x","pt":$n[1].Single,"ps":2},{"n":"z","pt":$n[1].Single,"ps":3},{"n":"halfWidth","pt":$n[1].Single,"ps":4},{"n":"moveAmp","pt":$n[1].Single,"ps":5},{"n":"moveSpeed","pt":$n[1].Single,"ps":6},{"n":"phaseOffset","pt":$n[1].Single,"ps":7}],"sn":"CreateGate","rt":$n[1].Void,"p":[$n[1].Int32,$n[1].Int32,$n[1].Single,$n[1].Single,$n[1].Single,$n[1].Single,$n[1].Single,$n[1].Single]},{"a":1,"n":"DamageEnemyBase","t":8,"pi":[{"n":"dmg","pt":$n[1].Int32,"ps":0},{"n":"hitPos","pt":$n[2].Vector3,"ps":1}],"sn":"DamageEnemyBase","rt":$n[1].Void,"p":[$n[1].Int32,$n[2].Vector3]},{"a":1,"n":"DamageYellowBlock","t":8,"pi":[{"n":"dmg","pt":$n[1].Int32,"ps":0},{"n":"hitPos","pt":$n[2].Vector3,"ps":1}],"sn":"DamageYellowBlock","rt":$n[1].Void,"p":[$n[1].Int32,$n[2].Vector3]},{"a":1,"n":"FirePurpleStickman","t":8,"sn":"FirePurpleStickman","rt":$n[1].Void},{"a":1,"n":"HandleCannonAndInput","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"HandleCannonAndInput","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"SampleTubeSpline","t":8,"pi":[{"n":"t","pt":$n[1].Single,"ps":0}],"sn":"SampleTubeSpline","rt":$n[2].Vector3,"p":[$n[1].Single]},{"a":1,"n":"SetStickmanColor","t":8,"pi":[{"n":"u","pt":$n[9].MobControlGame.StickmanUnit,"ps":0},{"n":"c","pt":$n[2].Color,"ps":1}],"sn":"SetStickmanColor","rt":$n[1].Void,"p":[$n[9].MobControlGame.StickmanUnit,$n[2].Color]},{"a":1,"n":"SetupCameraAndSpaceEnvironment","t":8,"sn":"SetupCameraAndSpaceEnvironment","rt":$n[1].Void},{"a":1,"n":"SpawnInitialReferenceState","t":8,"sn":"SpawnInitialReferenceState","rt":$n[1].Void},{"a":1,"n":"SpawnRing","t":8,"pi":[{"n":"pos","pt":$n[2].Vector3,"ps":0},{"n":"maxScale","pt":$n[1].Single,"ps":1},{"n":"col","pt":$n[2].Color,"ps":2},{"n":"duration","pt":$n[1].Single,"ps":3},{"n":"tiltX","pt":$n[1].Single,"ps":4}],"sn":"SpawnRing","rt":$n[1].Void,"p":[$n[2].Vector3,$n[1].Single,$n[2].Color,$n[1].Single,$n[1].Single]},{"a":1,"n":"SpawnSparks","t":8,"pi":[{"n":"pos","pt":$n[2].Vector3,"ps":0},{"n":"count","pt":$n[1].Int32,"ps":1},{"n":"col","pt":$n[2].Color,"ps":2},{"n":"speed","pt":$n[1].Single,"ps":3},{"n":"cubeDebris","pt":$n[1].Boolean,"ps":4}],"sn":"SpawnSparks","rt":$n[1].Void,"p":[$n[2].Vector3,$n[1].Int32,$n[2].Color,$n[1].Single,$n[1].Boolean]},{"a":1,"n":"SpawnStickman","t":8,"pi":[{"n":"isPurple","pt":$n[1].Boolean,"ps":0},{"n":"pos","pt":$n[2].Vector3,"ps":1},{"n":"gateMask","pt":$n[1].Int32,"ps":2}],"sn":"SpawnStickman","rt":$n[9].MobControlGame.StickmanUnit,"p":[$n[1].Boolean,$n[2].Vector3,$n[1].Int32]},{"a":1,"n":"SpawnWhiteSmoke","t":8,"pi":[{"n":"pos","pt":$n[2].Vector3,"ps":0},{"n":"count","pt":$n[1].Int32,"ps":1},{"n":"col","pt":$n[2].Color,"ps":2}],"sn":"SpawnWhiteSmoke","rt":$n[1].Void,"p":[$n[2].Vector3,$n[1].Int32,$n[2].Color]},{"a":1,"n":"Start","t":8,"sn":"Start","rt":$n[1].Void},{"a":1,"n":"TriggerCameraShake","t":8,"pi":[{"n":"duration","pt":$n[1].Single,"ps":0},{"n":"amp","pt":$n[1].Single,"ps":1}],"sn":"TriggerCameraShake","rt":$n[1].Void,"p":[$n[1].Single,$n[1].Single]},{"a":1,"n":"TriggerDefeatClimax","t":8,"sn":"TriggerDefeatClimax","rt":$n[1].Void},{"a":1,"n":"TriggerVictoryClimax","t":8,"sn":"TriggerVictoryClimax","rt":$n[1].Void},{"a":1,"n":"Update","t":8,"sn":"Update","rt":$n[1].Void},{"a":1,"n":"UpdateBackdropScale","t":8,"sn":"UpdateBackdropScale","rt":$n[1].Void},{"a":1,"n":"UpdateCameraShake","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateCameraShake","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateGates","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateGates","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateRings","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateRings","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateSmokePuffs","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateSmokePuffs","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateSparks","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateSparks","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateStickmen","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateStickmen","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateTubeBulge","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateTubeBulge","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateYellowWaves","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateYellowWaves","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"GrayCorpse","is":true,"t":4,"rt":$n[2].Color,"sn":"GrayCorpse","ro":true},{"a":2,"n":"MobControlStoreUrl","is":true,"t":4,"rt":$n[1].String,"sn":"MobControlStoreUrl"},{"a":1,"n":"PurpleGateCol","is":true,"t":4,"rt":$n[2].Color,"sn":"PurpleGateCol","ro":true},{"a":1,"n":"PurpleLight","is":true,"t":4,"rt":$n[2].Color,"sn":"PurpleLight","ro":true},{"a":1,"n":"PurpleMain","is":true,"t":4,"rt":$n[2].Color,"sn":"PurpleMain","ro":true},{"a":1,"n":"TubeEntranceRadius","is":true,"t":4,"rt":$n[1].Single,"sn":"TubeEntranceRadius","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"TubeEntranceX","is":true,"t":4,"rt":$n[1].Single,"sn":"TubeEntranceX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"TubeEntranceZ","is":true,"t":4,"rt":$n[1].Single,"sn":"TubeEntranceZ","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"YellowDark","is":true,"t":4,"rt":$n[2].Color,"sn":"YellowDark","ro":true},{"a":1,"n":"YellowMain","is":true,"t":4,"rt":$n[2].Color,"sn":"YellowMain","ro":true},{"a":1,"n":"_barrelRecoil","t":4,"rt":$n[1].Single,"sn":"_barrelRecoil","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_bgSpriteH","t":4,"rt":$n[1].Single,"sn":"_bgSpriteH","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_bgSpriteW","t":4,"rt":$n[1].Single,"sn":"_bgSpriteW","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_bgTransform","t":4,"rt":$n[2].Transform,"sn":"_bgTransform"},{"a":1,"n":"_cam","t":4,"rt":$n[2].Camera,"sn":"_cam"},{"a":1,"n":"_camBasePos","t":4,"rt":$n[2].Vector3,"sn":"_camBasePos"},{"a":1,"n":"_cannonBarrel","t":4,"rt":$n[2].Transform,"sn":"_cannonBarrel"},{"a":1,"n":"_cannonRoot","t":4,"rt":$n[2].Transform,"sn":"_cannonRoot"},{"a":1,"n":"_cannonWheels","t":4,"rt":$n[4].List$1(UnityEngine.Transform),"sn":"_cannonWheels","ro":true},{"a":1,"n":"_cannonX","t":4,"rt":$n[1].Single,"sn":"_cannonX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_climaxTimer","t":4,"rt":$n[1].Single,"sn":"_climaxTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_climaxTriggered","t":4,"rt":$n[1].Boolean,"sn":"_climaxTriggered","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"_defeatBannerRt","t":4,"rt":$n[2].RectTransform,"sn":"_defeatBannerRt"},{"a":1,"n":"_defeatTitleText","t":4,"rt":$n[7].Text,"sn":"_defeatTitleText"},{"a":1,"n":"_elapsedTime","t":4,"rt":$n[1].Single,"sn":"_elapsedTime","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_endOverlayRoot","t":4,"rt":$n[2].GameObject,"sn":"_endOverlayRoot"},{"a":1,"n":"_endSubText","t":4,"rt":$n[7].Text,"sn":"_endSubText"},{"a":1,"n":"_enemyBaseBody","t":4,"rt":$n[2].Transform,"sn":"_enemyBaseBody"},{"a":1,"n":"_enemyBaseHitPunch","t":4,"rt":$n[1].Single,"sn":"_enemyBaseHitPunch","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_enemyBaseHp","t":4,"rt":$n[1].Int32,"sn":"_enemyBaseHp","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":1,"n":"_enemyBaseLabel","t":4,"rt":$n[6].Label,"sn":"_enemyBaseLabel"},{"a":1,"n":"_enemyBaseRoot","t":4,"rt":$n[2].Transform,"sn":"_enemyBaseRoot"},{"a":1,"n":"_enemyWaveTimer","t":4,"rt":$n[1].Single,"sn":"_enemyWaveTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_fireCooldown","t":4,"rt":$n[1].Single,"sn":"_fireCooldown","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_gates","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.MultiplierGate),"sn":"_gates","ro":true},{"a":1,"n":"_hasInteracted","t":4,"rt":$n[1].Boolean,"sn":"_hasInteracted","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"_lastCamAspect","t":4,"rt":$n[1].Single,"sn":"_lastCamAspect","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_muzzleFlash","t":4,"rt":$n[2].Transform,"sn":"_muzzleFlash"},{"a":1,"n":"_playNowBtnRt","t":4,"rt":$n[2].RectTransform,"sn":"_playNowBtnRt"},{"a":1,"n":"_puffs","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.SmokePuff),"sn":"_puffs","ro":true},{"a":1,"n":"_purpleMobs","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.StickmanUnit),"sn":"_purpleMobs","ro":true},{"a":1,"n":"_rings","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.RingFx),"sn":"_rings","ro":true},{"a":1,"n":"_sfxGateCooldown","t":4,"rt":$n[1].Single,"sn":"_sfxGateCooldown","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_sfxHitCooldown","t":4,"rt":$n[1].Single,"sn":"_sfxHitCooldown","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_shakeAmp","t":4,"rt":$n[1].Single,"sn":"_shakeAmp","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_shakeTimer","t":4,"rt":$n[1].Single,"sn":"_shakeTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_sparks","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.SparkFx),"sn":"_sparks","ro":true},{"a":1,"n":"_targetCannonX","t":4,"rt":$n[1].Single,"sn":"_targetCannonX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_topBlueMobsText","t":4,"rt":$n[7].Text,"sn":"_topBlueMobsText"},{"a":1,"n":"_topEnemyBaseText","t":4,"rt":$n[7].Text,"sn":"_topEnemyBaseText"},{"a":1,"n":"_topHudRoot","t":4,"rt":$n[2].GameObject,"sn":"_topHudRoot"},{"a":1,"n":"_tubeSegments","t":4,"rt":$n[4].List$1(UnityEngine.Transform),"sn":"_tubeSegments","ro":true},{"a":1,"n":"_tubeSpline","t":4,"rt":System.Array.type(UnityEngine.Vector3),"sn":"_tubeSpline"},{"a":1,"n":"_ui","t":4,"rt":$n[6].AdUI,"sn":"_ui"},{"a":1,"n":"_yellowBlockDestroyed","t":4,"rt":$n[1].Boolean,"sn":"_yellowBlockDestroyed","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"_yellowBlockHitPunch","t":4,"rt":$n[1].Single,"sn":"_yellowBlockHitPunch","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_yellowBlockHp","t":4,"rt":$n[1].Int32,"sn":"_yellowBlockHp","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":1,"n":"_yellowBlockLabel","t":4,"rt":$n[6].Label,"sn":"_yellowBlockLabel"},{"a":1,"n":"_yellowBlockRoot","t":4,"rt":$n[2].Transform,"sn":"_yellowBlockRoot"},{"a":1,"n":"_yellowMobs","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.StickmanUnit),"sn":"_yellowMobs","ro":true},{"at":[new UnityEngine.HeaderAttribute("Background Theme")],"a":2,"n":"backgroundTheme","t":4,"rt":$n[9].MobControlGame.BackgroundTheme,"sn":"backgroundTheme","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.BackgroundTheme, System.Enum.toStringFn(MobControlAd.MobControlGame.BackgroundTheme));}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("CTA Button Text", 3, "Endcard Settings", false, null)],"a":2,"n":"ctaText","t":4,"rt":$n[1].String,"sn":"ctaText"},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Enemy Base HP", 2, "Mob Control Settings", false, null)],"a":2,"n":"enemyBaseStartHp","t":4,"rt":$n[1].Int32,"sn":"enemyBaseStartHp","box":function ($v) { return Bridge.box($v, System.Int32);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Cannon Fire Rate", 0, "Mob Control Settings", false, null)],"a":2,"n":"fireRate","t":4,"rt":$n[1].Single,"sn":"fireRate","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Yellow Block HP", 1, "Mob Control Settings", false, null)],"a":2,"n":"yellowBlockStartHp","t":4,"rt":$n[1].Int32,"sn":"yellowBlockStartHp","box":function ($v) { return Bridge.box($v, System.Int32);}}]}; }, $n);
+    $m("MobControlAd.MobControlGame", function () { return {"nested":[$n[9].MobControlGame.BackgroundTheme,$n[9].MobControlGame.CharacterStyle,$n[9].MobControlGame.CtaButtonColor,$n[9].MobControlGame.CtaButtonShape,$n[9].MobControlGame.StickmanUnit,$n[9].MobControlGame.MultiplierGate,$n[9].MobControlGame.SmokePuff,$n[9].MobControlGame.RingFx,$n[9].MobControlGame.SparkFx,$n[9].MobControlGame.FloatTextFx],"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"AnimateStickmanRun","t":8,"pi":[{"n":"u","pt":$n[9].MobControlGame.StickmanUnit,"ps":0},{"n":"dt","pt":$n[1].Single,"ps":1}],"sn":"AnimateStickmanRun","rt":$n[1].Void,"p":[$n[9].MobControlGame.StickmanUnit,$n[1].Single]},{"a":1,"n":"ApplyThemePalette","t":8,"sn":"ApplyThemePalette","rt":$n[1].Void},{"a":1,"n":"Awake","t":8,"sn":"Awake","rt":$n[1].Void},{"a":1,"n":"BuildArchedPurpleTube","t":8,"sn":"BuildArchedPurpleTube","rt":$n[1].Void},{"a":1,"n":"BuildGatesAndYellowBlock","t":8,"sn":"BuildGatesAndYellowBlock","rt":$n[1].Void},{"a":1,"n":"BuildPurpleCannon","t":8,"sn":"BuildPurpleCannon","rt":$n[1].Void},{"a":1,"n":"BuildUI","t":8,"sn":"BuildUI","rt":$n[1].Void},{"a":1,"n":"BuildWhiteBridge","t":8,"sn":"BuildWhiteBridge","rt":$n[1].Void},{"a":1,"n":"BuildYellowEnemyBase","t":8,"sn":"BuildYellowEnemyBase","rt":$n[1].Void},{"a":1,"n":"CreateGate","t":8,"pi":[{"n":"bitIndex","pt":$n[1].Int32,"ps":0},{"n":"mult","pt":$n[1].Int32,"ps":1},{"n":"x","pt":$n[1].Single,"ps":2},{"n":"z","pt":$n[1].Single,"ps":3},{"n":"halfWidth","pt":$n[1].Single,"ps":4},{"n":"moveAmp","pt":$n[1].Single,"ps":5},{"n":"moveSpeed","pt":$n[1].Single,"ps":6},{"n":"phaseOffset","pt":$n[1].Single,"ps":7}],"sn":"CreateGate","rt":$n[1].Void,"p":[$n[1].Int32,$n[1].Int32,$n[1].Single,$n[1].Single,$n[1].Single,$n[1].Single,$n[1].Single,$n[1].Single]},{"a":1,"n":"DamageEnemyBase","t":8,"pi":[{"n":"dmg","pt":$n[1].Int32,"ps":0},{"n":"hitPos","pt":$n[2].Vector3,"ps":1}],"sn":"DamageEnemyBase","rt":$n[1].Void,"p":[$n[1].Int32,$n[2].Vector3]},{"a":1,"n":"DamageYellowBlock","t":8,"pi":[{"n":"dmg","pt":$n[1].Int32,"ps":0},{"n":"hitPos","pt":$n[2].Vector3,"ps":1}],"sn":"DamageYellowBlock","rt":$n[1].Void,"p":[$n[1].Int32,$n[2].Vector3]},{"a":1,"n":"FindRunClip","is":true,"t":8,"pi":[{"n":"resourcePath","pt":$n[1].String,"ps":0}],"sn":"FindRunClip","rt":$n[2].AnimationClip,"p":[$n[1].String]},{"a":1,"n":"FirePurpleStickman","t":8,"sn":"FirePurpleStickman","rt":$n[1].Void},{"a":1,"n":"GetCtaPalette","is":true,"t":8,"pi":[{"n":"col","pt":$n[9].MobControlGame.CtaButtonColor,"ps":0},{"n":"main","out":true,"pt":$n[2].Color,"ps":1},{"n":"bevel","out":true,"pt":$n[2].Color,"ps":2},{"n":"shadow","out":true,"pt":$n[2].Color,"ps":3},{"n":"txt","out":true,"pt":$n[2].Color,"ps":4}],"sn":"GetCtaPalette","rt":$n[1].Void,"p":[$n[9].MobControlGame.CtaButtonColor,$n[2].Color,$n[2].Color,$n[2].Color,$n[2].Color]},{"a":1,"n":"HandleCannonAndInput","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"HandleCannonAndInput","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"IsEyeMesh","is":true,"t":8,"pi":[{"n":"r","pt":$n[2].Renderer,"ps":0}],"sn":"IsEyeMesh","rt":$n[1].Boolean,"p":[$n[2].Renderer],"box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"IsEyeName","is":true,"t":8,"pi":[{"n":"n","pt":$n[1].String,"ps":0}],"sn":"IsEyeName","rt":$n[1].Boolean,"p":[$n[1].String],"box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"MakeThemeMat","is":true,"t":8,"pi":[{"n":"col","pt":$n[2].Color,"ps":0}],"sn":"MakeThemeMat","rt":$n[2].Material,"p":[$n[2].Color]},{"a":1,"n":"SampleTubeSpline","t":8,"pi":[{"n":"t","pt":$n[1].Single,"ps":0}],"sn":"SampleTubeSpline","rt":$n[2].Vector3,"p":[$n[1].Single]},{"a":1,"n":"SetStickmanColor","t":8,"pi":[{"n":"u","pt":$n[9].MobControlGame.StickmanUnit,"ps":0},{"n":"c","pt":$n[2].Color,"ps":1}],"sn":"SetStickmanColor","rt":$n[1].Void,"p":[$n[9].MobControlGame.StickmanUnit,$n[2].Color]},{"a":1,"n":"SetupCameraAndSpaceEnvironment","t":8,"sn":"SetupCameraAndSpaceEnvironment","rt":$n[1].Void},{"a":1,"n":"SpawnFloatText","t":8,"pi":[{"n":"pos","pt":$n[2].Vector3,"ps":0},{"n":"text","pt":$n[1].String,"ps":1},{"n":"col","pt":$n[2].Color,"ps":2},{"n":"height","pt":$n[1].Single,"ps":3}],"sn":"SpawnFloatText","rt":$n[1].Void,"p":[$n[2].Vector3,$n[1].String,$n[2].Color,$n[1].Single]},{"a":1,"n":"SpawnInitialReferenceState","t":8,"sn":"SpawnInitialReferenceState","rt":$n[1].Void},{"a":1,"n":"SpawnRing","t":8,"pi":[{"n":"pos","pt":$n[2].Vector3,"ps":0},{"n":"maxScale","pt":$n[1].Single,"ps":1},{"n":"col","pt":$n[2].Color,"ps":2},{"n":"duration","pt":$n[1].Single,"ps":3},{"n":"tiltX","pt":$n[1].Single,"ps":4}],"sn":"SpawnRing","rt":$n[1].Void,"p":[$n[2].Vector3,$n[1].Single,$n[2].Color,$n[1].Single,$n[1].Single]},{"a":1,"n":"SpawnSparks","t":8,"pi":[{"n":"pos","pt":$n[2].Vector3,"ps":0},{"n":"count","pt":$n[1].Int32,"ps":1},{"n":"col","pt":$n[2].Color,"ps":2},{"n":"speed","pt":$n[1].Single,"ps":3},{"n":"cubeDebris","pt":$n[1].Boolean,"ps":4}],"sn":"SpawnSparks","rt":$n[1].Void,"p":[$n[2].Vector3,$n[1].Int32,$n[2].Color,$n[1].Single,$n[1].Boolean]},{"a":1,"n":"SpawnStickman","t":8,"pi":[{"n":"isPurple","pt":$n[1].Boolean,"ps":0},{"n":"pos","pt":$n[2].Vector3,"ps":1},{"n":"gateMask","pt":$n[1].Int32,"ps":2},{"n":"isGiant","dv":false,"o":true,"pt":$n[1].Boolean,"ps":3}],"sn":"SpawnStickman","rt":$n[9].MobControlGame.StickmanUnit,"p":[$n[1].Boolean,$n[2].Vector3,$n[1].Int32,$n[1].Boolean]},{"a":1,"n":"SpawnWhiteSmoke","t":8,"pi":[{"n":"pos","pt":$n[2].Vector3,"ps":0},{"n":"count","pt":$n[1].Int32,"ps":1},{"n":"col","pt":$n[2].Color,"ps":2}],"sn":"SpawnWhiteSmoke","rt":$n[1].Void,"p":[$n[2].Vector3,$n[1].Int32,$n[2].Color]},{"a":1,"n":"Start","t":8,"sn":"Start","rt":$n[1].Void},{"a":1,"n":"TriggerCameraShake","t":8,"pi":[{"n":"duration","pt":$n[1].Single,"ps":0},{"n":"amp","pt":$n[1].Single,"ps":1}],"sn":"TriggerCameraShake","rt":$n[1].Void,"p":[$n[1].Single,$n[1].Single]},{"a":1,"n":"TriggerDefeatClimax","t":8,"sn":"TriggerDefeatClimax","rt":$n[1].Void},{"a":1,"n":"TriggerVictoryClimax","t":8,"sn":"TriggerVictoryClimax","rt":$n[1].Void},{"a":1,"n":"Update","t":8,"sn":"Update","rt":$n[1].Void},{"a":1,"n":"UpdateBackdropScale","t":8,"sn":"UpdateBackdropScale","rt":$n[1].Void},{"a":1,"n":"UpdateCameraShake","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateCameraShake","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateFloatTexts","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateFloatTexts","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateGates","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateGates","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateRings","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateRings","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateSmokePuffs","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateSmokePuffs","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateSparks","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateSparks","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateStickmen","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateStickmen","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateTubeBulge","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateTubeBulge","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"UpdateYellowWaves","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"UpdateYellowWaves","rt":$n[1].Void,"p":[$n[1].Single]},{"a":1,"n":"GrayCorpse","is":true,"t":4,"rt":$n[2].Color,"sn":"GrayCorpse","ro":true},{"a":2,"n":"MobControlStoreUrl","is":true,"t":4,"rt":$n[1].String,"sn":"MobControlStoreUrl"},{"a":1,"n":"PurpleGateCol","t":4,"rt":$n[2].Color,"sn":"PurpleGateCol"},{"a":1,"n":"PurpleLight","t":4,"rt":$n[2].Color,"sn":"PurpleLight"},{"a":1,"n":"PurpleMain","t":4,"rt":$n[2].Color,"sn":"PurpleMain"},{"a":1,"n":"TubeEntranceRadius","is":true,"t":4,"rt":$n[1].Single,"sn":"TubeEntranceRadius","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"TubeEntranceX","is":true,"t":4,"rt":$n[1].Single,"sn":"TubeEntranceX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"TubeEntranceZ","is":true,"t":4,"rt":$n[1].Single,"sn":"TubeEntranceZ","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"YellowDark","t":4,"rt":$n[2].Color,"sn":"YellowDark"},{"a":1,"n":"YellowMain","t":4,"rt":$n[2].Color,"sn":"YellowMain"},{"a":1,"n":"_barrelRecoil","t":4,"rt":$n[1].Single,"sn":"_barrelRecoil","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_bgSpriteH","t":4,"rt":$n[1].Single,"sn":"_bgSpriteH","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_bgSpriteW","t":4,"rt":$n[1].Single,"sn":"_bgSpriteW","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_bgTransform","t":4,"rt":$n[2].Transform,"sn":"_bgTransform"},{"a":1,"n":"_cam","t":4,"rt":$n[2].Camera,"sn":"_cam"},{"a":1,"n":"_camBasePos","t":4,"rt":$n[2].Vector3,"sn":"_camBasePos"},{"a":1,"n":"_cannonBarrel","t":4,"rt":$n[2].Transform,"sn":"_cannonBarrel"},{"a":1,"n":"_cannonRoot","t":4,"rt":$n[2].Transform,"sn":"_cannonRoot"},{"a":1,"n":"_cannonWheels","t":4,"rt":$n[4].List$1(UnityEngine.Transform),"sn":"_cannonWheels","ro":true},{"a":1,"n":"_cannonX","t":4,"rt":$n[1].Single,"sn":"_cannonX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_climaxTimer","t":4,"rt":$n[1].Single,"sn":"_climaxTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_climaxTriggered","t":4,"rt":$n[1].Boolean,"sn":"_climaxTriggered","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"_defeatBannerRt","t":4,"rt":$n[2].RectTransform,"sn":"_defeatBannerRt"},{"a":1,"n":"_defeatTitleText","t":4,"rt":$n[7].Text,"sn":"_defeatTitleText"},{"a":1,"n":"_elapsedTime","t":4,"rt":$n[1].Single,"sn":"_elapsedTime","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_endOverlayRoot","t":4,"rt":$n[2].GameObject,"sn":"_endOverlayRoot"},{"a":1,"n":"_endSubText","t":4,"rt":$n[7].Text,"sn":"_endSubText"},{"a":1,"n":"_enemyBaseBody","t":4,"rt":$n[2].Transform,"sn":"_enemyBaseBody"},{"a":1,"n":"_enemyBaseHitPunch","t":4,"rt":$n[1].Single,"sn":"_enemyBaseHitPunch","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_enemyBaseHp","t":4,"rt":$n[1].Int32,"sn":"_enemyBaseHp","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":1,"n":"_enemyBaseLabel","t":4,"rt":$n[6].Label,"sn":"_enemyBaseLabel"},{"a":1,"n":"_enemyBaseRoot","t":4,"rt":$n[2].Transform,"sn":"_enemyBaseRoot"},{"a":1,"n":"_enemyWaveTimer","t":4,"rt":$n[1].Single,"sn":"_enemyWaveTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_fireCooldown","t":4,"rt":$n[1].Single,"sn":"_fireCooldown","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_floatTexts","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.FloatTextFx),"sn":"_floatTexts","ro":true},{"a":1,"n":"_gameplayControlsRoot","t":4,"rt":$n[2].GameObject,"sn":"_gameplayControlsRoot"},{"a":1,"n":"_gates","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.MultiplierGate),"sn":"_gates","ro":true},{"a":1,"n":"_giantBarFillImg","t":4,"rt":$n[7].Image,"sn":"_giantBarFillImg"},{"a":1,"n":"_giantBarFillRt","t":4,"rt":$n[2].RectTransform,"sn":"_giantBarFillRt"},{"a":1,"n":"_giantBarLabel","t":4,"rt":$n[7].Text,"sn":"_giantBarLabel"},{"a":1,"n":"_giantCharge","t":4,"rt":$n[1].Single,"sn":"_giantCharge","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_hasInteracted","t":4,"rt":$n[1].Boolean,"sn":"_hasInteracted","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"_hurryRoot","t":4,"rt":$n[2].GameObject,"sn":"_hurryRoot"},{"a":1,"n":"_hurryText","t":4,"rt":$n[7].Text,"sn":"_hurryText"},{"a":1,"n":"_lastCamAspect","t":4,"rt":$n[1].Single,"sn":"_lastCamAspect","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_lastHurrySec","t":4,"rt":$n[1].Int32,"sn":"_lastHurrySec","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":1,"n":"_matEnemyAccent","t":4,"rt":$n[2].Material,"sn":"_matEnemyAccent"},{"a":1,"n":"_matEnemyMain","t":4,"rt":$n[2].Material,"sn":"_matEnemyMain"},{"a":1,"n":"_matFriendlyDark","t":4,"rt":$n[2].Material,"sn":"_matFriendlyDark"},{"a":1,"n":"_matFriendlyDeep","t":4,"rt":$n[2].Material,"sn":"_matFriendlyDeep"},{"a":1,"n":"_matFriendlyLight","t":4,"rt":$n[2].Material,"sn":"_matFriendlyLight"},{"a":1,"n":"_matFriendlyMain","t":4,"rt":$n[2].Material,"sn":"_matFriendlyMain"},{"a":1,"n":"_matGrayCorpse","t":4,"rt":$n[2].Material,"sn":"_matGrayCorpse"},{"a":1,"n":"_muteBgImg","t":4,"rt":$n[7].Image,"sn":"_muteBgImg"},{"a":1,"n":"_muteBtnRt","t":4,"rt":$n[2].RectTransform,"sn":"_muteBtnRt"},{"a":1,"n":"_muteOnColor","t":4,"rt":$n[2].Color,"sn":"_muteOnColor"},{"a":1,"n":"_muteTapConsumed","t":4,"rt":$n[1].Boolean,"sn":"_muteTapConsumed","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"_muteText","t":4,"rt":$n[7].Text,"sn":"_muteText"},{"a":1,"n":"_muzzleFlash","t":4,"rt":$n[2].Transform,"sn":"_muzzleFlash"},{"a":1,"n":"_playNowBtnRt","t":4,"rt":$n[2].RectTransform,"sn":"_playNowBtnRt"},{"a":1,"n":"_puffs","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.SmokePuff),"sn":"_puffs","ro":true},{"a":1,"n":"_purpleMobPrefab","t":4,"rt":$n[2].GameObject,"sn":"_purpleMobPrefab"},{"a":1,"n":"_purpleMobs","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.StickmanUnit),"sn":"_purpleMobs","ro":true},{"a":1,"n":"_purpleRunClip","t":4,"rt":$n[2].AnimationClip,"sn":"_purpleRunClip"},{"a":1,"n":"_rings","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.RingFx),"sn":"_rings","ro":true},{"a":1,"n":"_sfxGateCooldown","t":4,"rt":$n[1].Single,"sn":"_sfxGateCooldown","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_sfxHitCooldown","t":4,"rt":$n[1].Single,"sn":"_sfxHitCooldown","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_shakeAmp","t":4,"rt":$n[1].Single,"sn":"_shakeAmp","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_shakeTimer","t":4,"rt":$n[1].Single,"sn":"_shakeTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_sparks","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.SparkFx),"sn":"_sparks","ro":true},{"a":1,"n":"_targetCannonX","t":4,"rt":$n[1].Single,"sn":"_targetCannonX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_topBlueMobsText","t":4,"rt":$n[7].Text,"sn":"_topBlueMobsText"},{"a":1,"n":"_topEnemyBaseText","t":4,"rt":$n[7].Text,"sn":"_topEnemyBaseText"},{"a":1,"n":"_topHudRoot","t":4,"rt":$n[2].GameObject,"sn":"_topHudRoot"},{"a":1,"n":"_tubeSegments","t":4,"rt":$n[4].List$1(UnityEngine.Transform),"sn":"_tubeSegments","ro":true},{"a":1,"n":"_tubeSpline","t":4,"rt":System.Array.type(UnityEngine.Vector3),"sn":"_tubeSpline"},{"a":1,"n":"_ui","t":4,"rt":$n[6].AdUI,"sn":"_ui"},{"a":1,"n":"_yellowBlockDestroyed","t":4,"rt":$n[1].Boolean,"sn":"_yellowBlockDestroyed","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"_yellowBlockHitPunch","t":4,"rt":$n[1].Single,"sn":"_yellowBlockHitPunch","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"_yellowBlockHp","t":4,"rt":$n[1].Int32,"sn":"_yellowBlockHp","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":1,"n":"_yellowBlockLabel","t":4,"rt":$n[6].Label,"sn":"_yellowBlockLabel"},{"a":1,"n":"_yellowBlockRoot","t":4,"rt":$n[2].Transform,"sn":"_yellowBlockRoot"},{"a":1,"n":"_yellowMobPrefab","t":4,"rt":$n[2].GameObject,"sn":"_yellowMobPrefab"},{"a":1,"n":"_yellowMobs","t":4,"rt":$n[4].List$1(MobControlAd.MobControlGame.StickmanUnit),"sn":"_yellowMobs","ro":true},{"a":1,"n":"_yellowRunClip","t":4,"rt":$n[2].AnimationClip,"sn":"_yellowRunClip"},{"at":[new UnityEngine.HeaderAttribute("Background Theme"),new UnityEngine.LunaPlaygroundFieldAttribute("Background Theme", 0, "Visual Settings", false, null)],"a":2,"n":"backgroundTheme","t":4,"rt":$n[9].MobControlGame.BackgroundTheme,"sn":"backgroundTheme","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.BackgroundTheme, System.Enum.toStringFn(MobControlAd.MobControlGame.BackgroundTheme));}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Character Style", 1, "Visual Settings", false, null)],"a":2,"n":"characterStyle","t":4,"rt":$n[9].MobControlGame.CharacterStyle,"sn":"characterStyle","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CharacterStyle, System.Enum.toStringFn(MobControlAd.MobControlGame.CharacterStyle));}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("CTA Button Color", 6, "Endcard & Localization", false, null)],"a":2,"n":"ctaColor","t":4,"rt":$n[9].MobControlGame.CtaButtonColor,"sn":"ctaColor","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonColor, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonColor));}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("CTA Button Shape", 7, "Endcard & Localization", false, null)],"a":2,"n":"ctaShape","t":4,"rt":$n[9].MobControlGame.CtaButtonShape,"sn":"ctaShape","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonShape, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonShape));}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("CTA Button Text", 0, "Endcard & Localization", false, null)],"a":2,"n":"ctaText","t":4,"rt":$n[1].String,"sn":"ctaText"},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Defeat Subtitle", 3, "Endcard & Localization", false, null)],"a":2,"n":"defeatSubtitle","t":4,"rt":$n[1].String,"sn":"defeatSubtitle"},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Defeat Title", 1, "Endcard & Localization", false, null)],"a":2,"n":"defeatTitle","t":4,"rt":$n[1].String,"sn":"defeatTitle"},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Enable Giant Champion", 4, "Mob Control Settings", false, null)],"a":2,"n":"enableGiantChampion","t":4,"rt":$n[1].Boolean,"sn":"enableGiantChampion","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Enemy Base HP", 3, "Mob Control Settings", false, null)],"a":2,"n":"enemyBaseStartHp","t":4,"rt":$n[1].Int32,"sn":"enemyBaseStartHp","box":function ($v) { return Bridge.box($v, System.Int32);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Cannon Fire Rate", 0, "Mob Control Settings", false, null)],"a":2,"n":"fireRate","t":4,"rt":$n[1].Single,"sn":"fireRate","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Front Sliding Gate (X)", 0, "Gate Multipliers", false, null)],"a":2,"n":"frontGateMultiplier","t":4,"rt":$n[1].Int32,"sn":"frontGateMultiplier","box":function ($v) { return Bridge.box($v, System.Int32);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Left Gate (X)", 1, "Gate Multipliers", false, null)],"a":2,"n":"leftGateMultiplier","t":4,"rt":$n[1].Int32,"sn":"leftGateMultiplier","box":function ($v) { return Bridge.box($v, System.Int32);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Min Lose Time (s)", 5, "Mob Control Settings", false, null)],"a":2,"n":"minLoseTime","t":4,"rt":$n[1].Single,"sn":"minLoseTime","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Right Gate (X)", 2, "Gate Multipliers", false, null)],"a":2,"n":"rightGateMultiplier","t":4,"rt":$n[1].Int32,"sn":"rightGateMultiplier","box":function ($v) { return Bridge.box($v, System.Int32);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Round Duration (s)", 1, "Mob Control Settings", false, null)],"a":2,"n":"roundDuration","t":4,"rt":$n[1].Single,"sn":"roundDuration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Tutorial Text", 5, "Endcard & Localization", false, null)],"a":2,"n":"tutorialText","t":4,"rt":$n[1].String,"sn":"tutorialText"},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Victory Subtitle", 4, "Endcard & Localization", false, null)],"a":2,"n":"victorySubtitle","t":4,"rt":$n[1].String,"sn":"victorySubtitle"},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Victory Title", 2, "Endcard & Localization", false, null)],"a":2,"n":"victoryTitle","t":4,"rt":$n[1].String,"sn":"victoryTitle"},{"at":[new UnityEngine.LunaPlaygroundFieldAttribute("Yellow Block HP", 2, "Mob Control Settings", false, null)],"a":2,"n":"yellowBlockStartHp","t":4,"rt":$n[1].Int32,"sn":"yellowBlockStartHp","box":function ($v) { return Bridge.box($v, System.Int32);}}]}; }, $n);
     /*MobControlAd.MobControlGame end.*/
 
     /*MobControlAd.MobControlGame+BackgroundTheme start.*/
     $m("MobControlAd.MobControlGame.BackgroundTheme", function () { return {"td":$n[9].MobControlGame,"att":258,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"AlpineWinter","is":true,"t":4,"rt":$n[9].MobControlGame.BackgroundTheme,"sn":"AlpineWinter","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.BackgroundTheme, System.Enum.toStringFn(MobControlAd.MobControlGame.BackgroundTheme));}},{"a":2,"n":"MidnightSlate","is":true,"t":4,"rt":$n[9].MobControlGame.BackgroundTheme,"sn":"MidnightSlate","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.BackgroundTheme, System.Enum.toStringFn(MobControlAd.MobControlGame.BackgroundTheme));}}]}; }, $n);
     /*MobControlAd.MobControlGame+BackgroundTheme end.*/
 
+    /*MobControlAd.MobControlGame+CharacterStyle start.*/
+    $m("MobControlAd.MobControlGame.CharacterStyle", function () { return {"td":$n[9].MobControlGame,"att":258,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ClassicStickmen","is":true,"t":4,"rt":$n[9].MobControlGame.CharacterStyle,"sn":"ClassicStickmen","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CharacterStyle, System.Enum.toStringFn(MobControlAd.MobControlGame.CharacterStyle));}},{"a":2,"n":"StylizedModels","is":true,"t":4,"rt":$n[9].MobControlGame.CharacterStyle,"sn":"StylizedModels","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CharacterStyle, System.Enum.toStringFn(MobControlAd.MobControlGame.CharacterStyle));}}]}; }, $n);
+    /*MobControlAd.MobControlGame+CharacterStyle end.*/
+
+    /*MobControlAd.MobControlGame+CtaButtonColor start.*/
+    $m("MobControlAd.MobControlGame.CtaButtonColor", function () { return {"td":$n[9].MobControlGame,"att":258,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Blue","is":true,"t":4,"rt":$n[9].MobControlGame.CtaButtonColor,"sn":"Blue","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonColor, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonColor));}},{"a":2,"n":"Green","is":true,"t":4,"rt":$n[9].MobControlGame.CtaButtonColor,"sn":"Green","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonColor, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonColor));}},{"a":2,"n":"Purple","is":true,"t":4,"rt":$n[9].MobControlGame.CtaButtonColor,"sn":"Purple","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonColor, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonColor));}},{"a":2,"n":"Red","is":true,"t":4,"rt":$n[9].MobControlGame.CtaButtonColor,"sn":"Red","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonColor, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonColor));}},{"a":2,"n":"Yellow","is":true,"t":4,"rt":$n[9].MobControlGame.CtaButtonColor,"sn":"Yellow","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonColor, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonColor));}}]}; }, $n);
+    /*MobControlAd.MobControlGame+CtaButtonColor end.*/
+
+    /*MobControlAd.MobControlGame+CtaButtonShape start.*/
+    $m("MobControlAd.MobControlGame.CtaButtonShape", function () { return {"td":$n[9].MobControlGame,"att":258,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Rounded","is":true,"t":4,"rt":$n[9].MobControlGame.CtaButtonShape,"sn":"Rounded","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonShape, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonShape));}},{"a":2,"n":"Sharp","is":true,"t":4,"rt":$n[9].MobControlGame.CtaButtonShape,"sn":"Sharp","box":function ($v) { return Bridge.box($v, MobControlAd.MobControlGame.CtaButtonShape, System.Enum.toStringFn(MobControlAd.MobControlGame.CtaButtonShape));}}]}; }, $n);
+    /*MobControlAd.MobControlGame+CtaButtonShape end.*/
+
     /*MobControlAd.MobControlGame+StickmanUnit start.*/
-    $m("MobControlAd.MobControlGame.StickmanUnit", function () { return {"td":$n[9].MobControlGame,"att":1048579,"a":1,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"body","t":4,"rt":$n[2].Transform,"sn":"body"},{"a":2,"n":"dyingTimer","t":4,"rt":$n[1].Single,"sn":"dyingTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"gateMask","t":4,"rt":$n[1].Int32,"sn":"gateMask","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"inTube","t":4,"rt":$n[1].Boolean,"sn":"inTube","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"isDyingGray","t":4,"rt":$n[1].Boolean,"sn":"isDyingGray","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"isPurple","t":4,"rt":$n[1].Boolean,"sn":"isPurple","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"leftArm","t":4,"rt":$n[2].Transform,"sn":"leftArm"},{"a":2,"n":"leftLeg","t":4,"rt":$n[2].Transform,"sn":"leftLeg"},{"a":2,"n":"phase","t":4,"rt":$n[1].Single,"sn":"phase","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"renderers","t":4,"rt":$n[4].List$1(UnityEngine.Renderer),"sn":"renderers"},{"a":2,"n":"rightArm","t":4,"rt":$n[2].Transform,"sn":"rightArm"},{"a":2,"n":"rightLeg","t":4,"rt":$n[2].Transform,"sn":"rightLeg"},{"a":2,"n":"root","t":4,"rt":$n[2].Transform,"sn":"root"},{"a":2,"n":"spawnPop","t":4,"rt":$n[1].Single,"sn":"spawnPop","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"speed","t":4,"rt":$n[1].Single,"sn":"speed","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"tubeT","t":4,"rt":$n[1].Single,"sn":"tubeT","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}}]}; }, $n);
+    $m("MobControlAd.MobControlGame.StickmanUnit", function () { return {"td":$n[9].MobControlGame,"att":1048579,"a":1,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"body","t":4,"rt":$n[2].Transform,"sn":"body"},{"a":2,"n":"dyingTimer","t":4,"rt":$n[1].Single,"sn":"dyingTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"gateMask","t":4,"rt":$n[1].Int32,"sn":"gateMask","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"hasSkeletalRun","t":4,"rt":$n[1].Boolean,"sn":"hasSkeletalRun","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"hp","t":4,"rt":$n[1].Int32,"sn":"hp","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"inTube","t":4,"rt":$n[1].Boolean,"sn":"inTube","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"isDyingGray","t":4,"rt":$n[1].Boolean,"sn":"isDyingGray","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"isGiant","t":4,"rt":$n[1].Boolean,"sn":"isGiant","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"isPurple","t":4,"rt":$n[1].Boolean,"sn":"isPurple","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"leftArm","t":4,"rt":$n[2].Transform,"sn":"leftArm"},{"a":2,"n":"leftLeg","t":4,"rt":$n[2].Transform,"sn":"leftLeg"},{"a":2,"n":"phase","t":4,"rt":$n[1].Single,"sn":"phase","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"renderers","t":4,"rt":$n[4].List$1(UnityEngine.Renderer),"sn":"renderers"},{"a":2,"n":"rightArm","t":4,"rt":$n[2].Transform,"sn":"rightArm"},{"a":2,"n":"rightLeg","t":4,"rt":$n[2].Transform,"sn":"rightLeg"},{"a":2,"n":"root","t":4,"rt":$n[2].Transform,"sn":"root"},{"a":2,"n":"spawnPop","t":4,"rt":$n[1].Single,"sn":"spawnPop","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"speed","t":4,"rt":$n[1].Single,"sn":"speed","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"tubeT","t":4,"rt":$n[1].Single,"sn":"tubeT","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}}]}; }, $n);
     /*MobControlAd.MobControlGame+StickmanUnit end.*/
 
     /*MobControlAd.MobControlGame+MultiplierGate start.*/
-    $m("MobControlAd.MobControlGame.MultiplierGate", function () { return {"td":$n[9].MobControlGame,"att":1048579,"a":1,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"baseX","t":4,"rt":$n[1].Single,"sn":"baseX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"bitIndex","t":4,"rt":$n[1].Int32,"sn":"bitIndex","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"currentX","t":4,"rt":$n[1].Single,"sn":"currentX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"halfWidth","t":4,"rt":$n[1].Single,"sn":"halfWidth","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"label","t":4,"rt":$n[6].Label,"sn":"label"},{"a":2,"n":"moveAmp","t":4,"rt":$n[1].Single,"sn":"moveAmp","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"moveSpeed","t":4,"rt":$n[1].Single,"sn":"moveSpeed","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"multiplier","t":4,"rt":$n[1].Int32,"sn":"multiplier","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"phaseOffset","t":4,"rt":$n[1].Single,"sn":"phaseOffset","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"punchTimer","t":4,"rt":$n[1].Single,"sn":"punchTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"root","t":4,"rt":$n[2].Transform,"sn":"root"},{"a":2,"n":"shieldRenderer","t":4,"rt":$n[2].Renderer,"sn":"shieldRenderer"},{"a":2,"n":"z","t":4,"rt":$n[1].Single,"sn":"z","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}}]}; }, $n);
+    $m("MobControlAd.MobControlGame.MultiplierGate", function () { return {"td":$n[9].MobControlGame,"att":1048579,"a":1,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"baseX","t":4,"rt":$n[1].Single,"sn":"baseX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"bitIndex","t":4,"rt":$n[1].Int32,"sn":"bitIndex","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"currentX","t":4,"rt":$n[1].Single,"sn":"currentX","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"halfWidth","t":4,"rt":$n[1].Single,"sn":"halfWidth","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"label","t":4,"rt":$n[6].Label,"sn":"label"},{"a":2,"n":"moveAmp","t":4,"rt":$n[1].Single,"sn":"moveAmp","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"moveSpeed","t":4,"rt":$n[1].Single,"sn":"moveSpeed","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"multiplier","t":4,"rt":$n[1].Int32,"sn":"multiplier","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":2,"n":"phaseOffset","t":4,"rt":$n[1].Single,"sn":"phaseOffset","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"popupCooldown","t":4,"rt":$n[1].Single,"sn":"popupCooldown","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"punchTimer","t":4,"rt":$n[1].Single,"sn":"punchTimer","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"root","t":4,"rt":$n[2].Transform,"sn":"root"},{"a":2,"n":"shieldRenderer","t":4,"rt":$n[2].Renderer,"sn":"shieldRenderer"},{"a":2,"n":"z","t":4,"rt":$n[1].Single,"sn":"z","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}}]}; }, $n);
     /*MobControlAd.MobControlGame+MultiplierGate end.*/
 
     /*MobControlAd.MobControlGame+SmokePuff start.*/
@@ -5677,12 +6297,16 @@ if ( TRACE ) { TRACE( "Spiski#Start", this ); }
     $m("MobControlAd.MobControlGame.SparkFx", function () { return {"td":$n[9].MobControlGame,"att":1048579,"a":1,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"baseScale","t":4,"rt":$n[1].Single,"sn":"baseScale","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"gravity","t":4,"rt":$n[1].Single,"sn":"gravity","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"life","t":4,"rt":$n[1].Single,"sn":"life","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"maxLife","t":4,"rt":$n[1].Single,"sn":"maxLife","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"spin","t":4,"rt":$n[2].Vector3,"sn":"spin"},{"a":2,"n":"tr","t":4,"rt":$n[2].Transform,"sn":"tr"},{"a":2,"n":"vel","t":4,"rt":$n[2].Vector3,"sn":"vel"}]}; }, $n);
     /*MobControlAd.MobControlGame+SparkFx end.*/
 
+    /*MobControlAd.MobControlGame+FloatTextFx start.*/
+    $m("MobControlAd.MobControlGame.FloatTextFx", function () { return {"td":$n[9].MobControlGame,"att":1048579,"a":1,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"baseScale","t":4,"rt":$n[1].Single,"sn":"baseScale","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"life","t":4,"rt":$n[1].Single,"sn":"life","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"maxLife","t":4,"rt":$n[1].Single,"sn":"maxLife","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":2,"n":"tr","t":4,"rt":$n[2].Transform,"sn":"tr"},{"a":2,"n":"vel","t":4,"rt":$n[2].Vector3,"sn":"vel"}]}; }, $n);
+    /*MobControlAd.MobControlGame+FloatTextFx end.*/
+
     /*AdKit.AdRes start.*/
-    $m("AdKit.AdRes", function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":1,"n":"Disc","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"soft","pt":$n[1].Boolean,"ps":1}],"sn":"Disc","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Boolean]},{"a":2,"n":"Gradient","is":true,"t":8,"pi":[{"n":"top","pt":$n[2].Color,"ps":0},{"n":"bottom","pt":$n[2].Color,"ps":1}],"sn":"Gradient","rt":$n[2].Sprite,"p":[$n[2].Color,$n[2].Color]},{"a":2,"n":"MakeLabel","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"text","pt":$n[1].String,"ps":1},{"n":"height","pt":$n[1].Single,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"order","pt":$n[1].Int32,"ps":4},{"n":"pos","pt":$n[2].Vector3,"ps":5}],"sn":"MakeLabel","rt":$n[6].Label,"p":[$n[2].Transform,$n[1].String,$n[1].Single,$n[2].Color,$n[1].Int32,$n[2].Vector3]},{"a":1,"n":"RingTex","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"inner","pt":$n[1].Single,"ps":1}],"sn":"RingTex","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Single]},{"a":2,"n":"Round","is":true,"t":8,"pi":[{"n":"ppu","pt":$n[1].Int32,"ps":0}],"sn":"Round","rt":$n[2].Sprite,"p":[$n[1].Int32]},{"a":1,"n":"RoundRect","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"radius","pt":$n[1].Single,"ps":1},{"n":"ppu","pt":$n[1].Int32,"ps":2},{"n":"border","dv":0.0,"o":true,"pt":$n[1].Single,"ps":3}],"sn":"RoundRect","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Single,$n[1].Int32,$n[1].Single]},{"a":2,"n":"Spr","is":true,"t":8,"pi":[{"n":"name","pt":$n[1].String,"ps":0},{"n":"parent","pt":$n[2].Transform,"ps":1},{"n":"s","pt":$n[2].Sprite,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"order","pt":$n[1].Int32,"ps":4},{"n":"pos","pt":$n[2].Vector3,"ps":5},{"n":"size","pt":$n[2].Vector2,"ps":6},{"n":"sliced","dv":false,"o":true,"pt":$n[1].Boolean,"ps":7}],"sn":"Spr","rt":$n[2].SpriteRenderer,"p":[$n[1].String,$n[2].Transform,$n[2].Sprite,$n[2].Color,$n[1].Int32,$n[2].Vector3,$n[2].Vector2,$n[1].Boolean]},{"a":2,"n":"Txt","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"name","pt":$n[1].String,"ps":1},{"n":"text","pt":$n[1].String,"ps":2},{"n":"height","pt":$n[1].Single,"ps":3},{"n":"c","pt":$n[2].Color,"ps":4},{"n":"order","pt":$n[1].Int32,"ps":5},{"n":"pos","pt":$n[2].Vector3,"ps":6}],"sn":"Txt","rt":$n[2].TextMesh,"p":[$n[2].Transform,$n[1].String,$n[1].String,$n[1].Single,$n[2].Color,$n[1].Int32,$n[2].Vector3]},{"a":2,"n":"Bead","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Bead","t":8,"rt":$n[2].Sprite,"fg":"Bead","is":true},"fn":"Bead"},{"a":2,"n":"Circle","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Circle","t":8,"rt":$n[2].Sprite,"fg":"Circle","is":true},"fn":"Circle"},{"a":2,"n":"Font","is":true,"t":16,"rt":$n[2].Font,"g":{"a":2,"n":"get_Font","t":8,"rt":$n[2].Font,"fg":"Font","is":true},"fn":"Font"},{"a":2,"n":"FontMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_FontMat","t":8,"rt":$n[2].Material,"fg":"FontMat","is":true},"fn":"FontMat"},{"a":2,"n":"PrimMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_PrimMat","t":8,"rt":$n[2].Material,"fg":"PrimMat","is":true},"fn":"PrimMat"},{"a":2,"n":"Ring","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Ring","t":8,"rt":$n[2].Sprite,"fg":"Ring","is":true},"fn":"Ring"},{"a":2,"n":"Soft","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Soft","t":8,"rt":$n[2].Sprite,"fg":"Soft","is":true},"fn":"Soft"},{"a":2,"n":"SpriteMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_SpriteMat","t":8,"rt":$n[2].Material,"fg":"SpriteMat","is":true},"fn":"SpriteMat"},{"a":2,"n":"Square","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Square","t":8,"rt":$n[2].Sprite,"fg":"Square","is":true},"fn":"Square"},{"a":1,"n":"_bead","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_bead"},{"a":1,"n":"_circle","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_circle"},{"a":1,"n":"_font","is":true,"t":4,"rt":$n[2].Font,"sn":"_font"},{"a":1,"n":"_fontMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_fontMat"},{"a":1,"n":"_primMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_primMat"},{"a":1,"n":"_ring","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_ring"},{"a":1,"n":"_round","is":true,"t":4,"rt":$n[4].Dictionary$2(System.Int32,UnityEngine.Sprite),"sn":"_round","ro":true},{"a":1,"n":"_soft","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_soft"},{"a":1,"n":"_spriteMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_spriteMat"},{"a":1,"n":"_square","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_square"}]}; }, $n);
+    $m("AdKit.AdRes", function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":1,"n":"Disc","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"soft","pt":$n[1].Boolean,"ps":1}],"sn":"Disc","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Boolean]},{"a":2,"n":"Gradient","is":true,"t":8,"pi":[{"n":"top","pt":$n[2].Color,"ps":0},{"n":"bottom","pt":$n[2].Color,"ps":1}],"sn":"Gradient","rt":$n[2].Sprite,"p":[$n[2].Color,$n[2].Color]},{"a":2,"n":"MakeLabel","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"text","pt":$n[1].String,"ps":1},{"n":"height","pt":$n[1].Single,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"order","pt":$n[1].Int32,"ps":4},{"n":"pos","pt":$n[2].Vector3,"ps":5}],"sn":"MakeLabel","rt":$n[6].Label,"p":[$n[2].Transform,$n[1].String,$n[1].Single,$n[2].Color,$n[1].Int32,$n[2].Vector3]},{"a":1,"n":"PillRect","is":true,"t":8,"pi":[{"n":"w","pt":$n[1].Int32,"ps":0},{"n":"h","pt":$n[1].Int32,"ps":1}],"sn":"PillRect","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Int32]},{"a":1,"n":"RingTex","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"inner","pt":$n[1].Single,"ps":1}],"sn":"RingTex","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Single]},{"a":2,"n":"Round","is":true,"t":8,"pi":[{"n":"ppu","pt":$n[1].Int32,"ps":0}],"sn":"Round","rt":$n[2].Sprite,"p":[$n[1].Int32]},{"a":1,"n":"RoundRect","is":true,"t":8,"pi":[{"n":"size","pt":$n[1].Int32,"ps":0},{"n":"radius","pt":$n[1].Single,"ps":1},{"n":"ppu","pt":$n[1].Int32,"ps":2},{"n":"border","dv":0.0,"o":true,"pt":$n[1].Single,"ps":3}],"sn":"RoundRect","rt":$n[2].Sprite,"p":[$n[1].Int32,$n[1].Single,$n[1].Int32,$n[1].Single]},{"a":2,"n":"Spr","is":true,"t":8,"pi":[{"n":"name","pt":$n[1].String,"ps":0},{"n":"parent","pt":$n[2].Transform,"ps":1},{"n":"s","pt":$n[2].Sprite,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"order","pt":$n[1].Int32,"ps":4},{"n":"pos","pt":$n[2].Vector3,"ps":5},{"n":"size","pt":$n[2].Vector2,"ps":6},{"n":"sliced","dv":false,"o":true,"pt":$n[1].Boolean,"ps":7}],"sn":"Spr","rt":$n[2].SpriteRenderer,"p":[$n[1].String,$n[2].Transform,$n[2].Sprite,$n[2].Color,$n[1].Int32,$n[2].Vector3,$n[2].Vector2,$n[1].Boolean]},{"a":2,"n":"Txt","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"name","pt":$n[1].String,"ps":1},{"n":"text","pt":$n[1].String,"ps":2},{"n":"height","pt":$n[1].Single,"ps":3},{"n":"c","pt":$n[2].Color,"ps":4},{"n":"order","pt":$n[1].Int32,"ps":5},{"n":"pos","pt":$n[2].Vector3,"ps":6}],"sn":"Txt","rt":$n[2].TextMesh,"p":[$n[2].Transform,$n[1].String,$n[1].String,$n[1].Single,$n[2].Color,$n[1].Int32,$n[2].Vector3]},{"a":2,"n":"Bead","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Bead","t":8,"rt":$n[2].Sprite,"fg":"Bead","is":true},"fn":"Bead"},{"a":2,"n":"Circle","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Circle","t":8,"rt":$n[2].Sprite,"fg":"Circle","is":true},"fn":"Circle"},{"a":2,"n":"Font","is":true,"t":16,"rt":$n[2].Font,"g":{"a":2,"n":"get_Font","t":8,"rt":$n[2].Font,"fg":"Font","is":true},"fn":"Font"},{"a":2,"n":"FontMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_FontMat","t":8,"rt":$n[2].Material,"fg":"FontMat","is":true},"fn":"FontMat"},{"a":2,"n":"Pill","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Pill","t":8,"rt":$n[2].Sprite,"fg":"Pill","is":true},"fn":"Pill"},{"a":2,"n":"PrimMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_PrimMat","t":8,"rt":$n[2].Material,"fg":"PrimMat","is":true},"fn":"PrimMat"},{"a":2,"n":"Ring","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Ring","t":8,"rt":$n[2].Sprite,"fg":"Ring","is":true},"fn":"Ring"},{"a":2,"n":"Soft","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Soft","t":8,"rt":$n[2].Sprite,"fg":"Soft","is":true},"fn":"Soft"},{"a":2,"n":"SpriteMat","is":true,"t":16,"rt":$n[2].Material,"g":{"a":2,"n":"get_SpriteMat","t":8,"rt":$n[2].Material,"fg":"SpriteMat","is":true},"fn":"SpriteMat"},{"a":2,"n":"Square","is":true,"t":16,"rt":$n[2].Sprite,"g":{"a":2,"n":"get_Square","t":8,"rt":$n[2].Sprite,"fg":"Square","is":true},"fn":"Square"},{"a":1,"n":"_bead","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_bead"},{"a":1,"n":"_circle","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_circle"},{"a":1,"n":"_font","is":true,"t":4,"rt":$n[2].Font,"sn":"_font"},{"a":1,"n":"_fontMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_fontMat"},{"a":1,"n":"_pill","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_pill"},{"a":1,"n":"_primMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_primMat"},{"a":1,"n":"_ring","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_ring"},{"a":1,"n":"_round","is":true,"t":4,"rt":$n[4].Dictionary$2(System.Int32,UnityEngine.Sprite),"sn":"_round","ro":true},{"a":1,"n":"_soft","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_soft"},{"a":1,"n":"_spriteMat","is":true,"t":4,"rt":$n[2].Material,"sn":"_spriteMat"},{"a":1,"n":"_square","is":true,"t":4,"rt":$n[2].Sprite,"sn":"_square"}]}; }, $n);
     /*AdKit.AdRes end.*/
 
     /*AdKit.AdUI start.*/
-    $m("AdKit.AdUI", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Banner","t":8,"pi":[{"n":"text","pt":$n[1].String,"ps":0},{"n":"color","pt":$n[2].Color,"ps":1}],"sn":"Banner","rt":$n[1].Void,"p":[$n[1].String,$n[2].Color]},{"a":2,"n":"Create","is":true,"t":8,"pi":[{"n":"title","pt":$n[1].String,"ps":0},{"n":"ctaText","pt":$n[1].String,"ps":1},{"n":"cardColor","pt":$n[2].Color,"ps":2},{"n":"titleColor","pt":$n[2].Color,"ps":3}],"sn":"Create","rt":$n[6].AdUI,"p":[$n[1].String,$n[1].String,$n[2].Color,$n[2].Color]},{"a":1,"n":"Hand","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"pulseRing","out":true,"pt":$n[2].RectTransform,"ps":1}],"sn":"Hand","rt":$n[2].RectTransform,"p":[$n[2].Transform,$n[2].RectTransform]},{"a":2,"n":"Img","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"s","pt":$n[2].Sprite,"ps":1},{"n":"c","pt":$n[2].Color,"ps":2},{"n":"anchor","pt":$n[2].Vector2,"ps":3},{"n":"pos","pt":$n[2].Vector2,"ps":4},{"n":"size","pt":$n[2].Vector2,"ps":5},{"n":"sliced","pt":$n[1].Boolean,"ps":6}],"sn":"Img","rt":$n[7].Image,"p":[$n[2].Transform,$n[2].Sprite,$n[2].Color,$n[2].Vector2,$n[2].Vector2,$n[2].Vector2,$n[1].Boolean]},{"a":2,"n":"ShowDragTutorial","t":8,"pi":[{"n":"on","pt":$n[1].Boolean,"ps":0}],"sn":"ShowDragTutorial","rt":$n[1].Void,"p":[$n[1].Boolean]},{"a":2,"n":"ShowEndcard","t":8,"pi":[{"n":"sub","pt":$n[1].String,"ps":0}],"sn":"ShowEndcard","rt":$n[1].Void,"p":[$n[1].String]},{"a":2,"n":"Tick","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"Tick","rt":$n[1].Void,"p":[$n[1].Single]},{"a":2,"n":"Txt","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"s","pt":$n[1].String,"ps":1},{"n":"size","pt":$n[1].Int32,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"anchor","pt":$n[2].Vector2,"ps":4},{"n":"pos","pt":$n[2].Vector2,"ps":5}],"sn":"Txt","rt":$n[7].Text,"p":[$n[2].Transform,$n[1].String,$n[1].Int32,$n[2].Color,$n[2].Vector2,$n[2].Vector2]},{"a":2,"n":"Card","t":16,"rt":$n[2].RectTransform,"g":{"a":2,"n":"get_Card","t":8,"rt":$n[2].RectTransform,"fg":"Card"},"fn":"Card"},{"a":2,"n":"EndcardVisible","t":16,"rt":$n[1].Boolean,"g":{"a":2,"n":"get_EndcardVisible","t":8,"rt":$n[1].Boolean,"fg":"EndcardVisible","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},"fn":"EndcardVisible"},{"a":2,"n":"Root","t":4,"rt":$n[2].RectTransform,"sn":"Root"},{"a":1,"n":"banner","t":4,"rt":$n[7].Text,"sn":"banner"},{"a":1,"n":"bannerBg","t":4,"rt":$n[7].Image,"sn":"bannerBg"},{"a":1,"n":"bannerColor","t":4,"rt":$n[2].Color,"sn":"bannerColor"},{"a":1,"n":"bannerT","t":4,"rt":$n[1].Single,"sn":"bannerT","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"bannerWrap","t":4,"rt":$n[2].RectTransform,"sn":"bannerWrap"},{"a":1,"n":"card","t":4,"rt":$n[2].RectTransform,"sn":"card"},{"a":1,"n":"cta","t":4,"rt":$n[2].RectTransform,"sn":"cta"},{"a":1,"n":"endSub","t":4,"rt":$n[7].Text,"sn":"endSub"},{"a":1,"n":"endcard","t":4,"rt":$n[2].GameObject,"sn":"endcard"},{"a":1,"n":"tut","t":4,"rt":$n[2].RectTransform,"sn":"tut"},{"a":1,"n":"tutHand","t":4,"rt":$n[2].RectTransform,"sn":"tutHand"},{"a":1,"n":"tutRing","t":4,"rt":$n[2].RectTransform,"sn":"tutRing"}]}; }, $n);
+    $m("AdKit.AdUI", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Banner","t":8,"pi":[{"n":"text","pt":$n[1].String,"ps":0},{"n":"color","pt":$n[2].Color,"ps":1}],"sn":"Banner","rt":$n[1].Void,"p":[$n[1].String,$n[2].Color]},{"a":2,"n":"Create","is":true,"t":8,"pi":[{"n":"title","pt":$n[1].String,"ps":0},{"n":"ctaText","pt":$n[1].String,"ps":1},{"n":"cardColor","pt":$n[2].Color,"ps":2},{"n":"titleColor","pt":$n[2].Color,"ps":3}],"sn":"Create","rt":$n[6].AdUI,"p":[$n[1].String,$n[1].String,$n[2].Color,$n[2].Color]},{"a":1,"n":"Hand","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"pulseRing","out":true,"pt":$n[2].RectTransform,"ps":1}],"sn":"Hand","rt":$n[2].RectTransform,"p":[$n[2].Transform,$n[2].RectTransform]},{"a":2,"n":"Img","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"s","pt":$n[2].Sprite,"ps":1},{"n":"c","pt":$n[2].Color,"ps":2},{"n":"anchor","pt":$n[2].Vector2,"ps":3},{"n":"pos","pt":$n[2].Vector2,"ps":4},{"n":"size","pt":$n[2].Vector2,"ps":5},{"n":"sliced","pt":$n[1].Boolean,"ps":6}],"sn":"Img","rt":$n[7].Image,"p":[$n[2].Transform,$n[2].Sprite,$n[2].Color,$n[2].Vector2,$n[2].Vector2,$n[2].Vector2,$n[1].Boolean]},{"a":2,"n":"SetTutorialText","t":8,"pi":[{"n":"text","pt":$n[1].String,"ps":0}],"sn":"SetTutorialText","rt":$n[1].Void,"p":[$n[1].String]},{"a":2,"n":"ShowDragTutorial","t":8,"pi":[{"n":"on","pt":$n[1].Boolean,"ps":0}],"sn":"ShowDragTutorial","rt":$n[1].Void,"p":[$n[1].Boolean]},{"a":2,"n":"ShowEndcard","t":8,"pi":[{"n":"sub","pt":$n[1].String,"ps":0}],"sn":"ShowEndcard","rt":$n[1].Void,"p":[$n[1].String]},{"a":2,"n":"Tick","t":8,"pi":[{"n":"dt","pt":$n[1].Single,"ps":0}],"sn":"Tick","rt":$n[1].Void,"p":[$n[1].Single]},{"a":2,"n":"Txt","is":true,"t":8,"pi":[{"n":"parent","pt":$n[2].Transform,"ps":0},{"n":"s","pt":$n[1].String,"ps":1},{"n":"size","pt":$n[1].Int32,"ps":2},{"n":"c","pt":$n[2].Color,"ps":3},{"n":"anchor","pt":$n[2].Vector2,"ps":4},{"n":"pos","pt":$n[2].Vector2,"ps":5}],"sn":"Txt","rt":$n[7].Text,"p":[$n[2].Transform,$n[1].String,$n[1].Int32,$n[2].Color,$n[2].Vector2,$n[2].Vector2]},{"a":2,"n":"Card","t":16,"rt":$n[2].RectTransform,"g":{"a":2,"n":"get_Card","t":8,"rt":$n[2].RectTransform,"fg":"Card"},"fn":"Card"},{"a":2,"n":"EndcardVisible","t":16,"rt":$n[1].Boolean,"g":{"a":2,"n":"get_EndcardVisible","t":8,"rt":$n[1].Boolean,"fg":"EndcardVisible","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},"fn":"EndcardVisible"},{"a":2,"n":"Root","t":4,"rt":$n[2].RectTransform,"sn":"Root"},{"a":1,"n":"banner","t":4,"rt":$n[7].Text,"sn":"banner"},{"a":1,"n":"bannerBg","t":4,"rt":$n[7].Image,"sn":"bannerBg"},{"a":1,"n":"bannerColor","t":4,"rt":$n[2].Color,"sn":"bannerColor"},{"a":1,"n":"bannerT","t":4,"rt":$n[1].Single,"sn":"bannerT","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"bannerWrap","t":4,"rt":$n[2].RectTransform,"sn":"bannerWrap"},{"a":1,"n":"card","t":4,"rt":$n[2].RectTransform,"sn":"card"},{"a":1,"n":"cta","t":4,"rt":$n[2].RectTransform,"sn":"cta"},{"a":1,"n":"endSub","t":4,"rt":$n[7].Text,"sn":"endSub"},{"a":1,"n":"endcard","t":4,"rt":$n[2].GameObject,"sn":"endcard"},{"a":1,"n":"tut","t":4,"rt":$n[2].RectTransform,"sn":"tut"},{"a":1,"n":"tutHand","t":4,"rt":$n[2].RectTransform,"sn":"tutHand"},{"a":1,"n":"tutLabel","t":4,"rt":$n[7].Text,"sn":"tutLabel"},{"a":1,"n":"tutRing","t":4,"rt":$n[2].RectTransform,"sn":"tutRing"}]}; }, $n);
     /*AdKit.AdUI end.*/
 
     /*AdKit.Label start.*/
@@ -5702,7 +6326,7 @@ if ( TRACE ) { TRACE( "Spiski#Start", this ); }
     /*AdKit.Sfx+Id end.*/
 
     /*AdKit.StoreLink start.*/
-    $m("AdKit.StoreLink", function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":2,"n":"GameEnded","is":true,"t":8,"sn":"GameEnded","rt":$n[1].Void},{"a":2,"n":"LogEvent","is":true,"t":8,"pi":[{"n":"name","pt":$n[1].String,"ps":0},{"n":"value","dv":0,"o":true,"pt":$n[1].Int32,"ps":1}],"sn":"LogEvent","rt":$n[1].Void,"p":[$n[1].String,$n[1].Int32]},{"a":2,"n":"NotifyGameEnded","is":true,"t":8,"sn":"NotifyGameEnded","rt":$n[1].Void},{"a":2,"n":"Open","is":true,"t":8,"pi":[{"n":"url","dv":"https://play.google.com/store/apps/details?id=com.vincentb.MobControl&gl=IN","o":true,"pt":$n[1].String,"ps":0}],"sn":"Open","rt":$n[1].Void,"p":[$n[1].String]}]}; }, $n);
+    $m("AdKit.StoreLink", function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":2,"n":"GameEnded","is":true,"t":8,"sn":"GameEnded","rt":$n[1].Void},{"a":2,"n":"LogEvent","is":true,"t":8,"pi":[{"n":"name","pt":$n[1].String,"ps":0},{"n":"value","dv":0,"o":true,"pt":$n[1].Int32,"ps":1}],"sn":"LogEvent","rt":$n[1].Void,"p":[$n[1].String,$n[1].Int32]},{"a":2,"n":"NotifyGameEnded","is":true,"t":8,"sn":"NotifyGameEnded","rt":$n[1].Void},{"a":2,"n":"Open","is":true,"t":8,"pi":[{"n":"url","dv":"https://apps.apple.com/us/app/mob-control/id1562817072","o":true,"pt":$n[1].String,"ps":0}],"sn":"Open","rt":$n[1].Void,"p":[$n[1].String]}]}; }, $n);
     /*AdKit.StoreLink end.*/
 
     }});
