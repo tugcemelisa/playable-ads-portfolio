@@ -446,8 +446,8 @@ namespace MobControlAd
             var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.76f), new Vector3(0.88f, 0.15f, 0.88f), new Color(0.04f, 0.02f, 0.06f));
             mouthHole.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
-            // Build smooth overlapping 3D cylindrical segments along the spline
-            int denseSteps = 54;
+            // Build smooth overlapping 3D cylindrical segments along the spline (22 steps saves ~75 draw calls!)
+            int denseSteps = 22;
             Vector3 prevPt = SampleTubeSpline(0f);
             for (int i = 1; i <= denseSteps; i++)
             {
@@ -461,8 +461,9 @@ namespace MobControlAd
                     var seg = Prims.Make(PrimitiveType.Cylinder, tubeRoot, mid, new Vector3(0.96f, len * 0.62f, 0.96f), PurpleMain).transform;
                     seg.localRotation = Quaternion.FromToRotation(Vector3.up, dir.normalized);
                     _tubeSegments.Add(seg);
-                    // Joint sphere to keep curves completely seamless
-                    Prims.Make(PrimitiveType.Sphere, tubeRoot, pt, Vector3.one * 0.95f, PurpleMain);
+                    // Joint sphere only on arched curve bends (i >= 5) to keep curves seamless while saving draw calls
+                    if (i >= 5)
+                        Prims.Make(PrimitiveType.Sphere, tubeRoot, pt, Vector3.one * 0.95f, PurpleMain);
                 }
                 prevPt = pt;
             }
