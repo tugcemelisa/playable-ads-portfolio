@@ -271,6 +271,9 @@ namespace MobControlAd
             Application.targetFrameRate = 60;
             // Mob Control uses pure math collisions — slow down unused FixedUpdate physics ticks by 5x!
             Time.fixedDeltaTime = 0.1f;
+#if !UNITY_LUNA
+            QualitySettings.skinWeights = SkinWeights.OneBone;
+#endif
         }
 
         void Start()
@@ -1355,8 +1358,8 @@ namespace MobControlAd
             _muzzleFlash.localScale = Vector3.one * (_barrelRecoil * 0.72f);
         }
 
-        int MaxFriendlyMobs => characterStyle == CharacterStyle.StylizedModels ? 36 : 70;
-        int MaxEnemyMobs => characterStyle == CharacterStyle.StylizedModels ? 24 : 55;
+        int MaxFriendlyMobs => characterStyle == CharacterStyle.StylizedModels ? 26 : 65;
+        int MaxEnemyMobs => characterStyle == CharacterStyle.StylizedModels ? 18 : 50;
 
         void FirePurpleStickman()
         {
