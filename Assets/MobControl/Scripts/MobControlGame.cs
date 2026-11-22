@@ -1616,7 +1616,7 @@ namespace MobControlAd
                 }
             }
 
-            // 3. Purple vs. Yellow Stickman Clashes (turn dark gray briefly like VideoReference.mp4!)
+            // 3. Purple vs. Yellow Clashes — instant vanish into pool with vivid crimson-red impact burst (no frozen gray statues!)
             for (int p = _purpleMobs.Count - 1; p >= 0; p--)
             {
                 var pm = _purpleMobs[p];
@@ -1632,20 +1632,7 @@ namespace MobControlAd
                     float clashDist = pm.isGiant ? 0.95f : 0.55f;
                     if (Mathf.Abs(pp.z - yp.z) < clashDist && Mathf.Abs(pp.x - yp.x) < clashDist)
                     {
-                        pm.hp--;
-                        if (pm.hp <= 0)
-                        {
-                            pm.isDyingGray = true;
-                            pm.dyingTimer = 0.24f;
-                            SetStickmanColor(pm, GrayCorpse);
-                        }
-
-                        ym.isDyingGray = true;
-                        ym.dyingTimer = 0.24f;
-                        SetStickmanColor(ym, GrayCorpse);
-
                         Vector3 clashPos = (pp + yp) * 0.5f + Vector3.up * 0.55f;
-                        // Vivid crimson-red impact flash, sparks & shockwave ring when mobs clash & turn gray!
                         Color clashRed = new Color(1f, 0.16f, 0.20f);
                         SpawnSparks(clashPos, pm.isGiant ? 7 : 4, clashRed, 4.6f, false);
                         SpawnWhiteSmoke(clashPos, 2, new Color(1f, 0.24f, 0.26f));
@@ -1655,7 +1642,18 @@ namespace MobControlAd
                             SpawnRing(clashPos, pm.isGiant ? 2.5f : 1.75f, new Color(1f, 0.18f, 0.22f, 0.95f), 0.24f, 90f);
                             Sfx.Play(Sfx.Id.Hit, 0.4f);
                         }
-                        if (pm.isDyingGray) break;
+
+                        // Instant vanish into pool for enemy mob (no frozen statue, fewer skinned meshes!)
+                        RecycleStickman(ym);
+                        _yellowMobs.RemoveAt(y);
+
+                        pm.hp--;
+                        if (pm.hp <= 0)
+                        {
+                            RecycleStickman(pm);
+                            _purpleMobs.RemoveAt(p);
+                            break;
+                        }
                     }
                 }
             }
