@@ -7,7 +7,8 @@ namespace AdKit
     public static class Prims
     {
         static readonly int ColorId = Shader.PropertyToID("_Color");
-        static MaterialPropertyBlock _mpb;
+        static readonly System.Collections.Generic.Dictionary<Color32, Material> _matCache =
+            new System.Collections.Generic.Dictionary<Color32, Material>();
 
         public static GameObject Make(PrimitiveType t, Transform parent, Vector3 pos, Vector3 scale, Color c)
         {
@@ -18,7 +19,6 @@ namespace AdKit
             g.transform.localPosition = pos;
             g.transform.localScale = scale;
             var r = g.GetComponent<Renderer>();
-            if (AdRes.PrimMat) r.sharedMaterial = AdRes.PrimMat;
             r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             r.receiveShadows = false;
             SetColor(r, c);
@@ -27,10 +27,16 @@ namespace AdKit
 
         public static void SetColor(Renderer r, Color c)
         {
-            if (_mpb == null) _mpb = new MaterialPropertyBlock();
-            r.GetPropertyBlock(_mpb);
-            _mpb.SetColor(ColorId, c);
-            r.SetPropertyBlock(_mpb);
+            // Cached shared Material per Color32: avoids Playworks MPB reference bug AND improves batching!
+            Color32 key = c;
+            if (!_matCache.TryGetValue(key, out var mat) || !mat)
+            {
+                var baseMat = AdRes.PrimMat;
+                mat = baseMat ? new Material(baseMat) : new Material(Shader.Find("Standard"));
+                mat.color = c;
+                _matCache[key] = mat;
+            }
+            r.sharedMaterial = mat;
         }
 
         /// <summary>Chibi figure: body capsule (child 0), head, hair/helmet, held item. Pivot at feet.</summary>

@@ -256,6 +256,8 @@ namespace MobControlAd
         void Awake()
         {
             Application.targetFrameRate = 60;
+            // Mob Control uses pure math collisions — slow down unused FixedUpdate physics ticks by 5x!
+            Time.fixedDeltaTime = 0.1f;
         }
 
         void Start()
