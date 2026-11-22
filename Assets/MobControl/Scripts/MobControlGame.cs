@@ -530,20 +530,6 @@ namespace MobControlAd
             _cannonBarrel.localPosition = new Vector3(0f, 0.58f, -0.15f);
             _cannonBarrel.localRotation = Quaternion.Euler(-8f, 0f, 0f);
 
-            // Try loading imported Cannon.fbx mesh if available, layered with clean Playworks primitives
-            var importedCannon = Resources.Load<GameObject>("Models/Cannon");
-            if (importedCannon)
-            {
-                var inst = Instantiate(importedCannon, _cannonBarrel);
-                inst.transform.localPosition = new Vector3(0f, -0.15f, 0.35f);
-                inst.transform.localScale = Vector3.one * 0.45f;
-                foreach (var r in inst.GetComponentsInChildren<Renderer>())
-                {
-                    if (AdRes.PrimMat) r.sharedMaterial = AdRes.PrimMat;
-                    Prims.SetColor(r, PurpleMain);
-                }
-            }
-
             var mainTube = Prims.Make(PrimitiveType.Cylinder, _cannonBarrel, new Vector3(0f, 0f, 0.42f), new Vector3(0.78f, 0.64f, 0.78f), PurpleMain);
             mainTube.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             // Metallic mid power band + light theme highlight stripe
@@ -607,25 +593,14 @@ namespace MobControlAd
             }
             else
             {
-                // Stylized 3D brick wall fallback (recessed dark mortar core + beveled bricks, themed to Yellow or Red)
+                // Lean 4-piece stylized 3D brick block (saves 7 draw calls while keeping crisp layered look!)
                 bool isBlueRed = backgroundTheme == BackgroundTheme.MidnightSlate;
                 Color mortarCol = isBlueRed ? new Color(0.42f, 0.05f, 0.08f) : new Color(0.56f, 0.42f, 0.04f);
                 Color brickHi = isBlueRed ? new Color(1.00f, 0.38f, 0.38f) : new Color(1f, 0.92f, 0.30f);
                 Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 0.72f, 0f), new Vector3(2.64f, 1.32f, 1.54f), mortarCol);
-                for (int row = 0; row < 3; row++)
-                {
-                    float y = 0.25f + row * 0.47f;
-                    bool stagger = (row % 2) == 1;
-                    int cols = stagger ? 4 : 3;
-                    float brickW = stagger ? 0.64f : 0.86f;
-                    float span = (cols - 1) * (brickW + 0.06f);
-                    for (int col = 0; col < cols; col++)
-                    {
-                        float bx = -span * 0.5f + col * (brickW + 0.06f);
-                        Color bc = ((row + col) % 2 == 0) ? YellowMain : brickHi;
-                        Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(bx, y, 0f), new Vector3(brickW, 0.41f, 1.66f), bc);
-                    }
-                }
+                Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 0.25f, 0f), new Vector3(2.74f, 0.41f, 1.66f), YellowMain);
+                Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 0.72f, 0f), new Vector3(2.74f, 0.41f, 1.66f), brickHi);
+                Prims.Make(PrimitiveType.Cube, _yellowBlockRoot, new Vector3(0f, 1.19f, 0f), new Vector3(2.74f, 0.41f, 1.66f), YellowMain);
             }
             _yellowBlockLabel = AdRes.MakeLabel(_yellowBlockRoot, _yellowBlockHp.ToString(), 0.95f, Color.white, 25, new Vector3(0f, 0.72f, -0.90f));
 
@@ -643,15 +618,11 @@ namespace MobControlAd
             Color frameDark = new Color(0.14f, 0.16f, 0.26f);
             Color capGlow = Color.Lerp(PurpleLight, Color.white, 0.30f);
 
-            // Stylized rounded-cap pillars + base bar + glowing neon trim
-            Prims.Make(PrimitiveType.Cylinder, root, new Vector3(-halfWidth, 0.60f, 0f), new Vector3(0.22f, 0.60f, 0.22f), frameDark);
-            Prims.Make(PrimitiveType.Cylinder, root, new Vector3(halfWidth, 0.60f, 0f), new Vector3(0.22f, 0.60f, 0.22f), frameDark);
-            Prims.Make(PrimitiveType.Sphere, root, new Vector3(-halfWidth, 1.22f, 0f), Vector3.one * 0.26f, capGlow);
-            Prims.Make(PrimitiveType.Sphere, root, new Vector3(halfWidth, 1.22f, 0f), Vector3.one * 0.26f, capGlow);
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.08f, 0f), new Vector3(fullW + 0.22f, 0.16f, 0.24f), frameDark);
-            // Glowing bottom & top neon trim bars
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.16f, -0.06f), new Vector3(fullW - 0.12f, 0.08f, 0.12f), Color.white);
-            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 1.12f, -0.04f), new Vector3(fullW - 0.12f, 0.07f, 0.10f), capGlow);
+            // Stylized lean 5-piece gate (saves 9 draw calls across 3 gates!)
+            Prims.Make(PrimitiveType.Cylinder, root, new Vector3(-halfWidth, 0.62f, 0f), new Vector3(0.22f, 0.62f, 0.22f), frameDark);
+            Prims.Make(PrimitiveType.Cylinder, root, new Vector3(halfWidth, 0.62f, 0f), new Vector3(0.22f, 0.62f, 0.22f), frameDark);
+            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.10f, 0f), new Vector3(fullW + 0.20f, 0.16f, 0.22f), Color.white);
+            Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 1.14f, 0f), new Vector3(fullW + 0.10f, 0.09f, 0.14f), capGlow);
 
             // Glowing purple energy gate shield
             var shieldGo = Prims.Make(PrimitiveType.Cube, root, new Vector3(0f, 0.64f, 0f), new Vector3(fullW - 0.14f, 0.96f, 0.06f), PurpleGateCol);
@@ -688,12 +659,9 @@ namespace MobControlAd
             Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 0.10f, 0f), new Vector3(2.72f, 0.20f, 2.12f), YellowDark);
             Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 0.92f, 0f), new Vector3(2.48f, 1.66f, 1.88f), YellowMain);
             Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 2.28f, 0f), new Vector3(2.72f, 1.24f, 2.10f), YellowMain);
-            // Castle battlements / crenellations along top rim
+            // Castle battlements along front top rim (saves 3 unseen back draw calls)
             for (int bx = -1; bx <= 1; bx++)
-            {
                 Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(bx * 0.96f, 3.04f, -0.84f), new Vector3(0.56f, 0.34f, 0.38f), YellowMain);
-                Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(bx * 0.96f, 3.04f, 0.84f), new Vector3(0.56f, 0.34f, 0.38f), YellowDark);
-            }
             // Dark horizontal trim band between tiers
             Prims.Make(PrimitiveType.Cube, _enemyBaseBody, new Vector3(0f, 1.68f, -0.96f), new Vector3(2.54f, 0.16f, 0.14f), new Color(0.28f, 0.22f, 0.06f));
             // Framed dark spawn doorway at bottom center
