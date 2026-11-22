@@ -443,25 +443,27 @@ namespace MobControlAd
                 new Vector3(1.35f, 0.55f, 19.35f)
             };
 
-            // Entrance mouth ring + dark inner hole at (0, 0.52, 4.85)
-            var mouthRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.80f), new Vector3(1.22f, 0.14f, 1.22f), PurpleMain);
+            // Entrance mouth cuff + deep dark hollow opening at front of tube (never covered by first segment!)
+            var mouthRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.74f), new Vector3(1.24f, 0.16f, 1.24f), PurpleMain);
             mouthRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.76f), new Vector3(0.88f, 0.15f, 0.88f), new Color(0.04f, 0.02f, 0.06f));
+            var mouthRim = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.62f), new Vector3(1.16f, 0.06f, 1.16f), PurpleLight);
+            mouthRim.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.55f), new Vector3(0.86f, 0.04f, 0.86f), new Color(0.03f, 0.01f, 0.05f));
             mouthHole.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
-            // Build smooth overlapping 3D cylindrical segments along the spline (14 steps keeps Draw Calls < 150!)
+            // Build smooth overlapping 3D cylindrical segments along the spline (start cleanly behind mouth opening)
             int denseSteps = 14;
-            Vector3 prevPt = SampleTubeSpline(0f);
+            Vector3 prevPt = SampleTubeSpline(0.03f);
             for (int i = 1; i <= denseSteps; i++)
             {
-                float t = i / (float)denseSteps;
+                float t = Mathf.Lerp(0.03f, 1f, i / (float)denseSteps);
                 Vector3 pt = SampleTubeSpline(t);
                 Vector3 mid = (prevPt + pt) * 0.5f;
                 Vector3 dir = pt - prevPt;
                 float len = dir.magnitude;
                 if (len > 0.001f)
                 {
-                    var seg = Prims.Make(PrimitiveType.Cylinder, tubeRoot, mid, new Vector3(0.96f, len * 0.65f, 0.96f), PurpleMain).transform;
+                    var seg = Prims.Make(PrimitiveType.Cylinder, tubeRoot, mid, new Vector3(0.96f, len * 0.58f, 0.96f), PurpleMain).transform;
                     seg.localRotation = Quaternion.FromToRotation(Vector3.up, dir.normalized);
                     _tubeSegments.Add(seg);
                     // Joint sphere only on upper arch curve (i = 4..12)
@@ -1870,7 +1872,7 @@ namespace MobControlAd
         {
             for (int i = 0; i < count; i++)
             {
-                if (_puffs.Count > 24) return;
+                if (_puffs.Count > 10) return;
                 SmokePuff puff;
                 if (_puffPool.Count > 0)
                 {
@@ -1912,7 +1914,7 @@ namespace MobControlAd
 
         void SpawnRing(Vector3 pos, float maxScale, Color col, float duration, float tiltX)
         {
-            if (_rings.Count > 12) return;
+            if (_rings.Count > 6) return;
             RingFx ring;
             if (_ringPool.Count > 0)
             {
@@ -1965,7 +1967,7 @@ namespace MobControlAd
         {
             for (int i = 0; i < count; i++)
             {
-                if (_sparks.Count > 36) return;
+                if (_sparks.Count > 14) return;
                 float sz = cubeDebris ? Random.Range(0.14f, 0.26f) : Random.Range(0.10f, 0.18f);
                 SparkFx sp;
                 if (_sparkPool.Count > 0)
