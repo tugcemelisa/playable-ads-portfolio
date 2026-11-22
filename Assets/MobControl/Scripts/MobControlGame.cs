@@ -444,63 +444,108 @@ namespace MobControlAd
                 new Vector3(1.35f, 0.55f, 19.35f)
             };
 
-            // Entrance dark hollow opening at (0, 0.52, 4.82)
+            // Entrance dark hollow opening at (0, 0.52, 4.80)
             var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.80f), new Vector3(0.88f, 0.06f, 0.88f), new Color(0.03f, 0.01f, 0.05f));
             mouthHole.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
-            // Prefer single-mesh Blender PurpleTube.fbx (1 Draw Call instead of 88 Draw Calls!)
-            var tubePrefab = Resources.Load<GameObject>("Models/PurpleTube");
-            if (tubePrefab != null)
-            {
-                var inst = Instantiate(tubePrefab, tubeRoot);
-                inst.name = "PurpleTube_Mesh";
-                inst.transform.localPosition = Vector3.zero;
-                inst.transform.localRotation = Quaternion.identity;
-                inst.transform.localScale = Vector3.one;
-                foreach (var r in inst.GetComponentsInChildren<Renderer>(true))
-                {
-                    r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                    r.receiveShadows = false;
-                    Prims.SetColor(r, PurpleMain);
-                }
+            // Single silky-smooth procedural Mesh along _tubeSpline (1 Draw Call instead of 88 Draw Calls!)
+            var meshGo = new GameObject("PurpleTube_SingleMesh");
+            meshGo.transform.SetParent(tubeRoot, false);
+            var mf = meshGo.AddComponent<MeshFilter>();
+            var mr = meshGo.AddComponent<MeshRenderer>();
+            mf.sharedMesh = BuildSmoothTubeMesh(36, 14, 0.48f);
+            mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            mr.receiveShadows = false;
+            Prims.SetColor(mr, PurpleMain);
 
-                // 4 pooled bulge beads slide smoothly along the tube when mobs travel inside!
-                for (int b = 0; b < 4; b++)
-                {
-                    var bead = Prims.Make(PrimitiveType.Sphere, tubeRoot, Vector3.zero, Vector3.one * 1.24f, PurpleMain).transform;
-                    bead.gameObject.SetActive(false);
-                    _tubeBulgeBeads.Add(bead);
-                }
-            }
-            else
+            // 4 pooled bulge beads slide smoothly along the tube when mobs travel inside!
+            for (int b = 0; b < 4; b++)
             {
-                var mouthRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.78f), new Vector3(1.22f, 0.14f, 1.22f), PurpleMain);
-                mouthRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-
-                // Fallback: 44-segment procedural tube
-                int denseSteps = 44;
-                Vector3 prevPt = SampleTubeSpline(0.01f);
-                for (int i = 1; i <= denseSteps; i++)
-                {
-                    float t = Mathf.Lerp(0.01f, 1f, i / (float)denseSteps);
-                    Vector3 pt = SampleTubeSpline(t);
-                    Vector3 mid = (prevPt + pt) * 0.5f;
-                    Vector3 dir = pt - prevPt;
-                    float len = dir.magnitude;
-                    if (len > 0.001f)
-                    {
-                        var seg = Prims.Make(PrimitiveType.Cylinder, tubeRoot, mid, new Vector3(0.96f, len * 0.62f, 0.96f), PurpleMain).transform;
-                        seg.localRotation = Quaternion.FromToRotation(Vector3.up, dir.normalized);
-                        _tubeSegments.Add(seg);
-                        Prims.Make(PrimitiveType.Sphere, tubeRoot, pt, Vector3.one * 0.95f, PurpleMain);
-                    }
-                    prevPt = pt;
-                }
+                var bead = Prims.Make(PrimitiveType.Sphere, tubeRoot, Vector3.zero, Vector3.one * 1.24f, PurpleMain).transform;
+                bead.gameObject.SetActive(false);
+                _tubeBulgeBeads.Add(bead);
             }
 
             // Exit cuff at upper-right lane (1.35, 0.55, 19.35)
             var exitRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(1.35f, 0.55f, 19.35f), new Vector3(1.08f, 0.14f, 1.08f), PurpleMain);
             exitRing.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+        }
+
+        Mesh BuildSmoothTubeMesh(int steps, int radial, float baseRadius)
+        {
+            var centers = new Vector3[steps + 1];
+            for (int i = 0; i <= steps; i++)
+                centers[i] = SampleTubeSpline(i / (float)steps);
+
+            // 2 smoothing passes keeping endpoints fixed for a silky arch curve
+            for (int pass = 0; pass < 2; pass++)
+            {
+                var next = new Vector3[steps + 1];
+                next[0] = centers[0];
+                next[steps] = centers[steps];
+                for (int i = 1; i < steps; i++)
+                    next[i] = centers[i] * 0.5f + (centers[i - 1] + centers[i + 1]) * 0.25f;
+                centers = next;
+            }
+
+            int ringVerts = radial + 1;
+            int vertCount = (steps + 1) * ringVerts;
+            var verts = new Vector3[vertCount];
+            var norms = new Vector3[vertCount];
+            var tris = new int[steps * radial * 6];
+
+            Vector3 prevUp = Vector3.up;
+            for (int i = 0; i <= steps; i++)
+            {
+                Vector3 c = centers[i];
+                Vector3 tangent = (i == 0) ? (centers[1] - centers[0]).normalized
+                                : (i == steps) ? (centers[steps] - centers[steps - 1]).normalized
+                                : (centers[i + 1] - centers[i - 1]).normalized;
+
+                Vector3 right = Vector3.Cross(prevUp, tangent);
+                if (right.sqrMagnitude < 0.0001f) right = Vector3.Cross(Vector3.right, tangent);
+                right.Normalize();
+                Vector3 up = Vector3.Cross(tangent, right).normalized;
+                prevUp = up;
+
+                float r = baseRadius;
+                if (i == 0) r = 0.61f;
+                else if (i == 1) r = 0.54f;
+
+                int rowStart = i * ringVerts;
+                for (int j = 0; j <= radial; j++)
+                {
+                    float ang = (j % radial) * (Mathf.PI * 2f / radial);
+                    Vector3 dir = right * Mathf.Cos(ang) + up * Mathf.Sin(ang);
+                    verts[rowStart + j] = c + dir * r;
+                    norms[rowStart + j] = dir;
+                }
+            }
+
+            int ti = 0;
+            for (int i = 0; i < steps; i++)
+            {
+                int r0 = i * ringVerts;
+                int r1 = (i + 1) * ringVerts;
+                for (int j = 0; j < radial; j++)
+                {
+                    // Outward-facing winding in Unity left-handed coords: Cross(+up, +tangent) = +right (outward!)
+                    tris[ti++] = r0 + j;
+                    tris[ti++] = r0 + j + 1;
+                    tris[ti++] = r1 + j + 1;
+
+                    tris[ti++] = r0 + j;
+                    tris[ti++] = r1 + j + 1;
+                    tris[ti++] = r1 + j;
+                }
+            }
+
+            var mesh = new Mesh { name = "SmoothArchedTube" };
+            mesh.vertices = verts;
+            mesh.normals = norms;
+            mesh.triangles = tris;
+            mesh.RecalculateBounds();
+            return mesh;
         }
 
         Vector3 SampleTubeSpline(float t)
