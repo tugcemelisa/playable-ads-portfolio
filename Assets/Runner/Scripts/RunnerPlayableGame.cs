@@ -270,12 +270,14 @@ namespace RunnerAd
             _cam.transform.position = _camBasePos;
             _cam.transform.rotation = Quaternion.Euler(20f, 0f, 0f);
 
-            var light = FindFirstObjectByType<Light>();
+            var light = FindObjectOfType<Light>();
             if (!light)
             {
                 var lgo = new GameObject("SunLight");
                 light = lgo.AddComponent<Light>();
+#if !UNITY_LUNA
                 light.type = LightType.Directional;
+#endif
             }
             light.shadows = LightShadows.None;
             light.intensity = 1.25f;
