@@ -24,13 +24,13 @@ namespace MobControlAd
         public float fireRate = 8.0f;
 
         [LunaPlaygroundField("Round Duration (s)", 1, "Mob Control Settings")]
-        public float roundDuration = 21.0f;
+        public float roundDuration = 24.0f;
 
         [LunaPlaygroundField("Yellow Block HP", 2, "Mob Control Settings")]
-        public int yellowBlockStartHp = 60;
+        public int yellowBlockStartHp = 90;
 
         [LunaPlaygroundField("Enemy Base HP", 3, "Mob Control Settings")]
-        public int enemyBaseStartHp = 50;
+        public int enemyBaseStartHp = 120;
 
         [LunaPlaygroundField("Enable Giant Champion", 4, "Mob Control Settings")]
         public bool enableGiantChampion = true;
