@@ -15,7 +15,6 @@ namespace AdKit.EditorTools
     public static class PlayableMenu
     {
         const string MobControlScene = "Assets/Scenes/MobControl.unity";
-        const string NumberMatchScene = "Assets/Scenes/NumberMatch.unity";
         const string RunnerScene = "Assets/Scenes/Runner.unity";
         const string DevIframePath = "LunaTemp/stage4/develop/iframe.html";
 
@@ -64,25 +63,18 @@ namespace AdKit.EditorTools
         [MenuItem("Playable Ads/Open Scene/Mob Control", priority = 1)]
         public static void OpenMobControl() => OpenScene(MobControlScene);
 
-        [MenuItem("Playable Ads/Open Scene/Number Match", priority = 2)]
-        public static void OpenNumberMatch() => OpenScene(NumberMatchScene);
-
-        [MenuItem("Playable Ads/Open Scene/Runner", priority = 3)]
+        [MenuItem("Playable Ads/Open Scene/Runner", priority = 2)]
         public static void OpenRunner() => OpenScene(RunnerScene);
 
         [MenuItem("Playable Ads/Export Playworks/Mob Control", priority = 20)]
         public static void ExportMobControl() => Build(MobControlScene, "mob-control");
 
-        [MenuItem("Playable Ads/Export Playworks/Number Match", priority = 21)]
-        public static void ExportNumberMatch() => Build(NumberMatchScene, "number-match");
-
-        [MenuItem("Playable Ads/Export Playworks/Runner", priority = 22)]
+        [MenuItem("Playable Ads/Export Playworks/Runner", priority = 21)]
         public static void ExportRunner() => Build(RunnerScene, "runner");
 
-        [MenuItem("Playable Ads/Export Playworks/Export All (Mob Control + Number Match + Runner)", priority = 40)]
+        [MenuItem("Playable Ads/Export Playworks/Export All (Mob Control + Runner)", priority = 40)]
         public static void ExportAll() => BuildMultiple(
             (MobControlScene, "mob-control"),
-            (NumberMatchScene, "number-match"),
             (RunnerScene, "runner")
         );
 
