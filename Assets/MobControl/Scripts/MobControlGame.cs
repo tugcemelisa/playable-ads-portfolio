@@ -24,16 +24,19 @@ namespace MobControlAd
         public float fireRate = 8.0f;
 
         [LunaPlaygroundField("Round Duration (s)", 1, "Mob Control Settings")]
-        public float roundDuration = 24.0f;
+        public float roundDuration = 30.0f;
 
         [LunaPlaygroundField("Yellow Block HP", 2, "Mob Control Settings")]
-        public int yellowBlockStartHp = 90;
+        public int yellowBlockStartHp = 110;
 
         [LunaPlaygroundField("Enemy Base HP", 3, "Mob Control Settings")]
-        public int enemyBaseStartHp = 120;
+        public int enemyBaseStartHp = 180;
 
         [LunaPlaygroundField("Enable Giant Champion", 4, "Mob Control Settings")]
         public bool enableGiantChampion = true;
+
+        [LunaPlaygroundField("Min Lose Time (s)", 5, "Mob Control Settings")]
+        public float minLoseTime = 14.0f;
 
         [LunaPlaygroundField("Front Sliding Gate (X)", 0, "Gate Multipliers")]
         public int frontGateMultiplier = 3;
@@ -1535,10 +1538,10 @@ namespace MobControlAd
                 y.root.localPosition = pos;
                 AnimateStickmanRun(y, dt);
 
-                // When Yellow Horde reaches the Cannon at bottom -> DEFEAT... climax!
+                // When Yellow Horde reaches the Cannon at bottom -> DEFEAT... climax (respecting minLoseTime!)
                 if (pos.z <= 1.85f)
                 {
-                    if (_elapsedTime < 7.5f)
+                    if (_elapsedTime < Mathf.Max(3f, minLoseTime))
                     {
                         Destroy(y.root.gameObject);
                         _yellowMobs.RemoveAt(i);
@@ -1578,11 +1581,14 @@ namespace MobControlAd
                         SetStickmanColor(ym, GrayCorpse);
 
                         Vector3 clashPos = (pp + yp) * 0.5f + Vector3.up * 0.55f;
-                        SpawnSparks(clashPos, pm.isGiant ? 6 : 3, new Color(1f, 0.94f, 0.48f), 4.2f, false);
+                        // Vivid crimson-red impact flash, sparks & shockwave ring when mobs clash & turn gray!
+                        Color clashRed = new Color(1f, 0.16f, 0.20f);
+                        SpawnSparks(clashPos, pm.isGiant ? 7 : 4, clashRed, 4.6f, false);
+                        SpawnWhiteSmoke(clashPos, 2, new Color(1f, 0.24f, 0.26f));
                         if (_sfxHitCooldown <= 0f)
                         {
                             _sfxHitCooldown = 0.08f;
-                            SpawnRing(clashPos, pm.isGiant ? 2.4f : 1.55f, new Color(1f, 0.95f, 0.65f, 0.90f), 0.22f, 90f);
+                            SpawnRing(clashPos, pm.isGiant ? 2.5f : 1.75f, new Color(1f, 0.18f, 0.22f, 0.95f), 0.24f, 90f);
                             Sfx.Play(Sfx.Id.Hit, 0.4f);
                         }
                         if (pm.isDyingGray) break;
