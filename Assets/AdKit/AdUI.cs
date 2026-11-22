@@ -191,9 +191,15 @@ namespace AdKit
             art.SetParent(h, false);
             art.localRotation = Quaternion.Euler(0f, 0f, 20f);
             var custom = Resources.Load<Sprite>("hand");
+            if (!custom)
+            {
+                var tex = Resources.Load<Texture2D>("hand");
+                if (tex) custom = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100f);
+            }
             if (custom)
             {
-                var img = Img(art, custom, Color.white, new Vector2(0.5f, 0.5f), new Vector2(40f, -90f), new Vector2(200f, 200f), false);
+                art.localRotation = Quaternion.Euler(0f, 0f, 8f);
+                var img = Img(art, custom, Color.white, new Vector2(0.5f, 0.5f), new Vector2(18f, -72f), new Vector2(168f, 168f), false);
                 img.preserveAspect = true;
                 return h;
             }
