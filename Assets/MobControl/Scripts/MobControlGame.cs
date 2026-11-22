@@ -1291,8 +1291,8 @@ namespace MobControlAd
             _muzzleFlash.localScale = Vector3.one * (_barrelRecoil * 0.72f);
         }
 
-        int MaxFriendlyMobs => characterStyle == CharacterStyle.StylizedModels ? 18 : 60;
-        int MaxEnemyMobs => characterStyle == CharacterStyle.StylizedModels ? 14 : 50;
+        int MaxFriendlyMobs => characterStyle == CharacterStyle.StylizedModels ? 36 : 70;
+        int MaxEnemyMobs => characterStyle == CharacterStyle.StylizedModels ? 24 : 55;
 
         void FirePurpleStickman()
         {
