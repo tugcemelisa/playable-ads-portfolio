@@ -13,7 +13,7 @@ Interactive 3D HTML5 playable ads are engineered in **Unity 6** and exported wit
 |---|---|---|
 | **Mob Control** | Playable Ad *(Unity Playworks)* | Voodoo-style 3D cannon & mob multiplier playable ad featuring two full visual themes (`AlpineWinter` Purple/Yellow & `MidnightSlate` Deep Navy/Red), two character styles (522-tri hairless 3D mob + eye-preserving alien with skeletal `Run` animation vs. classic stickmen), single-mesh arched center tube with traveling gulp waves, sliding `X3` / `X2` / `X7` gates, `GIANT CHARGE` 2.25× Giant Champion, destructible brick block (`100` HP), castle siege (`160` HP), `HURRY UP!` 8s finale countdown, `SFX ON/OFF`, and auto iOS App Store / Android Google Play CTA.<br>🎮 **Playable Ad (Playworks Studio on Desktop / Fullscreen on Mobile):** [Play Live Demo](https://tugcemelisa.github.io/playable-ads-portfolio/mob-control/) · 🔗 **Source:** [`Assets/MobControl/`](Assets/MobControl/) |
 | **Number Match** | Game Dev + Creative Video Ad | Full Unity 3D colour-by-number pixel art puzzle game (`16×16` rainbow artwork) + 18s 9:16 Creative Video Ad with wrong-move tension hook, 360° radial colour wave reveals, centered `HURRY UP!` countdown alarm, `00:00` explosion transition, and 3D endcard CTA.<br>🎬 **Creative Video Ad:** [Watch on YouTube Shorts](https://youtube.com/shorts/G4jU1Z6JKeI) · 🔗 **Unity Game & Case Study Repo:** [github.com/tugcemelisa/number-match-case-study](https://github.com/tugcemelisa/number-match-case-study) |
-| **Jelly Flow** | Creative Video Ad | 9:16 vertical performance marketing creative video ad for a pixel-art conveyor puzzle game — featuring a fast visual hook, satisfying sorting payoff, and clear endcard CTA.<br>🎬 **Creative Video Ad:** [Watch on YouTube Shorts](https://www.youtube.com/shorts/1l0v7LeWNJU) |
+| **Jelly Flow** | Creative Video Ad | 26s 9:16 vertical creative video ad for a 3D pixel-voxel conveyor puzzle game — opens with a sunlit 3D CGI plush bunny & bear hook holding 3 red heart balloons that seamlessly matches the 3-heart pixel mosaic board, transitions into crisp conveyor color-shooter gameplay (animated tap hand, `5/5` conveyor capacity, multi-shooter voxel shatter VFX, 5-slot holding tray tension), and finishes with a 3D card-flip multi-level showcase endcard (6 live mini-level previews + `PLAY` CTA).<br>🎬 **Creative Video Ad:** [Watch on YouTube Shorts](https://www.youtube.com/shorts/1l0v7LeWNJU) |
 | **Mech Wars** | Creative Video Ads | 9:16 vertical action shooter UA marketing video creatives (visual hooks, gameplay pacing, motion graphics & endcards) — **all videos on the official TikTok channel were produced by me**.<br>🎬 **Creative Video Ads (Full Channel):** [Watch on TikTok (@mechwarsofficial_)](https://www.tiktok.com/@mechwarsofficial_) |
 
 ---
@@ -61,6 +61,22 @@ Measured directly inside **Unity Playworks Performance Profiler** (`iPhone X/XS`
 - **Blender 5.0 FBX Pipeline:** Stripped 28+ unused animation clips (retaining only `CharacterArmature|Run`), removed heavy hair/accessory submeshes, collapsed `PurpleMob.fbx` from 11 materials to **1 single material / 522 tris** (`4,155 KB → 330 KB`), and preserved `YellowMob.fbx` alien eyes (`Eye_Black` / `Eye_White`) while cutting polygons by 55%.
 - **Single-Mesh Procedural Tube (`88 → 1 Draw Call`):** Replaced 88 separate cylinder/sphere tube segments with a single C# swept `UnityEngine.Mesh` (`BuildSmoothTubeMesh`) paired with 10 pooled bulge beads for smooth entrance-to-exit gulp waves.
 - **Playworks 7.2.0 WebGL Compatibility:** Per-`Color32` cached shared materials (`Prims._matCache`), non-sliced procedural `AdRes.Pill` UI sprites, 4-way World-Space `UI.Text` comic strokes (Bangers font), and mobile-safe CTA redirect (`window.open` + `top.location` fallback with auto iOS App Store / Android Google Play routing).
+
+---
+
+## Jelly Flow — Creative Video Breakdown & Keyframe Previews
+
+A **26-second 9:16 vertical UA creative** ([Watch on YouTube Shorts](https://www.youtube.com/shorts/1l0v7LeWNJU)) structured around a 3-beat conversion funnel:
+- **0:00 – 0:03 | 3D CGI Visual Motif Hook:** Stylized 3D plush red bunny & green bear holding three glossy red heart balloons along a sunlit cloud path — establishing the exact 3-heart visual motif before cutting straight into the 3-heart pixel-voxel board.
+- **0:03 – 0:20 | Conveyor Color-Shooter Gameplay & Holding-Tray Tension:** Animated gloved tap hand launches numbered jelly shooters (`20`, `30` ammo) onto a `5/5` loop conveyor; simultaneous multi-angle paint streams shatter matching voxel pixels while unmatched shooters drop into the 5 holding slots to create resource-management tension.
+- **0:21 – 0:26 | 3D Card-Flip Multi-Level Endcard:** Swoosh-trailed 3D card flip reveals 6 live animated mini-level preview cards (mouse, calico cat, alien, frog, grumpy cat, superhero) under the **JELLY FLOW** logo and pulsing yellow **PLAY** CTA.
+
+<p align="center">
+  <img src="docs/screenshots/jelly-flow-01-hook.jpg" width="23%" alt="Jelly Flow 0:00 — 3D CGI Heart Balloon Opening Hook" />
+  <img src="docs/screenshots/jelly-flow-02-gameplay.jpg" width="23%" alt="Jelly Flow 0:04 — Conveyor & 3-Heart Voxel Board Gameplay" />
+  <img src="docs/screenshots/jelly-flow-03-combo.jpg" width="23%" alt="Jelly Flow 0:16 — Multi-Shooter Color Erosion & Holding Slots" />
+  <img src="docs/screenshots/jelly-flow-04-endcard.jpg" width="23%" alt="Jelly Flow 0:25 — 6-Level Showcase Endcard & PLAY CTA" />
+</p>
 
 ---
 
