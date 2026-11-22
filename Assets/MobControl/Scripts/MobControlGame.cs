@@ -198,6 +198,7 @@ namespace MobControlAd
         // Center Arched Purple Tube
         Vector3[] _tubeSpline;
         readonly List<Transform> _tubeSegments = new List<Transform>();
+        readonly List<Transform> _tubeBulgeBeads = new List<Transform>();
         const float TubeEntranceX = 0.0f;
         const float TubeEntranceZ = 4.85f;
         const float TubeEntranceRadius = 0.72f;
@@ -443,31 +444,58 @@ namespace MobControlAd
                 new Vector3(1.35f, 0.55f, 19.35f)
             };
 
-            // Entrance mouth ring + clear dark hollow opening at (0, 0.52, 4.76)
-            var mouthRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.78f), new Vector3(1.22f, 0.14f, 1.22f), PurpleMain);
-            mouthRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-            var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.66f), new Vector3(0.86f, 0.06f, 0.86f), new Color(0.03f, 0.01f, 0.05f));
+            // Entrance dark hollow opening at (0, 0.52, 4.82)
+            var mouthHole = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.80f), new Vector3(0.88f, 0.06f, 0.88f), new Color(0.03f, 0.01f, 0.05f));
             mouthHole.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
 
-            // Original silky-smooth overlapping 3D cylindrical segments + seamless joint spheres along the spline
-            int denseSteps = 44;
-            Vector3 prevPt = SampleTubeSpline(0.01f);
-            for (int i = 1; i <= denseSteps; i++)
+            // Prefer single-mesh Blender PurpleTube.fbx (1 Draw Call instead of 88 Draw Calls!)
+            var tubePrefab = Resources.Load<GameObject>("Models/PurpleTube");
+            if (tubePrefab != null)
             {
-                float t = Mathf.Lerp(0.01f, 1f, i / (float)denseSteps);
-                Vector3 pt = SampleTubeSpline(t);
-                Vector3 mid = (prevPt + pt) * 0.5f;
-                Vector3 dir = pt - prevPt;
-                float len = dir.magnitude;
-                if (len > 0.001f)
+                var inst = Instantiate(tubePrefab, tubeRoot);
+                inst.name = "PurpleTube_Mesh";
+                inst.transform.localPosition = Vector3.zero;
+                inst.transform.localRotation = Quaternion.identity;
+                inst.transform.localScale = Vector3.one;
+                foreach (var r in inst.GetComponentsInChildren<Renderer>(true))
                 {
-                    var seg = Prims.Make(PrimitiveType.Cylinder, tubeRoot, mid, new Vector3(0.96f, len * 0.62f, 0.96f), PurpleMain).transform;
-                    seg.localRotation = Quaternion.FromToRotation(Vector3.up, dir.normalized);
-                    _tubeSegments.Add(seg);
-                    // Joint sphere to keep curves completely seamless
-                    Prims.Make(PrimitiveType.Sphere, tubeRoot, pt, Vector3.one * 0.95f, PurpleMain);
+                    r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    r.receiveShadows = false;
+                    Prims.SetColor(r, PurpleMain);
                 }
-                prevPt = pt;
+
+                // 4 pooled bulge beads slide smoothly along the tube when mobs travel inside!
+                for (int b = 0; b < 4; b++)
+                {
+                    var bead = Prims.Make(PrimitiveType.Sphere, tubeRoot, Vector3.zero, Vector3.one * 1.24f, PurpleMain).transform;
+                    bead.gameObject.SetActive(false);
+                    _tubeBulgeBeads.Add(bead);
+                }
+            }
+            else
+            {
+                var mouthRing = Prims.Make(PrimitiveType.Cylinder, tubeRoot, new Vector3(0f, 0.52f, 4.78f), new Vector3(1.22f, 0.14f, 1.22f), PurpleMain);
+                mouthRing.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+
+                // Fallback: 44-segment procedural tube
+                int denseSteps = 44;
+                Vector3 prevPt = SampleTubeSpline(0.01f);
+                for (int i = 1; i <= denseSteps; i++)
+                {
+                    float t = Mathf.Lerp(0.01f, 1f, i / (float)denseSteps);
+                    Vector3 pt = SampleTubeSpline(t);
+                    Vector3 mid = (prevPt + pt) * 0.5f;
+                    Vector3 dir = pt - prevPt;
+                    float len = dir.magnitude;
+                    if (len > 0.001f)
+                    {
+                        var seg = Prims.Make(PrimitiveType.Cylinder, tubeRoot, mid, new Vector3(0.96f, len * 0.62f, 0.96f), PurpleMain).transform;
+                        seg.localRotation = Quaternion.FromToRotation(Vector3.up, dir.normalized);
+                        _tubeSegments.Add(seg);
+                        Prims.Make(PrimitiveType.Sphere, tubeRoot, pt, Vector3.one * 0.95f, PurpleMain);
+                    }
+                    prevPt = pt;
+                }
             }
 
             // Exit cuff at upper-right lane (1.35, 0.55, 19.35)
@@ -1659,7 +1687,28 @@ namespace MobControlAd
 
         void UpdateTubeBulge(float dt)
         {
-            // Bulge the segments of the Arched Purple Tube where stickmen are currently sliding inside!
+            if (_tubeBulgeBeads.Count > 0)
+            {
+                int used = 0;
+                for (int i = 0; i < _purpleMobs.Count && used < _tubeBulgeBeads.Count; i++)
+                {
+                    var m = _purpleMobs[i];
+                    if (!m.inTube) continue;
+                    var bead = _tubeBulgeBeads[used++];
+                    if (!bead.gameObject.activeSelf) bead.gameObject.SetActive(true);
+                    bead.localPosition = SampleTubeSpline(m.tubeT);
+                    float pulse = 1.20f + 0.10f * Mathf.Sin(m.tubeT * 24f);
+                    bead.localScale = Vector3.one * pulse;
+                }
+                for (int b = used; b < _tubeBulgeBeads.Count; b++)
+                {
+                    if (_tubeBulgeBeads[b].gameObject.activeSelf)
+                        _tubeBulgeBeads[b].gameObject.SetActive(false);
+                }
+                return;
+            }
+
+            // Fallback: Bulge procedural tube segments
             for (int s = 0; s < _tubeSegments.Count; s++)
             {
                 float segT = (s + 0.5f) / _tubeSegments.Count;
