@@ -1386,8 +1386,21 @@ namespace MobControlAd
             }
 
             Sfx.Play(Sfx.Id.Pop, 0.32f);
-            if (_purpleMobs.Count < MaxFriendlyMobs)
-                SpawnStickman(true, spawnPos, 0, false);
+            // Cannon ALWAYS fires a visible mob (only gate cloning is strictly capped at MaxFriendlyMobs!)
+            if (_purpleMobs.Count >= MaxFriendlyMobs + 10)
+            {
+                // Recycle the oldest non-giant, non-tube mob so the cannon never fires blanks
+                for (int k = 0; k < _purpleMobs.Count; k++)
+                {
+                    if (!_purpleMobs[k].isGiant && !_purpleMobs[k].inTube)
+                    {
+                        RecycleStickman(_purpleMobs[k]);
+                        _purpleMobs.RemoveAt(k);
+                        break;
+                    }
+                }
+            }
+            SpawnStickman(true, spawnPos, 0, false);
             Color fxRingCol = Color.Lerp(PurpleLight, Color.white, 0.45f);
             fxRingCol.a = 0.92f;
             SpawnWhiteSmoke(muzzleWorld, 2, PurpleLight);
