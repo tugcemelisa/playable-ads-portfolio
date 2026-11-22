@@ -3,7 +3,7 @@
 Playable ads and performance marketing video creatives by **Melisa Tuğçe Haspolat**.  
 Interactive 3D HTML5 playable ads are engineered in **Unity 6** and exported with **Unity Playworks (Luna 7.2.0)**; 3D mesh/rig optimization is performed in **Blender 5.0**, and motion design, visual hooks, UI art, and video creatives are crafted in **Adobe After Effects** and **Adobe Illustrator / Photoshop**.
 
-> **Live Portfolio Hub:** [tugcemelisa.github.io/playable-ads-portfolio](https://tugcemelisa.github.io/playable-ads-portfolio/)
+> **Personal Portfolio & All Projects:** [www.melisatugce.com](https://www.melisatugce.com/) · **Live Mob Control Playable Demo:** [Play Now](https://tugcemelisa.github.io/playable-ads-portfolio/mob-control/)
 
 ---
 
