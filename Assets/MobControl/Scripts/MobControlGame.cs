@@ -36,7 +36,7 @@ namespace MobControlAd
         public bool enableGiantChampion = true;
 
         [LunaPlaygroundField("Min Lose Time (s)", 5, "Mob Control Settings")]
-        public float minLoseTime = 22.0f;
+        public float minLoseTime = 27.0f;
 
         [LunaPlaygroundField("Front Sliding Gate (X)", 0, "Gate Multipliers")]
         public int frontGateMultiplier = 3;

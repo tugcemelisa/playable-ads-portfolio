@@ -149,9 +149,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 8
-  yellowBlockStartHp: 60
-  enemyBaseStartHp: 50
+  roundDuration: 30
+  yellowBlockStartHp: 100
+  enemyBaseStartHp: 160
+  enableGiantChampion: 1
+  minLoseTime: 27
+  frontGateMultiplier: 3
+  leftGateMultiplier: 2
+  rightGateMultiplier: 7
   ctaText: PLAY NOW
+  defeatTitle: DEFEAT...
+  victoryTitle: VICTORY!
+  defeatSubtitle: CAN YOU BEAT THE BOSS?
+  victorySubtitle: READY FOR LEVEL 2?
+  tutorialText: <  HOLD & DRAG TO AIM  >
+  backgroundTheme: 0
+  characterStyle: 0
+  ctaColor: 0
+  ctaShape: 0
 --- !u!4 &849959340
 Transform:
   m_ObjectHideFlags: 0
