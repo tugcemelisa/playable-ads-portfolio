@@ -1677,11 +1677,20 @@ namespace MobControlAd
                 y.root.localPosition = pos;
                 AnimateStickmanRun(y, dt);
 
-                // When Yellow Horde reaches the Cannon at bottom -> DEFEAT... climax (respecting minLoseTime!)
+                // When Yellow Horde reaches the Cannon at bottom -> warning hit feedback before minLoseTime, then DEFEAT... climax!
                 if (pos.z <= 1.85f)
                 {
                     if (_elapsedTime < Mathf.Max(3f, minLoseTime))
                     {
+                        Vector3 warnPos = new Vector3(pos.x, 0.55f, 1.95f);
+                        SpawnSparks(warnPos, 4, new Color(1f, 0.14f, 0.18f), 4.8f, false);
+                        if (_sfxHitCooldown <= 0f)
+                        {
+                            _sfxHitCooldown = 0.14f;
+                            SpawnRing(warnPos, 2.2f, new Color(1f, 0.14f, 0.18f, 0.95f), 0.26f, 90f);
+                            TriggerCameraShake(0.14f, 0.12f);
+                            Sfx.Play(Sfx.Id.Error, 0.55f);
+                        }
                         RecycleStickman(y);
                         _yellowMobs.RemoveAt(i);
                         continue;
