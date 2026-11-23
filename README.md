@@ -18,6 +18,28 @@ Interactive 3D HTML5 playable ads are engineered in **Unity 6** and exported wit
 
 ---
 
+## Mob Control — Gameplay & Endcard per Theme
+
+<p align="center">
+  <img src="docs/screenshots/mob-control-variants-overview.webp" width="100%" alt="Mob Control — AlpineWinter and MidnightSlate gameplay with Victory and Defeat endcards" /><br/>
+  <sub><b>Gameplay → Endcard, per theme:</b> `AlpineWinter` gameplay → `VICTORY!` endcard with green `PLAY NOW!` CTA, and `MidnightSlate` gameplay → `DEFEAT...` endcard with yellow `PLAY NOW!` CTA.</sub>
+</p>
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="docs/screenshots/mob-control-gameplay-themes.webp" width="100%" alt="Mob Control gameplay — AlpineWinter vs. MidnightSlate" /><br/>
+      <sub><b>Gameplay (`AlpineWinter` ↔ `MidnightSlate`):</b> `HOLD & DRAG TO AIM` tutorial hand, `X3!` gate burst, sliding `X2`/`X3`/`X7` gates & destructible brick block.</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="docs/screenshots/mob-control-endcard-themes.webp" width="100%" alt="Mob Control endcards — Victory and Defeat" /><br/>
+      <sub><b>Endcards (`VICTORY!` ↔ `DEFEAT...`):</b> Mob Control logo, `HURRY UP!` timer and themed `PLAY NOW!` store CTA.</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## Mob Control — Live Playworks Preview & A/B Variant Screenshots
 
 <table>
@@ -90,10 +112,10 @@ A **26-second 9:16 vertical UA creative** ([Watch on YouTube Shorts](https://www
 - **0:21 – 0:26 | 3D Card-Flip Multi-Level Endcard:** Swoosh-trailed 3D card flip reveals 6 live animated mini-level preview cards (mouse, calico cat, alien, frog, grumpy cat, superhero) under the **JELLY FLOW** logo and pulsing yellow **PLAY** CTA.
 
 <p align="center">
-  <img src="docs/screenshots/jelly-flow-01-hook.jpg" width="23%" alt="Jelly Flow 0:00 — 3D CGI Heart Balloon Opening Hook" />
-  <img src="docs/screenshots/jelly-flow-02-gameplay.jpg" width="23%" alt="Jelly Flow 0:04 — Conveyor & 3-Heart Voxel Board Gameplay" />
-  <img src="docs/screenshots/jelly-flow-03-combo.jpg" width="23%" alt="Jelly Flow 0:16 — Multi-Shooter Color Erosion & Holding Slots" />
-  <img src="docs/screenshots/jelly-flow-04-endcard.jpg" width="23%" alt="Jelly Flow 0:25 — 6-Level Showcase Endcard & PLAY CTA" />
+  <img src="docs/screenshots/jelly-flow-01-hook.jpg" width="23%" alt="Jelly Flow 0:01 — 3D CGI Heart Balloon Opening Hook" />
+  <img src="docs/screenshots/jelly-flow-02-gameplay.jpg" width="23%" alt="Jelly Flow 0:05 — Conveyor & 3-Heart Voxel Board Gameplay" />
+  <img src="docs/screenshots/jelly-flow-03-combo.jpg" width="23%" alt="Jelly Flow 0:17 — Multi-Shooter Color Erosion & Holding Slots" />
+  <img src="docs/screenshots/jelly-flow-04-endcard.jpg" width="23%" alt="Jelly Flow 0:24 — 6-Level Showcase Endcard & PLAY CTA" />
 </p>
 
 ---
